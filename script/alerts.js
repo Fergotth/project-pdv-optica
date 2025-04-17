@@ -8,12 +8,14 @@ const icons = [
         className3: "",
         icon: "succes",
         iconHTML: `
-            <div class="swal2-success-circular-line-left"></div>
-            <span class="swal2-success-line-tip"></span>
-            <span class="swal2-success-line-long"></span>
-            <div class="swal2-success-ring"></div>
-            <div class="swal2-success-fix"></div>
-            <div class="swal2-success-circular-line-right"></div>
+            <div class="swal2-icon swal2-success">
+                <div class="swal2-success-circular-line-left"></div>
+                <span class="swal2-success-line-tip"></span>
+                <span class="swal2-success-line-long"></span>
+                <div class="swal2-success-ring"></div>
+                <div class="swal2-success-fix"></div>
+                <div class="swal2-success-circular-line-right"></div>
+            </div>
         `,
         style: `
         .swal2-success {
@@ -56,15 +58,23 @@ const icons = [
         className3: "swal2-icon-show",
         icon: "question",
         iconHTML: `
-        <div class="swal2-question-circular-line-left"></div>
-        <div class="swal2-question-circular-line-right"></div>
-        <div class="swal2-question-ring"></div>
-        <div class="swal2-icon-content">?</div>
+        <div class="swal2-icon swal2-question swal2-icon-show">
+            <div class="swal2-question-circular-line-left"></div>
+            <div class="swal2-question-circular-line-right"></div>
+            <div class="swal2-question-ring"></div>
+            <div class="swal2-icon-content">?</div>
+        </div>
         `,
         style: `
         .swal2-icon.swal2-question {
             border-color: #87adbd;
             color: #87adbd;
+            position: relative;
+            width: 5em;
+            height: 5em;
+            border-radius: 50%;
+            border: 0.25em solid;
+            box-sizing: content-box;
         }
         
         .swal2-icon .swal2-icon-content {
@@ -73,6 +83,11 @@ const icons = [
             justify-content: center;
             font-size: 3.75em;
             line-height: 1;
+            z-index: 2;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .swal2-question-circular-line-left,
@@ -82,7 +97,7 @@ const icons = [
             position: absolute;
             width: 5em;
             height: 5em;
-            background: white;
+            background: transparent;
             transform: rotate(-45deg);
             z-index: 1;
         }
@@ -97,15 +112,6 @@ const icons = [
             top: 0;
         }
         
-        .swal2-question-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border: 0.25em solid #87adbd;
-            border-radius: 50%;
-            box-sizing: content-box;
-            z-index: 0;
-        }
 
         .swal2-icon.swal2-question.swal2-icon-show {
             animation: swal2-animate-error-icon 0.5s;
@@ -128,10 +134,10 @@ const icons = [
         
         @keyframes swal2-animate-question-mark {
             0% {
-                transform: rotateY(-360deg);
+                transform: translate(-50%, -50%) rotateY(-360deg); /* Mantén el centro */
             }
             100% {
-                transform: rotateY(0);
+                transform: translate(-50%, -50%) rotateY(0); /* Mantén el centro */
             }
         }
         `
@@ -140,14 +146,13 @@ const icons = [
 const x = document.getElementById('x');
 
 x.addEventListener('click', () => {
-    let a = document.createElement('div');
-    a.classList.add(icons[1].className1);
-    a.classList.add(icons[1].className2);
-    a.classList.add("swal2-icon-show");
+    const a = document.createElement('div');
+    const styleTag = document.createElement('style');
+    
+    styleTag.innerHTML = icons[1].style;
     a.innerHTML = icons[1].iconHTML;
+    a.appendChild(styleTag);
     document.body.appendChild(a);
 });
 
-const styleTag = document.createElement('style');
-styleTag.innerHTML = icons[1].style;
-document.head.appendChild(styleTag);
+
