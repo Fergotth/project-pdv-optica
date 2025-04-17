@@ -1,0 +1,30 @@
+body {
+    /* background-image: url('/images/wallpaper.jpg');
+    background-size: cover; */
+    background-color: #000;
+    overflow: hidden;
+}
+
+div#temporaryContent {
+    position: absolute;
+    top: 13%;
+    left: 50px;
+}
+
+#calendar {
+    position: absolute;
+    right: -300px;
+    top: 50px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+div#timer {
+    position: absolute;
+    bottom: 0;
+    right: 2px;
+}
+
+#calendar.showCalendar {
+    right: 2px;
+}
