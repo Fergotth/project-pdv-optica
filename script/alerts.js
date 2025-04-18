@@ -3,7 +3,6 @@
 const alert = [
     {
         icon: "succes",
-<<<<<<< HEAD
         text: "Mensaje de prueba",
         title: "Prueba de titulo",
         timer: 4000,
@@ -17,17 +16,6 @@ const alert = [
             <div class="swal2-success-fix"></div>
             <div class="swal2-success-circular-line-right"></div>
         </div>
-=======
-        iconHTML: `
-            <div class="swal2-icon swal2-success">
-                <div class="swal2-success-circular-line-left"></div>
-                <span class="swal2-success-line-tip"></span>
-                <span class="swal2-success-line-long"></span>
-                <div class="swal2-success-ring"></div>
-                <div class="swal2-success-fix"></div>
-                <div class="swal2-success-circular-line-right"></div>
-            </div>
->>>>>>> 1b38d1cb8a3622f019b545a10b8e0235a7ecc930
         `,
         style: 
         `
@@ -107,15 +95,11 @@ const alert = [
     },
     {
         icon: "question",
-<<<<<<< HEAD
         text: "",
         title: "",
         timer: 4000,
         iconHTML: 
         `
-=======
-        iconHTML: `
->>>>>>> 1b38d1cb8a3622f019b545a10b8e0235a7ecc930
         <div class="swal2-icon swal2-question swal2-icon-show">
             <div class="swal2-question-circular-line-left"></div>
             <div class="swal2-question-circular-line-right"></div>
@@ -129,11 +113,8 @@ const alert = [
             border-color: #87adbd;
             color: #87adbd;
             position: relative;
-<<<<<<< HEAD
             left: calc(50% - 2.5em);
             margin-top: 5%;
-=======
->>>>>>> 1b38d1cb8a3622f019b545a10b8e0235a7ecc930
             width: 5em;
             height: 5em;
             border-radius: 50%;
@@ -209,7 +190,6 @@ const alert = [
     }
 ];
 
-<<<<<<< HEAD
 document.addEventListener('click', (event) => {
     if (event.target.tagName === 'BUTTON') {
         let index = event.target.dataset.id;
@@ -272,16 +252,3 @@ document.addEventListener('click', (event) => {
             }, alert[index].timer);
     }
 });
-=======
-x.addEventListener('click', () => {
-    const a = document.createElement('div');
-    const styleTag = document.createElement('style');
-    
-    styleTag.innerHTML = icons[1].style;
-    a.innerHTML = icons[1].iconHTML;
-    a.appendChild(styleTag);
-    document.body.appendChild(a);
-});
-
-
->>>>>>> 1b38d1cb8a3622f019b545a10b8e0235a7ecc930
