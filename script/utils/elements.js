@@ -1,3 +1,36 @@
+export const container = `
+    <div class="overlay" style="height: 100vh; width: 100vw; background-color: #00000022; position: absolute;">    
+        <div class="containerAlert"> 
+            <style>
+                .containerAlert {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 40vw;
+                    border-radius: 15px;
+                    background: #fff;
+                    animation: ZoomIn 0.5s;
+                }
+
+                @keyframes ZoomIn {
+                    0% {
+                        transform: translate(-50%, -50%) scale(0);
+                    }
+                    70% {
+                        transform: translate(-50%, -50%) scale(1.0);
+                    } 
+                    80% {
+                        transform: translate(-50%, -50%) scale(0.9);
+                    }
+                    100% {
+                        transform: translate(-50%, -50%) scale(1.0);
+                    }
+                }
+            </style>
+        </div>
+    </div>`;
+
 const alerts = [
     {
         icon: "succes",
