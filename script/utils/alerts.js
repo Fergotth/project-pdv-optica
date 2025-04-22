@@ -3,14 +3,14 @@ import alerts, { container } from './elements.js';
 document.addEventListener('click', (event) => {
     if (event.target.tagName === 'BUTTON') {
         newAlert({
-            icon: "infso",
+            icon: "inffo",
             text: "Texto de prueba de success",
             title: "Titulo de prueba de Success"
         });
 
             setTimeout(() => {
                 document.body.querySelector('.overlay').remove();
-            }, 4000);
+            }, 40000);
     }
 });
 
@@ -36,6 +36,14 @@ const assignContent = (doc, alertContainer, innerText) => {
 };
 
 const createObject = (title, text, timer, dataObject) => {
+    if (typeof dataObject === "string") {
+        return {
+            title: title,
+            text: "",
+            timer: timer
+        };
+    }
+    
     const newElement = {
         title: title,
         text: text,
@@ -48,7 +56,7 @@ const createObject = (title, text, timer, dataObject) => {
 
 const newAlert = (input) => {
     if (typeof input === "object" && input !== null) {
-        const { icon, title, text, timer = 4000 } = input;
+        const { icon, title, text, timer = 40000 } = input;
         const index = alerts.findIndex(item => item.icon === icon);
         const newObject = createObject(title, text, timer, alerts[index]);
         const newElement = document.body;
@@ -60,10 +68,11 @@ const newAlert = (input) => {
         const typeOfObject = () => {
             let doc;
             if (index !== -1) {        
-                doc = parser.parseFromString(alerts[index].innerHTML + alerts[index].style, 'text/html');
+                doc = parser.parseFromString(alerts[index].innerHTML, 'text/html');
             } else {
-                doc = parser.parseFromString(alerts[4].innerHTML + alerts[4].style, 'text/html');
+                doc = parser.parseFromString(alerts[4].innerHTML, 'text/html');
             }
+            console.log(doc);
             return doc;
         }
         // falta corregir cuando no se manda bien la etiqueta icon
