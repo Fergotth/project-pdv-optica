@@ -10,10 +10,10 @@ export const container = `
                     width: 40vw;
                     border-radius: 15px;
                     background: #fff;
-                    animation: ZoomIn 0.5s;
+                    animation: fadeIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards, fadeOut 0.5s ease 3.4s forwards;
                 }
 
-                @keyframes ZoomIn {
+                @keyframes fadeIn {
                     0% {
                         transform: translate(-50%, -50%) scale(0);
                     }
@@ -27,31 +27,45 @@ export const container = `
                         transform: translate(-50%, -50%) scale(1.0);
                     }
                 }
+
+                @keyframes fadeOut {
+                    0% {
+                        transform: translate(-50%, -50%) scale(1.0);
+                    }
+                    70% {
+                        transform: translate(-50%, -50%) scale(0.9);
+                    } 
+                    80% {
+                        transform: translate(-50%, -50%) scale(1.0);
+                    }
+                    100% {
+                        transform: translate(-50%, -50%) scale(0);
+                    }
+                }
             </style>
         </div>
     </div>`;
 
 const alerts = [
     {
-        icon: "succes",
-        timer: 4000,
+        icon: "success",
         innerHTML: 
         `
-        <div class="swal2-icon swal2-success">
-            <div class="swal2-success-circular-line-left"></div>
-            <span class="swal2-success-line-tip"></span>
-            <span class="swal2-success-line-long"></span>
-            <div class="swal2-success-ring"></div>
-            <div class="swal2-success-fix"></div>
-            <div class="swal2-success-circular-line-right"></div>
+        <div class="icon success">
+            <div class="success-circular-line-left"></div>
+            <span class="success-line-tip"></span>
+            <span class="success-line-long"></span>
+            <div class="success-ring"></div>
+            <div class="success-fix"></div>
+            <div class="success-circular-line-right"></div>
         </div>
-        <div class="textTitleStyle"></div>
-        <div class="textMessageStyle"></div>
+        <div class="textTitle"></div>
+        <div class="textMessage"></div>
         `,
         style: 
         `
         <style>
-            .swal2-success {
+            .success {
                 border-color: #a5dc86;
                 color: #a5dc86;
                 background: #fff;
@@ -65,33 +79,33 @@ const alerts = [
                 box-sizing: content-box;
             }
             
-            .swal2-success-line-tip,
-            .swal2-success-line-long {
+            .success-line-tip,
+            .success-line-long {
                 position: absolute;
                 height: 0.3125em;
                 background-color: currentColor;
                 border-radius: 0.125em;
             }
             
-            .swal2-success-line-tip {
+            .success-line-tip {
                 top: 2.875em;
                 left: 0.8125em;
                 width: 1.5625em;
                 transform: rotate(45deg);
             }
             
-            .swal2-success-line-long {
+            .success-line-long {
                 top: 2.375em;
                 right: 0.5em;
                 width: 2.9375em;
                 transform: rotate(-45deg);
             }
 
-            .swal2-icon.swal2-success {
-                animation: swal2-animate-success-icon 0.5s;
+            .icon.success {
+                animation: animate-success-icon 0.5s;
             }
 
-            @keyframes swal2-animate-success-icon {
+            @keyframes animate-success-icon {
                 0% {
                     transform: rotateX(100deg);
                     opacity: 0;
@@ -102,7 +116,7 @@ const alerts = [
                 }
             }
 
-            .textTitleStyle {
+            .textTitle {
                 display: flex;
                 width: 100%;
                 align-item: center;
@@ -112,7 +126,7 @@ const alerts = [
                 font-size: 2.5rem;
             }
 
-            .textMessageStyle {
+            .textMessage {
                 display: flex;
                 width: 100%;
                 align-item: center;
@@ -128,22 +142,21 @@ const alerts = [
     },
     {
         icon: "question",
-        timer: 4000,
         innerHTML: 
         `
-        <div class="swal2-icon swal2-question swal2-icon-show">
-            <div class="swal2-question-circular-line-left"></div>
-            <div class="swal2-question-circular-line-right"></div>
-            <div class="swal2-question-ring"></div>
-            <div class="swal2-icon-content">?</div>
+        <div class="icon question icon-show">
+            <div class="question-circular-line-left"></div>
+            <div class="question-circular-line-right"></div>
+            <div class="question-ring"></div>
+            <div class="icon-content">?</div>
         </div>
-        <div class="textTitleStyle"></div>
-        <div class="textMessageStyle"></div>
+        <div class="textTitle"></div>
+        <div class="textMessage"></div>
         `,
         style: 
         `
         <style>
-            .swal2-icon.swal2-question {
+            .icon.question {
                 border-color: #87adbd;
                 color: #87adbd;
                 position: relative;
@@ -156,7 +169,7 @@ const alerts = [
                 box-sizing: content-box;
             }
             
-            .swal2-icon .swal2-icon-content {
+            .icon .icon-content {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -169,8 +182,8 @@ const alerts = [
                 transform: translate(-50%, -50%);
             }
 
-            .swal2-question-circular-line-left,
-            .swal2-question-circular-line-right {
+            .question-circular-line-left,
+            .question-circular-line-right {
                 content: "";
                 border-radius: 50%;
                 position: absolute;
@@ -181,27 +194,27 @@ const alerts = [
                 z-index: 1;
             }
 
-            .swal2-question-circular-line-left {
+            .question-circular-line-left {
                 left: 0;
                 top: 0;
             }
             
-            .swal2-question-circular-line-right {
+            .question-circular-line-right {
                 right: 0;
                 top: 0;
             }
             
 
-            .swal2-icon.swal2-question.swal2-icon-show {
-                animation: swal2-animate-error-icon 0.5s;
+            .icon.question.icon-show {
+                animation: animate-error-icon 0.5s;
             }
             
-            .swal2-icon.swal2-question.swal2-icon-show .swal2-icon-content {
-                animation: swal2-animate-question-mark 0.8s;
+            .icon.question.icon-show .icon-content {
+                animation: animate-question-mark 0.8s;
                 animation-delay: 0.5s;
             }
 
-            .textTitleStyle {
+            .textTitle {
                 display: flex;
                 width: 100%;
                 align-item: center;
@@ -211,7 +224,7 @@ const alerts = [
                 font-size: 2.5rem;
             }
 
-            .textMessageStyle {
+            .textMessage {
                 display: flex;
                 width: 100%;
                 align-item: center;
@@ -223,7 +236,7 @@ const alerts = [
                 color: #888;
             }
 
-            @keyframes swal2-animate-error-icon {
+            @keyframes animate-error-icon {
                 0% {
                     transform: rotateX(100deg);
                     opacity: 0;
@@ -234,7 +247,7 @@ const alerts = [
                 }
             }
             
-            @keyframes swal2-animate-question-mark {
+            @keyframes animate-question-mark {
                 0% {
                     transform: translate(-50%, -50%) rotateY(-360deg); /* Mantén el centro */
                 }
@@ -247,22 +260,21 @@ const alerts = [
     },
     {
         icon: "info",
-        timer: 4000,
         innerHTML: 
         `
-        <div class="swal2-icon swal2-info swal2-icon-show">
-            <div class="swal2-info-circular-line-left"></div>
-            <div class="swal2-info-circular-line-right"></div>
-            <div class="swal2-info-ring"></div>
-            <div class="swal2-icon-content">!</div>
+        <div class="icon info icon-show">
+            <div class="info-circular-line-left"></div>
+            <div class="info-circular-line-right"></div>
+            <div class="info-ring"></div>
+            <div class="icon-content">!</div>
         </div>
-        <div class="textTitleStyle"></div>
-        <div class="textMessageStyle"></div>
+        <div class="textTitle"></div>
+        <div class="textMessage"></div>
         `,
         style: 
         `
         <style>
-            .swal2-icon.swal2-info {
+            .icon.info {
                 border-color: #87adbd;
                 color: #87adbd;
                 position: relative;
@@ -275,7 +287,7 @@ const alerts = [
                 box-sizing: content-box;
             }
             
-            .swal2-icon .swal2-icon-content {
+            .icon .icon-content {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -288,8 +300,8 @@ const alerts = [
                 transform: translate(-50%, -50%);
             }
 
-            .swal2-info-circular-line-left,
-            .swal2-info-circular-line-right {
+            .info-circular-line-left,
+            .info-circular-line-right {
                 content: "";
                 border-radius: 50%;
                 position: absolute;
@@ -300,27 +312,27 @@ const alerts = [
                 z-index: 1;
             }
 
-            .swal2-info-circular-line-left {
+            .info-circular-line-left {
                 left: 0;
                 top: 0;
             }
             
-            .swal2-info-circular-line-right {
+            .info-circular-line-right {
                 right: 0;
                 top: 0;
             }
             
 
-            .swal2-icon.swal2-info.swal2-icon-show {
-                animation: swal2-animate-error-icon 0.5s;
+            .icon.info.icon-show {
+                animation: animate-error-icon 0.5s;
             }
             
-            .swal2-icon.swal2-info.swal2-icon-show .swal2-icon-content {
-                animation: swal2-animate-info-mark 0.8s;
+            .icon.info.icon-show .icon-content {
+                animation: animate-info-mark 0.8s;
                 animation-delay: 0.5s;
             }
 
-            .textTitleStyle {
+            .textTitle {
                 display: flex;
                 width: 100%;
                 align-item: center;
@@ -330,7 +342,7 @@ const alerts = [
                 font-size: 2.5rem;
             }
 
-            .textMessageStyle {
+            .textMessage {
                 display: flex;
                 width: 100%;
                 align-item: center;
@@ -342,7 +354,7 @@ const alerts = [
                 color: #888;
             }
 
-            @keyframes swal2-animate-error-icon {
+            @keyframes animate-error-icon {
                 0% {
                     transform: rotateX(100deg);
                     opacity: 0;
@@ -353,7 +365,7 @@ const alerts = [
                 }
             }
             
-            @keyframes swal2-animate-info-mark {
+            @keyframes animate-info-mark {
                 0% {
                     transform: translate(-50%, -50%) rotateY(-360deg); /* Mantén el centro */
                 }
@@ -366,22 +378,21 @@ const alerts = [
     },
     {
         icon: "error",
-        timer: 4000,
         innerHTML: 
         `
-        <div class="swal2-icon swal2-error swal2-icon-show">
-            <div class="swal2-error-circular-line-left"></div>
-            <div class="swal2-error-circular-line-right"></div>
-            <div class="swal2-error-ring"></div>
-            <div class="swal2-icon-content">X</div>
+        <div class="icon error icon-show">
+            <div class="error-circular-line-left"></div>
+            <div class="error-circular-line-right"></div>
+            <div class="error-ring"></div>
+            <div class="icon-content">X</div>
         </div>
-        <div class="textTitleStyle"></div>
-        <div class="textMessageStyle"></div>
+        <div class="textTitle"></div>
+        <div class="textMessage"></div>
         `,
         style: 
         `
         <style>
-            .swal2-icon.swal2-error {
+            .icon.error {
                 border-color: #ff0000;
                 color: #ff0000;
                 position: relative;
@@ -394,7 +405,7 @@ const alerts = [
                 box-sizing: content-box;
             }
             
-            .swal2-icon .swal2-icon-content {
+            .icon .icon-content {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -407,8 +418,8 @@ const alerts = [
                 transform: translate(-50%, -50%);
             }
 
-            .swal2-error-circular-line-left,
-            .swal2-error-circular-line-right {
+            .error-circular-line-left,
+            .error-circular-line-right {
                 content: "";
                 border-radius: 50%;
                 position: absolute;
@@ -419,27 +430,27 @@ const alerts = [
                 z-index: 1;
             }
 
-            .swal2-error-circular-line-left {
+            .error-circular-line-left {
                 left: 0;
                 top: 0;
             }
             
-            .swal2-error-circular-line-right {
+            .error-circular-line-right {
                 right: 0;
                 top: 0;
             }
             
 
-            .swal2-icon.swal2-error.swal2-icon-show {
-                animation: swal2-animate-error-icon 0.5s;
+            .icon.error.icon-show {
+                animation: animate-error-icon 0.5s;
             }
             
-            .swal2-icon.swal2-error.swal2-icon-show .swal2-icon-content {
-                animation: swal2-animate-error-mark 0.8s;
+            .icon.error.icon-show .icon-content {
+                animation: animate-error-mark 0.8s;
                 animation-delay: 0.5s;
             }
 
-            .textTitleStyle {
+            .textTitle {
                 display: flex;
                 width: 100%;
                 align-item: center;
@@ -449,7 +460,7 @@ const alerts = [
                 font-size: 2.5rem;
             }
 
-            .textMessageStyle {
+            .textMessage {
                 display: flex;
                 width: 100%;
                 align-item: center;
@@ -461,7 +472,7 @@ const alerts = [
                 color: #888;
             }
 
-            @keyframes swal2-animate-error-icon {
+            @keyframes animate-error-icon {
                 0% {
                     transform: rotateX(100deg);
                     opacity: 0;
@@ -472,7 +483,7 @@ const alerts = [
                 }
             }
             
-            @keyframes swal2-animate-error-mark {
+            @keyframes animate-error-mark {
                 0% {
                     transform: translate(-50%, -50%) rotateY(-360deg); /* Mantén el centro */
                 }
@@ -481,6 +492,37 @@ const alerts = [
                 }
             }
         </style>
+        `
+    },
+    {
+        innerHTML: 
+        `
+        <div class="textTitle"></div>
+        <div class="textMessage"></div>
+        `,
+        style: 
+        `
+        .textTitle {
+            display: flex;
+            width: 100%;
+            align-item: center;
+            text-align: center;
+            justify-content: center;
+            margin-top: 15px;
+            font-size: 2.5rem;
+        }
+
+        .textMessage {
+            display: flex;
+            width: 100%;
+            align-item: center;
+            text-align: center;
+            justify-content: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: #888;
+        }
         `
     }
 ];

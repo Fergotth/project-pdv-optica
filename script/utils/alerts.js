@@ -2,36 +2,15 @@ import alerts, { container } from './elements.js';
 
 document.addEventListener('click', (event) => {
     if (event.target.tagName === 'BUTTON') {
-        let index = parseInt(event.target.dataset.id);
-        let newElement = document.body;
-        let title;
-        let text;
-        newElement.insertAdjacentHTML('afterbegin', container); 
+        newAlert({
+            icon: "infso",
+            text: "Texto de prueba de success",
+            title: "Titulo de prueba de Success"
+        });
 
-        const alertContainer = document.querySelector('.containerAlert');
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(alerts[index].innerHTML + alerts[index].style, 'text/html');
-
-        if (index === 0) {
-            title = 'Success Title';
-            text = 'Success Text';    
-        } else if (index === 1) {
-            title = 'question Title';
-            text = 'question Text';
-        } else if (index === 2) {
-            title = 'info Title';
-            text = 'info Text';
-        } else if (index === 3) {
-            title = 'error Title';
-            text = 'error Text';
-        }
-
-        assignContent(doc, alertContainer, getContent(title, text, alerts[index]));
-
-        if (alerts[index].timer !== 0)
             setTimeout(() => {
                 document.body.querySelector('.overlay').remove();
-            }, alerts[index].timer);
+            }, 4000);
     }
 });
 
@@ -40,8 +19,8 @@ const assignContent = (doc, alertContainer, innerText) => {
         if (node.nodeType === Node.ELEMENT_NODE) {
             // Mapeo de clases a propiedades de innerText
             const classToTextMap = {
-                textTitleStyle: innerText.title,
-                textMessageStyle: innerText.text,
+                textTitle: innerText.title,
+                textMessage: innerText.text,
             };
 
             // Verificar si el nodo tiene alguna de las clases y asignar el texto correspondiente
@@ -56,11 +35,38 @@ const assignContent = (doc, alertContainer, innerText) => {
     });
 };
 
-const getContent = (title, text, dataObject) => {
+const createObject = (title, text, timer, dataObject) => {
     const newElement = {
         title: title,
         text: text,
+        timer: timer,
         ...dataObject
     };
+    
     return newElement;
+};
+
+const newAlert = (input) => {
+    if (typeof input === "object" && input !== null) {
+        const { icon, title, text, timer = 4000 } = input;
+        const index = alerts.findIndex(item => item.icon === icon);
+        const newObject = createObject(title, text, timer, alerts[index]);
+        const newElement = document.body;
+        newElement.insertAdjacentHTML('afterbegin', container); 
+
+        const alertContainer = document.querySelector('.containerAlert');
+        const parser = new DOMParser();
+
+        const typeOfObject = () => {
+            let doc;
+            if (index !== -1) {        
+                doc = parser.parseFromString(alerts[index].innerHTML + alerts[index].style, 'text/html');
+            } else {
+                doc = parser.parseFromString(alerts[4].innerHTML + alerts[4].style, 'text/html');
+            }
+            return doc;
+        }
+        // falta corregir cuando no se manda bien la etiqueta icon
+        assignContent(typeOfObject(), alertContainer, newObject);
+    }
 };
