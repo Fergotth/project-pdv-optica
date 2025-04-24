@@ -37,6 +37,7 @@
     }
     100% {
         transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
     }
 }
 
@@ -351,3 +352,5 @@
     font-size: 1rem;
     color: #888;
 }
+
+/* Estilo del overlay de a alerta */
