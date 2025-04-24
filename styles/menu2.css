@@ -1,0 +1,46 @@
+:root {
+    --color-background: #4652f3;
+    --color-backgroundHover: #2e3faafb;
+    --color-Menu: #ffffff;
+}
+
+body {
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    text-align: center;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
+    background-color: var(--color-background);
+    color: var(--color-Menu);
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;          /* Corrige el error del inline-flexbox */
+    list-style-type: none;  
+}
+
+nav ul li {
+    display: flex;          
+    align-items: center;     /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    margin-right: 10px;
+    padding: 5px;            /* Cambia height/width por padding */
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+
+svg {
+    fill: var(--color-Menu);
+    height: 40px;
+    width: 40px;
+}
+
+li:hover {
+    background-color: var(--color-backgroundHover);
+    cursor: pointer;
+}

@@ -1,0 +1,45 @@
+:root {
+    --color-menu: #ffffff;
+}
+
+nav {
+    display: flex;
+    text-align: center;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
+    color: var(--color-menu);
+    user-select: none;
+}
+
+nav svg {
+    position: fixed;
+    right: 3px;
+}
+
+nav svg:hover {
+    cursor: pointer;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;          /* Corrige el error del inline-flexbox */
+    list-style-type: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    gap: 15px;
+}
+
+nav ul li {
+    display: flex;          
+    align-items: center;     /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    padding: 5px;            /* Cambia height/width por padding */
+    font-size: 1.4rem;
+    transition: 0.3s;
+}
+
+li:hover {
+    color: yellow;
+    cursor: pointer;
+}

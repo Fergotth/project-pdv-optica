@@ -1,0 +1,493 @@
+.form {
+    width: 70vw;
+    height: 80vh;
+    display: grid;
+    background-color: #2a2a3b;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    min-height: 0;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(221, 62, 226, 0.2);
+}
+
+.container svg {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: calc(50% - 15px);
+}
+
+.container input:not([type="radio"]) {
+    font-size: 1.3rem;
+    border: none;
+    border: 1px solid #5C7D99;
+    border-radius: 8px;
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.container input::placeholder {
+    color: #5C7D99;
+    opacity: 0.8;
+}
+
+.container input:focus {
+    outline: none;
+    border-color: #3A5A74;
+    box-shadow: 0 0 0 1px #3A5A74;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.container--menu { 
+    grid-area: 1 / 1 / 13 / 2;
+    background-color: #1e1e2f;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.cantainer--iconArticle { 
+    grid-area: 1 / 4 / 2 / 5;
+    text-align: center;
+    justify-content: center;
+}
+
+.container--inputArticule { 
+    grid-area: 1 / 5 / 2 / 7;
+    border-radius: 5px;
+}
+
+.container--iconSeachArticle { 
+    grid-area: 1 / 7 / 2 / 8;
+}
+
+.container--iconTicket { 
+    grid-area: 2 / 4 / 3 / 5;
+    text-align: center;
+    justify-content: center;
+}
+
+.containr--inputTicket { 
+    grid-area: 2 / 5 / 3 / 7; 
+    border-radius: 5px;
+}
+
+.container--iconClient { 
+    grid-area: 3 / 4 / 4 / 5;
+    text-align: center;
+    justify-content: center;
+}
+
+.container--clientName { 
+    grid-area: 3 / 5 / 4 / 8;
+    border-radius: 5px;
+}
+
+.container--iconSearchClient { 
+    grid-area: 3 / 8 / 4 / 9;
+    justify-content: center;
+    text-align: left;
+}
+
+.container--quantityItems { 
+    grid-area: 5 / 2 / 6 / 3;
+    text-align: center;
+    display: grid;
+    place-items: center;
+}
+
+.container--description { 
+    grid-area: 5 / 3 / 6 / 6;
+    text-align: center;
+    display: grid;
+    place-items: center;
+}
+
+.container--price { 
+    grid-area: 5 / 6 / 6 / 7;
+    text-align: center;
+    display: grid;
+    place-items: center;
+}
+
+.container--discount { 
+    grid-area: 5 / 7 / 6 / 8;
+    text-align: center;
+    display: grid;
+    place-items: center;
+}
+
+.container--iva { 
+    grid-area: 5 / 8 / 6 / 9; 
+    text-align: center;
+    display: grid;
+    place-items: center;
+}
+
+.container--amount { 
+    grid-area: 5 / 9 / 6 / 10; 
+    text-align: center;
+    display: grid;
+    place-items: center;
+}
+
+.container--quantityItems,
+.container--description,
+.container--price,
+.container--discount,
+.container--iva,
+.container--amount {
+    background-color: #252530;
+    color: #d1d5db;
+    border-right: 1px solid #3c3c50;
+}
+
+.container--imageLogo { 
+    grid-area: 1 / 2 / 5 / 4;
+    background-image: url('/images/wallpaper.jpg');
+    background-size: cover;
+}
+
+.container--iconPay { 
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.container--iconPay svg, .container--iconQuote svg, 
+.container--iconRecoverQuote svg, .container--iconCancel svg {
+    width: 34px;
+    height: 34px;
+}
+
+.container--iconQuote { 
+    grid-area: 2 / 1 / 3 / 2; 
+}
+
+.container--iconRecoverQuote { 
+    grid-area: 3 / 1 / 4 / 2;
+}
+
+.container--iconCancel { 
+    grid-area: 4 / 1 / 5 / 2;
+}
+
+.container--iconPay, .container--iconQuote, .container--iconRecoverQuote, .container--iconCancel { 
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.container--iconPay:hover, .container--iconQuote:hover, 
+.container--iconRecoverQuote:hover, .container--iconCancel:hover {
+    background-color: #4a90e2;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.container--iconSeachArticle:hover, .container--iconSearchClient:hover {
+    cursor: pointer;
+}
+
+input:hover {
+    border: 1px solid #4a90e2;
+}
+
+.container--totalPrice { 
+    grid-area: 12 / 2 / 13 / 10;
+    background-color: #1e1e2f;
+    color: #d1d5db;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    font-size: 1.8rem;
+}
+
+.container--infoDolarPrice { 
+    grid-area: 11 / 2 / 12 / 10;
+    background-color: #3b82f6;
+    color: #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    font-size: 1.8rem;
+}
+
+.container--shoppingArticles { 
+    grid-area: 6 / 2 / 11 / 10;
+    overflow-y: auto;
+    background-color: #2a2a3b;
+}
+
+/* Scrollbar para navegadores WebKit */
+.container--shoppingArticles::-webkit-scrollbar {
+    width: 8px;
+}
+
+  /* Fondo de la barra (track) */
+.container--shoppingArticles::-webkit-scrollbar-track {
+    background: #2a2a3b;
+}
+
+
+  /* La barra en sí (thumb) */
+.container--shoppingArticles::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+  /* Hover del thumb */
+.container--shoppingArticles::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.container--iconPay,
+.container--iconQuote,
+.container--iconRecoverQuote,
+.container--iconCancel {
+    position: relative; /* Necesario para que el tooltip se posicione correctamente */
+}
+
+.container--iconPay::after,
+.container--iconQuote::after,
+.container--iconRecoverQuote::after,
+.container--iconCancel::after {
+    content: attr(data-tooltip); 
+    position: absolute;
+    bottom: 35%;
+    left: 0%;
+    transform: translateX(-50%);
+    background-color: rgba(59, 130, 246, 0.9);
+    color: #ffffff;
+    padding: 5px 10px;
+    font-size: 13px;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+}
+
+.container--iconPay:hover::after,
+.container--iconQuote:hover::after,
+.container--iconRecoverQuote:hover::after,
+.container--iconCancel:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.itemRow {
+    display: flex;
+    height: calc( 1 / 6 * 100% ); color: #fff;
+}
+
+.itemRow > *:not(:nth-child(2)) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(0.5rem, 0.9rem, 1rem);
+    user-select: none;
+    background-color: transparent;
+    min-width: 0;    
+}
+
+.itemRow > *:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    font-size: clamp(0.5rem, 0.9rem, 1rem);
+    user-select: none;
+    background-color: transparent;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.itemRow:hover {
+    background-color: #2a2a5bf1;
+}
+
+.itemRow:nth-child(odd) span:nth-child(1),
+.itemRow:nth-child(even) span:nth-child(1) {
+    position: relative;
+    background-color: #ff2b6b;
+    border-radius: 50%;
+    justify-content: center;
+    left: 1px;
+    color: #fff;
+    width: 1.3rem;
+    height: 1.3rem;
+    user-select: none;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.itemRow:nth-child(odd) span:nth-child(2),
+.itemRow:nth-child(even) span:nth-child(2) {
+    position: relative;
+    justify-content: center;
+    text-align: center;
+    left: 0;
+    width: 60%;
+}
+
+.itemRow:nth-child(odd) span:nth-child(3),
+.itemRow:nth-child(even) span:nth-child(3) {
+    position: relative;
+    background-color: #7ed657;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    right: 3px;
+    color: #fff;
+    width: 1.3rem;
+    height: 1.3rem;
+    user-select: none;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.itemRow > div:nth-child(4), .minus, .plus {
+    cursor: pointer;
+}
+
+.itemRow span:nth-child(1):hover {
+    background-color: #e0205b;
+}
+
+.itemRow span:nth-child(3):hover {
+    background-color: #6bc24b;
+}
+
+.itemRow span:nth-child(1):active, .itemRow span:nth-child(3):active {
+    transform: scale(0.95);
+}
+
+.overlay {
+    position: absolute;
+    background-color: transparent;
+    height: 100vh;
+    width: 100vw;
+    z-index: 100;
+}
+
+.formDiscount {
+    position: absolute;
+    display: flex;
+    flex-direction: column; gap: 1rem;
+    width: 30%;
+    height: 15%;
+    border-radius: 5px;
+    background-color: #111827;
+    color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 10px rgba(59, 130, 246, 0.2);
+    padding: 1rem;
+    left: 35%;
+    top: 20%;
+    z-index: 110;
+}
+
+.formDiscount label {
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.5rem;
+}
+
+.formDiscount label input[type="text"] {
+    padding: 0.5rem; 
+    border-radius: 0.5rem; 
+    border: none; 
+    outline: none; 
+    background-color: #1f2937; 
+    color: white;
+}
+
+.formDiscount div {
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 1rem;
+}
+
+.formDiscount div button {
+    padding: 0.5rem 1rem; 
+    border-radius: 0.5rem; 
+    color: white; 
+    border: none;
+}
+
+/* botones radio del contener de descuentos */
+.radio-input {
+    display: flex;
+    flex-direction: row;
+    font-weight: 600;
+    color: #fff;
+    user-select: none;
+}
+
+.radio-input input[type="radio"] {
+    display: none;
+}
+
+.radio-input label {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    width: 22px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.radio-input label:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    transition: all 0.3s ease-in-out;
+}
+
+.radio-input input[type="radio"]:checked + label:before {
+    background-color: green;
+    top: 0;
+}
+
+.radio-input input[type="radio"]:checked + label {
+    background-color: royalblue;
+    color: #fff;
+    border-color: rgb(129, 235, 129);
+    animation: radio-translate 0.3s ease-in-out;
+}
+
+@keyframes radio-translate {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
