@@ -3,7 +3,7 @@ export const container = `
         <div class="containerAlert"></div>
     </div>`;
 
-const alerts = [
+export const alerts = [
     {
         icon: "success",
         innerHTML: 
@@ -70,5 +70,3 @@ const alerts = [
         `
     }
 ];
-
-export default alerts;

@@ -1,26 +1,25 @@
-import alerts, { container } from './elements.js';
+
+import { alerts, container } from './elements.js';
 
 document.addEventListener('click', (event) => {
     if (event.target.tagName === 'BUTTON') {
         newAlert({
-            icon: "inffo",
+            icon: "success",
             text: "Texto de prueba de success",
             title: "Titulo de prueba de Success"
         });
-
-            setTimeout(() => {
-                document.body.querySelector('.overlay').remove();
-            }, 40000);
     }
 });
 
 const assignContent = (doc, alertContainer, innerText) => {
+    // Limpia el contenedor antes de insertar nuevos nodos
+    alertContainer.innerHTML = '';
     Array.from(doc.body.childNodes).forEach((node) => {
         if (node.nodeType === Node.ELEMENT_NODE) {
             // Mapeo de clases a propiedades de innerText
             const classToTextMap = {
-                textTitle: innerText.title,
-                textMessage: innerText.text,
+                textTitle: innerText.title || innerText.text || "",
+                textMessage: innerText.title ? innerText.text || "" : "",
             };
 
             // Verificar si el nodo tiene alguna de las clases y asignar el texto correspondiente
@@ -30,52 +29,44 @@ const assignContent = (doc, alertContainer, innerText) => {
                 }
             });
         }
-        
         alertContainer.appendChild(node);
     });
 };
 
 const createObject = (title, text, timer, dataObject) => {
-    if (typeof dataObject === "string") {
-        return {
-            title: title,
-            text: "",
-            timer: timer
-        };
-    }
-    
-    const newElement = {
+    // dataObject siempre es un objeto de alerts
+    return {
         title: title,
         text: text,
         timer: timer,
         ...dataObject
     };
-    
-    return newElement;
 };
 
 const newAlert = (input) => {
     if (typeof input === "object" && input !== null) {
-        const { icon, title, text, timer = 40000 } = input;
+        const { icon, title, text, timer = 4100 } = input;
         const index = alerts.findIndex(item => item.icon === icon);
-        const newObject = createObject(title, text, timer, alerts[index]);
-        const newElement = document.body;
-        newElement.insertAdjacentHTML('afterbegin', container); 
+        const alertData = index !== -1 ? alerts[index] : alerts[4];
+        const newObject = createObject(title, text, timer, alertData);
+
+        // Elimina overlay existente si lo hay
+        const existingOverlay = document.body.querySelector('.overlay');
+        if (existingOverlay) existingOverlay.remove();
+
+        document.body.insertAdjacentHTML('afterbegin', container);
 
         const alertContainer = document.querySelector('.containerAlert');
         const parser = new DOMParser();
+        const doc = parser.parseFromString(alertData.innerHTML, 'text/html');
 
-        const typeOfObject = () => {
-            let doc;
-            if (index !== -1) {        
-                doc = parser.parseFromString(alerts[index].innerHTML, 'text/html');
-            } else {
-                doc = parser.parseFromString(alerts[4].innerHTML, 'text/html');
-            }
-            console.log(doc);
-            return doc;
-        }
-        // falta corregir cuando no se manda bien la etiqueta icon
-        assignContent(typeOfObject(), alertContainer, newObject);
+        assignContent(doc, alertContainer, newObject);
+
+        setTimeout(() => {
+            const overlay = document.body.querySelector('.overlay');
+            if (overlay) overlay.remove();
+        }, timer);
     }
 };
+
+export { newAlert };
