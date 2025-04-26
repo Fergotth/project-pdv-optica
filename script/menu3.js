@@ -40,7 +40,8 @@ const menu = () => {
         fetch(`/templates/${templateName}`)
             .then(response => response.text())
             .then(html => {
-                temporaryContent.innerHTML = html;
+                const tempContentDiv = document.getElementById('temporaryContent');
+                tempContentDiv.innerHTML = html;
                 sales();
             })
             .catch(error => console.error('Error al cargar el archivo: ', error));

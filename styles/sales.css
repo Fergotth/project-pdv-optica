@@ -1,3 +1,4 @@
+/* Modal principal  */
 .form {
     width: 70vw;
     height: 80vh;
@@ -5,6 +6,16 @@
     background-color: #2a2a3b;
     border-radius: 5px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    animation: showForm 0.5s ease-in-out;
+}
+
+@keyframes showForm {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .container {

@@ -1,7 +1,11 @@
 import products from "../data/products.js";
 import { newAlert } from "../script/utils/alerts.js";
+import { getItemRowInnerHTML, getDiscountContainerInnerHTML, getContainerIVAHTML } from "./utils/domsales.js";
 
 const sales = () => {
+    /**
+     * @var {HTMLElement}   // Elemento contener del icono de buscar artiuclo
+     */
     const addItem = document.querySelector('.container--iconSeachArticle');
 
     /**
@@ -68,6 +72,62 @@ const sales = () => {
         itemSearched.value = '';
     });
 
+    /**
+     * @type {HTMLElement}  // Evento de click dentro del contenedor
+     */
+    document.querySelector('.itemRow--1').addEventListener('click', function(event) {
+        if (!event.target) return;
+
+        event.stopPropagation();
+
+        const isMinus = button.classList.contains('minus');
+        const isPlus = button.classList.contains('plus');
+        
+        if (isMinus || isPlus) {
+            handleQuantityButton(event.taget || "");
+            refreshDataHTML(data);
+        }
+    });
+
+    /**
+     * @type {HTMLElement}  // Evento de click dentro del contenedor
+     */
+    document.querySelector('.discount').addEventListener('click', function(event) {
+        if (!event.target) return;
+
+        const button = event.target;
+        const isDiscount = button.classList.contains('discount');
+        
+        if (isDiscount) {
+            event.stopPropagation();
+            showPromptDiscount(parseInt(button.dataset.id, 10));
+            return;
+        }
+
+        const btnCancel = button.classList.contains('btnCancel');
+        const btnAccept = button.classList.contains('btnAccept');
+
+        if (btnCancel || btnAccept) 
+        {
+            event.stopPropagation();
+            handleDiscount(button); 
+            return;
+        }
+    });
+
+    /**
+     * @type {HTMLElement}  // Evento de click dentro del contenedor
+     */
+    document.querySelector('.iva').addEventListener('click', function(event) {
+        if (!event.target) return;
+        
+        event.stopPropagation();
+
+        const isIVA = button.classList.contains('iva');
+
+        if (isIVA) showPromptIVA();
+    });
+
     const refreshDataHTML = (newData) => {
         const listProduct = document.querySelector('.container--shoppingArticles');
         const totalLabel = document.querySelector('.container--totalPrice');
@@ -77,70 +137,13 @@ const sales = () => {
         for (const item of newData) {
             let newItem = document.createElement('div');
             newItem.classList.add('itemRow');
-            newItem.innerHTML =
-                `
-                <div class="itemRow--1" style="width: calc(1 / 8 * 100%);">
-                    <span class="minus" data-id="${item.position}" style="display: flex;">-</span>
-                    <span class="itemQuantity">${item.quantity}</span>
-                    <span class="plus" data-id="${item.position}" style="display: flex;">+</span>
-                </div>
-                <div class="description" style="width: calc(3 / 8 * 100%);">${item.description} ${item.material}</div>
-                <div class="unitPrice" style="width: calc(1 / 8 * 100%);">${Number(item.price).toFixed(2)}</div>
-                <div class="discount" data-id="${item.position}" style="width: calc(1 / 8 * 100%);">${item.discount}</div>
-                <div class="iva" data-id="${item.position}" style="width: calc(1 / 8 * 100%);">${Number(item.iva).toFixed(2)}</div>
-                <div class="price" style="width: calc(1 / 8 * 100%);">${Number(item.amount).toFixed(2)}</div>
-                `;
+            newItem.innerHTML = getItemRowInnerHTML(item);
             total += item.amount;
             listProduct.appendChild(newItem);
         }
 
-        totalLabel.innerText = `Total: $${parseFloat(total).toFixed(2)}`
+        totalLabel.textContent = `Total: $${parseFloat(total).toFixed(2)}`
     };
-
-    document.addEventListener('click', function(event) {
-        if (!event.target) return;
-
-        /**
-         * @constant {HTMLElement} - Boton que se presiono dentro del contenedor 
-         */
-        const button = event.target;
-
-        /**
-         * @param {boolean} - Valor booleano si se encontro alguna de esas clases
-         */
-        const isMinus = button.classList.contains('minus');
-        const isPlus = button.classList.contains('plus');
-        const isDiscount = button.classList.contains('discount');
-        const isIVA = button.classList.contains('iva');
-        const btnCancel = button.classList.contains('btnCancel');
-        const btnAccept = button.classList.contains('btnAccept');
-
-        if (isMinus || isPlus) {
-            event.stopPropagation();
-            handleQuantityButton(button);
-            refreshDataHTML(data);
-            return;
-        }
-
-        if (btnCancel || btnAccept) 
-        {
-            event.stopPropagation();
-            handleDiscount(button); 
-            return;
-        }
-        
-        if (isDiscount) {
-            event.stopPropagation();
-            showPromtDiscount(parseInt(button.dataset.id, 10));
-            return;
-        }
-        
-        if (isIVA) {
-            event.stopPropagation();
-            showPromptIVA();
-            return;
-        }
-    });
 
     const handleQuantityButton = (button) => {
         const isMinus = button.classList.contains('minus');
@@ -166,7 +169,7 @@ const sales = () => {
         }));
     };
 
-    const handleDiscount = (button) => {
+    const handleDiscount = (button) => { debugger
         const overlayScreen = document.querySelector('.overlay');
         index = parseInt(button.dataset.id, 10);
 
@@ -174,10 +177,10 @@ const sales = () => {
             const input = document.querySelector('.inputDiscount');
             const opCash = document.getElementById('value-1');
             const regex = /^(?:\d+)(?:\.\d{1,2})?$/;
-            const discount = input.value.trim();
+            const discountStr = input.value.trim();
 
-            if (regex.test(discount) && discount !== "") {
-                const amountToDiscount = opCash.checked ? discount : data[index].amount * (discount / 100);
+            if (regex.test(discountStr) && discountStr !== "" && !isNaN(parseFloat(discountStr))) {
+                const amountToDiscount = opCash.checked ? parseFloat(discountStr) : data[index].amount * (discount / 100);
 
                 if (amountToDiscount < data[index].amount) {
                     data[index].discount = parseFloat(amountToDiscount);
@@ -206,29 +209,7 @@ const sales = () => {
 
     const showPromptIVA = () => {
         const formIVA = document.body;
-        formIVA.insertAdjacentHTML('afterbegin', `
-        <div class="overlay">   
-            <div class="containerIVA">
-                <div class="custom-radioIVA">
-                    <input type="radio" id="radio-IVA1" name="tabs" checked="">
-                    <label class="radio-labelIVA" for="radio-IVA1">
-                        <div class="radio-circleIVA"></div>
-                        <span class="radio-text">0%</span>
-                    </label>
-                    <input type="radio" id="radio-IVA2" name="tabs">
-                    <label class="radio-labelIVA" for="radio-IVA2">
-                        <div class="radio-circleIVA"></div>
-                        <span class="radio-text">8%</span>
-                    </label>
-                    <input type="radio" id="radio-IVA3" name="tabs">
-                    <label class="radio-labelIVA" for="radio-IVA3">
-                        <div class="radio-circleIVA"></div>
-                        <span class="radio-text">16%</span>
-                    </label>
-                </div>
-            </div>
-        </div>
-        `);
+        formIVA.insertAdjacentHTML('afterbegin', getContainerIVAHTML());
     };
 
     const getIVA = (index, IVA) => {
@@ -241,28 +222,9 @@ const sales = () => {
         return (item.quantity * item.price) - item.discount + item.iva;
     };
 
-    const showPromtDiscount = (index) => {
+    const showPromptDiscount = (index) => {debugger
         const windowInput = document.body;
-        windowInput.insertAdjacentHTML('afterbegin', `
-        <div class="overlay">   
-            <form class="formDiscount">
-                <label>
-                    <span>Cantidad o porcentaje a descontar</span>
-                    <input type="text" class="inputDiscount"/>
-                </label>
-                <div>
-                    <div class="radio-input">
-                        <input value="value-1" name="value-radio" id="value-1" type="radio" checked>
-                        <label for="value-1">$</label>
-                        <input value="value-2" name="value-radio" id="value-2" type="radio">
-                        <label for="value-2">%</label>
-                    </div>
-                    <button type="button" class="btnCancel" style="background-color: #374151;">Cancelar</button>
-                    <button type="button" class="btnAccept" data-id="${index}" style="background-color: #2563eb;">Aceptar</button>
-                </div>
-            </form>
-        </div>
-        `);
+        windowInput.insertAdjacentHTML('afterbegin', getDiscountContainerInnerHTML(index));
     };
 };
 
