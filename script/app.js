@@ -1,11 +1,9 @@
 import menu from "./menu3.js";
 import renderCalendar from "./calendar.js";
-import clock from "./clock.js";
 
 const app = document.getElementById('app');
 const temporaryContent = document.getElementById('temporaryContent');
 const calendar = document.getElementById('calendar');
-const clockTimer = document.getElementById('timer');
 
 const loadMenu = () => {
     fetch('/templates/template-menu3.html')
@@ -39,18 +37,6 @@ const loadCalendar = () => {
 }
 
 loadCalendar();
-
-const loadClock = () => {
-    fetch('/templates/template-clock.html')
-    .then(response => response.text())
-        .then(html => {
-            clockTimer.innerHTML = html;
-            clock();
-        })
-        .catch(error => console.error("Error al cargar el reloj: ", error));
-}
-
-loadClock();
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {

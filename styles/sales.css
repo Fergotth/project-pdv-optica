@@ -136,6 +136,7 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: center;
     display: grid;
     place-items: center;
+    position: relative;
 }
 
 .container--amount { 
@@ -322,15 +323,17 @@ input:hover {
 .itemRow:nth-child(odd) span:nth-child(1),
 .itemRow:nth-child(even) span:nth-child(1) {
     position: relative;
-    background-color: #ff2b6b;
+    background-color: #87adbd;
     border-radius: 50%;
     justify-content: center;
     left: 1px;
     color: #fff;
     width: 1.3rem;
     height: 1.3rem;
+    border: none;
     user-select: none;
     font-size: 1rem;
+    box-shadow: 0 1px 3px #0001;
     transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -346,7 +349,7 @@ input:hover {
 .itemRow:nth-child(odd) span:nth-child(3),
 .itemRow:nth-child(even) span:nth-child(3) {
     position: relative;
-    background-color: #7ed657;
+    background-color: #87adbd;
     border-radius: 50%;
     justify-content: center;
     align-items: center;
@@ -354,8 +357,10 @@ input:hover {
     color: #fff;
     width: 1.3rem;
     height: 1.3rem;
+    border: none;
     user-select: none;
     font-size: 1rem;
+    box-shadow: 0 1px 3px #0001;
     transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -375,12 +380,30 @@ input:hover {
     transform: scale(0.95);
 }
 
+/* Elemento del porcentaje en el contenedor de IVA */
+.amount--percentIVA {
+    position: absolute;
+    display: flex;
+    top: 3px;
+    right: 3px;
+    background-color: #3b82f6;
+    color: #fff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    
+}
+
 .overlay {
     position: absolute;
     background-color: transparent;
     height: 100vh;
     width: 100vw;
-    z-index: 100;
+    z-index: 200;
 }
 
 .formDiscount {
@@ -396,7 +419,7 @@ input:hover {
     padding: 1rem;
     left: 35%;
     top: 20%;
-    z-index: 110;
+    z-index: 210;
 }
 
 .formDiscount label {
@@ -490,4 +513,67 @@ input:hover {
     100% {
         transform: translateX(0);
     }
+}
+
+/* botones radio del contener de IVA */
+.containerIVA {
+    position: absolute;
+    top: calc(50% - 15%);
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #252530;
+    border-radius: 10px;
+}
+
+.custom-radioIVA {
+    display: flex;
+    flex-direction: column;
+    background-color: #1e1e2f;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0 ,0.1);
+    overflow: hidden;
+}
+
+.custom-radioIVA input[type="radio"] {
+    display: none;
+}
+
+.radio-labelIVA {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.radio-circleIVA {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #87adbd;
+    border-radius: 50%;
+    margin-right: 10px;
+    background: #252530;
+    box-shadow: 0 1.5px 3px #0002;
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.radio-text {
+    font-size: 1rem;
+    color: #64748b;
+    transition: color 0.3s ease-in-out;
+}
+
+.custom-radioIVA input[type="radio"]:hover + .radio-labelIVA {
+    background-color: #4a90e2;
+}
+
+.custom-radioIVA input[type="radio"]:checked + .radio-labelIVA .radio-circleIVA {
+    border-color: #fff;
+    background-color: #ffcc00;
+}
+
+.custom-radioIVA input[type="radio"]:checked + .radio-labelIVA .radio-text {
+    color: #d1d5db;
 }

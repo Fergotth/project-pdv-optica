@@ -19,12 +19,6 @@ div#temporaryContent {
     transition: 0.3s;
 }
 
-div#timer {
-    position: absolute;
-    bottom: 0;
-    right: 2px;
-}
-
 #calendar.showCalendar {
     right: 2px;
 }
