@@ -14,7 +14,7 @@ export const getItemRowInnerHTML = (item) => {
     <div class="description" style="width: calc(3 / 8 * 100%);">${item.description} ${item.material}</div>
     <div class="unitPrice" style="width: calc(1 / 8 * 100%);">${Number(item.price).toFixed(2)}</div>
     <div class="discount" data-id="${item.position}" style="width: calc(1 / 8 * 100%);">${item.discount}</div>
-    <div class="iva" data-id="${item.position}" style="width: calc(1 / 8 * 100%);">${Number(item.iva).toFixed(2)}</div>
+    <div class="IVA" style="width: calc(1 / 8 * 100%);">${Number(item.iva).toFixed(2)}</div>
     <div class="price" style="width: calc(1 / 8 * 100%);">${Number(item.amount).toFixed(2)}</div>
     `;
 };
@@ -55,17 +55,17 @@ export const getContainerIVAHTML = () => {
     <div class="overlay">   
         <div class="containerIVA">
             <div class="custom-radioIVA">
-                <input type="radio" id="radio-IVA1" name="tabs" checked="">
+                <input class="typeOfIva" type="radio" id="radio-IVA1" name="tabs" data-value="0" checked="">
                 <label class="radio-labelIVA" for="radio-IVA1">
                     <div class="radio-circleIVA"></div>
                     <span class="radio-text">0%</span>
                 </label>
-                <input type="radio" id="radio-IVA2" name="tabs">
+                <input class="typeOfIva" type="radio" id="radio-IVA2" name="tabs" data-value="8">
                 <label class="radio-labelIVA" for="radio-IVA2">
                     <div class="radio-circleIVA"></div>
                     <span class="radio-text">8%</span>
                 </label>
-                <input type="radio" id="radio-IVA3" name="tabs">
+                <input class="typeOfIva" type="radio" id="radio-IVA3" name="tabs" data-value="16">
                 <label class="radio-labelIVA" for="radio-IVA3">
                     <div class="radio-circleIVA"></div>
                     <span class="radio-text">16%</span>

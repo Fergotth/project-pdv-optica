@@ -3,32 +3,22 @@ import { newAlert } from "../script/utils/alerts.js";
 import { getItemRowInnerHTML, getDiscountContainerInnerHTML, getContainerIVAHTML } from "./utils/domsales.js";
 
 const sales = () => {
-    /**
-     * @var {HTMLElement}   // Elemento contener del icono de buscar artiuclo
-     */
-    const addItem = document.querySelector('.container--iconSeachArticle');
-
-    /**
-     * @var {array} - Array donde se almacenaran los datos de los articulos
-     */
     let data = [];
-    
-    /**
-     * @var {integer} - Valor del inidice del array donde se posiciona
-     */
     let index = 0;
+    let iva = 0;
 
-    if (!addItem) {
-        newAlert({
-            icon: "error",
-            title: "No se ha cargado el contenedor principal. Reintente nuevamente",
-            text: "Verifique la estructura HTML o recargue la pagina"
-        });
-        return;
-    }
-
-    addItem.addEventListener('click', (event) => {
+    document.body.addEventListener('click', (event) => {
         event.stopPropagation();
+        const button = event.target;
+        button.classList.forEach(className => {
+            const functionName = `handler${className.charAt(0).toUpperCase() + className.slice(1)}`;
+            if (typeof globalThis[functionName] === 'function') {
+                globalThis[functionName](button);
+            }
+        });
+    });
+
+    const handlerAddItem = (button) => {
         const itemSearched = document.querySelector('.container--inputArticule');
         let itemSKU = parseInt(itemSearched.value, 10);
 
@@ -44,7 +34,7 @@ const sales = () => {
                     discount: 0,
                     iva: 0,
                     amount: 0,
-                    percentIVA: 8,
+                    percentIVA: iva,
                     position: 0
                 });
 
@@ -70,63 +60,44 @@ const sales = () => {
         }
 
         itemSearched.value = '';
-    });
+    };
 
-    /**
-     * @type {HTMLElement}  // Evento de click dentro del contenedor
-     */
-    document.querySelector('.itemRow--1').addEventListener('click', function(event) {
-        if (!event.target) return;
+    const handlerMinus = (button) => {
+        handleQuantityButton(button || "");
+        refreshDataHTML(data);
+    };
 
-        event.stopPropagation();
+    const handlerPlus = (button) => {
+        handleQuantityButton(button || "");
+        refreshDataHTML(data);
+    };
 
-        const isMinus = button.classList.contains('minus');
-        const isPlus = button.classList.contains('plus');
+    const handlerDiscount = (button) => {
+        showPromptDiscount(parseInt(button.dataset.id, 10));
+    };
+
+    const handlerBtnCancel = (button) => {
+        handleDiscount(button);
+    };
+
+    const handlerBtnAccept = (button) => {
+        handleDiscount(button);
+    };
+
+    const handlerIva = (button) => {
+        showPromptIVA();
+    };
+
+    const handlerTypeOfIva = (button) => { debugger
+        iva = parseInt(button.dataset.value, 10);
+        data = data.map((item) => ({
+            ...item, percentIVA: iva,
+            ...item, iva: getIVA(item.position, iva)
+        }));
         
-        if (isMinus || isPlus) {
-            handleQuantityButton(event.taget || "");
-            refreshDataHTML(data);
-        }
-    });
-
-    /**
-     * @type {HTMLElement}  // Evento de click dentro del contenedor
-     */
-    document.querySelector('.discount').addEventListener('click', function(event) {
-        if (!event.target) return;
-
-        const button = event.target;
-        const isDiscount = button.classList.contains('discount');
-        
-        if (isDiscount) {
-            event.stopPropagation();
-            showPromptDiscount(parseInt(button.dataset.id, 10));
-            return;
-        }
-
-        const btnCancel = button.classList.contains('btnCancel');
-        const btnAccept = button.classList.contains('btnAccept');
-
-        if (btnCancel || btnAccept) 
-        {
-            event.stopPropagation();
-            handleDiscount(button); 
-            return;
-        }
-    });
-
-    /**
-     * @type {HTMLElement}  // Evento de click dentro del contenedor
-     */
-    document.querySelector('.iva').addEventListener('click', function(event) {
-        if (!event.target) return;
-        
-        event.stopPropagation();
-
-        const isIVA = button.classList.contains('iva');
-
-        if (isIVA) showPromptIVA();
-    });
+        document.querySelector('.overlay').remove();
+        refreshDataHTML(data);
+    };
 
     const refreshDataHTML = (newData) => {
         const listProduct = document.querySelector('.container--shoppingArticles');
@@ -169,7 +140,7 @@ const sales = () => {
         }));
     };
 
-    const handleDiscount = (button) => { debugger
+    const handleDiscount = (button) => {
         const overlayScreen = document.querySelector('.overlay');
         index = parseInt(button.dataset.id, 10);
 
@@ -180,7 +151,7 @@ const sales = () => {
             const discountStr = input.value.trim();
 
             if (regex.test(discountStr) && discountStr !== "" && !isNaN(parseFloat(discountStr))) {
-                const amountToDiscount = opCash.checked ? parseFloat(discountStr) : data[index].amount * (discount / 100);
+                const amountToDiscount = opCash.checked ? parseFloat(discountStr) : data[index].amount * (parseFloat(discountStr) / 100);
 
                 if (amountToDiscount < data[index].amount) {
                     data[index].discount = parseFloat(amountToDiscount);
@@ -222,10 +193,19 @@ const sales = () => {
         return (item.quantity * item.price) - item.discount + item.iva;
     };
 
-    const showPromptDiscount = (index) => {debugger
+    const showPromptDiscount = (index) => {
         const windowInput = document.body;
         windowInput.insertAdjacentHTML('afterbegin', getDiscountContainerInnerHTML(index));
     };
+
+    globalThis.handlerAddItem = handlerAddItem;
+    globalThis.handlerMinus = handlerMinus;
+    globalThis.handlerPlus = handlerPlus;
+    globalThis.handlerDiscount = handlerDiscount;
+    globalThis.handlerBtnCancel = handlerBtnCancel;
+    globalThis.handlerBtnAccept = handlerBtnAccept;
+    globalThis.handlerIva = handlerIva;
+    globalThis.handlerTypeOfIva = handlerTypeOfIva;
 };
 
 export default sales;

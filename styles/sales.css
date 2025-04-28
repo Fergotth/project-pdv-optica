@@ -20,6 +20,7 @@
 
 .container {
     display: grid;
+    position: relative;
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(12, 1fr);
     grid-column-gap: 0px;
@@ -34,6 +35,7 @@
     height: 30px;
     position: relative;
     top: calc(50% - 15px);
+    pointer-events: none;
 }
 
 .container input:not([type="radio"]) {
@@ -148,6 +150,7 @@ input[type=number]::-webkit-outer-spin-button {
     display: grid;
     place-items: center;
     position: relative;
+    cursor: pointer;
 }
 
 .container--amount { 
@@ -182,6 +185,8 @@ input[type=number]::-webkit-outer-spin-button {
 .container--iconRecoverQuote svg, .container--iconCancel svg {
     width: 34px;
     height: 34px;
+    z-index: 90;
+    pointer-events: none;
 }
 
 .container--iconQuote { 
@@ -212,6 +217,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .container--iconSeachArticle:hover, .container--iconSearchClient:hover {
     cursor: pointer;
+    z-index: 100;
 }
 
 input:hover {
@@ -587,4 +593,9 @@ input:hover {
 
 .custom-radioIVA input[type="radio"]:checked + .radio-labelIVA .radio-text {
     color: #d1d5db;
+}
+
+/* Estilos los botones del contenedor descuento */
+.btnCancel:hover, .btnAccept:hover {
+    cursor: pointer;
 }
