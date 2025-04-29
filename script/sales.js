@@ -13,12 +13,12 @@ const sales = () => {
 
             if (typeof globalThis[handlerName] === 'function') {
                 const args = getHandlerArgs[handlerName]?.(button) || { button, state: getState() };
-                globalThis[handlerName](button);
+                globalThis[handlerName](args);
             }
         });
     });
 
-    const handlerAddItem = ({ button, itemSearched, products, state }) => {
+    const handlerAddItem = ({ itemSearched, products, state }) => {
         let itemSKU = parseInt(itemSearched.value, 10);
 
         if (itemSKU) {
@@ -34,13 +34,13 @@ const sales = () => {
                         discount: 0,
                         iva: 0,
                         amount: 0,
-                        percentIVA: state.iva,
+                        percentIVA: previusData.percentIva,
                         position: previusData.data.length
                     }];
 
                     const updatedItem = {
                         ...newData[newData.length - 1],
-                        iva: getIVA(newData.length - 1, state.iva, newData),
+                        iva: getIVA(newData.length - 1, previusData.percentIva, newData),
                         amount: getAmount(newData.length - 1, newData)
                     };
 
@@ -67,14 +67,14 @@ const sales = () => {
         itemSearched.value = '';
     };
 
-    const handlerMinus = (button) => {
-        handleQuantityButton(button || "");
-        refreshDataHTML(data);
+    const handlerMinus = ({ button, state }) => {
+        handleQuantityButton(button, state);
+        refreshDataHTML(getState().data);
     };
 
-    const handlerPlus = (button) => {
-        handleQuantityButton(button || "");
-        refreshDataHTML(data);
+    const handlerPlus = ({ button, state }) => {
+        handleQuantityButton(button, state);
+        refreshDataHTML(getState().data);
     };
 
     const handlerDiscount = (button) => {
@@ -89,19 +89,26 @@ const sales = () => {
         handleDiscount(button);
     };
 
-    const handlerIva = (button) => {
+    const handlerIva = () => {
         showPromptIVA();
     };
 
-    const handlerTypeOfIva = (button) => {
-        iva = parseInt(button.dataset.value, 10);
-        data = data.map((item) => ({
-            ...item, percentIVA: iva,
-            ...item, iva: getIVA(item.position, iva)
-        }));
+    const handlerTypeOfIva = ({ button, percentIva, state }) => {
+        updateState(previusData => {
+            const newData = previusData.data.map(item => ({
+                ...item,
+                percentIVA: percentIVA,
+                iva: getIVA(item.position, percentIva, previusData.data)
+            }));
+
+            return {
+                data: newData,
+                percentIVA: newData.percentIVA
+            };
+        });
         
-        document.querySelector('.overlay').remove();
-        refreshDataHTML(data);
+        document.querySelector('.overlay')?.remove();
+        refreshDataHTML(getState().data);
     };
 
     const refreshDataHTML = (newData) => {
@@ -121,28 +128,34 @@ const sales = () => {
         totalLabel.textContent = `Total: $${parseFloat(total).toFixed(2)}`
     };
 
-    const handleQuantityButton = (button) => {
+    const handleQuantityButton = (button, state) => {
         const isMinus = button.classList.contains('minus');
-        index = parseInt(button.dataset.id, 10);
+        const index = parseInt(button.dataset.id, 10);
+        const quantity = isMinus ? -1 : 1;
 
-        if (!data[index]) {
-            newAlert({
-                title: "Error",
-                text: "No se encontró el elemento correspondiente.",
-                icon: "error"
-            });
-            return;
-        }
+        updateState(previusData => {
+            const newData = [...previusData.data];
+            
+            newData[index] = {
+                ...newData[index],
+                quantity: newData[index].quantity + quantity
+            };
 
-        let quantity = data[index].quantity;
+            const filteredData = newData
+                .filter(item => item.quantity > 0)
+                .map((item, i) => ({
+                    ...item,
+                    position: i,
+                    iva: getIVA(i, previusData.percentIva, newData),
+                    amount: getAmount(i, newData)
+                }));
+            
+                return {
+                    ...previusData, data: filteredData                    
+                };
+        });
 
-        data[index].quantity = isMinus ? --quantity : ++quantity;
-        data[index].discount = isMinus ? 0 : data[index].discount;
-        data[index].iva = getIVA(index, data[index].percentIVA);
-        data[index].amount = getAmount(index);
-        data = data.filter(item => item.quantity !== 0).map((item, index) => ({
-            ...item, position: index
-        }));
+        refreshDataHTML(getState().data);
     };
 
     const handleDiscount = (button) => {

@@ -2,8 +2,7 @@ import { getState } from "./stateSales.js";
 import products from "../../data/products.js";
 
 export const getHandlerArgs = {
-    handlerAddItem: (button) => ({
-        button,
+    handlerAddItem: () => ({
         itemSearched: document.querySelector('.container--inputArticule'),
         products,
         state: getState()

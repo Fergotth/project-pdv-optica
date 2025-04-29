@@ -1,6 +1,5 @@
 let state = {
     data: [],
-    index: 0,
     percentIva: 0
 };
 
