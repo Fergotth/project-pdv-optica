@@ -1,49 +1,54 @@
 import products from "../data/products.js";
 import { newAlert } from "../script/utils/alerts.js";
-import { getItemRowInnerHTML, getDiscountContainerInnerHTML, getContainerIVAHTML } from "./utils/domsales.js";
+import { getItemRowInnerHTML, getDiscountContainerInnerHTML, getContainerIVAHTML } from "./sales/domsales.js";
+import { getHandlerArgs } from "./sales/handlerDispatcher.js";
+import { getState, updateState } from "./sales/stateSales.js";
 
 const sales = () => {
-    let data = [];
-    let index = 0;
-    let iva = 0;
-
     document.body.addEventListener('click', (event) => {
         event.stopPropagation();
         const button = event.target;
         button.classList.forEach(className => {
-            const functionName = `handler${className.charAt(0).toUpperCase() + className.slice(1)}`;
-            if (typeof globalThis[functionName] === 'function') {
-                globalThis[functionName](button);
+            const handlerName = `handler${className.charAt(0).toUpperCase() + className.slice(1)}`;
+
+            if (typeof globalThis[handlerName] === 'function') {
+                const args = getHandlerArgs[handlerName]?.(button) || { button, state: getState() };
+                globalThis[handlerName](button);
             }
         });
     });
 
-    const handlerAddItem = (button) => {
-        const itemSearched = document.querySelector('.container--inputArticule');
+    const handlerAddItem = ({ button, itemSearched, products, state }) => {
         let itemSKU = parseInt(itemSearched.value, 10);
 
         if (itemSKU) {
             const productSearched = products.find(product => product.sku === itemSKU);
 
             if (productSearched) {
-                data.push({
-                    price: productSearched.price,
-                    description: productSearched.description,
-                    material: productSearched.material,
-                    quantity: 1,
-                    discount: 0,
-                    iva: 0,
-                    amount: 0,
-                    percentIVA: iva,
-                    position: 0
-                });
+                updateState(previusData => {
+                    const newData = [...previusData.data, {
+                        price: productSearched.price,
+                        description: productSearched.description,
+                        material: productSearched.material,
+                        quantity: 1,
+                        discount: 0,
+                        iva: 0,
+                        amount: 0,
+                        percentIVA: state.iva,
+                        position: previusData.data.length
+                    }];
 
-                index = data.length - 1;
-                data[index].position = index;
-                data[index].iva = getIVA(index, data[index].percentIVA);
-                data[index].amount = getAmount(index);
+                    const updatedItem = {
+                        ...newData[newData.length - 1],
+                        iva: getIVA(newData.length - 1, state.iva, newData),
+                        amount: getAmount(newData.length - 1, newData)
+                    };
+
+                    newData[newData.length - 1] = updatedItem;
+                    return { ...previusData, data: newData };
+                });
                 
-                refreshDataHTML(data);
+                refreshDataHTML(getState().data);
             } else {
                 newAlert({
                     title: "AVISO",
@@ -88,7 +93,7 @@ const sales = () => {
         showPromptIVA();
     };
 
-    const handlerTypeOfIva = (button) => { debugger
+    const handlerTypeOfIva = (button) => {
         iva = parseInt(button.dataset.value, 10);
         data = data.map((item) => ({
             ...item, percentIVA: iva,
@@ -183,12 +188,12 @@ const sales = () => {
         formIVA.insertAdjacentHTML('afterbegin', getContainerIVAHTML());
     };
 
-    const getIVA = (index, IVA) => {
+    const getIVA = (index, IVA, data) => {
         const item = data[index];
         return parseFloat((item.quantity * item.price - item.discount) * (IVA / 100));
     };
 
-    const getAmount = (index) => {
+    const getAmount = (index, data) => {
         const item = data[index];
         return (item.quantity * item.price) - item.discount + item.iva;
     };
