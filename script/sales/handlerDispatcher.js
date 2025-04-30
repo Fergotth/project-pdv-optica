@@ -4,24 +4,19 @@ import products from "../../data/products.js";
 export const getHandlerArgs = {
     handlerAddItem: () => ({
         itemSearched: document.querySelector('.container--inputArticule'),
-        products,
-        state: getState()
+        products
     }),
     
     handlerMinus: (button) => ({
-        button,
-        state: getState()
+        button
     }),
 
     handlerPlus: (button) => ({
-        button,
-        state: getState()
+        button
     }),
 
     handlerDiscount: (button) => ({
-        button,
-        index: button.dataset.id,
-        state: getState()
+        index: parseInt(button.dataset.id, 10)
     }),
 
     handlerBtnCancel: (button) => ({
@@ -39,7 +34,6 @@ export const getHandlerArgs = {
     }),
 
     handlerTypeOfIva: (button) => ({
-        button,
-        state: getState()
+        percentIva: parseInt(button.dataset.value, 10)
     })
 };

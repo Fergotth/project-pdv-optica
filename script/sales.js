@@ -18,7 +18,7 @@ const sales = () => {
         });
     });
 
-    const handlerAddItem = ({ itemSearched, products, state }) => {
+    const handlerAddItem = ({ itemSearched, products }) => {
         let itemSKU = parseInt(itemSearched.value, 10);
 
         if (itemSKU) {
@@ -40,8 +40,8 @@ const sales = () => {
 
                     const updatedItem = {
                         ...newData[newData.length - 1],
-                        iva: getIVA(newData.length - 1, previusData.percentIva, newData),
-                        amount: getAmount(newData.length - 1, newData)
+                        iva: getIVA(newData[newData.length - 1], previusData.percentIva),
+                        amount: getAmount(newData[newData.length - 1])
                     };
 
                     newData[newData.length - 1] = updatedItem;
@@ -67,18 +67,18 @@ const sales = () => {
         itemSearched.value = '';
     };
 
-    const handlerMinus = ({ button, state }) => {
-        handleQuantityButton(button, state);
+    const handlerMinus = ({ button }) => {
+        handleQuantityButton(button, parseInt(button.dataset.id, 10));
         refreshDataHTML(getState().data);
     };
 
-    const handlerPlus = ({ button, state }) => {
-        handleQuantityButton(button, state);
+    const handlerPlus = ({ button }) => {
+        handleQuantityButton(button, parseInt(button.dataset.id, 10));
         refreshDataHTML(getState().data);
     };
 
-    const handlerDiscount = (button) => {
-        showPromptDiscount(parseInt(button.dataset.id, 10));
+    const handlerDiscount = ({ index }) => {
+        showPromptDiscount(index, document.body);
     };
 
     const handlerBtnCancel = (button) => {
@@ -90,20 +90,20 @@ const sales = () => {
     };
 
     const handlerIva = () => {
-        showPromptIVA();
+        showPromptIVA(document.body);
     };
 
-    const handlerTypeOfIva = ({ button, percentIva, state }) => {
+    const handlerTypeOfIva = ({ percentIva }) => {
         updateState(previusData => {
             const newData = previusData.data.map(item => ({
                 ...item,
-                percentIVA: percentIVA,
-                iva: getIVA(item.position, percentIva, previusData.data)
+                percentIva: percentIva,
+                iva: getIVA(item, percentIva)
             }));
 
             return {
                 data: newData,
-                percentIVA: newData.percentIVA
+                percentIva: percentIva
             };
         });
         
@@ -128,9 +128,8 @@ const sales = () => {
         totalLabel.textContent = `Total: $${parseFloat(total).toFixed(2)}`
     };
 
-    const handleQuantityButton = (button, state) => {
+    const handleQuantityButton = (button, index) => {
         const isMinus = button.classList.contains('minus');
-        const index = parseInt(button.dataset.id, 10);
         const quantity = isMinus ? -1 : 1;
 
         updateState(previusData => {
@@ -141,25 +140,25 @@ const sales = () => {
                 quantity: newData[index].quantity + quantity
             };
 
-            const filteredData = newData.filter(item => item.quantity > 0);
-            const finalData = filteredData.map((item, i) => ({
+            const finalData = newData
+                .filter(item => item.quantity > 0)
+                .map((item, i, filteredData) => ({
                     ...item,
                     position: i,
-                    iva: getIVA(i, previusData.percentIva, filteredData),
-                    amount: getAmount(i, filteredData)
-            }));
+                    iva: getIVA(item, previusData.percentIva),
+                    amount: getAmount(filteredData[i])
+                }));
             
             return {
                 data: finalData                    
             };
         });
-        console.log(getState().data);
+        
         refreshDataHTML(getState().data);
     };
 
-    const handleDiscount = (button) => {
+    const handleDiscount = (index) => {
         const overlayScreen = document.querySelector('.overlay');
-        index = parseInt(button.dataset.id, 10);
 
         if (button.classList.contains('btnAccept')) {
             const input = document.querySelector('.inputDiscount');
@@ -195,24 +194,20 @@ const sales = () => {
         }
     };
 
-    const showPromptIVA = () => {
-        const formIVA = document.body;
-        formIVA.insertAdjacentHTML('afterbegin', getContainerIVAHTML());
-    };
-
-    const getIVA = (index, IVA, data) => {
-        const item = data[index];
+    const getIVA = (item, IVA) => {
         return parseFloat((item.quantity * item.price - item.discount) * (IVA / 100));
     };
 
-    const getAmount = (index, data) => {
-        const item = data[index];
+    const getAmount = (item) => {
         return (item.quantity * item.price) - item.discount + item.iva;
     };
 
-    const showPromptDiscount = (index) => {
-        const windowInput = document.body;
-        windowInput.insertAdjacentHTML('afterbegin', getDiscountContainerInnerHTML(index));
+    const showPromptIVA = (element) => {
+        element.insertAdjacentHTML('afterbegin', getContainerIVAHTML());
+    };
+
+    const showPromptDiscount = (index, element) => {
+        element.insertAdjacentHTML('afterbegin', getDiscountContainerInnerHTML(index));
     };
 
     globalThis.handlerAddItem = handlerAddItem;
