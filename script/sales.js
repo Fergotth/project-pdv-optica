@@ -141,20 +141,19 @@ const sales = () => {
                 quantity: newData[index].quantity + quantity
             };
 
-            const filteredData = newData
-                .filter(item => item.quantity > 0)
-                .map((item, i) => ({
+            const filteredData = newData.filter(item => item.quantity > 0);
+            const finalData = filteredData.map((item, i) => ({
                     ...item,
                     position: i,
-                    iva: getIVA(i, previusData.percentIva, newData),
-                    amount: getAmount(i, newData)
-                }));
+                    iva: getIVA(i, previusData.percentIva, filteredData),
+                    amount: getAmount(i, filteredData)
+            }));
             
-                return {
-                    ...previusData, data: filteredData                    
-                };
+            return {
+                data: finalData                    
+            };
         });
-
+        console.log(getState().data);
         refreshDataHTML(getState().data);
     };
 
