@@ -13,7 +13,7 @@ export const getItemRowInnerHTML = (item) => {
     </div>
     <div class="description" style="width: calc(3 / 8 * 100%);">${item.description} ${item.material}</div>
     <div class="unitPrice" style="width: calc(1 / 8 * 100%);">${Number(item.price).toFixed(2)}</div>
-    <div class="discount" data-id="${item.position}" style="width: calc(1 / 8 * 100%);">${item.discount}</div>
+    <div class="discount" data-id="${item.position}" style="width: calc(1 / 8 * 100%);">${Number(item.discount).toFixed(2)}</div>
     <div class="IVA" style="width: calc(1 / 8 * 100%);">${Number(item.iva).toFixed(2)}</div>
     <div class="price" style="width: calc(1 / 8 * 100%);">${Number(item.amount).toFixed(2)}</div>
     `;

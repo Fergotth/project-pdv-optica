@@ -20,17 +20,18 @@ export const getHandlerArgs = {
     }),
 
     handlerBtnCancel: (button) => ({
-        button,
-        state: getState()
+        button
     }),
 
     handlerBtnAccept: (button) => ({
         button,
-        state: getState()
+        input: document.querySelector('.inputDiscount'),
+        ivaSelected: document.getElementById('value-1'),
+        index: parseInt(button.dataset.id, 10)
     }),
 
     handlerIva: () => ({
-        state: getState()
+        dom: document.body
     }),
 
     handlerTypeOfIva: (button) => ({

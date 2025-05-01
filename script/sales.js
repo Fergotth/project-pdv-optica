@@ -81,25 +81,31 @@ const sales = () => {
         showPromptDiscount(index, document.body);
     };
 
-    const handlerBtnCancel = (button) => {
-        handleDiscount(button);
+    const handlerBtnCancel = ({ button }) => {
+        handleDiscount( {button} );
     };
 
-    const handlerBtnAccept = (button) => {
-        handleDiscount(button);
+    const handlerBtnAccept = ({ button, input, ivaSelected, index }) => {
+        handleDiscount({ button, input, ivaSelected, index });
     };
 
-    const handlerIva = () => {
-        showPromptIVA(document.body);
+    const handlerIva = ({ dom }) => {
+        showPromptIVA(dom);
     };
 
     const handlerTypeOfIva = ({ percentIva }) => {
         updateState(previusData => {
-            const newData = previusData.data.map(item => ({
-                ...item,
-                percentIva: percentIva,
-                iva: getIVA(item, percentIva)
-            }));
+            const newData = previusData.data.map(item => {
+                const updatedItem = {
+                    ...item,
+                    percentIva: percentIva,
+                }
+
+                updatedItem.iva = getIVA(updatedItem, percentIva);
+                updatedItem.amount = getAmount(updatedItem);
+
+                return updatedItem;
+            });
 
             return {
                 data: newData,
@@ -157,23 +163,35 @@ const sales = () => {
         refreshDataHTML(getState().data);
     };
 
-    const handleDiscount = (index) => {
+    const handleDiscount = ({ button, input, ivaSelected, index }) => {
         const overlayScreen = document.querySelector('.overlay');
 
         if (button.classList.contains('btnAccept')) {
-            const input = document.querySelector('.inputDiscount');
-            const opCash = document.getElementById('value-1');
             const regex = /^(?:\d+)(?:\.\d{1,2})?$/;
             const discountStr = input.value.trim();
 
             if (regex.test(discountStr) && discountStr !== "" && !isNaN(parseFloat(discountStr))) {
-                const amountToDiscount = opCash.checked ? parseFloat(discountStr) : data[index].amount * (parseFloat(discountStr) / 100);
+                const actualAmount = getState().data[index].amount;
+                const amountToDiscount = ivaSelected.checked ? parseFloat(discountStr) : actualAmount * (parseFloat(discountStr) / 100);
 
-                if (amountToDiscount < data[index].amount) {
-                    data[index].discount = parseFloat(amountToDiscount);
-                    data[index].iva = getIVA(index, data[index].percentIVA);
-                    data[index].amount = getAmount(index);
-                    refreshDataHTML(data);
+                if (amountToDiscount < actualAmount) {
+                    updateState(previusData => {
+                        const newData = [...previusData.data]
+                        
+                        newData[index] = {
+                            ...newData[index],
+                            discount: parseFloat(amountToDiscount),
+                            iva: getIVA(newData[index], newData[index].percentIVA)
+                        };
+
+                        newData[index].amount = getAmount(newData[index]);
+
+                        return {
+                            data: newData
+                        };
+                    });
+
+                    refreshDataHTML(getState().data);
                     if (overlayScreen) overlayScreen.remove();
                 } else {
                     newAlert({
