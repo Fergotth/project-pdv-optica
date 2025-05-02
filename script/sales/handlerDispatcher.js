@@ -8,15 +8,18 @@ export const getHandlerArgs = {
     }),
     
     handlerMinus: (button) => ({
-        button
+        button,
+        index: parseInt(button.dataset.id, 10)
     }),
 
     handlerPlus: (button) => ({
-        button
+        button,
+        index: parseInt(button.dataset.id, 10)
     }),
 
     handlerDiscount: (button) => ({
-        index: parseInt(button.dataset.id, 10)
+        index: parseInt(button.dataset.id, 10),
+        dom: document.querySelector('.formSales')
     }),
 
     handlerBtnCancel: (button) => ({
@@ -31,7 +34,7 @@ export const getHandlerArgs = {
     }),
 
     handlerIva: () => ({
-        dom: document.body
+        dom: document.querySelector('.formSales')
     }),
 
     handlerTypeOfIva: (button) => ({

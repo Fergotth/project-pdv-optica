@@ -7,34 +7,35 @@ const calendar = document.getElementById('calendar');
 
 const loadMenu = () => {
     fetch('/templates/template-menu3.html')
-        .then(response => response.text())
-        .then(html => {
-            app.innerHTML = html;
-            menu();
-        })
-        .catch(error => console.error("Error al cargar el menu: ", error));
+    .then(response => response.text())
+    .then(html => {
+        app.innerHTML = html;
+        menu();
+    })
+    .catch(error => console.error("Error al cargar el menu: ", error));
 }
 
 loadMenu();
 
-document.addEventListener('click', (event) => {
-    const calendarIcon = event.target.closest('.calendarIcon'); // Detecta el SVG clicado
+// document.addEventListener('click', (event) => {
+//     event.stopPropagation(); // Evita que el evento se propague a otros elementos
+//     const calendarIcon = event.target.closest('.calendarIcon'); // Detecta el SVG clicado
 
-    if (calendarIcon) {
-        const calendar = document.getElementById('calendar');
-        calendar.classList.toggle('showCalendar'); // Alternar la clase para mostrar u ocultar el calendario
-    }
-});
+//     if (calendarIcon) {
+//         const calendar = document.getElementById('calendar');
+//         calendar.classList.toggle('showCalendar'); // Alternar la clase para mostrar u ocultar el calendario
+//     }
+// });
 
 const loadCalendar = () => {
     fetch('/templates/template-calendar.html')
     .then(response => response.text())
-        .then(html => {
-            calendar.innerHTML = html;
-            renderCalendar();
-        })
-        .catch(error => console.error("Error al cargar el calendario: ", error));
-}
+    .then(html => {
+        calendar.innerHTML = html;
+        renderCalendar();
+    })
+    .catch(error => console.error("Error al cargar el calendario: ", error));
+};
 
 loadCalendar();
 

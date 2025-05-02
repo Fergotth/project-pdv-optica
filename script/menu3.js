@@ -1,7 +1,7 @@
 import sales from "./sales.js";
 
 const menu = () => {
-    document.addEventListener('click', function(event) {
+    document.querySelector('.menu').addEventListener('click', function(event) {
         const elementClicked = event.target;
         const itemMenu = Array.from(elementClicked.classList).find(item => item.includes('menu--item'));
         
@@ -34,18 +34,29 @@ const menu = () => {
                 elementClicked.style.borderRadius = '0 25px 25px 0';
             }
         }
+
+        if (elementClicked.classList.contains('calendarIcon')) {
+            const calendarIcon = event.target.closest('.calendarIcon'); // Detecta el SVG clicado
+
+            if (calendarIcon) {
+                const calendar = document.getElementById('calendar');
+                calendar.classList.toggle('showCalendar'); // Alternar la clase para mostrar u ocultar el calendario
+            }
+        }
+        
+        event.stopPropagation();
     });
 
     const loadTemplate = (templateName) => {
         fetch(`/templates/${templateName}`)
-            .then(response => response.text())
-            .then(html => {
-                const tempContentDiv = document.getElementById('temporaryContent');
-                tempContentDiv.innerHTML = html;
-                sales();
-            })
-            .catch(error => console.error('Error al cargar el archivo: ', error));
-    }
-}
+        .then(response => response.text())
+        .then(html => {
+            const tempContentDiv = document.getElementById('temporaryContent');
+            tempContentDiv.innerHTML = html;
+            sales();
+        })
+        .catch(error => console.error('Error al cargar el archivo: ', error));
+    };
+};
 
 export default menu;

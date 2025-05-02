@@ -1,5 +1,5 @@
 /* Modal principal  */
-.form {
+.formSales {
     width: 70vw;
     height: 80vh;
     display: grid;
@@ -401,16 +401,16 @@ input:hover {
 .amount--percentIVA {
     position: absolute;
     display: flex;
-    top: 3px;
-    right: 3px;
+    top: -3px;
+    right: 1px;
     background-color: #3b82f6;
     color: #fff;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 0.9rem;
+    width: 25px;
+    height: 25px;
+    font-size: 0.8rem;
     align-items: center;
-    align-content: center;
+    justify-content: center;
     text-align: center;
     
 }

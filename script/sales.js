@@ -1,11 +1,10 @@
-import products from "../data/products.js";
 import { newAlert } from "../script/utils/alerts.js";
 import { getItemRowInnerHTML, getDiscountContainerInnerHTML, getContainerIVAHTML } from "./sales/domsales.js";
 import { getHandlerArgs } from "./sales/handlerDispatcher.js";
 import { getState, updateState } from "./sales/stateSales.js";
 
 const sales = () => {
-    document.body.addEventListener('click', (event) => {
+    document.querySelector('.formSales').addEventListener('click', (event) => {
         event.stopPropagation();
         const button = event.target;
         button.classList.forEach(className => {
@@ -67,26 +66,26 @@ const sales = () => {
         itemSearched.value = '';
     };
 
-    const handlerMinus = ({ button }) => {
+    const handlerMinus = ({ button, index }) => {
+        handleQuantityButton(button, index);
+        refreshDataHTML(getState().data);
+    };
+
+    const handlerPlus = ({ button, index }) => {
         handleQuantityButton(button, parseInt(button.dataset.id, 10));
         refreshDataHTML(getState().data);
     };
 
-    const handlerPlus = ({ button }) => {
-        handleQuantityButton(button, parseInt(button.dataset.id, 10));
-        refreshDataHTML(getState().data);
-    };
-
-    const handlerDiscount = ({ index }) => {
-        showPromptDiscount(index, document.body);
+    const handlerDiscount = ({ index, dom }) => {
+        showPromptDiscount(index, dom);
     };
 
     const handlerBtnCancel = ({ button }) => {
-        handleDiscount( {button} );
+        setDiscount( {button} );
     };
 
     const handlerBtnAccept = ({ button, input, ivaSelected, index }) => {
-        handleDiscount({ button, input, ivaSelected, index });
+        setDiscount({ button, input, ivaSelected, index });
     };
 
     const handlerIva = ({ dom }) => {
@@ -99,7 +98,7 @@ const sales = () => {
                 const updatedItem = {
                     ...item,
                     percentIva: percentIva,
-                }
+                };
 
                 updatedItem.iva = getIVA(updatedItem, percentIva);
                 updatedItem.amount = getAmount(updatedItem);
@@ -114,6 +113,7 @@ const sales = () => {
         });
         
         document.querySelector('.overlay')?.remove();
+        changeLabelIva(percentIva);
         refreshDataHTML(getState().data);
     };
 
@@ -163,7 +163,7 @@ const sales = () => {
         refreshDataHTML(getState().data);
     };
 
-    const handleDiscount = ({ button, input, ivaSelected, index }) => {
+    const setDiscount = ({ button, input, ivaSelected, index }) => {
         const overlayScreen = document.querySelector('.overlay');
 
         if (button.classList.contains('btnAccept')) {
@@ -189,7 +189,7 @@ const sales = () => {
                         return {
                             data: newData
                         };
-                    });
+                    });                  
 
                     refreshDataHTML(getState().data);
                     if (overlayScreen) overlayScreen.remove();
@@ -221,11 +221,28 @@ const sales = () => {
     };
 
     const showPromptIVA = (element) => {
-        element.insertAdjacentHTML('afterbegin', getContainerIVAHTML());
+        element.appendChild(insertNewHTML(getContainerIVAHTML()));
     };
 
     const showPromptDiscount = (index, element) => {
-        element.insertAdjacentHTML('afterbegin', getDiscountContainerInnerHTML(index));
+        element.appendChild(insertNewHTML(getDiscountContainerInnerHTML(index)));
+    };
+
+    const changeLabelIva = (percentIva) => {
+        const ivaLabel = document.querySelector('.amount--percentIVA');
+        if (ivaLabel) {
+            ivaLabel.textContent = `${percentIva}%`;
+        }
+    };
+
+    const insertNewHTML = (innerHTML) => {
+        const parser = new DOMParser();
+        const parsedDocument = parser.parseFromString(innerHTML, 'text/html');
+        const parsedElement = parsedDocument.body.firstChild;
+
+        if (parsedElement) {
+            return parsedElement;
+        }
     };
 
     globalThis.handlerAddItem = handlerAddItem;
