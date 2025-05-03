@@ -35,8 +35,8 @@ const menu = () => {
             }
         }
 
-        if (elementClicked.classList.contains('calendarIcon')) {
-            const calendarIcon = event.target.closest('.calendarIcon'); // Detecta el SVG clicado
+        if (elementClicked.classList.contains('calendarContainer')) {
+            const calendarIcon = event.target.closest('.calendarContainer'); // Detecta el SVG clicado
 
             if (calendarIcon) {
                 const calendar = document.getElementById('calendar');

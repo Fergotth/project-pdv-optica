@@ -11,13 +11,17 @@ nav {
     user-select: none;
 }
 
-nav svg {
+nav .calendarContainer {
     position: fixed;
     right: 3px;
 }
 
-nav svg:hover {
+nav .calendarContainer:hover {
     cursor: pointer;
+}
+
+nav .calendarContainer svg {
+    pointer-events: none;
 }
 
 nav ul {

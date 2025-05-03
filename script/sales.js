@@ -29,7 +29,7 @@ const sales = () => {
                         price: productSearched.price,
                         description: productSearched.description,
                         material: productSearched.material,
-                        quantity: 1,
+                        quantity: productSearched.category === "lenses" ? 2 : 1,
                         discount: 0,
                         iva: 0,
                         amount: 0,
