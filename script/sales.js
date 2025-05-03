@@ -24,8 +24,8 @@ const sales = () => {
             const productSearched = products.find(product => product.sku === itemSKU);
 
             if (productSearched) {
-                updateState(previusData => {
-                    const newData = [...previusData.data, {
+                updateState(previousData => {
+                    const newData = [...previousData.data, {
                         price: productSearched.price,
                         description: productSearched.description,
                         material: productSearched.material,
@@ -33,18 +33,18 @@ const sales = () => {
                         discount: 0,
                         iva: 0,
                         amount: 0,
-                        percentIVA: previusData.percentIva,
-                        position: previusData.data.length
+                        percentIVA: previousData.percentIva,
+                        position: previousData.data.length
                     }];
 
                     const updatedItem = {
                         ...newData[newData.length - 1],
-                        iva: getIVA(newData[newData.length - 1], previusData.percentIva),
+                        iva: getIVA(newData[newData.length - 1], previousData.percentIva),
                         amount: getAmount(newData[newData.length - 1])
                     };
 
                     newData[newData.length - 1] = updatedItem;
-                    return { ...previusData, data: newData };
+                    return { ...previousData, data: newData };
                 });
                 
                 refreshDataHTML(getState().data);
@@ -93,8 +93,8 @@ const sales = () => {
     };
 
     const handlerTypeOfIva = ({ percentIva }) => {
-        updateState(previusData => {
-            const newData = previusData.data.map(item => {
+        updateState(previousData => {
+            const newData = previousData.data.map(item => {
                 const updatedItem = {
                     ...item,
                     percentIva: percentIva,
@@ -138,12 +138,13 @@ const sales = () => {
         const isMinus = button.classList.contains('minus');
         const quantity = isMinus ? -1 : 1;
 
-        updateState(previusData => {
-            const newData = [...previusData.data];
+        updateState(previousData => {
+            const newData = [...previousData.data];
             
             newData[index] = {
                 ...newData[index],
-                quantity: newData[index].quantity + quantity
+                quantity: newData[index].quantity + quantity,
+                discount: quantity < 0 ? 0 : newData[index].discount
             };
 
             const finalData = newData
@@ -151,7 +152,7 @@ const sales = () => {
                 .map((item, i, filteredData) => ({
                     ...item,
                     position: i,
-                    iva: getIVA(item, previusData.percentIva),
+                    iva: getIVA(item, previousData.percentIva),
                     amount: getAmount(filteredData[i])
                 }));
             
@@ -175,8 +176,8 @@ const sales = () => {
                 const amountToDiscount = ivaSelected.checked ? parseFloat(discountStr) : actualAmount * (parseFloat(discountStr) / 100);
 
                 if (amountToDiscount < actualAmount) {
-                    updateState(previusData => {
-                        const newData = [...previusData.data]
+                    updateState(previousData => {
+                        const newData = [...previousData.data]
                         
                         newData[index] = {
                             ...newData[index],
