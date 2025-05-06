@@ -1,5 +1,5 @@
 import { newAlert } from "../script/utils/alerts.js";
-import { getItemRowInnerHTML, getDiscountContainerInnerHTML, getContainerIVAHTML } from "./sales/domsales.js";
+import { getItemRowInnerHTML, getDiscountContainerInnerHTML, getContainerIVAHTML } from "./sales/domSales.js";
 import { getHandlerArgs } from "./sales/handlerDispatcher.js";
 import { getState, updateState } from "./sales/stateSales.js";
 
@@ -29,11 +29,11 @@ const sales = () => {
                         price: productSearched.price,
                         description: productSearched.description,
                         material: productSearched.material,
-                        quantity: productSearched.category === "lenses" ? 2 : 1,
+                        quantity: productSearched.category === 'lenses' ? 2 : 1,
                         discount: 0,
                         iva: 0,
                         amount: 0,
-                        percentIVA: previousData.percentIva,
+                        percentIva: previousData.percentIva,
                         position: previousData.data.length
                     }];
 
@@ -84,8 +84,8 @@ const sales = () => {
         setDiscount( {button} );
     };
 
-    const handlerBtnAccept = ({ button, input, ivaSelected, index }) => {
-        setDiscount({ button, input, ivaSelected, index });
+    const handlerBtnAccept = ({ button, input, typeOfDiscount, index }) => {
+        setDiscount({ button, input, typeOfDiscount, index });
     };
 
     const handlerIva = ({ dom }) => {
@@ -164,7 +164,7 @@ const sales = () => {
         refreshDataHTML(getState().data);
     };
 
-    const setDiscount = ({ button, input, ivaSelected, index }) => {
+    const setDiscount = ({ button, input, typeOfDiscount, index }) => {
         const overlayScreen = document.querySelector('.overlay');
 
         if (button.classList.contains('btnAccept')) {
@@ -172,20 +172,22 @@ const sales = () => {
             const discountStr = input.value.trim();
 
             if (regex.test(discountStr) && discountStr !== "" && !isNaN(parseFloat(discountStr))) {
-                const actualAmount = getState().data[index].amount;
-                const amountToDiscount = ivaSelected.checked ? parseFloat(discountStr) : actualAmount * (parseFloat(discountStr) / 100);
+                const item = getState().data[index];
+                const actualAmount = item.price * item.quantity;
+                const amountToDiscount = typeOfDiscount.checked ? parseFloat(discountStr) : actualAmount * (parseFloat(discountStr) / 100);
 
                 if (amountToDiscount < actualAmount) {
                     updateState(previousData => {
                         const newData = [...previousData.data]
-                        
-                        newData[index] = {
+
+                        const updatedItem = {
                             ...newData[index],
-                            discount: parseFloat(amountToDiscount),
-                            iva: getIVA(newData[index], newData[index].percentIVA)
+                            discount: parseFloat(amountToDiscount)
                         };
 
-                        newData[index].amount = getAmount(newData[index]);
+                        updatedItem.iva = getIVA(updatedItem, updatedItem.percentIva);
+                        updatedItem.amount = getAmount(updatedItem);
+                        newData[index] = updatedItem;
 
                         return {
                             data: newData

@@ -29,7 +29,7 @@ export const getHandlerArgs = {
     handlerBtnAccept: (button) => ({
         button,
         input: document.querySelector('.inputDiscount'),
-        ivaSelected: document.getElementById('value-1'),
+        typeOfDiscount: document.getElementById('value-1'),
         index: parseInt(button.dataset.id, 10)
     }),
 
