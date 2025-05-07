@@ -538,6 +538,15 @@ const products = [
         "description": "BIFOCAL INVISIBLE FOTOCROMATICO BLUEBLOCK",
         "price": 0,
         "image": ""
+    },
+    {
+        "id": 61,
+        "sku": "010101",
+        "category": "frame",
+        "material": "metal",
+        "description": "@VER",
+        "price": 649,
+        "image": ""
     }
 ];
 

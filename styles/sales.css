@@ -232,17 +232,27 @@ input:hover {
     display: flex;
     align-items: center;
     justify-content: right;
-    font-size: 1.8rem;
+    font-size: 1.9rem;
 }
 
 .container--infoDolarPrice { 
     grid-area: 11 / 2 / 12 / 10;
     background-color: #3b82f6;
-    color: #d1d5db;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    position: relative;
+    font-size: 1.1rem;
+}
+
+.container--infoDolarPrice .discountValue,
+.container--infoDolarPrice .ivaValue,
+.container--infoDolarPrice .subtotalValue {
+    display: flex;
     justify-content: right;
-    font-size: 1.8rem;
+}
+
+.container--infoDolarPrice span {
+    color: #d1d5db;
 }
 
 .container--shoppingArticles { 

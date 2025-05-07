@@ -17,11 +17,11 @@ const sales = () => {
         });
     });
 
-    const handlerAddItem = ({ itemSearched, products }) => {
+    const handlerAddItem = ({ itemSearched, products, percentIva }) => {
         let itemSKU = parseInt(itemSearched.value, 10);
 
         if (itemSKU) {
-            const productSearched = products.find(product => product.sku === itemSKU);
+            const productSearched = products.find(product => product.sku == itemSKU);
 
             if (productSearched) {
                 updateState(previousData => {
@@ -33,16 +33,16 @@ const sales = () => {
                         discount: 0,
                         iva: 0,
                         amount: 0,
-                        percentIva: previousData.percentIva,
+                        percentIva: percentIva,
                         position: previousData.data.length
                     }];
 
                     const updatedItem = {
                         ...newData[newData.length - 1],
-                        iva: getIVA(newData[newData.length - 1], previousData.percentIva),
-                        amount: getAmount(newData[newData.length - 1])
+                        iva: getIVA(newData[newData.length - 1], percentIva)
                     };
 
+                    updatedItem.amount = getAmount(updatedItem);
                     newData[newData.length - 1] = updatedItem;
                     return { ...previousData, data: newData };
                 });
@@ -120,18 +120,31 @@ const sales = () => {
     const refreshDataHTML = (newData) => {
         const listProduct = document.querySelector('.container--shoppingArticles');
         const totalLabel = document.querySelector('.container--totalPrice');
+        const subtotalLabel = document.querySelector('.subtotalValue span');
+        const ivaLabel = document.querySelector('.ivaValue span');
+        const discountLabel = document.querySelector('.discountValue span');
         let total = 0;
+        let subtotal = 0;
+        let iva = 0;
+        let discount = 0;
+
         listProduct.innerHTML = '';
         
         for (const item of newData) {
             let newItem = document.createElement('div');
             newItem.classList.add('itemRow');
             newItem.innerHTML = getItemRowInnerHTML(item);
+            subtotal += item.price * item.quantity;
+            iva += item.iva;
+            discount += item.discount;
             total += item.amount;
             listProduct.appendChild(newItem);
         }
 
-        totalLabel.textContent = `Total: $${parseFloat(total).toFixed(2)}`
+        subtotalLabel.textContent = `$${parseFloat(subtotal).toFixed(2)}`;
+        ivaLabel.textContent = `$${parseFloat(iva).toFixed(2)}`;
+        discountLabel.textContent = `$${parseFloat(discount).toFixed(2)}`;
+        totalLabel.textContent = `Total: $${parseFloat(total).toFixed(2)}`;
     };
 
     const handleQuantityButton = (button, index) => {
@@ -240,8 +253,8 @@ const sales = () => {
 
     const insertNewHTML = (innerHTML) => {
         const parser = new DOMParser();
-        const parsedDocument = parser.parseFromString(innerHTML, 'text/html');
-        const parsedElement = parsedDocument.body.firstChild;
+        const parsed = parser.parseFromString(innerHTML, 'text/html');
+        const parsedElement = parsed.body.firstChild;
 
         if (parsedElement) {
             return parsedElement;

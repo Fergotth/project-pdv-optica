@@ -4,7 +4,8 @@ import products from "../../data/products.js";
 export const getHandlerArgs = {
     handlerAddItem: () => ({
         itemSearched: document.querySelector('.container--inputArticule'),
-        products
+        products,
+        percentIva: getState().percentIva
     }),
     
     handlerMinus: (button) => ({
