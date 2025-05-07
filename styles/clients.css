@@ -48,6 +48,14 @@
     background: linear-gradient(to right, #4f46e5, #2563eb);
 }
 
+.container #btnCancel {
+    background: linear-gradient(to right, #ff0641, #df0641);
+}
+
+.container #btnCancel:hover {
+    background: linear-gradient(to right, #af0641, #8f0641);
+}
+
 .radio-input input {
     display: none;
 }
