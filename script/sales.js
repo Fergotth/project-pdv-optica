@@ -1,5 +1,5 @@
 import { newAlert } from "../script/utils/alerts.js";
-import { getItemRowInnerHTML, getDiscountContainerInnerHTML, getContainerIVAHTML } from "./sales/domSales.js";
+import { getItemRowInnerHTML, getDiscountContainerHTML, getContainerIVAHTML, getSearchClientContainerHTML } from "./sales/domSales.js";
 import { getHandlerArgs } from "./sales/handlerDispatcher.js";
 import { getState, updateState } from "./sales/stateSales.js";
 
@@ -115,6 +115,18 @@ const sales = () => {
         document.querySelector('.overlay')?.remove();
         changeLabelIva(percentIva);
         refreshDataHTML(getState().data);
+    };
+
+    const handlerSearchClient = ({ dom }) => {
+        showPromptSearchClient(dom);
+    };
+
+    const handlerBtnCancelClient = () => {
+        document.querySelector('.overlay')?.remove();
+    };
+
+    const handlerBtnSearchClient = () => {
+        document.querySelector('.overlay')?.remove();
     };
 
     const refreshDataHTML = (newData) => {
@@ -241,7 +253,7 @@ const sales = () => {
     };
 
     const showPromptDiscount = (index, element) => {
-        element.appendChild(insertNewHTML(getDiscountContainerInnerHTML(index)));
+        element.appendChild(insertNewHTML(getDiscountContainerHTML(index)));
     };
 
     const changeLabelIva = (percentIva) => {
@@ -249,6 +261,10 @@ const sales = () => {
         if (ivaLabel) {
             ivaLabel.textContent = `${percentIva}%`;
         }
+    };
+
+    const showPromptSearchClient = (element) => {
+        element.appendChild(insertNewHTML(getSearchClientContainerHTML()));
     };
 
     const insertNewHTML = (innerHTML) => {
@@ -269,6 +285,9 @@ const sales = () => {
     globalThis.handlerBtnAccept = handlerBtnAccept;
     globalThis.handlerIva = handlerIva;
     globalThis.handlerTypeOfIva = handlerTypeOfIva;
+    globalThis.handlerSearchClient = handlerSearchClient;
+    globalThis.handlerBtnCancelClient = handlerBtnCancelClient;
+    globalThis.handlerBtnSearchClient = handlerBtnSearchClient;
 };
 
 export default sales;

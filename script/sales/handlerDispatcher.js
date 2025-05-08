@@ -40,5 +40,13 @@ export const getHandlerArgs = {
 
     handlerTypeOfIva: (button) => ({
         percentIva: parseInt(button.dataset.value, 10)
+    }),
+
+    handlerBtnSearchClient: () => ({}),
+    
+    handlerBtnCancelClient: () => ({}),
+    
+    handlerSearchClient: () => ({
+        dom: document.querySelector('.formSales')
     })
 };

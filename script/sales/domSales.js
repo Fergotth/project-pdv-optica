@@ -24,7 +24,7 @@ export const getItemRowInnerHTML = (item) => {
  * @param {integer} index   // Indice del elemento
  * @returns {InnerHTML}     // Contenido del contenedor a crear
  */
-export const getDiscountContainerInnerHTML = (index) => {
+export const getDiscountContainerHTML = (index) => {
     return `
     <div class="overlay">   
         <form class="formDiscount">
@@ -72,6 +72,26 @@ export const getContainerIVAHTML = () => {
                 </label>
             </div>
         </div>
+    </div>
+    `
+};
+
+/**
+ * @returns {InnerHTML} // Contener del cliente a buscar
+ */
+export const getSearchClientContainerHTML = () => {
+    return `
+    <div class="overlay">   
+        <form class="formDiscount">
+            <label>
+                <span>Nombre del cliente</span>
+                <input type="text" class="inputClient"/>
+            </label>
+            <div>
+                <button type="button" class="btnCancelClient" style="background-color: #374151;">Cancelar</button>
+                <button type="button" class="btnSearchClient" style="background-color: #2563eb;">Buscar</button>
+            </div>
+        </form>
     </div>
     `
 };
