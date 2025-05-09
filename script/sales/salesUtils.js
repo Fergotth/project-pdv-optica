@@ -1,6 +1,12 @@
 import { getItemRowInnerHTML, getDiscountContainerHTML, getContainerIVAHTML, getSearchClientContainerHTML } from "./domSales.js";
 import { getState, updateState } from "./stateSales.js";
+import { getIVA, getAmount } from "./salesCalculations.js";
 
+/**
+ * 
+ * @param {HTMLElement} element 
+ * @returns 
+ */
 export const validateElement = (element) => {
     if (!element) {
         throw new Error("Elemento no existe en el DOM");
@@ -9,6 +15,10 @@ export const validateElement = (element) => {
     return element;
 };
 
+/**
+ * 
+ * @param {Object} newData 
+ */
 export const refreshDataHTML = (newData) => {
     const listProduct = validateElement(document.querySelector('.container--shoppingArticles'));
     const totalLabel = validateElement(document.querySelector('.container--totalPrice'));
@@ -118,14 +128,6 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
     } else {
         if (overlayScreen) overlayScreen.remove();
     }
-};
-
-export const getIVA = (item, IVA) => {
-    return parseFloat((item.quantity * item.price - item.discount) * (IVA / 100));
-};
-
-export const getAmount = (item) => {
-    return (item.quantity * item.price) - item.discount + item.iva;
 };
 
 export const showPromptIVA = (element) => {
