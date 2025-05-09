@@ -1,9 +1,10 @@
 import { getState } from "./stateSales.js";
 import products from "../../data/products.js";
+import { validateElement } from "./salesUtils.js";
 
 export const getHandlerArgs = {
     handlerAddItem: () => ({
-        itemSearched: document.querySelector('.container--inputArticule'),
+        itemSearched: validateElement(document.querySelector('.container--inputArticule')),
         products,
         percentIva: getState().percentIva
     }),
@@ -20,7 +21,7 @@ export const getHandlerArgs = {
 
     handlerDiscount: (button) => ({
         index: parseInt(button.dataset.id, 10),
-        dom: document.querySelector('.formSales')
+        dom: validateElement(document.querySelector('.formSales'))
     }),
 
     handlerBtnCancel: (button) => ({
@@ -29,13 +30,13 @@ export const getHandlerArgs = {
 
     handlerBtnAccept: (button) => ({
         button,
-        input: document.querySelector('.inputDiscount'),
-        typeOfDiscount: document.getElementById('value-1'),
+        input: validateElement(document.querySelector('.inputDiscount')),
+        typeOfDiscount: validateElement(document.getElementById('value-1')),
         index: parseInt(button.dataset.id, 10)
     }),
 
     handlerIva: () => ({
-        dom: document.querySelector('.formSales')
+        dom: validateElement(document.querySelector('.formSales'))
     }),
 
     handlerTypeOfIva: (button) => ({
@@ -47,6 +48,6 @@ export const getHandlerArgs = {
     handlerBtnCancelClient: () => ({}),
     
     handlerSearchClient: () => ({
-        dom: document.querySelector('.formSales')
+        dom: validateElement(document.querySelector('.formSales'))
     })
 };
