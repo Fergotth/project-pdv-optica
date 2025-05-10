@@ -1,7 +1,11 @@
 export const getIVA = (item, IVA) => {
-    return parseFloat((item.quantity * item.price - item.discount) * (IVA / 100));
+    return parseFloat((getSubTotal(item) - item.discount) * (IVA / 100));
 };
 
-export const getAmount = (item) => {
-    return (item.quantity * item.price) - item.discount + item.iva;
+export const getTotal = (item) => {
+    return getSubTotal(item) - item.discount + item.iva;
 };
+
+export const getSubTotal = (item) => {
+    return item.quantity * item.price;
+}

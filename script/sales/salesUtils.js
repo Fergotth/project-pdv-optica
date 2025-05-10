@@ -1,11 +1,13 @@
-import { getItemRowInnerHTML, getDiscountContainerHTML, getContainerIVAHTML, getSearchClientContainerHTML } from "./domSales.js";
+import { getItemRowInnerHTML, getDiscountContainerHTML, getContainerIVAHTML, getSearchClientContainerHTML } from "./salesDom.js";
 import { getState, updateState } from "./stateSales.js";
-import { getIVA, getAmount } from "./salesCalculations.js";
+import { getIVA, getTotal, getSubTotal } from "./salesCalculations.js";
+import { newAlert } from "../utils/alerts.js";
+import Class from "./salesConsts.js";
 
 /**
  * 
  * @param {HTMLElement} element 
- * @returns 
+ * @returns {HTMLElement}
  */
 export const validateElement = (element) => {
     if (!element) {
@@ -17,18 +19,15 @@ export const validateElement = (element) => {
 
 /**
  * 
- * @param {Object} newData 
+ * @param {Object} newData // Objeto que contiene los datos del nuevo producto a mostrar
  */
 export const refreshDataHTML = (newData) => {
-    const listProduct = validateElement(document.querySelector('.container--shoppingArticles'));
-    const totalLabel = validateElement(document.querySelector('.container--totalPrice'));
-    const subtotalLabel = validateElement(document.querySelector('.subtotalValue span'));
-    const ivaLabel = validateElement(document.querySelector('.ivaValue span'));
-    const discountLabel = validateElement(document.querySelector('.discountValue span'));
-    let total = 0;
-    let subtotal = 0;
-    let iva = 0;
-    let discount = 0;
+    const listProduct = validateElement(document.querySelector(Class.listProduct));
+    const totalLabel = validateElement(document.querySelector(Class.total));
+    const subtotalLabel = validateElement(document.querySelector(Class.subTotal));
+    const ivaLabel = validateElement(document.querySelector(Class.iva));
+    const discountLabel = validateElement(document.querySelector(Class.discount));
+    let total = 0, subtotal = 0, iva = 0, discount = 0;
 
     listProduct.innerHTML = '';
     
@@ -36,17 +35,25 @@ export const refreshDataHTML = (newData) => {
         let newItem = document.createElement('div');
         newItem.classList.add('itemRow');
         newItem.innerHTML = getItemRowInnerHTML(item);
-        subtotal += item.price * item.quantity;
+        subtotal += getSubTotal(item);
         iva += item.iva;
         discount += item.discount;
         total += item.amount;
         listProduct.appendChild(newItem);
     }
 
-    subtotalLabel.textContent = `$${parseFloat(subtotal).toFixed(2)}`;
-    ivaLabel.textContent = `$${parseFloat(iva).toFixed(2)}`;
-    discountLabel.textContent = `$${parseFloat(discount).toFixed(2)}`;
-    totalLabel.textContent = `Total: $${parseFloat(total).toFixed(2)}`;
+    const formatMoney = (item) => {
+        if (isNaN(item)) {
+            throw new Error('Valor invalido');
+        }
+
+        return parseFloat(item).toFixed(2);
+    }
+
+    subtotalLabel.textContent = `$${formatMoney(subtotal)}`;
+    ivaLabel.textContent = `$${formatMoney(iva)}`;
+    discountLabel.textContent = `$${formatMoney(discount)}`;
+    totalLabel.textContent = `Total: $${formatMoney(total)}`;
 };
 
 export const handleQuantityButton = (button, index) => {
@@ -68,7 +75,7 @@ export const handleQuantityButton = (button, index) => {
                 ...item,
                 position: i,
                 iva: getIVA(item, previousData.percentIva),
-                amount: getAmount(filteredData[i])
+                amount: getTotal(filteredData[i])
             }));
         
         return {
@@ -80,15 +87,13 @@ export const handleQuantityButton = (button, index) => {
 };
 
 export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
-    const overlayScreen = document.querySelector('.overlay');
-
     if (button.classList.contains('btnAccept')) {
         const regex = /^(?:\d+)(?:\.\d{1,2})?$/;
         const discountStr = input.value.trim();
 
         if (regex.test(discountStr) && discountStr !== "" && !isNaN(parseFloat(discountStr))) {
             const item = getState().data[index];
-            const actualAmount = item.price * item.quantity;
+            const actualAmount = getSubTotal(item);
             const amountToDiscount = typeOfDiscount.checked ? parseFloat(discountStr) : actualAmount * (parseFloat(discountStr) / 100);
 
             if (amountToDiscount < actualAmount) {
@@ -101,7 +106,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
                     };
 
                     updatedItem.iva = getIVA(updatedItem, updatedItem.percentIva);
-                    updatedItem.amount = getAmount(updatedItem);
+                    updatedItem.amount = getTotal(updatedItem);
                     newData[index] = updatedItem;
 
                     return {
@@ -110,7 +115,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
                 });                  
 
                 refreshDataHTML(getState().data);
-                if (overlayScreen) overlayScreen.remove();
+                closeOverlay(document.querySelector(Class.overlay));
             } else {
                 newAlert({
                     title: "AVISO",
@@ -126,7 +131,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
             });
         }
     } else {
-        if (overlayScreen) overlayScreen.remove();
+        closeOverlay(document.querySelector(Class.overlay));
     }
 };
 
@@ -139,7 +144,7 @@ export const showPromptDiscount = (index, element) => {
 };
 
 export const changeLabelIva = (percentIva) => {
-    const ivaLabel = document.querySelector('.amount--percentIVA');
+    const ivaLabel = document.querySelector(Class.percent);
     if (ivaLabel) {
         ivaLabel.textContent = `${percentIva}%`;
     }
@@ -156,5 +161,26 @@ export const insertNewHTML = (innerHTML) => {
 
     if (parsedElement) {
         return parsedElement;
+    }
+};
+
+export const closeOverlay = (element) => {
+    if (element) element.remove();
+};
+
+export const validateValue = (button) => {
+    try {
+        let value = 0;
+        if ('id' in button.dataset) {
+            value = parseInt(button.dataset.id, 10);
+        }
+
+        if ('value' in button.dataset) {
+            value = parseInt(button.dataset.value, 10);
+        }
+
+        return value;
+    } catch (error) {
+        throw new Error('Valor no encontrado');
     }
 };

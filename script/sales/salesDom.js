@@ -77,7 +77,7 @@ export const getContainerIVAHTML = () => {
 };
 
 /**
- * @returns {InnerHTML} // Contener del cliente a buscar
+ * @returns {InnerHTML} // Contenedor del cliente a buscar
  */
 export const getSearchClientContainerHTML = () => {
     return `

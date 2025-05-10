@@ -1,6 +1,6 @@
 import { getState, updateState } from "./stateSales.js";
 import { newAlert } from "../utils/alerts.js";
-import { getIVA, getAmount } from "./salesCalculations.js";
+import { getIVA, getTotal } from "./salesCalculations.js";
 import * as utils from "./salesUtils.js";
 
 export const handlerAddItem = ({ itemSearched, products, percentIva }) => {
@@ -28,7 +28,7 @@ export const handlerAddItem = ({ itemSearched, products, percentIva }) => {
                     iva: getIVA(newData[newData.length - 1], percentIva)
                 };
 
-                updatedItem.amount = getAmount(updatedItem);
+                updatedItem.amount = getTotal(updatedItem);
                 newData[newData.length - 1] = updatedItem;
                 return { ...previousData, data: newData };
             });
@@ -87,7 +87,7 @@ export const handlerTypeOfIva = ({ percentIva }) => {
             };
 
             updatedItem.iva = getIVA(updatedItem, percentIva);
-            updatedItem.amount = getAmount(updatedItem);
+            updatedItem.amount = getTotal(updatedItem);
 
             return updatedItem;
         });
