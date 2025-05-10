@@ -1,7 +1,8 @@
-import { getState, updateState } from "./stateSales.js";
+import { getState, updateState } from "./state.js";
 import { newAlert } from "../utils/alerts.js";
-import { getIVA, getTotal } from "./salesCalculations.js";
-import * as utils from "./salesUtils.js";
+import { getIVA, getTotal } from "./calculations.js";
+import * as utils from "./utils.js";
+import Class from "./consts.js";
 
 export const handlerAddItem = ({ itemSearched, products, percentIva }) => {
     let itemSKU = parseInt(itemSearched.value, 10);
@@ -98,7 +99,7 @@ export const handlerTypeOfIva = ({ percentIva }) => {
         };
     });
     
-    document.querySelector('.overlay')?.remove();
+    utils.closeOverlay(document.querySelector(Class.overlay));
     utils.changeLabelIva(percentIva);
     utils.refreshDataHTML(getState().data);
 };
@@ -108,9 +109,9 @@ export const handlerSearchClient = ({ dom }) => {
 };
 
 export const handlerBtnCancelClient = () => {
-    document.querySelector('.overlay')?.remove();
+    utils.closeOverlay(document.querySelector(Class.overlay));
 };
 
 export const handlerBtnSearchClient = () => {
-    document.querySelector('.overlay')?.remove();
+    utils.closeOverlay(document.querySelector(Class.overlay));
 };

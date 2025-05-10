@@ -7,6 +7,8 @@ const Class = {
     discount: '.discountValue span',
     percent: '.amount--percentIVA',
     inputArticle: '.container--inputArticule',
+    inputDiscount: '.inputDiscount',
+    typeOfDiscount: 'value-1',
     form: '.formSales'
 };
 

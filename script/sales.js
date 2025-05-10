@@ -1,8 +1,9 @@
 import { getHandlerArgs } from "./sales/handlerDispatcher.js";
-import * as handlers from './sales/salesHandlers.js';
+import Class from "./sales/consts.js";
+import * as handlers from './sales/handlers.js';
 
 const sales = () => {
-    document.querySelector('.formSales').addEventListener('click', (event) => {
+    document.querySelector(Class.form).addEventListener('click', (event) => {
         event.stopPropagation();
         const button = event.target;
         button.classList.forEach(name => {

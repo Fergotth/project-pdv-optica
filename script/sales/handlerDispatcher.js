@@ -1,7 +1,7 @@
-import { getState } from "./stateSales.js";
+import { getState } from "./state.js";
+import { validateElement, validateValue } from "./utils.js";
 import products from "../../data/products.js";
-import Class from "./salesConsts.js";
-import { validateElement, validateValue } from "./salesUtils.js";
+import Class from "./consts.js";
 
 export const getHandlerArgs = {
     handlerAddItem: () => ({
@@ -31,13 +31,13 @@ export const getHandlerArgs = {
 
     handlerBtnAccept: (button) => ({
         button,
-        input: validateElement(document.querySelector('.inputDiscount')),
-        typeOfDiscount: validateElement(document.getElementById('value-1')),
+        input: validateElement(document.querySelector(Class.inputDiscount)),
+        typeOfDiscount: validateElement(document.getElementById(Class.typeOfDiscount)),
         index: validateValue(button)
     }),
 
     handlerIva: () => ({
-        dom: validateElement(document.querySelector('.formSales'))
+        dom: validateElement(document.querySelector(Class.form))
     }),
 
     handlerTypeOfIva: (button) => ({
@@ -49,6 +49,6 @@ export const getHandlerArgs = {
     handlerBtnCancelClient: () => ({}),
     
     handlerSearchClient: () => ({
-        dom: validateElement(document.querySelector('.formSales'))
+        dom: validateElement(document.querySelector(Class.form))
     })
 };

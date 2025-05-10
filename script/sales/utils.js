@@ -1,8 +1,8 @@
 import { getItemRowInnerHTML, getDiscountContainerHTML, getContainerIVAHTML, getSearchClientContainerHTML } from "./salesDom.js";
-import { getState, updateState } from "./stateSales.js";
-import { getIVA, getTotal, getSubTotal } from "./salesCalculations.js";
+import { getState, updateState } from "./state.js";
+import { getIVA, getTotal, getSubTotal } from "./calculations.js";
 import { newAlert } from "../utils/alerts.js";
-import Class from "./salesConsts.js";
+import Class from "./consts.js";
 
 /**
  * 
