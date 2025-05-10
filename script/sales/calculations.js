@@ -1,5 +1,7 @@
+import { validateValue } from "./utils";
+
 export const getIVA = (item, IVA) => {
-    return parseFloat((getSubTotal(item) - item.discount) * (IVA / 100));
+    return parseFloat((getSubTotal(item) - item.discount) * (validateValue(IVA) / 100));
 };
 
 export const getTotal = (item) => {
@@ -9,3 +11,18 @@ export const getTotal = (item) => {
 export const getSubTotal = (item) => {
     return item.quantity * item.price;
 }
+
+/**
+ * 
+ * @param {HTMLElement} typeOfDiscount  // Elemento que contiene el tipo de descuento (si es porcentaje o no)
+ * @param {float} discount              // Cantidad de descuento 
+ * @param {float} amount                // Monto actual
+ * @returns {float}                     // Cantidad final a descontar
+ */
+export const getDiscount = (typeOfDiscount, discount, amount) => {
+    if (!typeOfDiscount && !(typeOfDiscount instanceof HTMLElement)) {
+        throw new Error('No se puede aplicar el descuento');
+    }
+
+    return typeOfDiscount.checked ? discount : amount * (discount / 100);
+};

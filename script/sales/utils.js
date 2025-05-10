@@ -1,16 +1,16 @@
 import { getItemRowInnerHTML, getDiscountContainerHTML, getContainerIVAHTML, getSearchClientContainerHTML } from "./salesDom.js";
 import { getState, updateState } from "./state.js";
-import { getIVA, getTotal, getSubTotal } from "./calculations.js";
+import { getIVA, getTotal, getSubTotal, getDiscount } from "./calculations.js";
 import { newAlert } from "../utils/alerts.js";
 import Class from "./consts.js";
 
 /**
  * 
- * @param {HTMLElement} element 
- * @returns {HTMLElement}
+ * @param {HTMLElement} element     // Elemento HTML
+ * @returns {HTMLElement} element   // Regresa el elemento validado
  */
 export const validateElement = (element) => {
-    if (!element) {
+    if (!element || !(element instanceof HTMLElement)) {
         throw new Error("Elemento no existe en el DOM");
     }
 
@@ -71,11 +71,14 @@ export const handleQuantityButton = (button, index) => {
 
         const finalData = newData
             .filter(item => item.quantity > 0)
-            .map((item, i, filteredData) => ({
+            .map((item, i) => ({
                 ...item,
                 position: i,
-                iva: getIVA(item, previousData.percentIva),
-                amount: getTotal(filteredData[i])
+                iva: getIVA(item, previousData.percentIva)
+            }))
+            .map(item => ({
+                ...item,
+                amount: getTotal(item)
             }));
         
         return {
@@ -94,7 +97,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
         if (regex.test(discountStr) && discountStr !== "" && !isNaN(parseFloat(discountStr))) {
             const item = getState().data[index];
             const actualAmount = getSubTotal(item);
-            const amountToDiscount = typeOfDiscount.checked ? parseFloat(discountStr) : actualAmount * (parseFloat(discountStr) / 100);
+            const amountToDiscount = getDiscount(typeOfDiscount, parseFloat(discountStr), actualAmount);
 
             if (amountToDiscount < actualAmount) {
                 updateState(previousData => {
@@ -165,18 +168,24 @@ export const insertNewHTML = (innerHTML) => {
 };
 
 export const closeOverlay = (element) => {
-    if (element) element.remove();
+    if (element instanceof HTMLElement && typeof element !== 'undefined' && element) {
+        element.remove();
+    }
 };
 
-export const validateValue = (button) => {
+export const validateValue = (element) => {
     try {
         let value = 0;
-        if ('id' in button.dataset) {
-            value = parseInt(button.dataset.id, 10);
-        }
+        if (element instanceof HTMLElement && typeof element !== 'undefined') {
+            if ('id' in element.dataset) {
+                value = parseInt(element.dataset.id, 10);
+            }
 
-        if ('value' in button.dataset) {
-            value = parseInt(button.dataset.value, 10);
+            if ('value' in element.dataset) {
+                value = parseInt(element.dataset.value, 10);
+            }
+        } else if (element && !isNaN(element) && element !== '') {
+            value = parseInt(element, 10);
         }
 
         return value;

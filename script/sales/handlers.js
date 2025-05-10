@@ -5,7 +5,7 @@ import * as utils from "./utils.js";
 import Class from "./consts.js";
 
 export const handlerAddItem = ({ itemSearched, products, percentIva }) => {
-    let itemSKU = parseInt(itemSearched.value, 10);
+    let itemSKU = utils.validateValue(itemSearched.value);
 
     if (itemSKU) {
         const productSearched = products.find(product => product.sku == itemSKU);
