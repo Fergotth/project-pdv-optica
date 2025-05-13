@@ -116,3 +116,10 @@ export const handlerBtnCancelClient = () => {
 export const handlerBtnSearchClient = ({ dom, name }) => {
     prompt.showPromptClients(dom, name);
 };
+
+export const handlerClientName = ({ name, id }) => {
+    const nameInput = document.querySelector(Class.inputName);
+    nameInput.setAttribute('data-id', id);
+    nameInput.value = name;
+    handlerBtnCancelClient();
+};

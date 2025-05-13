@@ -53,5 +53,10 @@ export const getHandlerArgs = {
         name: validateElement(document.querySelector(Class.client)).value
     }),
     
-    handlerBtnCancelClient: () => ({})
+    handlerBtnCancelClient: () => ({}),
+
+    handlerClientName: (button) => ({
+        name: button.textContent,
+        id: validateValue(button)
+    })
 };

@@ -192,6 +192,31 @@ export const searchClient = (clients, name) => {
     );
 };
 
+/**
+ * 
+ * @param {HTMLElement} dom     // Contenedor donde se esta trabajando
+ * @param {Object} client       // Objeto que contiene los clientes a mostrar
+ */
+export const addClientToList = (dom, client) => {
+    const newElement = dom.querySelector('label');
+    let listClients = dom.querySelector(Class.listClients);
+
+    if (!listClients) {
+        newElement.insertAdjacentHTML('afterend', '<div class="listClients"></div>');
+        listClients = dom.querySelector(Class.listClients);
+    } else {
+        listClients.innerHTML = '';
+    }
+
+    if (!dom.classList.contains('resizeForm')) {
+        dom.classList.add('resizeForm');
+    }
+
+    for(let item of client) {
+        listClients.appendChild(insertNewHTML(`<span class="clientName" data-id="${item.id}">${item.name}</span>`));
+    }
+};
+
 const formatMoney = (item) => {
     validateValue(item);
     return Number(item).toFixed(2);

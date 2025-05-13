@@ -1,6 +1,5 @@
 import { getDiscountContainerHTML, getContainerIVAHTML, getSearchClientContainerHTML } from "./salesDom.js";
-import { insertNewHTML } from "./utils.js";
-import { searchClient } from "./utils.js";
+import { insertNewHTML, searchClient, addClientToList } from "./utils.js";
 import { newAlert } from "../utils/alerts.js";
 import clients from "../../data/clients.js";
 
@@ -22,7 +21,7 @@ export const showPromptClients = (dom, name) => {
             const client = searchClient(clients, name);
 
             if (!!client.length) { 
-                dom.classList.add('resizeForm');
+                addClientToList(dom, client);
             } else {
                 newAlert({
                     icon: "info",

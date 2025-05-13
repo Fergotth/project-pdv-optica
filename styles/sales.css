@@ -466,13 +466,13 @@ input:hover {
     color: white;
 }
 
-.formDiscount div, .formSearchClient div {
+.formDiscount div, .formSearchClient .btnContainerClients {
     display: flex; 
     justify-content: flex-end; 
     gap: 1rem;
 }
 
-.formDiscount div button, .formSearchClient div button {
+.formDiscount div button, .formSearchClient .btnContainerClients button {
     padding: 0.5rem 1rem; 
     border-radius: 0.5rem; 
     color: white; 
@@ -485,12 +485,59 @@ input:hover {
     height: 300px;
 }
 
-.resizeForm div {
+.resizeForm .btnContainerClients {
     display: flex;
     right: 1rem;
     position: absolute;
     bottom: 0.7rem;
 }
+
+/* Lista de cliente */
+.listClients {
+    justify-content: flex-start;
+    margin-top: 0;
+    height: 60%;
+    background-color: #1f2937;
+    overflow-y: auto;
+}
+
+.listClients span {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 3px);
+    padding: 3px 0 3px 3px;
+    font-size: 1.2rem;
+    user-select: none;
+}
+
+.listClients span:hover {
+    transition: background-color 0.3s;
+    background-color: #3A5A74;
+    cursor: pointer;
+}
+
+/* Scrollbar para navegadores WebKit */
+.listClients::-webkit-scrollbar {
+    width: 8px;
+}
+
+  /* Fondo de la barra (track) */
+.listClients::-webkit-scrollbar-track {
+    background: #2a2a3b;
+}
+
+
+  /* La barra en sí (thumb) */
+.listClients::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+  /* Hover del thumb */
+.listClients::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 /* botones radio del contener de descuentos */
 .radio-input {
     display: flex;

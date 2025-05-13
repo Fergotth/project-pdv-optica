@@ -11,7 +11,9 @@ const Class = {
     typeOfDiscount: 'value-1',
     form: '.formSales',
     formClients: '.formSearchClient',
-    client: '.inputClient'
+    client: '.inputClient',
+    listClients: '.listClients',
+    inputName: '.container--clientName'
 };
 
 export default Class;

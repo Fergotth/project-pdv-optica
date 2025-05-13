@@ -87,7 +87,7 @@ export const getSearchClientContainerHTML = () => {
                 <span>Nombre del cliente</span>
                 <input type="text" class="inputClient"/>
             </label>
-            <div>
+            <div class="btnContainerClients">
                 <button type="button" class="btnCancelClient" style="background-color: #374151;">Cancelar</button>
                 <button type="button" class="btnSearchClient" style="background-color: #2563eb;">Buscar</button>
             </div>
