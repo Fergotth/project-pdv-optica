@@ -82,7 +82,7 @@ export const getContainerIVAHTML = () => {
 export const getSearchClientContainerHTML = () => {
     return `
     <div class="overlay">   
-        <form class="formDiscount">
+        <form class="formSearchClient">
             <label>
                 <span>Nombre del cliente</span>
                 <input type="text" class="inputClient"/>

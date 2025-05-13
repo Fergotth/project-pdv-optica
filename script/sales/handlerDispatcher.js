@@ -43,12 +43,15 @@ export const getHandlerArgs = {
     handlerTypeOfIva: (button) => ({
         percentIva: validateValue(button)
     }),
-
-    handlerBtnSearchClient: () => ({}),
-    
-    handlerBtnCancelClient: () => ({}),
     
     handlerSearchClient: () => ({
         dom: validateElement(document.querySelector(Class.form))
-    })
+    }),
+    
+    handlerBtnSearchClient: () => ({
+        dom: validateElement(document.querySelector(Class.formClients)),
+        name: validateElement(document.querySelector(Class.client)).value
+    }),
+    
+    handlerBtnCancelClient: () => ({})
 };

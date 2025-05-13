@@ -543,7 +543,8 @@ const products = [
         "id": 61,
         "sku": "010101",
         "category": "frame",
-        "material": "metal",
+        "material": "Metal",
+        "model": "A1687",
         "description": "@VER",
         "price": 649,
         "image": ""

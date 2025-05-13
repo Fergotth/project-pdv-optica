@@ -1,6 +1,7 @@
 import { getState, updateState } from "./state.js";
 import { newAlert } from "../utils/alerts.js";
 import { getIVA, getTotal } from "./calculations.js";
+import * as prompt from "./prompts.js";
 import * as utils from "./utils.js";
 import Class from "./consts.js";
 
@@ -14,7 +15,7 @@ export const handlerAddItem = ({ itemSearched, products, percentIva }) => {
             updateState(previousData => {
                 const newData = [...previousData.data, {
                     price: productSearched.price,
-                    description: productSearched.description,
+                    description: productSearched.category === 'frame' ? `${productSearched.description} ${productSearched.model}` : productSearched.description,
                     material: productSearched.material,
                     quantity: productSearched.category === 'lenses' ? 2 : 1,
                     discount: 0,
@@ -64,7 +65,7 @@ export const handlerPlus = ({ button, index }) => {
 };
 
 export const handlerDiscount = ({ index, dom }) => {
-    utils.showPromptDiscount(index, dom);
+    prompt.showPromptDiscount(index, dom);
 };
 
 export const handlerBtnCancel = ({ button }) => {
@@ -76,7 +77,7 @@ export const handlerBtnAccept = ({ button, input, typeOfDiscount, index }) => {
 };
 
 export const handlerIva = ({ dom }) => {
-    utils.showPromptIVA(dom);
+    prompt.showPromptIVA(dom);
 };
 
 export const handlerTypeOfIva = ({ percentIva }) => {
@@ -105,13 +106,13 @@ export const handlerTypeOfIva = ({ percentIva }) => {
 };
 
 export const handlerSearchClient = ({ dom }) => {
-    utils.showPromptSearchClient(dom);
+    prompt.showPromptSearchClient(dom);
 };
 
 export const handlerBtnCancelClient = () => {
     utils.closeOverlay(document.querySelector(Class.overlay));
 };
 
-export const handlerBtnSearchClient = () => {
-    utils.closeOverlay(document.querySelector(Class.overlay));
+export const handlerBtnSearchClient = ({ dom, name }) => {
+    prompt.showPromptClients(dom, name);
 };

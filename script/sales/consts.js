@@ -9,7 +9,9 @@ const Class = {
     inputArticle: '.container--inputArticule',
     inputDiscount: '.inputDiscount',
     typeOfDiscount: 'value-1',
-    form: '.formSales'
+    form: '.formSales',
+    formClients: '.formSearchClient',
+    client: '.inputClient'
 };
 
 export default Class;

@@ -1,4 +1,4 @@
-import { getItemRowInnerHTML, getDiscountContainerHTML, getContainerIVAHTML, getSearchClientContainerHTML } from "./salesDom.js";
+import { getItemRowInnerHTML } from "./salesDom.js";
 import { getState, updateState } from "./state.js";
 import { getIVA, getTotal, getSubTotal, getDiscount } from "./calculations.js";
 import { newAlert } from "../utils/alerts.js";
@@ -7,7 +7,7 @@ import Class from "./consts.js";
 /**
  * 
  * @param {HTMLElement} element     // Elemento HTML
- * @returns {HTMLElement} element   // Regresa el elemento validado
+ * @returns {HTMLElement}           // Regresa el elemento validado
  */
 export const validateElement = (element) => {
     if (!element || !(element instanceof HTMLElement)) {
@@ -15,6 +15,32 @@ export const validateElement = (element) => {
     }
 
     return element;
+};
+
+/**
+ * 
+ * @param {HTMLElement | Number} element    // Elemento HTML o dato numerico
+ * @returns                                 // Valor numerico
+ */
+export const validateValue = (element) => {
+    try {
+        let value = 0;
+        if (element && element instanceof HTMLElement && typeof element !== 'undefined') {
+            if ('id' in element.dataset) {
+                value = Number(element.dataset.id);
+            }
+
+            if ('value' in element.dataset) {
+                value = Number(element.dataset.value);
+            }
+        } else if (element && !isNaN(element) && element !== '') {
+            value = Number(element);
+        }
+
+        return value;
+    } catch (error) {
+        throw new Error('Valor incorrecto o tipo de dato incorrecto');
+    }
 };
 
 /**
@@ -40,14 +66,6 @@ export const refreshDataHTML = (newData) => {
         discount += item.discount;
         total += item.amount;
         listProduct.appendChild(newItem);
-    }
-
-    const formatMoney = (item) => {
-        if (isNaN(item)) {
-            throw new Error('Valor invalido');
-        }
-
-        return parseFloat(item).toFixed(2);
     }
 
     subtotalLabel.textContent = `$${formatMoney(subtotal)}`;
@@ -94,10 +112,10 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
         const regex = /^(?:\d+)(?:\.\d{1,2})?$/;
         const discountStr = input.value.trim();
 
-        if (regex.test(discountStr) && discountStr !== "" && !isNaN(parseFloat(discountStr))) {
+        if (regex.test(discountStr) && discountStr !== "" && !isNaN(Number(discountStr))) {
             const item = getState().data[index];
             const actualAmount = getSubTotal(item);
-            const amountToDiscount = getDiscount(typeOfDiscount, parseFloat(discountStr), actualAmount);
+            const amountToDiscount = getDiscount(typeOfDiscount, Number(discountStr), actualAmount);
 
             if (amountToDiscount < actualAmount) {
                 updateState(previousData => {
@@ -105,7 +123,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
 
                     const updatedItem = {
                         ...newData[index],
-                        discount: parseFloat(amountToDiscount)
+                        discount: Number(amountToDiscount)
                     };
 
                     updatedItem.iva = getIVA(updatedItem, updatedItem.percentIva);
@@ -118,7 +136,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
                 });                  
 
                 refreshDataHTML(getState().data);
-                closeOverlay(document.querySelector(Class.overlay));
+                closeOverlay(validateElement(document.querySelector(Class.overlay)));
             } else {
                 newAlert({
                     title: "AVISO",
@@ -134,27 +152,15 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
             });
         }
     } else {
-        closeOverlay(document.querySelector(Class.overlay));
+        closeOverlay(validateElement(document.querySelector(Class.overlay)));
     }
-};
-
-export const showPromptIVA = (element) => {
-    element.appendChild(insertNewHTML(getContainerIVAHTML()));
-};
-
-export const showPromptDiscount = (index, element) => {
-    element.appendChild(insertNewHTML(getDiscountContainerHTML(index)));
 };
 
 export const changeLabelIva = (percentIva) => {
-    const ivaLabel = document.querySelector(Class.percent);
+    const ivaLabel = validateElement(document.querySelector(Class.percent));
     if (ivaLabel) {
         ivaLabel.textContent = `${percentIva}%`;
     }
-};
-
-export const showPromptSearchClient = (element) => {
-    element.appendChild(insertNewHTML(getSearchClientContainerHTML()));
 };
 
 export const insertNewHTML = (innerHTML) => {
@@ -168,28 +174,25 @@ export const insertNewHTML = (innerHTML) => {
 };
 
 export const closeOverlay = (element) => {
-    if (element instanceof HTMLElement && typeof element !== 'undefined' && element) {
-        element.remove();
-    }
+    element.remove();
 };
 
-export const validateValue = (element) => {
-    try {
-        let value = 0;
-        if (element instanceof HTMLElement && typeof element !== 'undefined') {
-            if ('id' in element.dataset) {
-                value = parseInt(element.dataset.id, 10);
-            }
-
-            if ('value' in element.dataset) {
-                value = parseInt(element.dataset.value, 10);
-            }
-        } else if (element && !isNaN(element) && element !== '') {
-            value = parseInt(element, 10);
-        }
-
-        return value;
-    } catch (error) {
-        throw new Error('Valor no encontrado');
-    }
+export const searchClient = (clients, name) => {
+    return (
+        clients.filter(px => {
+        const inName = px.name.toLowerCase().includes(name.toLowerCase());
+        const inLastName = px.lastName.toLowerCase().includes(name.toLowerCase());
+        
+        return inName || inLastName;
+        })
+        .map(px => ({
+            id: px.id,
+            name: `${px.name} ${px.lastName}`
+        }))
+    );
 };
+
+const formatMoney = (item) => {
+    validateValue(item);
+    return Number(item).toFixed(2);
+}

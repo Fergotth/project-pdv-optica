@@ -1,7 +1,7 @@
-import { validateValue } from "./utils";
+import { validateValue } from "./utils.js";
 
 export const getIVA = (item, IVA) => {
-    return parseFloat((getSubTotal(item) - item.discount) * (validateValue(IVA) / 100));
+    return Number((getSubTotal(item) - item.discount) * (validateValue(IVA) / 100));
 };
 
 export const getTotal = (item) => {

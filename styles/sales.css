@@ -425,6 +425,7 @@ input:hover {
     
 }
 
+/* Elemento que se usa como fondo debajo de algun prompt o form */
 .overlay {
     position: absolute;
     background-color: transparent;
@@ -433,7 +434,8 @@ input:hover {
     z-index: 200;
 }
 
-.formDiscount {
+/* Forms */
+.formDiscount, .formSearchClient {
     position: absolute;
     display: flex;
     flex-direction: column; gap: 1rem;
@@ -449,13 +451,13 @@ input:hover {
     z-index: 210;
 }
 
-.formDiscount label {
+.formDiscount label, .formSearchClient label {
     display: flex; 
     flex-direction: column; 
     gap: 0.5rem;
 }
 
-.formDiscount label input[type="text"] {
+.formDiscount label input[type="text"], .formSearchClient input[type="text"] {
     padding: 0.5rem; 
     border-radius: 0.5rem; 
     border: none; 
@@ -464,19 +466,31 @@ input:hover {
     color: white;
 }
 
-.formDiscount div {
+.formDiscount div, .formSearchClient div {
     display: flex; 
     justify-content: flex-end; 
     gap: 1rem;
 }
 
-.formDiscount div button {
+.formDiscount div button, .formSearchClient div button {
     padding: 0.5rem 1rem; 
     border-radius: 0.5rem; 
     color: white; 
     border: none;
 }
 
+/* Ajuste del formSearchClient */
+.resizeForm {
+    transition: height 0.3s;
+    height: 300px;
+}
+
+.resizeForm div {
+    display: flex;
+    right: 1rem;
+    position: absolute;
+    bottom: 0.7rem;
+}
 /* botones radio del contener de descuentos */
 .radio-input {
     display: flex;
