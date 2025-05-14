@@ -106,8 +106,8 @@ export const handlerBtnCancel = ({ button }) => {
  * 
  * @param {Object} params                       // Valores recibidos en el objeto
  * @param {HTMLElement} params.button           // Elemento seleccionado
- * @param {HTMLElement} params.input            // Elemento que contiene el valor a decontar
- * @param {HTMLElement} params.typeOfDiscount   // Elemento que contine el tipo de descuento
+ * @param {HTMLElement} params.input            // Elemento que contiene el valor base a descontar
+ * @param {HTMLElement} params.typeOfDiscount   // Elemento que contiene el tipo de descuento
  * @param {Number} params.index                 // Indice del elemento
  */
 export const handlerBtnAccept = ({ button, input, typeOfDiscount, index }) => {
@@ -117,7 +117,7 @@ export const handlerBtnAccept = ({ button, input, typeOfDiscount, index }) => {
 /**
  * 
  * @param {Object} param            // Valor recibido en el objeto
- * @param {HTMLElement} param.dom   // Elemento padre donde se insertara el nuebo elemento 
+ * @param {HTMLElement} param.dom   // Elemento padre donde se insertara el nuevo elemento 
  */
 export const handlerIva = ({ dom }) => {
     prompt.showPromptIVA(dom);
@@ -148,7 +148,7 @@ export const handlerTypeOfIva = ({ percentIva }) => {
         };
     });
     
-    utils.closeOverlay(document.querySelector(Class.overlay));
+    utils.closeOverlay(document.querySelector(Class.main.overlay));
     utils.changeLabelIva(percentIva);
     utils.refreshDataHTML(getState().data);
 };
@@ -166,14 +166,14 @@ export const handlerSearchClient = ({ dom }) => {
  * No recibe argumentos, solo quita la capa overlay
  */
 export const handlerBtnCancelClient = () => {
-    utils.closeOverlay(document.querySelector(Class.overlay));
+    utils.closeOverlay(document.querySelector(Class.main.overlay));
 };
 
 /**
  * 
- * @param {Object} params
- * @param {HTMLElement} params.dom
- * @param {String} params.name 
+ * @param {Object} params           // Valores recibidos en el objeto
+ * @param {HTMLElement} params.dom  // Elemento padre donde se insertara el nuevo elemento
+ * @param {String} params.name      // Nombre del cliente
  */
 export const handlerBtnSearchClient = ({ dom, name }) => {
     prompt.showPromptClients(dom, name);
@@ -181,12 +181,12 @@ export const handlerBtnSearchClient = ({ dom, name }) => {
 
 /**
  * 
- * @param {Object} params
- * @param {String} params.name
- * @param {Number} params.id 
+ * @param {Object} params       // Valores recibidos en el objeto
+ * @param {String} params.name  // Nombre del cliente
+ * @param {Number} params.id    // ID del cliente
  */
 export const handlerClientName = ({ name, id }) => {
-    const nameInput = document.querySelector(Class.inputName);
+    const nameInput = document.querySelector(Class.input.name);
     nameInput.setAttribute('data-id', id);
     nameInput.value = name;
     handlerBtnCancelClient();

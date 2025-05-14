@@ -8,7 +8,7 @@ import Class from "./consts.js";
  */
 export const getHandlerArgs = {
     handlerAddItem: () => ({
-        itemSearched: validateElement(document.querySelector(Class.inputArticle)),
+        itemSearched: validateElement(document.querySelector(Class.input.article)),
         products,
         percentIva: getState().percentIva
     }),
@@ -25,7 +25,7 @@ export const getHandlerArgs = {
 
     handlerDiscount: (button) => ({
         index: validateValue(button),
-        dom: validateElement(document.querySelector(Class.form))
+        dom: validateElement(document.querySelector(Class.form.sales))
     }),
 
     handlerBtnCancel: (button) => ({
@@ -34,13 +34,13 @@ export const getHandlerArgs = {
 
     handlerBtnAccept: (button) => ({
         button,
-        input: validateElement(document.querySelector(Class.inputDiscount)),
-        typeOfDiscount: validateElement(document.getElementById(Class.typeOfDiscount)),
+        input: validateElement(document.querySelector(Class.input.discount)),
+        typeOfDiscount: validateElement(document.getElementById(Class.input.typeOfDiscount)),
         index: validateValue(button)
     }),
 
     handlerIva: () => ({
-        dom: validateElement(document.querySelector(Class.form))
+        dom: validateElement(document.querySelector(Class.form.sales))
     }),
 
     handlerTypeOfIva: (button) => ({
@@ -48,12 +48,12 @@ export const getHandlerArgs = {
     }),
     
     handlerSearchClient: () => ({
-        dom: validateElement(document.querySelector(Class.form))
+        dom: validateElement(document.querySelector(Class.form.sales))
     }),
     
     handlerBtnSearchClient: () => ({
-        dom: validateElement(document.querySelector(Class.formClients)),
-        name: validateElement(document.querySelector(Class.client)).value
+        dom: validateElement(document.querySelector(Class.form.clients)),
+        name: validateElement(document.querySelector(Class.input.client)).value
     }),
     
     handlerBtnCancelClient: () => ({}),

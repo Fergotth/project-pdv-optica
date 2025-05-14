@@ -48,11 +48,11 @@ export const validateValue = (element) => {
  * @param {Object} newData // Objeto que contiene los datos del nuevo producto a mostrar
  */
 export const refreshDataHTML = (newData) => {
-    const listProduct = validateElement(document.querySelector(Class.listProduct));
-    const totalLabel = validateElement(document.querySelector(Class.total));
-    const subtotalLabel = validateElement(document.querySelector(Class.subTotal));
-    const ivaLabel = validateElement(document.querySelector(Class.iva));
-    const discountLabel = validateElement(document.querySelector(Class.discount));
+    const listProduct = validateElement(document.querySelector(Class.list.products));
+    const totalLabel = validateElement(document.querySelector(Class.label.total));
+    const subtotalLabel = validateElement(document.querySelector(Class.label.subTotal));
+    const ivaLabel = validateElement(document.querySelector(Class.label.iva));
+    const discountLabel = validateElement(document.querySelector(Class.label.discount));
     let total = 0, subtotal = 0, iva = 0, discount = 0;
 
     listProduct.innerHTML = '';
@@ -148,7 +148,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
                 });                  
 
                 refreshDataHTML(getState().data);
-                closeOverlay(validateElement(document.querySelector(Class.overlay)));
+                closeOverlay(validateElement(document.querySelector(Class.main.overlay)));
             } else {
                 newAlert({
                     title: "AVISO",
@@ -164,7 +164,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
             });
         }
     } else {
-        closeOverlay(validateElement(document.querySelector(Class.overlay)));
+        closeOverlay(validateElement(document.querySelector(Class.main.overlay)));
     }
 };
 
@@ -172,7 +172,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
  * @param {Integer} percentIva  // Porcentaje de IVA
  */
 export const changeLabelIva = (percentIva) => {
-    const ivaLabel = validateElement(document.querySelector(Class.percent));
+    const ivaLabel = validateElement(document.querySelector(Class.label.percent));
     if (ivaLabel) {
         ivaLabel.textContent = `${percentIva}%`;
     }
@@ -229,11 +229,11 @@ export const searchClient = (clients, name) => {
  */
 export const addClientToList = (dom, client) => {
     const newElement = dom.querySelector('label');
-    let listClients = dom.querySelector(Class.listClients);
+    let listClients = dom.querySelector(Class.list.clients);
 
     if (!listClients) {
         newElement.insertAdjacentHTML('afterend', '<div class="listClients"></div>');
-        listClients = dom.querySelector(Class.listClients);
+        listClients = dom.querySelector(Class.list.clients);
     } else {
         listClients.innerHTML = '';
     }
