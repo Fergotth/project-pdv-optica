@@ -3,6 +3,9 @@ import { validateElement, validateValue } from "./utils.js";
 import products from "../../data/products.js";
 import Class from "./consts.js";
 
+/**
+ * Definiciones de los valores a pasar a las funciones a llamar 
+ */
 export const getHandlerArgs = {
     handlerAddItem: () => ({
         itemSearched: validateElement(document.querySelector(Class.inputArticle)),

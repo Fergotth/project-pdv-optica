@@ -5,6 +5,13 @@ import * as prompt from "./prompts.js";
 import * as utils from "./utils.js";
 import Class from "./consts.js";
 
+/**
+ * 
+ * @param {Object} params                   // Valores recibidos en el objeto
+ * @param {HTMLElement} params.itemSearched // Elemento con el input del valor a buscar
+ * @param {Object} params.products          // Objeto que contiene los productos
+ * @param {Number} params.percentIva        // Valor del porcentaje del IVA
+ */
 export const handlerAddItem = ({ itemSearched, products, percentIva }) => {
     let itemSKU = utils.validateValue(itemSearched.value);
 
@@ -54,32 +61,73 @@ export const handlerAddItem = ({ itemSearched, products, percentIva }) => {
     itemSearched.value = '';
 };
 
+/**
+ * 
+ * @param {Object} params               // Valores recibidos en el objeto
+ * @param {HTMLElement} params.button   // Elemento que se selecciono
+ * @param {Number} params.index         // Indice del elemento seleccionado
+ */
 export const handlerMinus = ({ button, index }) => {
     utils.handleQuantityButton(button, index);
     utils.refreshDataHTML(getState().data);
 };
 
+/**
+ * 
+ * @param {Object} params               // Valores recibidos en el objeto
+ * @param {HTMLElement} params.button   // Elemento que se selecciono
+ * @param {Number} params.index         // Indice del elemento seleccionado
+ */
 export const handlerPlus = ({ button, index }) => {
     utils.handleQuantityButton(button, index);
     utils.refreshDataHTML(getState().data);
 };
 
+/**
+ * 
+ * @param {Object} params           // Valores recibidos en el objeto
+ * @param {Number} params.index     // Indice del elemento seleccionado
+ * @param {HTMLElement} params.dom  // Elemento padre para insertar el nuevo elemento
+ */
 export const handlerDiscount = ({ index, dom }) => {
     prompt.showPromptDiscount(index, dom);
 };
 
+/**
+ * 
+ * @param {Object} param                // Valor recibido en el objeto
+ * @param {HTMLElement} param.button    // Elemento seleccionado 
+ */
 export const handlerBtnCancel = ({ button }) => {
     utils.setDiscount( {button} );
 };
 
+/**
+ * 
+ * @param {Object} params                       // Valores recibidos en el objeto
+ * @param {HTMLElement} params.button           // Elemento seleccionado
+ * @param {HTMLElement} params.input            // Elemento que contiene el valor a decontar
+ * @param {HTMLElement} params.typeOfDiscount   // Elemento que contine el tipo de descuento
+ * @param {Number} params.index                 // Indice del elemento
+ */
 export const handlerBtnAccept = ({ button, input, typeOfDiscount, index }) => {
     utils.setDiscount({ button, input, typeOfDiscount, index });
 };
 
+/**
+ * 
+ * @param {Object} param            // Valor recibido en el objeto
+ * @param {HTMLElement} param.dom   // Elemento padre donde se insertara el nuebo elemento 
+ */
 export const handlerIva = ({ dom }) => {
     prompt.showPromptIVA(dom);
 };
 
+/**
+ * 
+ * @param {Object} param            // Valor recibido en el objeto
+ * @param {Number} param.percentIva // Porcentaje de IVA
+ */
 export const handlerTypeOfIva = ({ percentIva }) => {
     updateState(previousData => {
         const newData = previousData.data.map(item => {
@@ -105,18 +153,38 @@ export const handlerTypeOfIva = ({ percentIva }) => {
     utils.refreshDataHTML(getState().data);
 };
 
+/**
+ * 
+ * @param {Object} param            // Valor recibido en el objeto
+ * @param {HTMLElement} param.dom   // Elemento padre donde se insertara el nuevo elemento 
+ */
 export const handlerSearchClient = ({ dom }) => {
     prompt.showPromptSearchClient(dom);
 };
 
+/**
+ * No recibe argumentos, solo quita la capa overlay
+ */
 export const handlerBtnCancelClient = () => {
     utils.closeOverlay(document.querySelector(Class.overlay));
 };
 
+/**
+ * 
+ * @param {Object} params
+ * @param {HTMLElement} params.dom
+ * @param {String} params.name 
+ */
 export const handlerBtnSearchClient = ({ dom, name }) => {
     prompt.showPromptClients(dom, name);
 };
 
+/**
+ * 
+ * @param {Object} params
+ * @param {String} params.name
+ * @param {Number} params.id 
+ */
 export const handlerClientName = ({ name, id }) => {
     const nameInput = document.querySelector(Class.inputName);
     nameInput.setAttribute('data-id', id);

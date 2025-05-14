@@ -1,13 +1,29 @@
 import { validateValue } from "./utils.js";
 
+/**
+ * 
+ * @param {Object} item 
+ * @param {Number} IVA 
+ * @returns {Number}
+ */
 export const getIVA = (item, IVA) => {
     return Number((getSubTotal(item) - item.discount) * (validateValue(IVA) / 100));
 };
 
+/**
+ * 
+ * @param {Object} item 
+ * @returns {Number}
+ */
 export const getTotal = (item) => {
     return getSubTotal(item) - item.discount + item.iva;
 };
 
+/**
+ * 
+ * @param {Object} item 
+ * @returns {Number}
+ */
 export const getSubTotal = (item) => {
     return item.quantity * item.price;
 }

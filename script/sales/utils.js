@@ -74,6 +74,11 @@ export const refreshDataHTML = (newData) => {
     totalLabel.textContent = `Total: $${formatMoney(total)}`;
 };
 
+/**
+ * 
+ * @param {HTMLElement} button  // Elemento seleccionado
+ * @param {Integer} index       // Indice del objeto
+ */
 export const handleQuantityButton = (button, index) => {
     const isMinus = button.classList.contains('minus');
     const quantity = isMinus ? -1 : 1;
@@ -107,6 +112,13 @@ export const handleQuantityButton = (button, index) => {
     refreshDataHTML(getState().data);
 };
 
+/**
+ * 
+ * @param {HTMLElement} button          // Elemento seleccionado
+ * @param {HTMLElement} input           // Elemento que contiene el valor del input
+ * @param {HTMLElement} typeOfDiscount  // Radio button seleccionado
+ * @param {Integer} index               // Indice del objeto
+ */
 export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
     if (button.classList.contains('btnAccept')) {
         const regex = /^(?:\d+)(?:\.\d{1,2})?$/;
@@ -156,6 +168,9 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
     }
 };
 
+/**
+ * @param {Integer} percentIva  // Porcentaje de IVA
+ */
 export const changeLabelIva = (percentIva) => {
     const ivaLabel = validateElement(document.querySelector(Class.percent));
     if (ivaLabel) {
@@ -163,6 +178,11 @@ export const changeLabelIva = (percentIva) => {
     }
 };
 
+/**
+ * 
+ * @param {String} innerHTML    // String que contiene el HTML para insertar
+ * @returns {HTMLElement} 
+ */
 export const insertNewHTML = (innerHTML) => {
     const parser = new DOMParser();
     const parsed = parser.parseFromString(innerHTML, 'text/html');
@@ -173,10 +193,20 @@ export const insertNewHTML = (innerHTML) => {
     }
 };
 
+/**
+ * 
+ * @param {HTMLElement} element     // Elemento overlay a remover
+ */
 export const closeOverlay = (element) => {
     element.remove();
 };
 
+/**
+ * 
+ * @param {Object} clients  // Objeto que contiene a los clientes
+ * @param {String} name     // Nombre a buscar
+ * @returns {Object}        // Objeto con los clientes encontrados
+ */
 export const searchClient = (clients, name) => {
     return (
         clients.filter(px => {
@@ -217,6 +247,11 @@ export const addClientToList = (dom, client) => {
     }
 };
 
+/**
+ * 
+ * @param {Number} item     // Valor numerico a dar formato de numero 
+ * @returns {Number}
+ */
 const formatMoney = (item) => {
     validateValue(item);
     return Number(item).toFixed(2);
