@@ -9,7 +9,10 @@ import Class from "./consts.js";
  * @param {HTMLElement} element     // Elemento HTML
  * @returns {HTMLElement}           // Regresa el elemento validado
  */
-export const validateElement = (element) => {
+export const validateElement = (strClass) => {
+    
+    const element = strClass.includes('.') ? document.querySelector(strClass) : document.getElementById(strClass);
+
     if (!element || !(element instanceof HTMLElement)) {
         throw new Error("Elemento no existe en el DOM");
     }
@@ -48,11 +51,11 @@ export const validateValue = (element) => {
  * @param {Object} newData // Objeto que contiene los datos del nuevo producto a mostrar
  */
 export const refreshDataHTML = (newData) => {
-    const listProduct = validateElement(document.querySelector(Class.list.products));
-    const totalLabel = validateElement(document.querySelector(Class.label.total));
-    const subtotalLabel = validateElement(document.querySelector(Class.label.subTotal));
-    const ivaLabel = validateElement(document.querySelector(Class.label.iva));
-    const discountLabel = validateElement(document.querySelector(Class.label.discount));
+    const listProduct = validateElement(Class.list.products);
+    const totalLabel = validateElement(Class.label.total);
+    const subtotalLabel = validateElement(Class.label.subTotal);
+    const ivaLabel = validateElement(Class.label.iva);
+    const discountLabel = validateElement(Class.label.discount);
     let total = 0, subtotal = 0, iva = 0, discount = 0;
 
     listProduct.innerHTML = '';
@@ -148,7 +151,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
                 });                  
 
                 refreshDataHTML(getState().data);
-                closeOverlay(validateElement(document.querySelector(Class.main.overlay)));
+                closeOverlay(validateElement(Class.main.overlay));
             } else {
                 newAlert({
                     title: "AVISO",
@@ -164,7 +167,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
             });
         }
     } else {
-        closeOverlay(validateElement(document.querySelector(Class.main.overlay)));
+        closeOverlay(validateElement(Class.main.overlay));
     }
 };
 
@@ -172,7 +175,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
  * @param {Integer} percentIva  // Porcentaje de IVA
  */
 export const changeLabelIva = (percentIva) => {
-    const ivaLabel = validateElement(document.querySelector(Class.label.percent));
+    const ivaLabel = validateElement(Class.label.percent);
     if (ivaLabel) {
         ivaLabel.textContent = `${percentIva}%`;
     }
