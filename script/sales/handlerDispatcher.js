@@ -61,5 +61,9 @@ export const getHandlerArgs = {
     handlerClientName: (button) => ({
         name: button.textContent,
         id: validateValue(button)
+    }),
+
+    handlerBtnPay: () => ({
+        dom: validateElement(Class.form.sales)
     })
 };

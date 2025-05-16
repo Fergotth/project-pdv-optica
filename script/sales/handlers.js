@@ -191,3 +191,7 @@ export const handlerClientName = ({ name, id }) => {
     nameInput.value = name;
     handlerBtnCancelClient();
 };
+
+export const handlerBtnPay = ({ dom }) => {
+    prompt.showSaleResume(dom);
+};

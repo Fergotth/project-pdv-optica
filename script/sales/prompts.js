@@ -1,4 +1,4 @@
-import { getDiscountContainerHTML, getContainerIVAHTML, getSearchClientContainerHTML } from "./salesDom.js";
+import { getDiscountContainerHTML, getContainerIVAHTML, getSearchClientContainerHTML, getTicketContainerHTML } from "./salesDom.js";
 import { insertNewHTML, searchClient, addClientToList } from "./utils.js";
 import { newAlert } from "../utils/alerts.js";
 import clients from "../../data/clients.js";
@@ -58,4 +58,8 @@ export const showPromptClients = (dom, name) => {
     } catch (error) {
         throw new Error('Se encontro un error en el DOM Clients');
     }
+};
+
+export const showSaleResume = (dom) => {
+    dom.appendChild(insertNewHTML(getTicketContainerHTML()));
 };
