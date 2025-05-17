@@ -252,6 +252,25 @@ export const addClientToList = (dom, client) => {
 
 /**
  * 
+ * @param {Object} data 
+ */
+export const insertDataSales = (data) => {
+    const items = validateElement(Class.list.items);
+    const totalLabel = validateElement(Class.label.totalTicket);
+    let total = 0;
+
+    for(const item of data) {
+        let newItem = document.createElement('p');
+        newItem.textContent = `${item.description} ${item.material}`;
+        items.appendChild(newItem);
+        total += getTotal(item);
+    }
+
+    totalLabel.textContent = `$${total.toFixed(2)}`;
+};
+
+/**
+ * 
  * @param {Number} item     // Valor numerico a dar formato de numero 
  * @returns {Number}
  */

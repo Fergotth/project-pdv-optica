@@ -64,6 +64,7 @@ export const getHandlerArgs = {
     }),
 
     handlerBtnPay: () => ({
-        dom: validateElement(Class.form.sales)
+        dom: validateElement(Class.form.sales),
+        data: getState().data
     })
 };

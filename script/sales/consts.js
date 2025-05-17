@@ -15,14 +15,16 @@ const Class = {
     },
     list: {
         products: '.container--shoppingArticles',
-        clients: '.listClients'
+        clients: '.listClients',
+        items: '.items'
     },
     label: {
         total: '.container--totalPrice',
         subTotal: '.subtotalValue span',
         iva: '.ivaValue span',
         discount: '.discountValue span',
-        percent: '.amount--percentIVA'
+        percent: '.amount--percentIVA',
+        totalTicket: '.total'
     }
 };
 

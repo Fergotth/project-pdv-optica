@@ -192,6 +192,15 @@ export const handlerClientName = ({ name, id }) => {
     handlerBtnCancelClient();
 };
 
-export const handlerBtnPay = ({ dom }) => {
-    prompt.showSaleResume(dom);
+export const handlerBtnPay = ({ dom, data }) => {
+    if (!!data.length) {
+        prompt.showSaleResume(dom);
+        utils.insertDataSales(data);
+    } else {
+        newAlert({
+            icon: "info",
+            title: "AVISO",
+            text: "No se registrado ningun articulo para su venta"
+        });
+    }
 };
