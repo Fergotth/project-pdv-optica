@@ -1,10 +1,10 @@
 import { getHandlerArgs } from "./sales/handlerDispatcher.js";
-import { flushState, updateState } from "./sales/state.js";
+import { flushState } from "./sales/state.js";
 import Class from "./sales/consts.js";
 import * as handlers from './sales/handlers.js';
 
 const sales = () => {
-    updateState(flushState);
+    flushState();
     
     document.querySelector(Class.form.sales).addEventListener('submit', (event) => {
         event.preventDefault();

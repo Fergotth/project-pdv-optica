@@ -9,9 +9,10 @@ const Class = {
     input: {
         article: '.container--inputArticule',
         discount: '.inputDiscount',
-        client: '.inputClient',
-        name: '.container--clientName',
-        typeOfDiscount: 'value-1'
+        client: '.inputClient',                 // input del contenedor de busqueda de cliente
+        name: '.container--clientName',         // input del contenedor princiapl
+        typeOfDiscount: 'value-1',
+        payment: '.input_field'                 // input del abono de la venta
     },
     list: {
         products: '.container--shoppingArticles',
@@ -24,7 +25,8 @@ const Class = {
         iva: '.ivaValue span',
         discount: '.discountValue span',
         percent: '.amount--percentIVA',
-        totalTicket: '.total'
+        totalTicket: '.total',              // Total de la nota
+        payment: '.price'                   // Saldo actual de la nota
     }
 };
 

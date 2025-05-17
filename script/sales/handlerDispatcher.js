@@ -65,6 +65,14 @@ export const getHandlerArgs = {
 
     handlerBtnPay: () => ({
         dom: validateElement(Class.form.sales),
-        data: getState().data
-    })
+        data: getState().data,
+        client: validateElement(Class.input.name).value
+    }),
+
+    handlerPaymentBtnApply: () => ({
+        pay: validateElement(Class.input.payment).value,
+        total: validateElement(Class.label.payment).replaceChild(/[^0-9.-]+/g, "")
+    }),
+
+    handlerCheckoutBtnCancel: () => ({})
 };

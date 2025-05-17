@@ -148,7 +148,7 @@ export const handlerTypeOfIva = ({ percentIva }) => {
         };
     });
     
-    utils.closeOverlay(document.querySelector(Class.main.overlay));
+    utils.closeOverlay(utils.validateElement(Class.main.overlay));
     utils.changeLabelIva(percentIva);
     utils.refreshDataHTML(getState().data);
 };
@@ -166,7 +166,7 @@ export const handlerSearchClient = ({ dom }) => {
  * No recibe argumentos, solo quita la capa overlay
  */
 export const handlerBtnCancelClient = () => {
-    utils.closeOverlay(document.querySelector(Class.main.overlay));
+    utils.closeOverlay(utils.validateElement(Class.main.overlay));
 };
 
 /**
@@ -192,10 +192,10 @@ export const handlerClientName = ({ name, id }) => {
     handlerBtnCancelClient();
 };
 
-export const handlerBtnPay = ({ dom, data }) => {
+export const handlerBtnPay = ({ dom, data, client }) => {
     if (!!data.length) {
         prompt.showSaleResume(dom);
-        utils.insertDataSales(data);
+        utils.insertDataSales(data, client);
     } else {
         newAlert({
             icon: "info",
@@ -203,4 +203,12 @@ export const handlerBtnPay = ({ dom, data }) => {
             text: "No se registrado ningun articulo para su venta"
         });
     }
+};
+
+export const handlerCheckoutBtnCancel = () => {
+    utils.closeOverlay(utils.validateElement(Class.main.overlay));
+};
+
+const handlerPaymentBtnApply = ({ pay, total }) => {
+    utils.setPayment(pay, total); // terminar esta funcion
 };

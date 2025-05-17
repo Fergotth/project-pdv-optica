@@ -1,7 +1,6 @@
 let state = {
     data: [],
-    percentIva: 0,
-    client: "Publico General"
+    percentIva: 0
 };
 
 export const getState = () => ({ ...state });
@@ -13,6 +12,5 @@ export const updateState = (updater) => {
 
 export const flushState = () => updateState(() => ({
     data: [],
-    percentIva: 0,
-    client: "Publico General"
+    percentIva: 0
 }));

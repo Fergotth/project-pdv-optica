@@ -821,18 +821,24 @@ hr {
     border-radius: 0 0 19px 19px;
 }
 
+.btnTicketContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .price {
     font-size: 22px;
     color: #ffffff; /* White text */
     font-weight: 900;
 }
 
-.checkout .checkout-btn {
+.checkout .checkoutBtnPay, .checkout .checkoutBtnCancel {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 150px;
+    width: 100px;
     height: 36px;
     background: #555555; /* Medium gray button */
     border-radius: 7px;
@@ -843,7 +849,7 @@ hr {
     transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
 }
 
-.checkout .checkout-btn:hover {
+.checkout .checkoutBtnPay:hover, .checkout .checkoutBtnCancel:hover {
     background-color: #777777; /* Slightly lighter gray on hover */
     cursor: pointer;
 }

@@ -156,7 +156,7 @@ export const getTicketContainerHTML = () => {
                             <span>PAGO</span>
                             <div class="form">
                                 <input class="input_field" placeholder="Cantidad" type="text" />
-                                <button>Aplicar</button>
+                                <button class="paymentBtnApply">Aplicar</button>
                             </div>
                         </div>
                         <hr />
@@ -172,7 +172,10 @@ export const getTicketContainerHTML = () => {
             <div class="card checkout">
                 <div class="footer">
                     <label class="price">$0.00</label>
-                    <button class="checkout-btn">Pagar</button>
+                    <div class="btnTicketContainer">
+                        <button class="checkoutBtnCancel">Cancelar</button>
+                        <button class="checkoutBtnPay">Pagar</button>
+                    </div>
                 </div>
             </div>
         </div>

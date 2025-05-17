@@ -153,7 +153,7 @@ hr {
     font-weight: 900;
 }
 
-.checkout .checkout-btn {
+.checkout .checkoutBtnPay, .checkout .checkoutBtnCancel {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -169,7 +169,7 @@ hr {
     transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
 }
 
-.checkout .checkout-btn:hover {
+.checkout .checkoutBtnPay:hover, .checkout .checkoutBtnCancel:hover {
     background-color: #777777; /* Slightly lighter gray on hover */
     cursor: pointer;
 }

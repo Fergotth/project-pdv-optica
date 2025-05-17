@@ -46,6 +46,10 @@ export const validateValue = (element) => {
     }
 };
 
+const validateRegex = (discount) => {
+    return (/^(?:\d+)(?:\.\d{1,2})?$/.test(discount) && discount !== "" && !isNaN(Number(discount)));
+}
+
 /**
  * 
  * @param {Object} newData // Objeto que contiene los datos del nuevo producto a mostrar
@@ -124,10 +128,9 @@ export const handleQuantityButton = (button, index) => {
  */
 export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
     if (button.classList.contains('btnAccept')) {
-        const regex = /^(?:\d+)(?:\.\d{1,2})?$/;
         const discountStr = input.value.trim();
 
-        if (regex.test(discountStr) && discountStr !== "" && !isNaN(Number(discountStr))) {
+        if (validateRegex(discountStr)) {
             const item = getState().data[index];
             const actualAmount = getSubTotal(item);
             const amountToDiscount = getDiscount(typeOfDiscount, Number(discountStr), actualAmount);
@@ -254,19 +257,29 @@ export const addClientToList = (dom, client) => {
  * 
  * @param {Object} data 
  */
-export const insertDataSales = (data) => {
+export const insertDataSales = (data, client) => {
     const items = validateElement(Class.list.items);
     const totalLabel = validateElement(Class.label.totalTicket);
+    const resumeLabelTicket = validateElement('.titleCard');
+    resumeLabelTicket.textContent = client;
     let total = 0;
 
     for(const item of data) {
-        let newItem = document.createElement('p');
-        newItem.textContent = `${item.description} ${item.material}`;
-        items.appendChild(newItem);
+        items.appendChild(insertNewHTML(`<p>${item.description} ${item.material}</p>`));
         total += getTotal(item);
     }
 
     totalLabel.textContent = `$${total.toFixed(2)}`;
+};
+
+export const setPayment = (pay, total) => {
+    const payment = pay.trim();
+
+    if (validateRegex(payment)) {
+
+    } else {
+        
+    }
 };
 
 /**
