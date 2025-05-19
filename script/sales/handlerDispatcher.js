@@ -1,5 +1,5 @@
 import { getState } from "./state.js";
-import { validateElement, validateValue } from "./utils.js";
+import { validateElement, validateValue } from "./validations.js";
 import products from "../../data/products.js";
 import Class from "./consts.js";
 
@@ -71,7 +71,7 @@ export const getHandlerArgs = {
 
     handlerPaymentBtnApply: () => ({
         pay: validateElement(Class.input.payment).value,
-        total: validateElement(Class.label.payment).replaceChild(/[^0-9.-]+/g, "")
+        total: validateElement(Class.label.payment).textContent.replace(/[^0-9.-]+/g, "")
     }),
 
     handlerCheckoutBtnCancel: () => ({})

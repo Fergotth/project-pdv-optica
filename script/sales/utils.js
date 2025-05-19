@@ -1,54 +1,9 @@
 import { getItemRowInnerHTML } from "./salesDom.js";
 import { getState, updateState } from "./state.js";
 import { getIVA, getTotal, getSubTotal, getDiscount } from "./calculations.js";
+import { validateElement, validatePayment, validateValue, validateRegex  } from "./validations.js";
 import { newAlert } from "../utils/alerts.js";
 import Class from "./consts.js";
-
-/**
- * 
- * @param {HTMLElement} element     // Elemento HTML
- * @returns {HTMLElement}           // Regresa el elemento validado
- */
-export const validateElement = (strClass) => {
-    
-    const element = strClass.includes('.') ? document.querySelector(strClass) : document.getElementById(strClass);
-
-    if (!element || !(element instanceof HTMLElement)) {
-        throw new Error("Elemento no existe en el DOM");
-    }
-
-    return element;
-};
-
-/**
- * 
- * @param {HTMLElement | Number} element    // Elemento HTML o dato numerico
- * @returns                                 // Valor numerico
- */
-export const validateValue = (element) => {
-    try {
-        let value = 0;
-        if (element && element instanceof HTMLElement && typeof element !== 'undefined') {
-            if ('id' in element.dataset) {
-                value = Number(element.dataset.id);
-            }
-
-            if ('value' in element.dataset) {
-                value = Number(element.dataset.value);
-            }
-        } else if (element && !isNaN(element) && element !== '') {
-            value = Number(element);
-        }
-
-        return value;
-    } catch (error) {
-        throw new Error('Valor incorrecto o tipo de dato incorrecto');
-    }
-};
-
-const validateRegex = (discount) => {
-    return (/^(?:\d+)(?:\.\d{1,2})?$/.test(discount) && discount !== "" && !isNaN(Number(discount)));
-}
 
 /**
  * 
@@ -276,9 +231,21 @@ export const setPayment = (pay, total) => {
     const payment = pay.trim();
 
     if (validateRegex(payment)) {
+        if (validatePayment(pay, total)){
 
+        } else {
+            newAlert({
+                icon: "info",
+                title: "Aviso",
+                text: "El abono o pago no puede ser mayor al total de la venta"
+            });
+        }
     } else {
-        
+        newAlert({
+            icon: "info",
+            title: "AVISO",
+            text: "Escriba una cantidad valida"
+        });
     }
 };
 
