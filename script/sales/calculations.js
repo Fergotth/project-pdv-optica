@@ -42,3 +42,13 @@ export const getDiscount = (typeOfDiscount, discount, amount) => {
 
     return typeOfDiscount.checked ? discount : amount * (discount / 100);
 };
+
+/**
+ * 
+ * @param {HTMLElement} priceLabel 
+ * @param {Number} pay
+ * @param {String} 
+ */
+export const getNewPrice = (priceLabel, pay) => {
+    return `$${(Number(priceLabel.textContent.replace("$", "")) + pay).toFixed(2)}`;
+};

@@ -26,7 +26,8 @@ const Class = {
         discount: '.discountValue span',
         percent: '.amount--percentIVA',
         totalTicket: '.total',              // Total de la nota
-        payment: '.price'                   // Saldo actual de la nota
+        payment: '.price',                  // Saldo actual de la nota
+        titleCard: '.titleCard'
     }
 };
 

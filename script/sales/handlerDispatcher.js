@@ -70,7 +70,7 @@ export const getHandlerArgs = {
     }),
 
     handlerPaymentBtnApply: () => ({
-        pay: validateElement(Class.input.payment).value,
+        pay: validateElement(Class.input.payment),
         total: validateElement(Class.label.payment).textContent.replace(/[^0-9.-]+/g, "")
     }),
 

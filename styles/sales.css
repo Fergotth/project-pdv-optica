@@ -796,8 +796,7 @@ hr {
 .payments .details {
     display: grid;
     grid-template-columns: 10fr 1fr;
-    padding: 0px;
-    gap: 5px;
+    gap: 1px;
 }
 
 .payments .details span:nth-child(odd) {
@@ -827,7 +826,7 @@ hr {
     justify-content: space-between;
 }
 
-.price {
+.paymentPrice {
     font-size: 22px;
     color: #ffffff; /* White text */
     font-weight: 900;

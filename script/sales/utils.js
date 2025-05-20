@@ -1,7 +1,7 @@
 import { getItemRowInnerHTML } from "./salesDom.js";
 import { getState, updateState } from "./state.js";
-import { getIVA, getTotal, getSubTotal, getDiscount } from "./calculations.js";
-import { validateElement, validatePayment, validateValue, validateRegex  } from "./validations.js";
+import { getIVA, getTotal, getSubTotal, getDiscount, getNewPrice } from "./calculations.js";
+import { validateElement, validatePayment, validateValue, validateRegex } from "./validations.js";
 import { newAlert } from "../utils/alerts.js";
 import Class from "./consts.js";
 
@@ -210,12 +210,13 @@ export const addClientToList = (dom, client) => {
 
 /**
  * 
- * @param {Object} data 
+ * @param {Object} data     // Objeto con los datos de los articulos de la venta
+ * @param {String} client   // Nombre del cliente
  */
 export const insertDataSales = (data, client) => {
     const items = validateElement(Class.list.items);
     const totalLabel = validateElement(Class.label.totalTicket);
-    const resumeLabelTicket = validateElement('.titleCard');
+    const resumeLabelTicket = validateElement(Class.label.titleCard);
     resumeLabelTicket.textContent = client;
     let total = 0;
 
@@ -227,12 +228,29 @@ export const insertDataSales = (data, client) => {
     totalLabel.textContent = `$${total.toFixed(2)}`;
 };
 
+/**
+ * 
+ * @param {HTMLElement} pay // Input de cantidad a abonar
+ * @param {String} total    // Total de la venta pendiente por pagar
+ */
 export const setPayment = (pay, total) => {
-    const payment = pay.trim();
+    const payment = pay.value.trim();
 
     if (validateRegex(payment)) {
-        if (validatePayment(pay, total)){
-
+        if (validatePayment(payment, total)){
+            const paymentMethod = getMethodPayment();
+            
+            if (paymentMethod) {
+                insertDataPayment(payment, paymentMethod.value);
+                paymentMethod.checked = false;
+                pay.value = '';
+            } else {
+                newAlert({
+                    icon: "info",
+                    title: "AVISO",
+                    text: "No se ha seleccionado la forma de pago"
+                });
+            }
         } else {
             newAlert({
                 icon: "info",
@@ -258,3 +276,25 @@ const formatMoney = (item) => {
     validateValue(item);
     return Number(item).toFixed(2);
 }
+
+/**
+ * 
+ * @returns {HTMLElement}   // Radio button seleccionado de forma de pago
+ */
+const getMethodPayment = () => {
+    const typeOfMethod = document.querySelectorAll('.payment-container input[type="radio"]');
+    return Array.from(typeOfMethod).find(method => method.checked) || null;
+};
+
+/**
+ * @param {String} pay
+ * @param {String} paymentMethod
+ */
+const insertDataPayment = (pay, paymentMethod) => {
+    const paymentsContainer = validateElement('.details');
+    const price = validateElement('.paymentPrice');
+
+    paymentsContainer.appendChild(insertNewHTML(`<span>${paymentMethod}</span>`));
+    paymentsContainer.appendChild(insertNewHTML(`<span>$${Number(pay).toFixed(2)}</span>`));
+    price.textContent = getNewPrice(price, Number(pay));
+};
