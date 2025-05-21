@@ -221,7 +221,7 @@ export const insertDataSales = (data, client) => {
     let total = 0;
 
     for(const item of data) {
-        items.appendChild(insertNewHTML(`<p>${item.description} ${item.material}</p>`));
+        items.appendChild(insertNewHTML(`<p>${item.quantity}x ${item.description} ${item.material}</p>`));
         total += getTotal(item);
     }
 
@@ -236,7 +236,7 @@ export const insertDataSales = (data, client) => {
 export const setPayment = (pay, total) => {
     const payment = pay.value.trim();
 
-    if (validateRegex(payment)) {
+    if (validateRegex(payment)) { debugger
         if (validatePayment(payment, total)){
             const paymentMethod = getMethodPayment();
             
@@ -293,8 +293,18 @@ const getMethodPayment = () => {
 const insertDataPayment = (pay, paymentMethod) => {
     const paymentsContainer = validateElement('.details');
     const price = validateElement('.paymentPrice');
+    const actualAmount = price.textContent.replace("$", "");
+    const total = validateElement(Class.label.totalTicket).textContent.replace("$", "");
 
-    paymentsContainer.appendChild(insertNewHTML(`<span>${paymentMethod}</span>`));
-    paymentsContainer.appendChild(insertNewHTML(`<span>$${Number(pay).toFixed(2)}</span>`));
-    price.textContent = getNewPrice(price, Number(pay));
+    if (validatePayment(Number(pay) + Number(actualAmount), total)) {
+        paymentsContainer.appendChild(insertNewHTML(`<span>${paymentMethod}</span>`));
+        paymentsContainer.appendChild(insertNewHTML(`<span>$${Number(pay).toFixed(2)}</span>`));
+        price.textContent = getNewPrice(price, Number(pay));
+    } else {
+        newAlert({
+            icon: "error",
+            title: "AVISO",
+            text: "El anticipo o pago no puede exceder el total de la venta"
+        });
+    }
 };

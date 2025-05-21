@@ -107,6 +107,8 @@ export const getTicketContainerHTML = () => {
                         <div>
                             <span class="items">ARTICULOS</span>
                             <!-- Se insertata un p para cada articulo -->
+                            <span>Total<span class="total" style="font-size: 1.5rem;"></span>
+                            </span>                            
                         </div>
                         <hr />
                         <div>
@@ -148,7 +150,6 @@ export const getTicketContainerHTML = () => {
                             </div>
                         </div>
                         <hr />
-
                         <div class="payment">
                             <span>PAGO</span>
                             <div class="form">
@@ -159,8 +160,7 @@ export const getTicketContainerHTML = () => {
                         <hr />
                         <div class="payments">
                             <div class="details">
-                                <span>Total</span>
-                                <span class="total">$3000.00</span>
+                                
                             </div>
                         </div>
                     </div>
