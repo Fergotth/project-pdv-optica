@@ -58,3 +58,13 @@ export const validateRegex = (discount) => {
 export const validatePayment = (payment, total) => {
     return Number(total) >= Number(payment);
 };
+
+/**
+ * 
+ * @param {HTMLElement} element 
+ * @param {Number} height 
+ * @returns {boolean}
+ */
+export const validateMaxHeight = (element, height) => {
+    return element.offsetHeight > window.innerHeight * height;
+}
