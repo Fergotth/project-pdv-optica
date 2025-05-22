@@ -1,7 +1,7 @@
 import { getItemRowInnerHTML } from "./salesDom.js";
 import { getState, updateState } from "./state.js";
 import { getIVA, getTotal, getSubTotal, getDiscount, getNewPrice } from "./calculations.js";
-import { validateElement, validatePayment, validateValue, validateRegex } from "./validations.js";
+import { validateElement, validatePayment, validateValue, validateRegex, validateMaxHeight } from "./validations.js";
 import { newAlert } from "../utils/alerts.js";
 import Class from "./consts.js";
 
@@ -300,6 +300,10 @@ const insertDataPayment = (pay, paymentMethod) => {
         paymentsContainer.appendChild(insertNewHTML(`<span>${paymentMethod}</span>`));
         paymentsContainer.appendChild(insertNewHTML(`<span>$${Number(pay).toFixed(2)}</span>`));
         price.textContent = getNewPrice(price, Number(pay));
+    
+        if (validateMaxHeight(document.querySelector('.containerTicket'), 0.89) && !paymentsContainer.classList.contains('itemScroll')) {
+            paymentsContainer.classList.add('itemsScroll');
+        }
     } else {
         newAlert({
             icon: "error",

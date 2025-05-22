@@ -283,38 +283,32 @@ input:hover {
     background: #555;
 }
 
-.container--iconPay,
-.container--iconQuote,
-.container--iconRecoverQuote,
-.container--iconCancel {
-    position: relative; /* Necesario para que el tooltip se posicione correctamente */
+/* Scroll bar para el contenedor items (los pagos a la venta del ticket  */
+/* Scrollbar para navegadores WebKit */
+.itemsScroll {
+    overflow-y: auto;
+    height: 63px;
 }
 
-.container--iconPay::after,
-.container--iconQuote::after,
-.container--iconRecoverQuote::after,
-.container--iconCancel::after {
-    content: attr(data-tooltip); 
-    position: absolute;
-    bottom: 35%;
-    left: 0%;
-    transform: translateX(-50%);
-    background-color: rgba(59, 130, 246, 0.9);
-    color: #ffffff;
-    padding: 5px 10px;
-    font-size: 13px;
-    border-radius: 5px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s, visibility 0.2s;
+.itemsScroll::-webkit-scrollbar {
+    width: 8px;
 }
 
-.container--iconPay:hover::after,
-.container--iconQuote:hover::after,
-.container--iconRecoverQuote:hover::after,
-.container--iconCancel:hover::after {
-    opacity: 1;
-    visibility: visible;
+  /* Fondo de la barra (track) */
+.itemsScroll::-webkit-scrollbar-track {
+    background: #2a2a3b;
+}
+
+
+  /* La barra en sí (thumb) */
+.itemsScroll::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+  /* Hover del thumb */
+.itemsScroll::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .itemRow {
@@ -950,4 +944,66 @@ hr {
     transform: translateY(-60%) translateX(0);
     color: #2e2e2e;
     font-size: 1rem;
+}
+
+.details span:hover:nth-child(odd) {
+    cursor: pointer;
+    transition: transform 0.5s;
+    transform: translateX(5px);
+}
+
+/* Estilo del boton de borrar abono o anticipo */
+.buttonDeletePayment {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    cursor: pointer;
+    transition-duration: .3s;
+    overflow: hidden;
+    position: relative;
+}
+
+.svgIcon {
+    width: 12px;
+    transition-duration: .3s;
+}
+
+.svgIcon path {
+    fill: white;
+}
+
+.buttonDeletePayment:hover {
+    width: 70px;
+    border-radius: 50px;
+    transition-duration: .3s;
+    background-color: rgb(255, 69, 69);
+    align-items: center;
+}
+
+.buttonDeletePayment:hover .svgIcon {
+    width: 50px;
+    transition-duration: .3s;
+    transform: translateY(40%);
+}
+
+.buttonDeletePayment::before {
+    position: absolute;
+    top: -30px;
+    color: black;
+    transition-duration: .3s;
+    font-size: 2px;
+}
+
+.buttonDeletePayment:hover::before {
+    font-size: 13px;
+    opacity: 1;
+    transform: translateY(30px);
+    transition-duration: .3s;
 }
