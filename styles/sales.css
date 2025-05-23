@@ -283,34 +283,6 @@ input:hover {
     background: #555;
 }
 
-/* Scroll bar para el contenedor items (los pagos a la venta del ticket  */
-/* Scrollbar para navegadores WebKit */
-.itemsScroll {
-    overflow-y: auto;
-    height: 63px;
-}
-
-.itemsScroll::-webkit-scrollbar {
-    width: 8px;
-}
-
-  /* Fondo de la barra (track) */
-.itemsScroll::-webkit-scrollbar-track {
-    background: #2a2a3b;
-}
-
-
-  /* La barra en sí (thumb) */
-.itemsScroll::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-}
-
-  /* Hover del thumb */
-.itemsScroll::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
 .itemRow {
     display: flex;
     height: calc( 1 / 6 * 100% ); color: #fff;

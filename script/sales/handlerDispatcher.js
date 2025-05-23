@@ -74,5 +74,9 @@ export const getHandlerArgs = {
         total: validateElement(Class.label.totalTicket).textContent.replace(/[^0-9.-]+/g, "")
     }),
 
-    handlerCheckoutBtnCancel: () => ({})
+    handlerCheckoutBtnCancel: () => ({}),
+
+    handlerButtonDeletePayment: (button) => ({
+        id: validateValue(button)
+    })
 };

@@ -13,6 +13,7 @@ const sales = () => {
     document.querySelector(Class.form.sales).addEventListener('click', (event) => {
         event.stopPropagation();
         const button = event.target;
+
         button.classList.forEach(name => {
             const handlerName = `handler${name.charAt(0).toUpperCase() + name.slice(1)}`;
 

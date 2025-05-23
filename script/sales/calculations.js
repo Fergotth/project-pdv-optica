@@ -45,9 +45,9 @@ export const getDiscount = (typeOfDiscount, discount, amount) => {
 
 /**
  * 
- * @param {HTMLElement} priceLabel 
- * @param {Number} pay
- * @param {String} 
+ * @param {HTMLElement} priceLabel  // Elemento que contiene el abono total
+ * @param {Number} pay              // Cantidad a sumar (o restar)
+ * @param {String}                  // Valor en string a devolver ya calculado
  */
 export const getNewPrice = (priceLabel, pay) => {
     return `$${(Number(priceLabel.textContent.replace("$", "")) + pay).toFixed(2)}`;

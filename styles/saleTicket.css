@@ -118,25 +118,31 @@ hr {
 .payment .form button:hover {
   background-color: #777777;
   cursor: pointer;
-  
 }
 
 .payments .details {
-  display: grid;
-  grid-template-columns: 10fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1px;
+  align-items: center;
 }
 
-.payments .details span:nth-child(odd) {
+.payments .details div {
+  display: grid;
+  grid-template-columns: 9fr 1fr 1fr;
+  width: 380px;
+}
+
+.payments .details div:nth-child(1) {
   font-size: 14px;
   font-weight: 600;
-  color: #ffffff; /* White text */
+  color: #ffffff;
 }
 
-.payments .details span:nth-child(even) {
+.payments .details div:nth-child(2) {
   font-size: 13px;
   font-weight: 600;
-  color: #bbbbbb; /* Light gray text */
+  color: #bbbbbb;
 }
 
 .checkout .footer {
@@ -279,12 +285,6 @@ hr {
   font-size: 1rem;
 }
 
-.details span:hover:nth-child(odd) {
-  cursor: pointer;
-  transition: transform 0.5s;
-  transform: translateX(5px);
-}
-
 /* Estilo del boton de borrar abono o anticipo */
 .buttonDeletePayment {
   width: 24px;
@@ -301,42 +301,51 @@ hr {
   transition-duration: .3s;
   overflow: hidden;
   position: relative;
+  top: -4px;
 }
 
 .svgIcon {
   width: 12px;
   transition-duration: .3s;
+  pointer-events: none;
 }
 
 .svgIcon path {
   fill: white;
+  pointer-events: none;
 }
 
 .buttonDeletePayment:hover {
-  width: 70px;
-  border-radius: 50px;
   transition-duration: .3s;
   background-color: rgb(255, 69, 69);
   align-items: center;
 }
 
-.buttonDeletePayment:hover .svgIcon {
-  width: 50px;
-  transition-duration: .3s;
-  transform: translateY(40%);
+/* Scroll bar para el contenedor items (los pagos a la venta del ticket  */
+/* Scrollbar para navegadores WebKit */
+.itemsScroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 63px;
 }
 
-.buttonDeletePayment::before {
-  position: absolute;
-  top: -30px;
-  color: black;
-  transition-duration: .3s;
-  font-size: 2px;
+.itemsScroll::-webkit-scrollbar {
+  width: 8px;
 }
 
-.buttonDeletePayment:hover::before {
-  font-size: 13px;
-  opacity: 1;
-  transform: translateY(30px);
-  transition-duration: .3s;
+/* Fondo de la barra (track) */
+.itemsScroll::-webkit-scrollbar-track {
+  background: #2a2a3b;
+}
+
+
+/* La barra en sí (thumb) */
+.itemsScroll::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Hover del thumb */
+.itemsScroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

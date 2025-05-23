@@ -211,5 +211,9 @@ export const handlerCheckoutBtnCancel = () => {
 };
 
 export const handlerPaymentBtnApply = ({ pay, total }) => {
-    utils.setPayment(pay, total); // terminar esta funcion
+    utils.setPayment(pay, total);
+};
+
+export const handlerButtonDeletePayment = ({ id }) => {
+    utils.deletePayment(id);
 };

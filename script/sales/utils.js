@@ -1,4 +1,4 @@
-import { getItemRowInnerHTML } from "./salesDom.js";
+import { getItemRowInnerHTML, getNewPaymentHTML } from "./salesDom.js";
 import { getState, updateState } from "./state.js";
 import { getIVA, getTotal, getSubTotal, getDiscount, getNewPrice } from "./calculations.js";
 import { validateElement, validatePayment, validateValue, validateRegex, validateMaxHeight } from "./validations.js";
@@ -236,7 +236,7 @@ export const insertDataSales = (data, client) => {
 export const setPayment = (pay, total) => {
     const payment = pay.value.trim();
 
-    if (validateRegex(payment)) { debugger
+    if (validateRegex(payment)) {
         if (validatePayment(payment, total)){
             const paymentMethod = getMethodPayment();
             
@@ -265,6 +265,26 @@ export const setPayment = (pay, total) => {
             text: "Escriba una cantidad valida"
         });
     }
+};
+
+/**
+ * @param {Integer} id  // id del elemento a eliminar
+ */
+export const deletePayment = (id) => {
+    const rowPayment = validateElement(`.payment--${id}`);
+    const actualPayment = rowPayment.children[1].textContent.replace("$", "");
+    const price = validateElement('.paymentPrice');
+    price.textContent = getNewPrice(price, -Number(actualPayment));
+    rowPayment.remove();
+
+    updateState(previousData => {
+        const payments = [...previousData.payment];
+        const updatedPayment = payments.filter(item => item.id !== id);
+        
+        return {
+            payment: updatedPayment
+        };
+    });
 };
 
 /**
@@ -297,8 +317,19 @@ const insertDataPayment = (pay, paymentMethod) => {
     const total = validateElement(Class.label.totalTicket).textContent.replace("$", "");
 
     if (validatePayment(Number(pay) + Number(actualAmount), total)) {
-        paymentsContainer.appendChild(insertNewHTML(`<span>${paymentMethod}</span>`));
-        paymentsContainer.appendChild(insertNewHTML(`<span>$${Number(pay).toFixed(2)}</span>`));
+        updateState(previousData => {
+            const newPayment = [...previousData.payment, {
+                amount: Number(pay),
+                paymentMethod: paymentMethod,
+                id: previousData.payments + 1
+            }];
+
+            return { 
+                payment: newPayment, payments: ++(previousData.payments) 
+            };
+        });
+        console.log(getState().payment)
+        paymentsContainer.appendChild(insertNewHTML(getNewPaymentHTML(pay, paymentMethod, getState().payments)));
         price.textContent = getNewPrice(price, Number(pay));
     
         if (validateMaxHeight(document.querySelector('.containerTicket'), 0.89) && !paymentsContainer.classList.contains('itemScroll')) {
