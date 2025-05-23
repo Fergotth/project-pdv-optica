@@ -10,7 +10,7 @@ const Class = {
         article: '.container--inputArticule',
         discount: '.inputDiscount',
         client: '.inputClient',                 // input del contenedor de busqueda de cliente
-        name: '.container--clientName',         // input del contenedor princiapl
+        name: '.container--clientName',         // input del contenedor principal
         typeOfDiscount: 'value-1',
         payment: '.input_field'                 // input del abono de la venta
     },

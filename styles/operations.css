@@ -1,0 +1,92 @@
+.containerOperations {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 70vw;
+    height: 80vh;
+    background-color: #2a2a3b;
+    border-radius: 5px;
+    animation: showForm 0.5s ease-in-out;
+}
+
+@keyframes showForm {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.card {
+    position: relative;
+    width: 150px;
+    height: 50px;
+    background: #fff;
+    border-radius: 10px;
+    transition: all 0.3s;
+    margin: 10px;
+    box-shadow: 2px 2px 5px #000;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.inputCard {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    cursor: pointer;
+    appearance: none;
+    border-radius: 10px;
+    z-index: 10;
+}
+
+.inputCard + .checkCard::before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #d0d0d0;
+    border-radius: 50%;
+    background-color: #E8E8E8;
+}
+
+.inputCard:checked + .checkCard::after {
+    content: '';
+    position: absolute;
+    top: 19px;
+    right: 19px;
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255,0,0,0.7);
+    border-radius: 50%;
+}
+
+.labelCard {
+    color: #323232;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.labelCard .titleCard {
+    width: 150px;
+    position: relative;
+    padding: 0;
+    margin-left: 3px;
+    margin-top: 5px;
+    border: none;
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: #323232;
+}

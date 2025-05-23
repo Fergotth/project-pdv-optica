@@ -78,5 +78,9 @@ export const getHandlerArgs = {
 
     handlerButtonDeletePayment: (button) => ({
         id: validateValue(button)
+    }),
+
+    handlerBtnResetSale: () => ({
+        formSales: validateElement(Class.form.sales)
     })
 };

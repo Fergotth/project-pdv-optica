@@ -17,16 +17,6 @@ const loadMenu = () => {
 
 loadMenu();
 
-// document.addEventListener('click', (event) => {
-//     event.stopPropagation(); // Evita que el evento se propague a otros elementos
-//     const calendarIcon = event.target.closest('.calendarIcon'); // Detecta el SVG clicado
-
-//     if (calendarIcon) {
-//         const calendar = document.getElementById('calendar');
-//         calendar.classList.toggle('showCalendar'); // Alternar la clase para mostrar u ocultar el calendario
-//     }
-// });
-
 const loadCalendar = () => {
     fetch('/templates/template-calendar.html')
     .then(response => response.text())

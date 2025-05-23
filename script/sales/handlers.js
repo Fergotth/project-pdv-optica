@@ -217,3 +217,7 @@ export const handlerPaymentBtnApply = ({ pay, total }) => {
 export const handlerButtonDeletePayment = ({ id }) => {
     utils.deletePayment(id);
 };
+
+export const handlerBtnResetSale = ({ formSales }) => {
+    utils.resetSale(formSales);
+};

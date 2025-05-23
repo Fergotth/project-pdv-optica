@@ -1,4 +1,5 @@
 import sales from "./sales.js";
+import operations from "./operations.js";
 
 const menu = () => {
     document.querySelector('.menu').addEventListener('click', function(event) {
@@ -15,7 +16,7 @@ const menu = () => {
             if (idItem[1] == 1) {
                 elementClicked.style.backgroundColor = '#509ec7';
                 elementClicked.style.borderRadius = '25px 0 0 25px';
-                loadTemplate('template-sales.html');
+                loadTemplate('template-sales.html', 1);
                 
             } else if (idItem[1] == 2) {
                 elementClicked.style.backgroundColor = '#509ec7';
@@ -29,6 +30,7 @@ const menu = () => {
                 elementClicked.style.backgroundColor = '#509ec7';
             } else if (idItem[1] == 7) {
                 elementClicked.style.backgroundColor = '#509ec7';
+                loadTemplate('template-operations.html', 7);
             } else if (idItem[1] == 8) {
                 elementClicked.style.backgroundColor = '#509ec7';
                 elementClicked.style.borderRadius = '0 25px 25px 0';
@@ -47,13 +49,23 @@ const menu = () => {
         event.stopPropagation();
     });
 
-    const loadTemplate = (templateName) => {
+    const loadTemplate = (templateName, id) => {
         fetch(`/templates/${templateName}`)
         .then(response => response.text())
         .then(html => {
             const tempContentDiv = document.getElementById('temporaryContent');
+            tempContentDiv.innerHTML = '';
             tempContentDiv.innerHTML = html;
-            sales();
+
+            switch(id) {
+                case 1:
+                    sales();
+                    break;
+                case 7:
+                    operations();
+                    break;
+            }
+            
         })
         .catch(error => console.error('Error al cargar el archivo: ', error));
     };

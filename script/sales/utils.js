@@ -1,5 +1,5 @@
 import { getItemRowInnerHTML, getNewPaymentHTML } from "./salesDom.js";
-import { getState, updateState } from "./state.js";
+import { getState, updateState, flushState } from "./state.js";
 import { getIVA, getTotal, getSubTotal, getDiscount, getNewPrice } from "./calculations.js";
 import { validateElement, validatePayment, validateValue, validateRegex, validateMaxHeight } from "./validations.js";
 import { newAlert } from "../utils/alerts.js";
@@ -289,6 +289,40 @@ export const deletePayment = (id) => {
 
 /**
  * 
+ * @param {HTMLFormElement} formSales // Contenedor principal
+ */
+export const resetSale = (formSales) => {
+    if (!formSales) {
+        throw new Error('DOM formSales no esta disponible');
+    }
+
+    flushState();
+
+    const name = validateElement(Class.input.name);
+    const listItems = validateElement(Class.list.products);
+    const labelIndicatorIVA = validateElement(Class.label.percent);
+    const labelSubtotal = validateElement(Class.label.subTotal);
+    const discount = validateElement(Class.label.discount);
+    const labelIVA = validateElement(Class.label.iva);
+    const labelTotal = validateElement(Class.label.total);
+
+    name.value = "Publico General";
+    listItems.innerHTML = '';
+    labelIndicatorIVA.textContent = "0%";
+    labelSubtotal.textContent = "$0.00";
+    discount.textContent = "$0.00";
+    labelIVA.textContent = "$0.00";
+    labelTotal.textContent = "Total $0.00";
+
+    newAlert({
+        icon: "success",
+        title: "AVISO",
+        text: "Venta en proceso cancelada"
+    });
+}
+
+/**
+ * 
  * @param {Number} item     // Valor numerico a dar formato de numero 
  * @returns {Number}
  */
@@ -328,11 +362,11 @@ const insertDataPayment = (pay, paymentMethod) => {
                 payment: newPayment, payments: ++(previousData.payments) 
             };
         });
-        console.log(getState().payment)
+
         paymentsContainer.appendChild(insertNewHTML(getNewPaymentHTML(pay, paymentMethod, getState().payments)));
         price.textContent = getNewPrice(price, Number(pay));
     
-        if (validateMaxHeight(document.querySelector('.containerTicket'), 0.89) && !paymentsContainer.classList.contains('itemScroll')) {
+        if (validateMaxHeight(validateElement('.containerTicket'), 0.89) && !paymentsContainer.classList.contains('itemScroll')) {
             paymentsContainer.classList.add('itemsScroll');
         }
     } else {
