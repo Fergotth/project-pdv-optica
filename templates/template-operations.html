@@ -8,34 +8,14 @@
 </head>
 <body>
     <div class="containerOperations">
-        <div class="card">
-            <input class="inputCard" type="radio" name="card" value="basic">
-            <span class="checkCard"></span>
-            <label class="labelCard">
-                <div class="titleCard">CLIENTES</div>
-            </label>
-        </div>
-        <div class="card">
-            <input class="inputCard" type="radio" name="card" value="standart">
-            <span class="checkCard"></span>
-            <label class="labelCard">
-                <div class="titleCard">INVENTARIO</div>
-            </label>
-        </div>
-        <div class="card">
-            <input class="inputCard" type="radio" name="card" value="premium">
-            <span class="checkCard"></span>
-            <label class="labelCard">
-                <div class="titleCard">VENTAS</div>
-            </label>
-        </div>
-        <div class="card">
-            <input class="inputCard" type="radio" name="card" value="premium">
-            <span class="checkCard"></span>
-            <label class="labelCard">
-                <div class="titleCard">ABONOS</div>
-            </label>
-        </div>
+        <details class="operations--card">
+            <summary class="card--summary">CLIENTES</summary>
+            <ul class="summary--ul">
+                <li class="li--option">Atas</li>
+                <li class="li--option">Bajas</li>
+                <li class="li--option">Modificaciones</li>
+            </ul>
+        </details>
     </div>
 </body>
 </html>
