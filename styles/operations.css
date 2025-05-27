@@ -4,11 +4,12 @@
     flex-direction: row;
     width: 70vw;
     height: 80vh;
-    background-color: #2a2a3b;
     border-radius: 5px;
     animation: showForm 0.5s ease-in-out;
     user-select: none;
-    font-size: 1.2rem;
+    background-color: #2a2a3b;;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans';
+  font-style: normal !important;
 }
 
 @keyframes showForm {
@@ -20,48 +21,63 @@
     }
 }
 
-/* 
+.dropdown {
+  position: relative;
+  display: inline-block;
+  padding: 10px 0 0 10px;
+}
 
-<!-- From Uiverse.io by themrsami --> 
-<div class="relative group inline-block">
-  <div
-    class="bg-white py-2 rounded-md shadow-lg hover:cursor-pointer flex justify-center items-center gap-4 px-4"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 18 14"
-      height="25"
-      width="25"
-    >
-      <path
-        fill="#FFA000"
-        d="M16.2 1.75H8.1L6.3 0H1.8C0.81 0 0 0.7875 0 1.75V12.25C0 13.2125 0.81 14 1.8 14H15.165L18 9.1875V3.5C18 2.5375 17.19 1.75 16.2 1.75Z"
-      ></path>
-      <path
-        fill="#FFCA28"
-        d="M16.2 2H1.8C0.81 2 0 2.77143 0 3.71429V12.2857C0 13.2286 0.81 14 1.8 14H16.2C17.19 14 18 13.2286 18 12.2857V3.71429C18 2.77143 17.19 2 16.2 2Z"
-      ></path>
-    </svg>
-    <p>Project Structure</p>
-  </div>
+.dropdown-button {
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 3px rgba(110, 0, 0, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 146px;
+}
 
-  <div
-    class="absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
-  >
-    <ul class="p-4 space-y-1">
-      <li class="py-1">📁 src</li>
-      <li class="pl-4 py-1">📁 app</li>
-      <li class="pl-8 py-1">📄 layout.js</li>
-      <li class="pl-8 py-1">📄 page.js</li>
-      <li class="pl-4 py-1">📁 components</li>
-      <li class="pl-8 py-1">📄 header.js</li>
-      <li class="pl-8 py-1">📄 footer.js</li>
-      <li class="pl-4 py-1">📁 styles</li>
-      <li class="pl-8 py-1">📄 globals.css</li>
-    </ul>
-  </div>
-</div>
+.dropdown-button:hover {
+  box-shadow: 0 10px 15px rgba(110, 0, 0, 0.3);
+}
 
+.dropdown-menu {
+  position: absolute;
+  left: 10px;
+  margin-top: 0.5rem;
+  width: 12rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  box-shadow: 0 10px 15px rgba(110, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease;
+  z-index: 10;
+}
 
-*/
+.dropdown-menu:hover {
+  box-shadow: 5px 10px 15px rgba(110, 0, 0, 0.3);
+}
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-menu ul {
+  padding: 1rem;
+  list-style: none;
+  margin: 0;
+}
+
+.dropdown-menu li {
+  padding: 0.25rem 0;
+}
+
+.dropdown-menu li:hover {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  transform: scale(1.1);
+}

@@ -43,7 +43,7 @@ nav ul li {
     transition: 0.3s;
 }
 
-li:hover {
+nav ul li:hover {
     color: yellow;
     cursor: pointer;
 }
