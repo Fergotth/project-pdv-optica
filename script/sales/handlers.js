@@ -1,7 +1,8 @@
 import { getState, updateState } from "./state.js";
 import { newAlert } from "../utils/alerts.js";
 import { getIVA, getTotal } from "./calculations.js";
-import { validateElement, validateValue } from "./validations.js";
+import { validateValue } from "./validations.js";
+import { getElement } from "../utils/getElement.js";
 import * as prompt from "./prompts.js";
 import * as utils from "./utils.js";
 import Class from "./consts.js";
@@ -149,7 +150,7 @@ export const handlerTypeOfIva = ({ percentIva }) => {
         };
     });
     
-    utils.closeOverlay(validateElement(Class.main.overlay));
+    utils.closeOverlay(getElement(Class.main.overlay));
     utils.changeLabelIva(percentIva);
     utils.refreshDataHTML(getState().data);
 };
@@ -167,7 +168,7 @@ export const handlerSearchClient = ({ dom }) => {
  * No recibe argumentos, solo quita la capa overlay
  */
 export const handlerBtnCancelClient = () => {
-    utils.closeOverlay(validateElement(Class.main.overlay));
+    utils.closeOverlay(getElement(Class.main.overlay));
 };
 
 /**
@@ -207,7 +208,7 @@ export const handlerBtnPay = ({ dom, data, client }) => {
 };
 
 export const handlerCheckoutBtnCancel = () => {
-    utils.closeOverlay(validateElement(Class.main.overlay));
+    utils.closeOverlay(getElement(Class.main.overlay));
 };
 
 export const handlerPaymentBtnApply = ({ pay, total }) => {

@@ -1,16 +1,20 @@
 import { getHandlerArgs } from "./sales/handlerDispatcher.js";
+import { getElement } from "./utils/getElement.js";
 import { flushState } from "./sales/state.js";
+import { setActiveModule } from "./utils/globalState.js";
+import { getState } from "./sales/state.js";
 import Class from "./sales/consts.js";
 import * as handlers from './sales/handlers.js';
 
 const sales = () => {
     flushState();
+    setActiveModule('sales');
     
-    document.querySelector(Class.form.sales).addEventListener('submit', (event) => {
+    getElement(Class.form.sales).addEventListener('submit', (event) => {
         event.preventDefault();
     });
     
-    document.querySelector(Class.form.sales).addEventListener('click', (event) => {
+    const onSalesActive = function(event) {
         event.stopPropagation();
         const button = event.target;
 
@@ -22,11 +26,28 @@ const sales = () => {
                 handlers[handlerName](args);
             }
         });
-    });
+    };
+
+    getElement(Class.form.sales).addEventListener('click', onSalesActive);
+
+    function clearEvents() {
+        getElement(Class.form.sales).removeEventListener('click', onSalesActive);
+        unregisterGlobals();
+    }
+
+    function unregisterGlobals() {
+        Object.keys(handlers).forEach(name => {
+            delete globalThis[name];
+        });
+    }
 
     Object.entries(handlers).forEach(([name, handler]) => {
         globalThis[name] = handler;
     });
+
+    return {
+        clearEvents
+    }
 };
 
 export default sales;

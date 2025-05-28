@@ -1,7 +1,8 @@
 import { getItemRowInnerHTML, getNewPaymentHTML } from "./salesDom.js";
 import { getState, updateState, flushState } from "./state.js";
 import { getIVA, getTotal, getSubTotal, getDiscount, getNewPrice } from "./calculations.js";
-import { validateElement, validatePayment, validateValue, validateRegex, validateMaxHeight } from "./validations.js";
+import { validatePayment, validateValue, validateRegex, validateMaxHeight } from "./validations.js";
+import { getElement } from "../utils/getElement.js";
 import { newAlert } from "../utils/alerts.js";
 import Class from "./consts.js";
 
@@ -10,11 +11,11 @@ import Class from "./consts.js";
  * @param {Object} newData // Objeto que contiene los datos del nuevo producto a mostrar
  */
 export const refreshDataHTML = (newData) => {
-    const listProduct = validateElement(Class.list.products);
-    const totalLabel = validateElement(Class.label.total);
-    const subtotalLabel = validateElement(Class.label.subTotal);
-    const ivaLabel = validateElement(Class.label.iva);
-    const discountLabel = validateElement(Class.label.discount);
+    const listProduct = getElement(Class.list.products);
+    const totalLabel = getElement(Class.label.total);
+    const subtotalLabel = getElement(Class.label.subTotal);
+    const ivaLabel = getElement(Class.label.iva);
+    const discountLabel = getElement(Class.label.discount);
     let total = 0, subtotal = 0, iva = 0, discount = 0;
 
     listProduct.innerHTML = '';
@@ -109,7 +110,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
                 });                  
 
                 refreshDataHTML(getState().data);
-                closeOverlay(validateElement(Class.main.overlay));
+                closeOverlay(getElement(Class.main.overlay));
             } else {
                 newAlert({
                     title: "AVISO",
@@ -125,7 +126,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
             });
         }
     } else {
-        closeOverlay(validateElement(Class.main.overlay));
+        closeOverlay(getElement(Class.main.overlay));
     }
 };
 
@@ -133,7 +134,7 @@ export const setDiscount = ({ button, input, typeOfDiscount, index }) => {
  * @param {Integer} percentIva  // Porcentaje de IVA
  */
 export const changeLabelIva = (percentIva) => {
-    const ivaLabel = validateElement(Class.label.percent);
+    const ivaLabel = getElement(Class.label.percent);
     if (ivaLabel) {
         ivaLabel.textContent = `${percentIva}%`;
     }
@@ -214,9 +215,9 @@ export const addClientToList = (dom, client) => {
  * @param {String} client   // Nombre del cliente
  */
 export const insertDataSales = (data, client) => {
-    const items = validateElement(Class.list.items);
-    const totalLabel = validateElement(Class.label.totalTicket);
-    const resumeLabelTicket = validateElement(Class.label.titleCard);
+    const items = getElement(Class.list.items);
+    const totalLabel = getElement(Class.label.totalTicket);
+    const resumeLabelTicket = getElement(Class.label.titleCard);
     resumeLabelTicket.textContent = client;
     let total = 0;
 
@@ -271,9 +272,9 @@ export const setPayment = (pay, total) => {
  * @param {Integer} id  // id del elemento a eliminar
  */
 export const deletePayment = (id) => {
-    const rowPayment = validateElement(`.payment--${id}`);
+    const rowPayment = getElement(`.payment--${id}`);
     const actualPayment = rowPayment.children[1].textContent.replace("$", "");
-    const price = validateElement('.paymentPrice');
+    const price = getElement('.paymentPrice');
     price.textContent = getNewPrice(price, -Number(actualPayment));
     rowPayment.remove();
 
@@ -298,13 +299,13 @@ export const resetSale = (formSales) => {
 
     flushState();
 
-    const name = validateElement(Class.input.name);
-    const listItems = validateElement(Class.list.products);
-    const labelIndicatorIVA = validateElement(Class.label.percent);
-    const labelSubtotal = validateElement(Class.label.subTotal);
-    const discount = validateElement(Class.label.discount);
-    const labelIVA = validateElement(Class.label.iva);
-    const labelTotal = validateElement(Class.label.total);
+    const name = getElement(Class.input.name);
+    const listItems = getElement(Class.list.products);
+    const labelIndicatorIVA = getElement(Class.label.percent);
+    const labelSubtotal = getElement(Class.label.subTotal);
+    const discount = getElement(Class.label.discount);
+    const labelIVA = getElement(Class.label.iva);
+    const labelTotal = getElement(Class.label.total);
 
     name.value = "Publico General";
     listItems.innerHTML = '';
@@ -345,10 +346,10 @@ const getMethodPayment = () => {
  * @param {String} paymentMethod
  */
 const insertDataPayment = (pay, paymentMethod) => {
-    const paymentsContainer = validateElement('.details');
-    const price = validateElement('.paymentPrice');
+    const paymentsContainer = getElement('.details');
+    const price = getElement('.paymentPrice');
     const actualAmount = price.textContent.replace("$", "");
-    const total = validateElement(Class.label.totalTicket).textContent.replace("$", "");
+    const total = getElement(Class.label.totalTicket).textContent.replace("$", "");
 
     if (validatePayment(Number(pay) + Number(actualAmount), total)) {
         updateState(previousData => {
@@ -366,7 +367,7 @@ const insertDataPayment = (pay, paymentMethod) => {
         paymentsContainer.appendChild(insertNewHTML(getNewPaymentHTML(pay, paymentMethod, getState().payments)));
         price.textContent = getNewPrice(price, Number(pay));
     
-        if (validateMaxHeight(validateElement('.containerTicket'), 0.89) && !paymentsContainer.classList.contains('itemScroll')) {
+        if (validateMaxHeight(getElement('.containerTicket'), 0.89) && !paymentsContainer.classList.contains('itemScroll')) {
             paymentsContainer.classList.add('itemsScroll');
         }
     } else {

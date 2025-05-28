@@ -1,21 +1,5 @@
 /**
  * 
- * @param {HTMLElement} element     // Elemento HTML
- * @returns {HTMLElement}           // Regresa el elemento validado
- */
-export const validateElement = (strClass) => {
-    
-    const element = strClass.includes('.') ? document.querySelector(strClass) : document.getElementById(strClass);
-
-    if (!element || !(element instanceof HTMLElement)) {
-        throw new Error("Elemento no existe en el DOM");
-    }
-
-    return element;
-};
-
-/**
- * 
  * @param {HTMLElement | Number} element    // Elemento HTML o dato numerico
  * @returns                                 // Valor numerico
  */

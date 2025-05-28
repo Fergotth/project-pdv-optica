@@ -1,5 +1,6 @@
 import { getState } from "./state.js";
-import { validateElement, validateValue } from "./validations.js";
+import { validateValue } from "./validations.js";
+import { getElement } from "../utils/getElement.js";
 import products from "../../data/products.js";
 import Class from "./consts.js";
 
@@ -8,7 +9,7 @@ import Class from "./consts.js";
  */
 export const getHandlerArgs = {
     handlerAddItem: () => ({
-        itemSearched: validateElement(Class.input.article),
+        itemSearched: getElement(Class.input.article),
         products,
         percentIva: getState().percentIva
     }),
@@ -25,7 +26,7 @@ export const getHandlerArgs = {
 
     handlerDiscount: (button) => ({
         index: validateValue(button),
-        dom: validateElement(Class.form.sales)
+        dom: getElement(Class.form.sales)
     }),
 
     handlerBtnCancel: (button) => ({
@@ -34,13 +35,13 @@ export const getHandlerArgs = {
 
     handlerBtnAccept: (button) => ({
         button,
-        input: validateElement(Class.input.discount),
-        typeOfDiscount: validateElement(Class.input.typeOfDiscount),
+        input: getElement(Class.input.discount),
+        typeOfDiscount: getElement(Class.input.typeOfDiscount),
         index: validateValue(button)
     }),
 
     handlerIva: () => ({
-        dom: validateElement(Class.form.sales)
+        dom: getElement(Class.form.sales)
     }),
 
     handlerTypeOfIva: (button) => ({
@@ -48,12 +49,12 @@ export const getHandlerArgs = {
     }),
     
     handlerSearchClient: () => ({
-        dom: validateElement(Class.form.sales)
+        dom: getElement(Class.form.sales)
     }),
     
     handlerBtnSearchClient: () => ({
-        dom: validateElement(Class.form.clients),
-        name: validateElement(Class.input.client).value
+        dom: getElement(Class.form.clients),
+        name: getElement(Class.input.client).value
     }),
     
     handlerBtnCancelClient: () => ({}),
@@ -64,14 +65,14 @@ export const getHandlerArgs = {
     }),
 
     handlerBtnPay: () => ({
-        dom: validateElement(Class.form.sales),
+        dom: getElement(Class.form.sales),
         data: getState().data,
-        client: validateElement(Class.input.name).value
+        client: getElement(Class.input.name).value
     }),
 
     handlerPaymentBtnApply: () => ({
-        pay: validateElement(Class.input.payment),
-        total: validateElement(Class.label.totalTicket).textContent.replace(/[^0-9.-]+/g, "")
+        pay: getElement(Class.input.payment),
+        total: getElement(Class.label.totalTicket).textContent.replace(/[^0-9.-]+/g, "")
     }),
 
     handlerCheckoutBtnCancel: () => ({}),
@@ -81,6 +82,6 @@ export const getHandlerArgs = {
     }),
 
     handlerBtnResetSale: () => ({
-        formSales: validateElement(Class.form.sales)
+        formSales: getElement(Class.form.sales)
     })
 };
