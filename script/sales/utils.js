@@ -3,6 +3,7 @@ import { getState, updateState, flushState } from "./state.js";
 import { getIVA, getTotal, getSubTotal, getDiscount, getNewPrice } from "./calculations.js";
 import { validatePayment, validateValue, validateRegex, validateMaxHeight } from "./validations.js";
 import { getElement } from "../utils/getElement.js";
+import { getParsedHTML } from "../utils/getElement.js";
 import { newAlert } from "../utils/alerts.js";
 import Class from "./consts.js";
 
@@ -145,15 +146,6 @@ export const changeLabelIva = (percentIva) => {
  * @param {String} innerHTML    // String que contiene el HTML para insertar
  * @returns {HTMLElement} 
  */
-export const insertNewHTML = (innerHTML) => {
-    const parser = new DOMParser();
-    const parsed = parser.parseFromString(innerHTML, 'text/html');
-    const parsedElement = parsed.body.firstChild;
-
-    if (parsedElement) {
-        return parsedElement;
-    }
-};
 
 /**
  * 
@@ -205,7 +197,7 @@ export const addClientToList = (dom, client) => {
     }
 
     for(let item of client) {
-        listClients.appendChild(insertNewHTML(`<span class="clientName" data-id="${item.id}">${item.name}</span>`));
+        listClients.appendChild(getParsedHTML(`<span class="clientName" data-id="${item.id}">${item.name}</span>`));
     }
 };
 
@@ -222,7 +214,7 @@ export const insertDataSales = (data, client) => {
     let total = 0;
 
     for(const item of data) {
-        items.appendChild(insertNewHTML(`<p>${item.quantity}x ${item.description} ${item.material}</p>`));
+        items.appendChild(getParsedHTML(`<p>${item.quantity}x ${item.description} ${item.material}</p>`));
         total += getTotal(item);
     }
 
@@ -364,7 +356,7 @@ const insertDataPayment = (pay, paymentMethod) => {
             };
         });
 
-        paymentsContainer.appendChild(insertNewHTML(getNewPaymentHTML(pay, paymentMethod, getState().payments)));
+        paymentsContainer.appendChild(getParsedHTML(getNewPaymentHTML(pay, paymentMethod, getState().payments)));
         price.textContent = getNewPrice(price, Number(pay));
     
         if (validateMaxHeight(getElement('.containerTicket'), 0.89) && !paymentsContainer.classList.contains('itemScroll')) {

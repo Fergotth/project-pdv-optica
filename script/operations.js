@@ -1,6 +1,6 @@
 import { getElement } from "./utils/getElement.js";
-import { setActiveModule } from "./utils/globalState.js";
-import { getHandlerArgs } from "./sales/handlerDispatcher.js";
+import { getHandlerArgs } from "./operations/handlerDispatcher.js";
+import * as handlers from "./operations/handlers.js";
 
 /**
  * Carga el menu de operaciones en la app principal
@@ -19,7 +19,7 @@ const operations = () => {
 
             if (typeof handlers[handlerName] === 'function') {
                 const args = getHandlerArgs[handlerName]?.(button) || { button };
-                //handlers[handlerName](args);
+                handlers[handlerName](args);
             }
         });
     };
@@ -28,7 +28,7 @@ const operations = () => {
 
     function clearEvents() {
         getElement('.containerOperations').removeEventListener('click', onOperationsActive);
-        //unregisterGlobals();
+        unregisterGlobals();
     }
 
     function unregisterGlobals() {
@@ -37,9 +37,9 @@ const operations = () => {
         });
     }
 
-    // Object.entries(handlers).forEach(([name, handler]) => {
-    //     globalThis[name] = handler;
-    // });
+    Object.entries(handlers).forEach(([name, handler]) => {
+        globalThis[name] = handler;
+    });
 
     return {
         clearEvents

@@ -9,7 +9,7 @@
 <body>
     <div class="containerClient">
         <h2>Registro de Clientes</h2>
-        <form>
+        <form class="container--formClient">
             <input type="text" placeholder="Nombre">
             <input type="text" placeholder="Apellidos">
             <input type="email" placeholder="Email">
@@ -34,8 +34,11 @@
                     <span class="selection"></span>
                 </div>
             </div>
+            <div>
+                <textarea name="comments" class="commentClient" cols="30" rows="10"></textarea>
+            </div>
             <button type="button" id="btnSaveClient">Guardar</button>
-            <button type="button" id="btnCancel">Cancelar</button>
+            <button type="button" id="btnCancelSaveClient">Cancelar</button>
         </form>
     </div>
 </body>

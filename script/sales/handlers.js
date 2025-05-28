@@ -188,7 +188,7 @@ export const handlerBtnSearchClient = ({ dom, name }) => {
  * @param {Number} params.id    // ID del cliente
  */
 export const handlerClientName = ({ name, id }) => {
-    const nameInput = document.querySelector(Class.input.name);
+    const nameInput = getElement(Class.input.name);
     nameInput.setAttribute('data-id', id);
     nameInput.value = name;
     handlerBtnCancelClient();

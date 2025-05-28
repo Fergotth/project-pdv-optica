@@ -1,6 +1,17 @@
+.overlay {
+    position: absolute;
+    background-color: transparent;
+    height: 100vh;
+    width: 100vw;
+    z-index: 200;
+}
+
 .containerClient {
+    position: absolute;
+    top: -25px;
     width: 100%;
-    max-width: 300px;
+    left: calc(50% - 200px);
+    max-width: 400px;
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -15,7 +26,7 @@
 }
 
 .containerClient input {
-    width: 100%;
+    width: 95%;
     background-color: #f3f4f6;
     color: #1f2937;
     border: none;
@@ -56,11 +67,11 @@
     background: linear-gradient(to right, #af0641, #8f0641);
 }
 
-.radio-input input {
+.containerClient .radio-input input {
     display: none;
 }
 
-.radio-input {
+.containerClient .radio-input {
     --container_width: 230px;
     position: relative;
     display: flex;
@@ -73,7 +84,7 @@
     overflow: hidden;
 }
 
-.radio-input label {
+.containerClient .radio-input label {
     width: 100%;
     padding: 10px;
     cursor: pointer;
@@ -85,7 +96,7 @@
     font-size: 1rem;
 }
 
-.selection {
+.containerClient .selection {
     display: none;
     position: absolute;
     height: 100%;
@@ -96,23 +107,23 @@
     transition: .15s ease;
 }
 
-.radio-input label:has(input:checked) {
+.containerClient .radio-input label:has(input:checked) {
     color: #fff;
 }
 
-.radio-input label:has(input:checked) ~ .selection {
+.containerClient .radio-input label:has(input:checked) ~ .selection {
     background-color: rgb(11 117 223);
     display: inline-block;
 }
 
-.radio-input label:nth-child(1):has(input:checked) ~ .selection {
+.containerClient .radio-input label:nth-child(1):has(input:checked) ~ .selection {
     transform: translateX(calc(var(--container_width) * 0/3));
 }
 
-.radio-input label:nth-child(2):has(input:checked) ~ .selection {
+.containerClient .radio-input label:nth-child(2):has(input:checked) ~ .selection {
     transform: translateX(calc(var(--container_width) * 1/3));
 }
 
-.radio-input label:nth-child(3):has(input:checked) ~ .selection {
+.containerClient .radio-input label:nth-child(3):has(input:checked) ~ .selection {
     transform: translateX(calc(var(--container_width) * 2/3));
 }

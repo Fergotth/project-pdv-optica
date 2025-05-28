@@ -1,7 +1,9 @@
 import { getElement } from "../utils/getElement.js";
+import { getClientHTML } from "./operationsDOMs.js";
 
 export const getHandlerArgs = {
-    handler: () => {
-        
-    }
+    handlerRegisterClient: () => ({
+        DOM: getElement('.containerOperations'),
+        innerHTML: getClientHTML()
+    })
 };

@@ -1,5 +1,6 @@
 import { getDiscountContainerHTML, getContainerIVAHTML, getSearchClientContainerHTML, getTicketContainerHTML } from "./salesDom.js";
-import { insertNewHTML, searchClient, addClientToList } from "./utils.js";
+import { searchClient, addClientToList } from "./utils.js";
+import { getParsedHTML } from "../utils/getElement.js";
 import { newAlert } from "../utils/alerts.js";
 import clients from "../../data/clients.js";
 
@@ -8,7 +9,7 @@ import clients from "../../data/clients.js";
  * @param {HTMLElement} element // Elemento padre donde se insertara el nuevo elemento 
  */
 export const showPromptIVA = (element) => {
-    element.appendChild(insertNewHTML(getContainerIVAHTML()));
+    element.appendChild(getParsedHTML(getContainerIVAHTML()));
 };
 
 /**
@@ -17,7 +18,7 @@ export const showPromptIVA = (element) => {
  * @param {HTMLElement} element // Elemento padre donde se insertara el nuevo elemento 
  */
 export const showPromptDiscount = (index, element) => {
-    element.appendChild(insertNewHTML(getDiscountContainerHTML(index)));
+    element.appendChild(getParsedHTML(getDiscountContainerHTML(index)));
 };
 
 /**
@@ -25,7 +26,7 @@ export const showPromptDiscount = (index, element) => {
  * @param {HTMLElement} element // Elemento padre donde se insertara el nuevo elemento 
  */
 export const showPromptSearchClient = (element) => {
-    element.appendChild(insertNewHTML(getSearchClientContainerHTML()));
+    element.appendChild(getParsedHTML(getSearchClientContainerHTML()));
 };
 
 /**
@@ -61,5 +62,5 @@ export const showPromptClients = (dom, name) => {
 };
 
 export const showSaleResume = (dom) => {
-    dom.appendChild(insertNewHTML(getTicketContainerHTML()));
+    dom.appendChild(getParsedHTML(getTicketContainerHTML()));
 };
