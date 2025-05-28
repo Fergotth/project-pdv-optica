@@ -8,7 +8,6 @@ import * as handlers from './sales/handlers.js';
 
 const sales = () => {
     flushState();
-    setActiveModule('sales');
     
     getElement(Class.form.sales).addEventListener('submit', (event) => {
         event.preventDefault();

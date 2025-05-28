@@ -7,8 +7,9 @@ body {
 
 div#temporaryContent {
     position: absolute;
-    top: 13%;
-    left: 50px;
+    top: 13vh;
+    left: 0px;
+    width: 100vw;
 }
 
 #calendar {

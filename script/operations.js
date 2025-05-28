@@ -5,9 +5,7 @@ import { getHandlerArgs } from "./sales/handlerDispatcher.js";
 /**
  * Carga el menu de operaciones en la app principal
  */
-const operations = () => {
-    setActiveModule('operations');
-    
+const operations = () => {    
     getElement('.containerOperations').addEventListener('submit', (event) => {
         event.preventDefault();
     });
