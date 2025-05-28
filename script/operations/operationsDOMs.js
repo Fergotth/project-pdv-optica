@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="stylesheet" href="/styles/clients.css">
-</head>
-<body>
+const getClientsHTML = () => {
+    return `
     <div class="containerClient">
         <h2>Registro de Clientes</h2>
         <form>
@@ -38,5 +31,5 @@
             <button type="button" id="btnCancel">Cancelar</button>
         </form>
     </div>
-</body>
-</html>
+    `;
+};

@@ -1,4 +1,4 @@
-.container {
+.containerClient {
     width: 100%;
     max-width: 300px;
     background-color: #ffffff;
@@ -7,14 +7,14 @@
     padding: 24px;
 }
 
-.container h2 {
+.containerClient h2 {
     font-size: 1.5rem;
     color: #1f2937;
     margin-bottom: 16px;
     margin-top: -15px;
 }
 
-.container input {
+.containerClient input {
     width: 100%;
     background-color: #f3f4f6;
     color: #1f2937;
@@ -26,12 +26,12 @@
     transition: background-color 0.15s ease-in-out;
 }
 
-.container input:focus {
+.containerClient input:focus {
     background-color: #e5e7eb;
     box-shadow: 0 0 0 2px #3b82f6;
 }
 
-.container button {
+.containerClient button {
     width: 100%;
     background: linear-gradient(to right, #6366f1, #3b82f6);
     color: #ffffff;
@@ -44,15 +44,15 @@
     transition: background 0.15s ease-in-out;
 }
 
-.container button:hover {
+.containerClient button:hover {
     background: linear-gradient(to right, #4f46e5, #2563eb);
 }
 
-.container #btnCancel {
+.containerClient #btnCancel {
     background: linear-gradient(to right, #ff0641, #df0641);
 }
 
-.container #btnCancel:hover {
+.containerClient #btnCancel:hover {
     background: linear-gradient(to right, #af0641, #8f0641);
 }
 
