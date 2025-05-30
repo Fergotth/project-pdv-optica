@@ -18,27 +18,41 @@ const menu = () => {
                 item.style.backgroundColor = "";
             });
 
-            if (idItem[1] == 1) {
-                elementClicked.style.backgroundColor = '#509ec7';
-                elementClicked.style.borderRadius = '25px 0 0 25px';
-                loadTemplate('template-sales.html', 1);
-                
-            } else if (idItem[1] == 2) {
-                elementClicked.style.backgroundColor = '#509ec7';
-            } else if (idItem[1] == 3) {
-                elementClicked.style.backgroundColor = '#509ec7';
-            } else if (idItem[1] == 4) {
-                elementClicked.style.backgroundColor = '#509ec7';
-            } else if (idItem[1] == 5) {
-                elementClicked.style.backgroundColor = '#509ec7';
-            } else if (idItem[1] == 6) {
-                elementClicked.style.backgroundColor = '#509ec7';
-            } else if (idItem[1] == 7) {
-                elementClicked.style.backgroundColor = '#509ec7';
-                loadTemplate('template-operations.html', 7);
-            } else if (idItem[1] == 8) {
-                elementClicked.style.backgroundColor = '#509ec7';
-                elementClicked.style.borderRadius = '0 25px 25px 0';
+            const itemConfig = {
+                1: {
+                    backgroundColor: '#509ec7',
+                    borderRadius: '25px 0 0 25px',
+                    template: 'template-sales.html',
+                    templateId: 1
+                },
+                2: { backgroundColor: '#509ec7' },
+                3: { backgroundColor: '#509ec7' },
+                4: { backgroundColor: '#509ec7' },
+                5: { backgroundColor: '#509ec7' },
+                6: { backgroundColor: '#509ec7' },
+                7: {
+                    backgroundColor: '#509ec7',
+                    template: 'template-operations.html',
+                    templateId: 7
+                },
+                8: {
+                    backgroundColor: '#509ec7',
+                    borderRadius: '0 25px 25px 0'
+                }
+            };
+
+            const config = itemConfig[idItem[1]];
+            
+            if (config) {
+                elementClicked.style.backgroundColor = config.backgroundColor;
+
+                if(config.borderRadius) {
+                    elementClicked.style.borderRadius = config.borderRadius;
+                }
+
+                if (config.template) {
+                    loadTemplate(config.template, config.templateId);
+                }
             }
         }
 
@@ -77,11 +91,11 @@ const menu = () => {
                 switch (id) {
                     case 1:
                         const salesInstance = sales();
-                        setModuleInstance('sales', salesInstance);
+                        setModuleInstance(moduleName, salesInstance);
                         break;
                     case 7:
                         const operationsInstance = operations();
-                        setModuleInstance('operations', operationsInstance);
+                        setModuleInstance(moduleName, operationsInstance);
                         break;
                 }
             })
