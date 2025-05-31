@@ -20,7 +20,7 @@ nav .calendarContainer:hover {
     cursor: pointer;
 }
 
-nav .calendarContainer svg {
+nav .calendarContainer object {
     pointer-events: none;
 }
 

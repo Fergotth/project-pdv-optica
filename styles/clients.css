@@ -18,112 +18,87 @@
     padding: 24px;
 }
 
-.containerClient h2 {
-    font-size: 1.5rem;
-    color: #1f2937;
-    margin-bottom: 16px;
-    margin-top: -15px;
+.cardClient {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
 }
 
-.containerClient input {
-    width: 95%;
-    background-color: #f3f4f6;
-    color: #1f2937;
-    border: none;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 12px;
-    outline: none;
-    transition: background-color 0.15s ease-in-out;
+.titleClient {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
 }
 
-.containerClient input:focus {
-    background-color: #e5e7eb;
-    box-shadow: 0 0 0 2px #3b82f6;
+.formClient {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
-.containerClient button {
-    width: 100%;
-    background: linear-gradient(to right, #6366f1, #3b82f6);
-    color: #ffffff;
-    font-weight: bold;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    margin-top: 15px;
-    cursor: pointer;
-    transition: background 0.15s ease-in-out;
-}
-
-.containerClient button:hover {
-    background: linear-gradient(to right, #4f46e5, #2563eb);
-}
-
-.containerClient #btnCancel {
-    background: linear-gradient(to right, #ff0641, #df0641);
-}
-
-.containerClient #btnCancel:hover {
-    background: linear-gradient(to right, #af0641, #8f0641);
-}
-
-.containerClient .radio-input input {
-    display: none;
-}
-
-.containerClient .radio-input {
-    --container_width: 230px;
+.groupClient {
     position: relative;
-    display: flex;
-    align-items: center;
-    border-radius: 9px;
-    background-color: #F2F2F2;
-    color: rgb(0, 89, 255);
-    width: var(--container_width);
-    height: 30px;
-    overflow: hidden;
 }
 
-.containerClient .radio-input label {
-    width: 100%;
-    padding: 10px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    letter-spacing: -1px;
-    font-size: 1rem;
-}
-
-.containerClient .selection {
-    display: none;
+.formClient .groupClient label {
+    font-size: 14px;
+    color: rgb(99, 102, 102);
     position: absolute;
-    height: 100%;
-    width: calc(var(--container_width) / 3);
-    z-index: 0;
-    left: 0;
-    top: 0;
-    transition: .15s ease;
+    top: -10px;
+    left: 10px;
+    background-color: #fff;
+    transition: all .3s ease;
 }
 
-.containerClient .radio-input label:has(input:checked) {
+.formClient .groupClient input,
+.formClient .groupClient textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    outline: 0;
+    width: 100%;
+    background-color: transparent;
+}
+
+.formClient .groupClient input:placeholder-shown + label, .formClient .groupClient textarea:placeholder-shown + label {
+    top: 10px;
+    background-color: transparent;
+}
+
+.formClient .groupClient input:focus,
+.formClient .groupClient textarea:focus {
+    border-color: #3366cc;
+}
+
+.formClient .groupClient input:focus + label, .formClient .groupClient textarea:focus + label {
+    top: -10px;
+    left: 10px;
+    background-color: #fff;
+    color: #3366cc;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.formClient .groupClient textarea {
+    resize: none;
+    height: 50px;
+}
+
+.formClient button {
+    background-color: #3366cc;
     color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.containerClient .radio-input label:has(input:checked) ~ .selection {
-    background-color: rgb(11 117 223);
-    display: inline-block;
-}
-
-.containerClient .radio-input label:nth-child(1):has(input:checked) ~ .selection {
-    transform: translateX(calc(var(--container_width) * 0/3));
-}
-
-.containerClient .radio-input label:nth-child(2):has(input:checked) ~ .selection {
-    transform: translateX(calc(var(--container_width) * 1/3));
-}
-
-.containerClient .radio-input label:nth-child(3):has(input:checked) ~ .selection {
-    transform: translateX(calc(var(--container_width) * 2/3));
-}
+.formClient button:hover {
+    background-color: #27408b;
+}  

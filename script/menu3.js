@@ -85,7 +85,7 @@ const menu = () => {
             .then(response => response.text())
             .then(html => {
                 const tempContentDiv = getElement('temporaryContent');
-                tempContentDiv.innerHTML = '';  // Ahora sí borras lo anterior
+                tempContentDiv.innerHTML = '';
                 tempContentDiv.innerHTML = html;
     
                 switch (id) {
