@@ -14,6 +14,10 @@ export const getClientHTML = () => {
                         <label for="phone">Telefono</label>
                     </div>
                     <div class="groupClient">
+                        <input placeholder="" type="date" id="date" name="date" required="">
+                        <label for="date">Fecha de Nacimiento</label>
+                    </div>
+                    <div class="groupClient">
                         <input placeholder="" type="email" id="email" name="email" required="">
                         <label for="email">Correo Electronico</label>
                     </div>

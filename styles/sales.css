@@ -7,6 +7,7 @@
     border-radius: 5px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     animation: showForm 0.5s ease-in-out;
+    user-select: none;
 }
 
 @keyframes showForm {
@@ -30,7 +31,7 @@
     box-shadow: 2px 2px 5px rgba(221, 62, 226, 0.2);
 }
 
-.container svg {
+.container img {
     width: 30px;
     height: 30px;
     position: relative;
@@ -84,7 +85,7 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 5px;
 }
 
-.container--iconSeachArticle { 
+.container--iconSearchArticle { 
     grid-area: 1 / 7 / 2 / 8;
 }
 
@@ -215,7 +216,7 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 5px;
 }
 
-.container--iconSeachArticle:hover, .container--iconSearchClient:hover {
+.container--iconSearchArticle:hover, .container--iconSearchClient:hover {
     cursor: pointer;
     z-index: 100;
 }
