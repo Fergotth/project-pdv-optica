@@ -24,7 +24,8 @@ dbSales.run(`
         Balance REAL,
         PaymentMethod TEXT,
         Date TEXT,
-        Status TEXT
+        Status TEXT,
+        FOREIGN KEY(ClientID) REFERENCES Clients(ID)
     )
 `);
 
