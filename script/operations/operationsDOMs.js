@@ -22,10 +22,10 @@ export const getClientHTML = () => {
                         <label for="email">Correo Electronico</label>
                     </div>
                     <div class="groupClient">
-                        <textarea placeholder="" id="comment" name="comment" rows="5"></textarea>
-                        <label for="comment">Comentarios</label>
+                        <textarea placeholder="" id="comments" name="comments" rows="5"></textarea>
+                        <label for="comments">Comentarios</label>
                     </div>
-                    <button>Guardar</button>
+                    <button class="btnSaveClient">Guardar</button>
                 </form>
             </div>
         </div>
