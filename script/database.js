@@ -44,4 +44,7 @@ dbSales.run(`
     )
 `);
 
+dbSales.run('PRAGMA foreign_keys = ON');
+dbClients.run('PRAGMA foreign_keys = ON');
+
 module.exports = { dbSales, dbClients };
