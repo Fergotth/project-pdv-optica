@@ -1,4 +1,5 @@
 import { getParsedHTML } from "../utils/getElement.js";
+import { saveClient } from "../clients/addClient.js";
 
 /**
  * 
@@ -10,23 +11,11 @@ export const handlerRegisterClient = ({ DOM, innerHTML }) => {
 };
 
 export const handlerBtnSaveClient = ({ data }) => {
-    const { name, email, phone, birthdate, comments } = data;
+    const { Name, Phone, Birthdate } = data;
 
-    if (!name || !email || !phone || !birthdate) {
+    if (!Name || !Phone || !Birthdate) {
         throw new Error("Todos los campos son obligatorios");
     }
 
-    console.log("Datos del cliente guardados:");
-    console.log(`Nombre: ${name}`);
-    console.log(`Email: ${email}`);
-    console.log(`Teléfono: ${phone}`);
-    console.log(`Fecha de nacimiento: ${birthdate}`);
-
-    return {
-        name,
-        email,
-        phone,
-        birthdate,
-        comments: comments || ""
-    };
+    saveClient(data);
 };

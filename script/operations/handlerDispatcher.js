@@ -1,6 +1,6 @@
 import { getElement } from "../utils/getElement.js";
 import { getClientHTML } from "./operationsDOMs.js";
-import { getDataClient } from "../clients/getData.js";
+import { getDataClientForm } from "../clients/getData.js";
 
 export const getHandlerArgs = {
     handlerRegisterClient: () => ({
@@ -9,6 +9,6 @@ export const getHandlerArgs = {
     }),
 
     handlerBtnSaveClient: () => ({
-        data: getDataClient()
+        data: getDataClientForm()
     })
 };

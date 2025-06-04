@@ -1,12 +1,13 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const { dbSales, dbClients, dbProducts, dbSalesDetails } = require('./database');
-
 const app = express();
+
 app.use(bodyParser.json());
 
 // Agregar un cliente
-app.post('/clients', (req, res) => {
+app.post('/save-clients', (req, res) => {
     const { Name, Phone, Birthdate, Email, Comments } = req.body;
     dbClients.run(
         `INSERT INTO Clients (Name, Phone, Birthdate, Email, Comments) VALUES (?, ?, ?, ?, ?)`,
@@ -19,7 +20,7 @@ app.post('/clients', (req, res) => {
 });
 
 // Agregar un producto
-app.post('/products', (req, res) => {
+app.post('/save-products', (req, res) => {
     const { SKU, Category, Description, Price, Stock, Image } = req.body;
     dbProducts.run(
         `INSERT INTO Products (SKU, Category, Description, Price, Stock, Image) VALUES (?, ?, ?, ?, ?, ?)`,
@@ -32,7 +33,7 @@ app.post('/products', (req, res) => {
 });
 
 // Agregar una venta
-app.post('/sales', (req, res) => {
+app.post('/save-sales', (req, res) => {
     const { ClientID, Total, Payment, Balance, PaymentMethod, Status } = req.body;
     dbSales.run(
         `INSERT INTO Sales (ClientID, Total, Payment, Balance, PaymentMethod, Status) VALUES (?, ?, ?, ?, ?, ?)`,
@@ -45,7 +46,7 @@ app.post('/sales', (req, res) => {
 });
 
 // Agregar detalle de venta
-app.post('/saledetails', (req, res) => {
+app.post('/save-saledetails', (req, res) => {
     const { SaleID, Quantity, Product, SKU, Price, Discount, IVA } = req.body;
     dbSalesDetails.run(
         `INSERT INTO SaleDetails (SaleID, Quantity, Product, SKU, Price, Discount, IVA) VALUES (?, ?, ?, ?, ?, ?, ?)`,
@@ -56,6 +57,8 @@ app.post('/saledetails', (req, res) => {
         }
     );
 });
+
+app.use(express.static(path.join(__dirname, './')));
 
 // Servidor escuchando
 const PORT = 3000;

@@ -1,12 +1,12 @@
 import { getElement} from "../utils/getElement.js";
 
-export const getDataClient = () => {
+export const getDataClientForm = () => {
     const data = {
-        name: getElement('name').value,
-        email: getElement('email').value,
-        phone: getElement('phone').value,
-        birthdate: getElement('date').value,
-        comments: getElement('comments').value
+        Name: getElement('name').value,
+        Email: getElement('email').value,
+        Phone: getElement('phone').value,
+        Birthdate: getElement('date').value,
+        Comments: getElement('comments').value
     };
 
     return data;
