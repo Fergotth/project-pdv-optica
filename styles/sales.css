@@ -234,6 +234,7 @@ input[type=number]::-webkit-outer-spin-button {
     align-items: center;
     justify-content: right;
     font-size: 1.9rem;
+    padding-right: 5px;
 }
 
 .container--infoDolarPrice { 
@@ -250,6 +251,7 @@ input[type=number]::-webkit-outer-spin-button {
 .container--infoDolarPrice .subtotalValue {
     display: flex;
     justify-content: right;
+    padding-right: 5px;
 }
 
 .container--infoDolarPrice span {

@@ -18,14 +18,14 @@ export const getClientHTML = () => {
                         <label for="date">Fecha de Nacimiento</label>
                     </div>
                     <div class="groupClient">
-                        <input placeholder="" type="email" id="email" name="email" required="">
+                        <input placeholder="" type="email" id="email" name="email">
                         <label for="email">Correo Electronico</label>
                     </div>
                     <div class="groupClient">
-                        <textarea placeholder="" id="comment" name="comment" rows="5"></textarea>
-                        <label for="comment">Comentarios</label>
+                        <textarea placeholder="" id="comments" name="comments" rows="5"></textarea>
+                        <label for="comments">Comentarios</label>
                     </div>
-                    <button>Guardar</button>
+                    <button class="btnSaveClient">Guardar</button>
                 </form>
             </div>
         </div>

@@ -1,0 +1,2 @@
+import { getDataClient } from "./getData";
+
