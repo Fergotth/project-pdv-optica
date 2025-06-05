@@ -10,5 +10,7 @@ export const getHandlerArgs = {
 
     handlerBtnSaveClient: () => ({
         data: getDataClientForm()
-    })
+    }),
+
+    handlerCloseFormClient: () => ({})
 };

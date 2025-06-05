@@ -4,6 +4,7 @@ import { getIVA, getTotal, getSubTotal, getDiscount, getNewPrice } from "./calcu
 import { validatePayment, validateValue, validateRegex, validateMaxHeight } from "./validations.js";
 import { getElement } from "../utils/getElement.js";
 import { getParsedHTML } from "../utils/getElement.js";
+import { closeOverlay } from "../utils/removeOverlay.js";
 import { newAlert } from "../utils/alerts.js";
 import Class from "./consts.js";
 

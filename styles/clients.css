@@ -18,6 +18,14 @@
     padding: 24px;
 }
 
+.containerClient .closeFormClient {
+    position: absolute;
+    display: flex;
+    right: 1%;
+    top: 1px;
+    cursor: pointer;
+}
+
 .cardClient {
     background-color: #fff;
     border-radius: 10px;

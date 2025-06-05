@@ -22,3 +22,7 @@ export const handlerBtnSaveClient = ({ data }) => {
     saveClient(data);
     closeOverlay(getElement('.overlay'));
 };
+
+export const handlerCloseFormClient = () => {
+    closeOverlay(getElement('.overlay'));
+};

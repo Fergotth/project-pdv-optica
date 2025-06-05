@@ -3,7 +3,7 @@ import { newAlert } from "../utils/alerts.js";
 import { getIVA, getTotal } from "./calculations.js";
 import { validateValue } from "./validations.js";
 import { getElement } from "../utils/getElement.js";
-import { closeOverlay } from "./utils.js";
+import { closeOverlay } from "../utils/removeOverlay.js";
 import * as prompt from "./prompts.js";
 import * as utils from "./utils.js";
 import Class from "./consts.js";

@@ -2,6 +2,7 @@ export const getClientHTML = () => {
     return `
     <div class="overlay">
         <div class="containerClient">
+        <img src="../icons/cancel.svg" class="closeFormClient"></img>
             <div class="cardClient">
                 <span class="titleClient">Datos del Cliente</span>
                 <form class="formClient">
