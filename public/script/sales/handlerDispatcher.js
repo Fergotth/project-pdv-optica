@@ -1,7 +1,7 @@
 import { getState } from "./state.js";
 import { validateValue } from "./validations.js";
 import { getElement } from "../utils/getElement.js";
-import products from "../../data/products.js";
+//import products from "../data/products.js";
 import Class from "./consts.js";
 
 /**

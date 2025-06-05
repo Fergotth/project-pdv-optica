@@ -6,6 +6,7 @@ import { getElement } from "../utils/getElement.js";
 import { getParsedHTML } from "../utils/getElement.js";
 import { closeOverlay } from "../utils/removeOverlay.js";
 import { newAlert } from "../utils/alerts.js";
+import { getDataClientDB } from "../clients/getData.js";
 import Class from "./consts.js";
 
 /**
@@ -174,8 +175,9 @@ export const searchClient = (clients, name) => {
  * @param {HTMLElement} dom     // Contenedor donde se esta trabajando
  * @param {Object} client       // Objeto que contiene los clientes a mostrar
  */
-export const addClientToList = (dom, client) => {
+export const addClientToList = async (dom, name) => { debugger
     const newElement = dom.querySelector('label');
+    const clients = await getDataClientDB(name);
     let listClients = dom.querySelector(Class.list.clients);
 
     if (!listClients) {
@@ -189,8 +191,16 @@ export const addClientToList = (dom, client) => {
         dom.classList.add('resizeForm');
     }
 
-    for(let item of client) {
-        listClients.appendChild(getParsedHTML(`<span class="clientName" data-id="${item.id}">${item.name}</span>`));
+    if (clients.length > 0) {
+        clients.forEach(client => {
+            listClients.appendChild(getParsedHTML(`<span class="clientName" data-id="${client.ID}">${client.Name}</span>`));
+        });
+    } else {
+        newAlert({
+            icon: "info",
+            title: "Busqueda",
+            text: "No se encontro ningun cliente con ese nombre"
+        });
     }
 };
 

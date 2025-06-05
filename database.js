@@ -1,8 +1,17 @@
+const fs = require('fs');
+const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
-const dbSales = new sqlite3.Database('./data/sales.db');
-const dbSalesDetails = new sqlite3.Database('./data/saleDetails.db');
-const dbClients = new sqlite3.Database('./data/clients.db');
-const dbProducts = new sqlite3.Database('./data/products.db');
+
+// Crear la carpeta /data si no existe
+const dataDir = path.join(__dirname, 'data');
+if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir);
+}
+
+const dbSales = new sqlite3.Database(path.join(dataDir, 'sales.db'));
+const dbSalesDetails = new sqlite3.Database(path.join(dataDir, 'saleDetails.db'));
+const dbClients = new sqlite3.Database(path.join(dataDir, 'clients.db'));
+const dbProducts = new sqlite3.Database(path.join(dataDir, 'products.db'));
 
 dbSales.run('PRAGMA foreign_keys = ON');
 dbSalesDetails.run('PRAGMA foreign_keys = ON');
