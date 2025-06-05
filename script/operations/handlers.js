@@ -1,5 +1,7 @@
 import { getParsedHTML } from "../utils/getElement.js";
 import { saveClient } from "../clients/addClient.js";
+import { closeOverlay } from "../utils/removeOverlay.js";
+import { getElement } from "../utils/getElement.js";
 
 /**
  * 
@@ -18,4 +20,5 @@ export const handlerBtnSaveClient = ({ data }) => {
     }
 
     saveClient(data);
+    closeOverlay(getElement('.overlay'));
 };

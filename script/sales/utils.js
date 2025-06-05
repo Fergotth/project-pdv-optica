@@ -149,14 +149,6 @@ export const changeLabelIva = (percentIva) => {
 
 /**
  * 
- * @param {HTMLElement} element     // Elemento overlay a remover
- */
-export const closeOverlay = (element) => {
-    element.remove();
-};
-
-/**
- * 
  * @param {Object} clients  // Objeto que contiene a los clientes
  * @param {String} name     // Nombre a buscar
  * @returns {Object}        // Objeto con los clientes encontrados
