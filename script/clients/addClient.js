@@ -1,5 +1,8 @@
 import { newAlert } from "../utils/alerts.js";
 
+/**
+ * @param {Object}  // Datos del cliente a guardar
+ */
 export const saveClient = async ({ data }) => {
     try {
         const response = await fetch('http://localhost:3000/save-clients', {
