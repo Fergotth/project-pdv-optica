@@ -86,7 +86,7 @@ app.post('/save-saledetails', (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Servidor escuchando
-const PORT = 3000;
+const PORT = 5500;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });

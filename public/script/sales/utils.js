@@ -187,11 +187,11 @@ export const addClientToList = async (dom, name) => { debugger
         listClients.innerHTML = '';
     }
 
-    if (!dom.classList.contains('resizeForm')) {
-        dom.classList.add('resizeForm');
-    }
-
     if (clients.length > 0) {
+        if (!dom.classList.contains('resizeForm')) {
+            dom.classList.add('resizeForm');
+        }
+        
         clients.forEach(client => {
             listClients.appendChild(getParsedHTML(`<span class="clientName" data-id="${client.ID}">${client.Name}</span>`));
         });
