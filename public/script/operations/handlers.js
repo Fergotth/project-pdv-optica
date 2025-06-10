@@ -26,3 +26,11 @@ export const handlerBtnSaveClient = ({ data }) => {
 export const handlerCloseFormClient = () => {
     closeOverlay(getElement('.overlay'));
 };
+
+export const handlerRegisterArticles = ({ DOM, innerHTML }) => {
+    DOM.appendChild(getParsedHTML(innerHTML));
+};
+
+export const handlerBtnProductsCancel = () => {
+    closeOverlay(getElement('.overlay'));
+};

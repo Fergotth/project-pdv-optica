@@ -63,10 +63,13 @@ CREATE TABLE IF NOT EXISTS Clients (
 dbProducts.run(`
     CREATE TABLE IF NOT EXISTS Products (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        DATE TEXT DEFAULT (datetime('now','localtime')),
         SKU TEXT,
         Category TEXT,
         Description TEXT,
-        Price REAL,
+        PriceExcludingIVA REAL,
+        PriceIncludingIVA REAL,
+        NetProfit REAL,
         Stock INTEGER,
         Image TEXT
     )

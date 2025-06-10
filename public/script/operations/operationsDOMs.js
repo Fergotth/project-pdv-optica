@@ -33,3 +33,49 @@ export const getClientHTML = () => {
     </div>
     `;
 };
+
+export const getProductsHTML = () => {
+    return `
+    <div class="overlay">
+        <div class="containerProducts">
+            <div class="products--title"><h2>Registro de Articulos</h2></div>
+            <div class="products--sku"> 
+                <input class="sku--input" id="sku--input" type="text">
+                <label for="sku--input">SKU</label>
+            </div>
+            <div class="products--category">
+                <input class="category--input" id="category--input" type="text">
+                <label for="category--input">Categoria</label>
+            </div>
+            <div class="products--description">
+                <input class="description--input" id="description--input" type="text">
+                <label for="description--input">Descripcion</label>
+            </div>
+            <div class="products--pricePurchaseExcludingIVA">
+                <input class="pricePurchaseExcludingIVA--input" id="pricePurchaseExcludingIVA--input" type="text">
+                <label for="pricePurchaseExcludingIVA--input">Precio de Compra s/IVA</label>
+            </div>
+            <div class="products--pricePurchaseIncludingIVA">
+                <input class="pricePurchaseIncludingIVA--input" id="pricePurchaseIncludingIVA--input" type="text">
+                <label for="pricePurchaseIncludingIVA--input">Precio de Compra c/IVA</label>
+            </div>
+            <div class="products--quantity">
+                <input class="quantity--input" id="IVA--input" type="text">
+                <label for="quantity--input">Cantidad</label>
+            </div>
+            <div class="products--salePrice">
+                <input class="salePrice--input" id="salePrice--input" type="text">
+                <label for="salePrice--input">Precio de Venta</label>
+            </div>
+            <div class="products--netProfit">
+                <div class="netProfit--input"></div>
+                <label for="netProfit--input">Utilidad Neta</label>
+            </div>
+            <div class="products--buttons">
+                <button class="btnProductsSave">Guardar</button>
+                <button class="btnProductsCancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    `;
+}

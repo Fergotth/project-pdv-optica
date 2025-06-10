@@ -9,7 +9,7 @@
 <body>
     <div class="containerProducts">
         <div class="products--title"><h2>Registro de Articulos</h2></div>
-        <div class="products--sku">
+        <div class="products--sku"> 
             <input class="sku--input" id="sku--input" type="text">
             <label for="sku--input">SKU</label>
         </div>
@@ -21,12 +21,30 @@
             <input class="quantity--input" id="quantity--input" type="text">
             <label for="quantity--input">Cantidad</label>
         </div>
-        <div class="products--pricePurchaseExcludingIVA">Precio de Compra s/IVA</div>
-        <div class="products--pricePurchaseIncludingIVA">Precio de Compra C/IVA</div>
-        <div class="products--IVA">IVA</div>
-        <div class="products--salePrice">Precio de Venta</div>
-        <div class="products--netProfit">Utilidad Neta</div>
-        <div class="products--buttons">Botones</div>
+        <div class="products--pricePurchaseExcludingIVA">
+            <input class="pricePurchaseExcludingIVA--input" id="pricePurchaseExcludingIVA--input" type="text">
+            <label for="pricePurchaseExcludingIVA--input">Precio de Compra s/IVA</label>
+        </div>
+        <div class="products--pricePurchaseIncludingIVA">
+            <input class="pricePurchaseIncludingIVA--input" id="pricePurchaseIncludingIVA--input" type="text">
+            <label for="pricePurchaseIncludingIVA--input">Precio de Compra c/IVA</label>
+        </div>
+        <div class="products--IVA">
+            <input class="IVA--input" id="IVA--input" type="text">
+            <label for="IVA--input">IVA</label>
+        </div>
+        <div class="products--salePrice">
+            <input class="salePrice--input" id="salePrice--input" type="text">
+            <label for="salePrice--input">Precio de Venta</label>
+        </div>
+        <div class="products--netProfit">
+            <div class="netProfit--input"></div>
+            <label for="netProfit--input">Utilidad Neta</label>
+        </div>
+        <div class="products--buttons">
+            <button>Guardar</button>
+            <button>Cancelar</button>
+        </div>
     </div>
 </body>
 </html>

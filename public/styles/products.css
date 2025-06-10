@@ -1,17 +1,20 @@
 .containerProducts {
     display: grid;
+    position: relative;
+    left: calc(50% - 40vw);
+    top: 5%;
     grid-template-columns: 5px 1fr 5px 1fr 5px repeat(2, 1fr) 5px;
-    grid-template-rows: 5px 50px 5px 40px 5px 40px 5px 40px 5px 40px 5px 40px 5px 40px;
+    grid-template-rows: 5px 50px 8px 40px 8px 40px 8px 40px 8px 40px 8px 40px 18px 40px;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     margin: 0;
     width: 80vw;
     height: 60vh;
-    border: 1px solid #000;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.containerProducts > div {
-    border: 1px solid #000;
+.containerProducts > div:not(:nth-child(10)) {
     border-radius: 5px;
     display: flex;
 }
@@ -32,54 +35,91 @@
     grid-area: 4 / 2 / 5 / 3;
 }
 
-.products--sku label, .products--category label {
+.products--sku label, 
+.products--category label, 
+.products--description label,
+.products--pricePurchaseExcludingIVA label,
+.products--pricePurchaseIncludingIVA label,
+.products--quantity label,
+.products--salePrice label,
+.products--netProfit label {
     position: absolute;
     transform: translateY(10px) translateX(10px);
+    font-weight: 600;
+    color: #000;
+    user-select: none;
 }
 
-.products--sku input {
+.products--sku input, 
+.products--category input, 
+.products--description input,
+.products--pricePurchaseExcludingIVA input,
+.products--pricePurchaseIncludingIVA input,
+.products--quantity input,
+.products--salePrice input,
+.products--netProfit div {
     border: none;
     border-radius: 5px;
     width: 100%;
+    background-color: #f2f0f0;
 }
 
-.products--sku label:hover {
+.products--sku input:focus, 
+.products--category input:focus, 
+.products--description input:focus,
+.products--pricePurchaseExcludingIVA input:focus,
+.products--pricePurchaseIncludingIVA input:focus,
+.products--quantity input:focus,
+.products--salePrice input:focus {
+    background-color: #f2f0f0;
+    border: none;
+    outline: none;
+}
+
+.products--sku label:hover, 
+.products--category label:hover,
+.products--description label:hover,
+.products--pricePurchaseExcludingIVA label:hover,
+.products--pricePurchaseIncludingIVA label:hover,
+.products--quantity label:hover,
+.products--salePrice label:hover,
+.products--netProfit label:hover {
     color: blue;
     transition: all 0.3s ease-in-out;
     transform: translateY(10px) translateX(10px) scale(1.2);
 }
 
 .products--sku input:focus + label,
-.products--sku input:not(:placeholder-shown) + label {
+.products--sku input:not(:placeholder-shown) + label,
+.products--category input:focus + label,
+.products--category input:not(:placeholder-shown) + label,
+.products--description input:focus + label,
+.products--description input:not(:placeholder-shown) + label,
+.products--pricePurchaseExcludingIVA input:focus + label,
+.products--pricePurchaseExcludingIVA input:not(:placeholder-shown) + label,
+.products--pricePurchaseIncludingIVA input:focus + label,
+.products--pricePurchaseIncludingIVA input:not(:placeholder-shown) + label,
+.products--quantity input:focus + label,
+.products--quantity input:not(:placeholder-shown) + label,
+.products--salePrice input:focus + label,
+.products--salePrice input:not(:placeholder-shown) + label,
+.products--netProfit div:focus + label,
+.products--netProfit div:not(:placeholder-shown) + label {
     transition: all 0.3s ease-in-out;
-    transform: translateY(-8px) translateX(2px);
-    background-color: #fff;
+    transform: translateY(-10px) translateX(10px);
+    background-color: transparent;
+}
+
+.products--netProfit label {
+    transform: translateY(-8px) translateX(10px);
+    background-color: transparent;
 }
 
 .products--category {
     grid-area: 6 / 2 / 7 / 5;
 }
 
-.products--category input {
-    border: none;
-    border-radius: 5px;
-    width: 100%;
-}
-
-.products--category label:hover {
-    color: blue;
-    transition: all 0.3s ease-in-out;
-    transform: translateY(10px) translateX(10px) scale(1.2);
-}
-
-.products--category input:focus + label,
-.products--category input:not(:placeholder-shown) + label {
-    transition: all 0.3s ease-in-out;
-    transform: translateY(-8px) translateX(2px);
-    background-color: #fff;
-}
-
-.products--quantity {
+.products--description {
     grid-area: 6 / 6 / 7 / 8;
 }
 
@@ -91,7 +131,7 @@
     grid-area: 8 / 4 / 9 / 5;
 }
 
-.products--IVA {
+.products--quantity {
     grid-area: 8 / 6 / 9 / 7;
 }
 
@@ -105,4 +145,19 @@
 
 .products--buttons { 
     grid-area: 14 / 2 / 15 / 8;
+    display: flex;
+    justify-content: end;
+}
+
+.products--buttons button {
+    margin-right: 50px;
+    width: 150px;
+    background-color: #3366cc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }

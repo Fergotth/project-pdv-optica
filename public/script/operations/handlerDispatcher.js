@@ -1,5 +1,5 @@
 import { getElement } from "../utils/getElement.js";
-import { getClientHTML } from "./operationsDOMs.js";
+import { getClientHTML, getProductsHTML } from "./operationsDOMs.js";
 import { getDataClientForm } from "../clients/getData.js";
 
 export const getHandlerArgs = {
@@ -12,5 +12,12 @@ export const getHandlerArgs = {
         data: getDataClientForm()
     }),
 
-    handlerCloseFormClient: () => ({})
+    handlerCloseFormClient: () => ({}),
+
+    handlerRegisterArticles: () => ({
+        DOM: getElement('.containerOperations'),
+        innerHTML: getProductsHTML()
+    }),
+
+    handlerBtnProductsCancel: () => ({})
 };
