@@ -175,7 +175,7 @@ export const searchClient = (clients, name) => {
  * @param {HTMLElement} dom     // Contenedor donde se esta trabajando
  * @param {Object} client       // Objeto que contiene los clientes a mostrar
  */
-export const addClientToList = async (dom, name) => { debugger
+export const addClientToList = async (dom, name) => {
     const newElement = dom.querySelector('label');
     const clients = await getDataClientDB(name);
     let listClients = dom.querySelector(Class.list.clients);

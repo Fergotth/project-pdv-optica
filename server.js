@@ -73,12 +73,29 @@ app.post('/save-sales', (req, res) => {
 // Agregar detalle de venta
 app.post('/save-saledetails', (req, res) => {
     const { SaleID, Quantity, Product, SKU, Price, Discount, IVA } = req.body;
+    
     dbSalesDetails.run(
         `INSERT INTO SaleDetails (SaleID, Quantity, Product, SKU, Price, Discount, IVA) VALUES (?, ?, ?, ?, ?, ?, ?)`,
         [SaleID, Quantity, Product, SKU, Price, Discount, IVA],
         function(err) {
             if (err) return res.status(500).json({ error: err.message });
             res.json({ id: this.lastID });
+        }
+    );
+});
+
+// Agregar nuevo producto
+app.post('/save-products', (req, res) => {
+    const { SKU, Category, Description, PriceExcludingIVA, PriceIncludingIVA, NetProfit, Stock, Status, Image } = req.body;
+
+    dbProducts.run(
+        `INSERT INTO Products (Date, SKU, Category, Description, PriceExcludingIVA, 
+        PriceIncludingIVA, NetProfit, Stock, Status, Image)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [],
+        function(err) {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json ({ id: this.lastID });
         }
     );
 });

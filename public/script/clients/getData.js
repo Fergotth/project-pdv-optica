@@ -23,7 +23,7 @@ export const getDataClientForm = () => {
  */
 export const getDataClientDB = async (typeOfParam) => {
     try {
-        const response = await fetch(`http://localhost:3000/get-clients?q=${encodeURIComponent(typeOfParam)}`);
+        const response = await fetch(`http://localhost:5500/get-clients?q=${encodeURIComponent(typeOfParam)}`);
         const data = await response.json();
         return data;
     } catch (error) {

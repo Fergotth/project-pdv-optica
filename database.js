@@ -9,9 +9,10 @@ if (!fs.existsSync(dataDir)) {
 }
 
 const dbSales = new sqlite3.Database(path.join(dataDir, 'sales.db'));
-const dbSalesDetails = new sqlite3.Database(path.join(dataDir, 'saleDetails.db'));
+const dbSalesDetails = new sqlite3.Database(path.join(dataDir, 'saledetails.db'));
 const dbClients = new sqlite3.Database(path.join(dataDir, 'clients.db'));
 const dbProducts = new sqlite3.Database(path.join(dataDir, 'products.db'));
+const dbProductsDetails = new sqlite3.Database(path.join(dataDir, 'productsdetails.db'))
 
 dbSales.run('PRAGMA foreign_keys = ON');
 dbSalesDetails.run('PRAGMA foreign_keys = ON');
@@ -71,7 +72,18 @@ dbProducts.run(`
         PriceIncludingIVA REAL,
         NetProfit REAL,
         Stock INTEGER,
+        Status TEXT,
         Image TEXT
+    )
+`);
+
+// Crear tabla ProductsDetails (Detalles del producto)
+dbProductsDetails.run(`
+    CREATE TABLE IF NOT EXISTS ProductDetails (
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        SKU INTEGER,
+        DATE TEXT DEFAULT (datetime('now','localtime')),
+        FOREIGN KEY(SKU) REFERENCES Products(SKU)
     )
 `);
 
