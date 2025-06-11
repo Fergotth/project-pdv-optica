@@ -1,6 +1,7 @@
 import { getElement } from "../utils/getElement.js";
 import { getClientHTML, getProductsHTML } from "./operationsDOMs.js";
 import { getDataClientForm } from "../clients/getData.js";
+import { getDataProductForm } from "../products/getData.js";
 
 export const getHandlerArgs = {
     handlerRegisterClient: () => ({
@@ -19,5 +20,9 @@ export const getHandlerArgs = {
         innerHTML: getProductsHTML()
     }),
 
-    handlerBtnProductsCancel: () => ({})
+    handlerBtnProductsCancel: () => ({}),
+
+    handlerBtnProductsSave: () => ({
+        data: getDataProductForm()
+    })
 };

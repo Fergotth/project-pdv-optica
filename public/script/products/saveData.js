@@ -1,33 +1,56 @@
 import { getDataProductForm } from "./getData.js";
 import { newAlert } from "../utils/alerts.js";
 
-export const saveProduct = async () => {
+/**
+ * Envía los datos del producto a la URL especificada.
+ * @param {string} url - Endpoint al que se enviarán los datos.
+ * @param {object} data - Datos del producto.
+ * @returns {Promise<boolean>} - true si la petición fue exitosa, false en caso contrario.
+ */
+const sendProductData = async (url, data) => {
     try {
-        const response = await fetch('http://localhost:5500/save-products', {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(getDataProductForm())
+            body: JSON.stringify(data)
         });
-
-        if (response.ok) {
-            newAlert({
-                icon: "success",
-                title: "Alta de Articulos",
-                text: "Articulo agregado correctamente"
-            });
-        } else {
-            newAlert({
-                icon: "error",
-                title: "Alta de Articulo",
-                text: "Articulo no se pudo agregar"
-            });
-        }
+        return response.ok;
     } catch (error) {
+        console.error('Error al guardar los datos del producto: ', error);
+        return false;
+    }
+};
+
+export const saveProduct = async () => {
+    const data = getDataProductForm();
+
+    if (!data || !data.SKU || !data.Category) {
         newAlert({
             icon: "error",
-            text: `Ha ocurrido un error al querer dar de alta un articulo: ${error}`
+            title: "Datos incompletos",
+            text: "Por favor, completa todos los campos obligatorios."
+        });
+        return;
+    }
+
+    const results = await Promise.all([
+        sendProductData('http://localhost:5500/save-products', data),
+        sendProductData('http://localhost:5500/save-productsDetails', data)
+    ]);
+    
+    if (results.every(success => success)) {
+        newAlert({
+            icon: "success",
+            title: "Alta de Artículos",
+            text: "Artículo agregado correctamente."
+        });
+    } else {
+        newAlert({
+            icon: "error",
+            title: "Alta de Artículo",
+            text: "El artículo no se pudo agregar en ninguno de los registros."
         });
     }
 };

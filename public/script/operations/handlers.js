@@ -2,6 +2,7 @@ import { getParsedHTML } from "../utils/getElement.js";
 import { saveClient } from "../clients/addClient.js";
 import { closeOverlay } from "../utils/removeOverlay.js";
 import { getElement } from "../utils/getElement.js";
+import { saveProduct } from "../products/saveData.js";
 
 /**
  * 
@@ -34,3 +35,7 @@ export const handlerRegisterArticles = ({ DOM, innerHTML }) => {
 export const handlerBtnProductsCancel = () => {
     closeOverlay(getElement('.overlay'));
 };
+
+export const handlerBtnProductsSave = (data) => {
+    saveProduct(data);
+}

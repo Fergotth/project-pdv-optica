@@ -89,7 +89,16 @@ app.post('/save-products', (req, res) => {
 
 // Agregar los detalles del producto
 app.post('/save-productDetails', (req, res) => {
-    const { SKU, Movement } = req.body;
+    const { SKU } = req.body;
+
+    dbProducts.run(
+        `INSERT INTO Products (SKU, Movement) VALUES (?, ?)`,
+            [SKU, 'Alta'],
+            function(err) {
+                if (err) return res.status(500).json({ error: err.message });
+                res.json ({ id: this.lastID });
+            }
+    );
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
