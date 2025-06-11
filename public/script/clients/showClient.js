@@ -9,7 +9,6 @@ export const showClientHTML = async (param) => {
             clients.forEach(client => {
                 // procedimiento para insertar los datos en el div contenedeor
             });
-            
         } else {
             newAlert({
                 icon: "info",

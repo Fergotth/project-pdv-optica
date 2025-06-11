@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const { dbSales, dbClients, dbProducts, dbSalesDetails } = require('./database');
+const { dbSales, dbClients, dbProducts } = require('./database');
 const app = express();
 
 app.use(bodyParser.json());
@@ -44,19 +44,6 @@ app.get('/get-clients', (req, res) => {
     });
 });
 
-// Agregar un producto
-app.post('/save-products', (req, res) => {
-    const { SKU, Category, Description, Price, Stock, Image } = req.body;
-    dbProducts.run(
-        `INSERT INTO Products (SKU, Category, Description, Price, Stock, Image) VALUES (?, ?, ?, ?, ?, ?)`,
-        [SKU, Category, Description, Price, Stock, Image],
-        function(err) {
-            if (err) return res.status(500).json({ error: err.message });
-            res.json({ id: this.lastID });
-        }
-    );
-});
-
 // Agregar una venta
 app.post('/save-sales', (req, res) => {
     const { ClientID, Total, Payment, Balance, PaymentMethod, Status } = req.body;
@@ -74,7 +61,7 @@ app.post('/save-sales', (req, res) => {
 app.post('/save-saledetails', (req, res) => {
     const { SaleID, Quantity, Product, SKU, Price, Discount, IVA } = req.body;
     
-    dbSalesDetails.run(
+    dbSales.run(
         `INSERT INTO SaleDetails (SaleID, Quantity, Product, SKU, Price, Discount, IVA) VALUES (?, ?, ?, ?, ?, ?, ?)`,
         [SaleID, Quantity, Product, SKU, Price, Discount, IVA],
         function(err) {
@@ -86,18 +73,23 @@ app.post('/save-saledetails', (req, res) => {
 
 // Agregar nuevo producto
 app.post('/save-products', (req, res) => {
-    const { SKU, Category, Description, PriceExcludingIVA, PriceIncludingIVA, NetProfit, Stock, Status, Image } = req.body;
+    const { SKU, Category, Description, PriceExcludingIVA, PriceIncludingIVA, NetProfit, SalePrice, Stock, Status, Image } = req.body;
 
     dbProducts.run(
-        `INSERT INTO Products (Date, SKU, Category, Description, PriceExcludingIVA, 
-        PriceIncludingIVA, NetProfit, Stock, Status, Image)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [],
+        `INSERT INTO Products (SKU, Category, Description, PriceExcludingIVA, 
+        PriceIncludingIVA, NetProfit, SalePrice, Stock, Image)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [SKU, Category, Description, PriceExcludingIVA, PriceIncludingIVA, NetProfit, SalePrice, Stock, Status, Image],
         function(err) {
             if (err) return res.status(500).json({ error: err.message });
             res.json ({ id: this.lastID });
         }
     );
+});
+
+// Agregar los detalles del producto
+app.post('/save-productDetails', (req, res) => {
+    const { SKU, Movement } = req.body;
 });
 
 app.use(express.static(path.join(__dirname, 'public')));

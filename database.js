@@ -9,14 +9,7 @@ if (!fs.existsSync(dataDir)) {
 }
 
 const dbSales = new sqlite3.Database(path.join(dataDir, 'sales.db'));
-const dbSalesDetails = new sqlite3.Database(path.join(dataDir, 'saledetails.db'));
-const dbClients = new sqlite3.Database(path.join(dataDir, 'clients.db'));
-const dbProducts = new sqlite3.Database(path.join(dataDir, 'products.db'));
-const dbProductsDetails = new sqlite3.Database(path.join(dataDir, 'productsdetails.db'))
-
 dbSales.run('PRAGMA foreign_keys = ON');
-dbSalesDetails.run('PRAGMA foreign_keys = ON');
-dbClients.run('PRAGMA foreign_keys = ON');
 
 // Crear tabla Sales (Ventas)
 dbSales.run(`
@@ -28,13 +21,12 @@ dbSales.run(`
         Balance REAL,
         PaymentMethod TEXT,
         Date TEXT DEFAULT (datetime('now','localtime')),
-        Status TEXT,
-        FOREIGN KEY(ClientID) REFERENCES Clients(ID)
+        Status TEXT
     )
 `);
 
 // Crear tabla SaleDetails (Detalles de Venta)
-dbSalesDetails.run(`
+dbSales.run(`
     CREATE TABLE IF NOT EXISTS SaleDetails (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         SaleID INTEGER,
@@ -48,6 +40,8 @@ dbSalesDetails.run(`
     )
 `);
 
+const dbClients = new sqlite3.Database(path.join(dataDir, 'clients.db'));
+
 // Crear la tabla Clients (Clientes)
 dbClients.run(`
 CREATE TABLE IF NOT EXISTS Clients (
@@ -60,6 +54,9 @@ CREATE TABLE IF NOT EXISTS Clients (
     )
 `);
 
+const dbProducts = new sqlite3.Database(path.join(dataDir, 'products.db'));
+dbClients.run('PRAGMA foreign_keys = ON');
+
 // Crear tabla Products (Productos)
 dbProducts.run(`
     CREATE TABLE IF NOT EXISTS Products (
@@ -71,20 +68,25 @@ dbProducts.run(`
         PriceExcludingIVA REAL,
         PriceIncludingIVA REAL,
         NetProfit REAL,
+        SalePrice REAL,
         Stock INTEGER,
-        Status TEXT,
         Image TEXT
     )
 `);
 
 // Crear tabla ProductsDetails (Detalles del producto)
-dbProductsDetails.run(`
+dbProducts.run(`
     CREATE TABLE IF NOT EXISTS ProductDetails (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        SKU INTEGER,
+        SKU TEXT,
+        Movement TEXT,
         DATE TEXT DEFAULT (datetime('now','localtime')),
         FOREIGN KEY(SKU) REFERENCES Products(SKU)
     )
 `);
 
-module.exports = { dbSales, dbClients, dbProducts, dbSalesDetails };
+module.exports = { 
+    dbSales, 
+    dbClients, 
+    dbProducts 
+};
