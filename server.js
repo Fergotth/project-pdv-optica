@@ -73,13 +73,13 @@ app.post('/save-saledetails', (req, res) => {
 
 // Agregar nuevo producto
 app.post('/save-products', (req, res) => {
-    const { SKU, Category, Description, PriceExcludingIVA, PriceIncludingIVA, NetProfit, SalePrice, Stock, Status, Image } = req.body;
+    const { SKU, Category, Description, PriceExcludingIVA, PriceIncludingIVA, NetProfit, SalePrice, Stock, Image } = req.body;
 
     dbProducts.run(
         `INSERT INTO Products (SKU, Category, Description, PriceExcludingIVA, 
         PriceIncludingIVA, NetProfit, SalePrice, Stock, Image)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [SKU, Category, Description, PriceExcludingIVA, PriceIncludingIVA, NetProfit, SalePrice, Stock, Status, Image],
+        [SKU, Category, Description, PriceExcludingIVA, PriceIncludingIVA, NetProfit, SalePrice, Stock, Image],
         function(err) {
             if (err) return res.status(500).json({ error: err.message });
             res.json ({ id: this.lastID });
@@ -88,11 +88,11 @@ app.post('/save-products', (req, res) => {
 });
 
 // Agregar los detalles del producto
-app.post('/save-productDetails', (req, res) => {
+app.post('/save-productsDetails', (req, res) => {
     const { SKU } = req.body;
 
     dbProducts.run(
-        `INSERT INTO Products (SKU, Movement) VALUES (?, ?)`,
+        `INSERT INTO ProductDetails (SKU, Movement) VALUES (?, ?)`,
             [SKU, 'Alta'],
             function(err) {
                 if (err) return res.status(500).json({ error: err.message });

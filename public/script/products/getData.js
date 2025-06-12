@@ -10,7 +10,7 @@ export const getDataProductForm = () => {
             PriceIncludingIVA: getElement('.pricePurchaseIncludingIVA--input').value,
             NetProfit: getElement('.netProfit--input').textContent,
             SalePrice: getElement('.salePrice--input').value,
-            Stock: getElement('products--quantity').value,
+            Stock: getElement('.quantity--input').value,
             Image: ""
         };
     

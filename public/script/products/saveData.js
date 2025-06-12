@@ -1,4 +1,3 @@
-import { getDataProductForm } from "./getData.js";
 import { newAlert } from "../utils/alerts.js";
 
 /**
@@ -23,9 +22,7 @@ const sendProductData = async (url, data) => {
     }
 };
 
-export const saveProduct = async () => {
-    const data = getDataProductForm();
-
+export const saveProduct = async (data) => {
     if (!data || !data.SKU || !data.Category) {
         newAlert({
             icon: "error",
@@ -40,7 +37,7 @@ export const saveProduct = async () => {
         sendProductData('http://localhost:5500/save-productsDetails', data)
     ]);
     
-    if (results.every(success => success)) {
+    if (results.every(Boolean)) {
         newAlert({
             icon: "success",
             title: "Alta de Artículos",
