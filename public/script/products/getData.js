@@ -1,5 +1,9 @@
 import { getElement } from "../utils/getElement.js";
 
+/**
+ * Obtiene los datos del formulario de productos.
+ * @returns {Object} // Devuelve un objeto con los datos del formulario de productos
+ */
 export const getDataProductForm = () => {
     try {
         const data = {
@@ -21,9 +25,8 @@ export const getDataProductForm = () => {
 };
 
 /**
- * 
- * @param {String} name // Nombre del articulo a buscar 
- * @returns             // Devuelve un objeto con los datos encontrar o un array vacio si no
+ * @param {String} article // Nombre del articulo a buscar
+ * @returns {Promise<Object>} // Devuelve un objeto con los datos encontrar o un array vacio si no
  */
 export const getDataProductDB = async (article) => {
     try {

@@ -16,6 +16,7 @@ const sendProductData = async (url, data) => {
             },
             body: JSON.stringify(data)
         });
+
         return response.ok;
     } catch (error) {
         console.error('Error al guardar los datos del producto: ', error);
@@ -23,17 +24,30 @@ const sendProductData = async (url, data) => {
     }
 };
 
+/**
+ * Guarda los datos del producto.
+ * @param {Object} data - Los datos del producto a guardar.
+ * @returns {Promise<void>}
+ */
 export const saveProduct = async (data) => {
-    if (!data || !data.SKU || !data.Category || !data.Description) {
+    const requiredFields = [
+        "SKU", "Category", "Description", "PriceExcludingIVA", "PriceIncludingIVA", "Stock"
+    ];
+
+    const hasMissingFields = requiredFields.some(field => !data[field]);
+
+    // Verifica si hay campos obligatorios que no están completos
+    if (hasMissingFields) {
         newAlert({
             icon: "error",
             title: "Datos incompletos",
             text: "Por favor, completa todos los campos obligatorios."
         });
+
         return;
     }
 
-    if (!existSKU(data.SKU)) {
+    if (!await existSKU(data.SKU)) {
         const results = await Promise.all([
             sendProductData('http://localhost:5500/save-products', data),
             sendProductData('http://localhost:5500/save-productsDetails', data)
