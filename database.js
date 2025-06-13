@@ -20,7 +20,7 @@ dbSales.run(`
         Payment REAL,
         Balance REAL,
         PaymentMethod TEXT,
-        Date TEXT DEFAULT (datetime('now','localtime')),
+        Date TEXT DEFAULT (date('now','localtime')),
         Status TEXT
     )
 `);
@@ -61,7 +61,7 @@ dbClients.run('PRAGMA foreign_keys = ON');
 dbProducts.run(`
     CREATE TABLE IF NOT EXISTS Products (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        DATE TEXT DEFAULT (datetime('now','localtime')),
+        DATE TEXT DEFAULT (date('now','localtime')),
         SKU TEXT,
         Category TEXT,
         Description TEXT,
@@ -80,7 +80,7 @@ dbProducts.run(`
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         SKU TEXT,
         Movement TEXT,
-        DATE TEXT DEFAULT (datetime('now','localtime')),
+        DATE TEXT DEFAULT (date('now','localtime')),
         FOREIGN KEY(SKU) REFERENCES Products(SKU)
     )
 `);

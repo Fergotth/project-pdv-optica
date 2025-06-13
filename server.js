@@ -101,6 +101,19 @@ app.post('/save-productsDetails', (req, res) => {
     );
 });
 
+// Obtener SKU del articulo a buscar
+app.get('/find-article', (req, res) => {
+    const SQLStr = 'SELECT * FROM Products WHERE SKU = ?';
+    
+    dbProducts.all(SQLStr, [req.query.q], (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows || []);
+    });
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Servidor escuchando

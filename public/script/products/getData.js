@@ -19,3 +19,19 @@ export const getDataProductForm = () => {
         console.error("No se puedieron obtener los datos de los articulos", error);
     }
 };
+
+/**
+ * 
+ * @param {String} name // Nombre del articulo a buscar 
+ * @returns             // Devuelve un objeto con los datos encontrar o un array vacio si no
+ */
+export const getDataProductDB = async (article) => {
+    try {
+        const response = await fetch(`http://localhost:5500/find-article?q=${encodeURIComponent(article)}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener datos del articulo:', error);
+        return [];
+    }
+};

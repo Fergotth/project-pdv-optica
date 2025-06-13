@@ -1,4 +1,5 @@
 import { newAlert } from "../utils/alerts.js";
+import { existSKU } from "./utils.js";
 
 /**
  * Envía los datos del producto a la URL especificada.
@@ -23,7 +24,7 @@ const sendProductData = async (url, data) => {
 };
 
 export const saveProduct = async (data) => {
-    if (!data || !data.SKU || !data.Category) {
+    if (!data || !data.SKU || !data.Category || !data.Description) {
         newAlert({
             icon: "error",
             title: "Datos incompletos",
@@ -32,22 +33,30 @@ export const saveProduct = async (data) => {
         return;
     }
 
-    const results = await Promise.all([
-        sendProductData('http://localhost:5500/save-products', data),
-        sendProductData('http://localhost:5500/save-productsDetails', data)
-    ]);
-    
-    if (results.every(Boolean)) {
-        newAlert({
-            icon: "success",
-            title: "Alta de Artículos",
-            text: "Artículo agregado correctamente."
-        });
+    if (!existSKU(data.SKU)) {
+        const results = await Promise.all([
+            sendProductData('http://localhost:5500/save-products', data),
+            sendProductData('http://localhost:5500/save-productsDetails', data)
+        ]);
+        
+        if (results.every(Boolean)) {
+            newAlert({
+                icon: "success",
+                title: "Alta de Artículos",
+                text: "Artículo agregado correctamente."
+            });
+        } else {
+            newAlert({
+                icon: "error",
+                title: "Alta de Artículo",
+                text: "El artículo no se pudo agregar en ninguno de los registros."
+            });
+        }
     } else {
         newAlert({
             icon: "error",
-            title: "Alta de Artículo",
-            text: "El artículo no se pudo agregar en ninguno de los registros."
+            title: "ALTA",
+            text: "SKU ya existe, favor de corregirlo."
         });
     }
 };
