@@ -8,29 +8,21 @@ grid.addEventListener('click', async (e) => {
     if (!item) return;
 
     if (closeIcon) {
-        // Cerrar/colapsar el item
-        item.classList.add('active');
-
-        // Simular animación con clases y timeout
+        // Colapsar
         item.classList.add('collapsing');
         item.classList.remove('expanded');
 
         setTimeout(() => {
             item.classList.remove('collapsing');
-            item.classList.remove('active');
-        }, 300); // duración de la animación
+        }, 300); // duración igual que el CSS
     } else {
-        // Expandir si no está expandido
         if (!item.classList.contains('expanded')) {
-            item.classList.add('active');
-
             item.classList.add('expanding');
             item.classList.add('expanded');
 
             setTimeout(() => {
                 item.classList.remove('expanding');
-                item.classList.remove('active');
-            }, 300); // duración de la animación
+            }, 300);
         }
     }
 });

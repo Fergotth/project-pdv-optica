@@ -28,7 +28,7 @@
   background: white;
   border-radius: 24px;
   cursor: pointer;
-  transition: all 0.3 ease-in-out;
+  transition: all 0.3 ease;
 }
 
 .grid-item .item-operations {
@@ -41,11 +41,19 @@
 }
 
 .grid-item .item-content {
-  display: none;
+  /*display: none;*/
   flex-direction: column;
   justify-content: center;
   gap: 4px;
   overflow: clip;
+
+  max-height: 0;
+  opacity: 0;
+  transform: scaleY(0.95);
+  transition: 
+    max-height 0.3s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .grid-item .item-content .item-title {
@@ -53,15 +61,8 @@
 }
 
 .grid-item.expanded {
+  transition: flex-direction 0.3s ease-in-out;
   flex-direction: column;
-}
-
-.grid-item.expanding {
-  /* opcional: puedes cambiar opacidad o color */
-}
-
-.grid-item.collapsing {
-  /* igual, para animaciones de colapso */
 }
 
 .grid-item.expanded > .chevron {
@@ -83,8 +84,12 @@
 }
 
 .grid-item.expanded .item-content {
-  display: flex;
   flex-grow: 1;
+  display: flex;
+  max-height: 500px; /* lo suficiente para mostrar contenido */
+  opacity: 1;
+  transform: scaleY(1);
+
 }
 
 .grid-item.expanded .item-operations {
@@ -112,10 +117,16 @@
 }
 
 .icon-grid {
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  width: 90px;
+  width: 64px;
+  justify-content: space-between; */
+
+  display: grid;
+  grid-template-columns: repeat(2, 30px);
+  gap: 8px;
+  width: max-content;
 }
 
 .icon-grid .item-operations {
@@ -126,6 +137,7 @@
 }
 
 .expanded .icon-grid {
+  display: flex;
   flex-direction: column;
   gap: 16px;
   width: 100%;
@@ -144,6 +156,7 @@
 .close-icon svg {
   width: 16px;
   height: 16px;
+  pointer-events: none;
 }
 
 .icon-operations {
@@ -190,4 +203,8 @@
 
 .expanded .chevron {
   display: none;
+}
+
+.chevron:hover svg { 
+  transform: scale(1.1);
 }
