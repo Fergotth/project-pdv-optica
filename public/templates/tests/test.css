@@ -4,14 +4,16 @@
   padding: 0 10px;
   background: #fff;
   display: flex;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
+  height: 80vh;
+  user-select: none;
 }
 
 .operations-grid {
   display: flex;
   flex-direction: column;
   max-width: 230px;
-  height: auto;
+  height: max-content;
   gap: 5px;
   padding: 5px;
   background: white;
@@ -24,8 +26,8 @@
   gap: 8px;
   padding: 4px;
   background: white;
+  border-radius: 24px;
   cursor: pointer;
-  transition: transform 0.2s;
   transition: all 0.3 ease-in-out;
 }
 
