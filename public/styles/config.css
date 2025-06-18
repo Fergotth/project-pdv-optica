@@ -1,11 +1,13 @@
 :root {
-    --bk-main: #f6f6f6;
-    --bk-windows: #fefdfc;
-    --colortext-regular: #2f2f2f;
-    --colortext-label: #71717a;
+    --bk-main: linear-gradient(90deg,rgba(48, 42, 24, 1) 0%, rgba(26, 56, 56, 1) 50%, rgba(48, 42, 24, 1) 100%, rgba(0, 0, 0, 1) 100%);
+    --bk-window: #1c1c1c;
+    --bk-hover: #1A3838;
+    --colortext-regular: #f6f6f6;
+    --colortext-li: #fde4c3;
+    --colortext-options: #e5924a;
     --fontsize-titles: 1.9rem;
-    --fontsize-menu-main: 1.3rem;
-    --fontsize-menu-option: 1rem;
+    --fontsize-menu-main: 1rem;
+    --fontsize-menu-option: 0.8rem;
     --div-height: 24px;
     --input-height: 24px;
 }   
