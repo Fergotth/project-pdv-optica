@@ -1,4 +1,4 @@
-import menu from "./menu3.js";
+import menu from "./menu4.js";
 import renderCalendar from "./calendar.js";
 
 const app = document.getElementById('app');
@@ -6,7 +6,7 @@ const temporaryContent = document.getElementById('temporaryContent');
 const calendar = document.getElementById('calendar');
 
 const loadMenu = () => {
-    fetch('/templates/template-menu3.html')
+    fetch('/templates/template-menu4.html')
     .then(response => response.text())
     .then(html => {
         app.innerHTML = html;

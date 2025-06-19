@@ -1,0 +1,89 @@
+@import url('../../styles/config.css');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bk-hover);
+    font-family: var(--font);
+}
+
+.container-sales {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.container-sales > div {
+    position: relative;
+    top: 10vh;
+}
+
+.sales-sideleft {
+    height: 80vh;
+    width: 5vw;
+    background-color: var(--color-window);
+}
+
+.sales-sidecenter {
+    height: 80vh;
+    width: 59vw;
+    background-color: var(--color-window);
+    display: flex;
+    flex-direction: column;
+}
+
+.sales-sideright {
+    height: 80vh;
+    width: 33vw;
+    background-color: var(--color-window);
+}
+
+.sales-sidecenter .sidecenter-firstsection {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 12%;
+}
+
+.sales-sidecenter .sidecenter-firstsection .sidecenter-firstsection-title {
+    width: 30%;display: flex;
+    align-items: flex-end;
+}
+
+.sales-sidecenter .sidecenter-firstsection .sidecenter-firstsection-inputs {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.sidecenter-firstsection-inputs div {
+    position: absolute;
+    top: 0;
+    left: 24px;
+    font-size: var(--fontsize-regular);
+    width: calc(98% - 24px);
+}
+
+.sidecenter-firstsection-inputs input {
+    position: absolute;
+    bottom: 0;
+    width: calc(98% - 24px);
+    left: 24px;
+    height: var(--input-height);
+    font-size: var(--fontsize-regular);
+    border: none;
+    outline: none;
+}
+
+.sidecenter-firstsection-inputs .sku-icon {
+    position: absolute;
+    bottom: 0;
+    width: 98%;
+    border: 1px solid black;
+    border-radius: 7px;
+}
+
+.sidecenter-firstsection-title span {
+    font-size: var(--fontsize-titles);
+}
