@@ -1,0 +1,5 @@
+iconos svg
+https://lucide.dev/icons/file-search-2
+
+colores gradientes
+https://cssgradient.io/
