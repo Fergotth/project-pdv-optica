@@ -269,7 +269,12 @@ body {
     height: 25%;
     display: flex;
     flex-direction: row;
+    align-items: center;
     border-radius: 7px;
+}
+
+.sideright-secondsection .item:hover {
+    background-color: var(--color-hover-gray);
 }
 
 .sideright-secondsection .item .item-delete {
@@ -334,9 +339,53 @@ body {
 }
 
 .sideright-secondsection .item .item-button {
-    height: 100%;
+    height: 90%;
     width: 21%;
-    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #FFA500;
+    border-radius: 7px;
+}
+
+.sideright-secondsection .item .item-button .button-quantity {
+    width: 60%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sideright-secondsection .item .item-button .button-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    width: 40%;
+    height: 90%;
+    gap: 2px;
+}
+
+.sideright-secondsection .item .item-button .button-buttons > button {
+    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
+    width: 100%;
+    height: 53%;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+.sideright-secondsection .item .item-button .button-buttons .buttons-plus {
+    border-top-right-radius: 7px;
+    color: #fafafa;
+}
+
+.sideright-secondsection .item .item-button .button-buttons .buttons-minus {
+    border-bottom-right-radius: 7px;
+    color: #fafafa;
 }
 
 .sideright-secondsection .item .item-price {

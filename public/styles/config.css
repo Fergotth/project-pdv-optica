@@ -13,6 +13,7 @@
     --input-height: 24px;
     --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans';
 
+    --color-hover-gray: #eaf1f3;
     --color-button: #ffcb74;
     --color-window: #f6f6f6;
     --colortext-price: #aa140a;
