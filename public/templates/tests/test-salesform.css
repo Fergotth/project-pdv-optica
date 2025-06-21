@@ -369,3 +369,8 @@ body {
     text-align: right;
     padding-right: 15px;
 }
+
+.sideright-thirdsection .thirdsection-total {
+    color: red;
+    font-weight: bolder;
+}
