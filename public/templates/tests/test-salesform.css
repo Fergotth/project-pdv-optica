@@ -19,7 +19,7 @@ body {
 }
 
 .sales-sideleft {
-    height: 80vh;
+    height: 85vh;
     width: 5vw;
     background-color: #fdfefe;
     border-radius: 7px;
@@ -27,7 +27,7 @@ body {
 }
 
 .sales-sidecenter {
-    height: 80vh;
+    height: 85vh;
     width: 59vw;
     background-color: transparent;
     display: flex;
@@ -35,7 +35,7 @@ body {
 }
 
 .sales-sideright {
-    height: 80vh;
+    height: 85vh;
     width: 33vw;
     background-color: #fdfefe;
     border-radius: 7px;
@@ -216,7 +216,7 @@ body {
 /* Right side style */
 .sideright-firstsection {
     width: 100%;
-    height: 15%;
+    height: 10%;
     display: flex;
     flex-direction: row;
 }
@@ -246,6 +246,7 @@ body {
     align-items: center;
     height: 100%;
     width: 40%;
+    margin-top: 5px;
 }
 
 .deleteIcon-container {
@@ -422,4 +423,67 @@ body {
 .sideright-thirdsection .thirdsection-total {
     color: red;
     font-weight: bolder;
+}
+
+/* Estilos sideright - cuarta seccion derecha */
+.sideright-forthsection {
+    display: flex;
+    flex-direction: column;
+}
+
+.sideright-forthsection .forthsection-title {
+    font-weight: 600;
+    margin-left: 15px;
+    transform: translateY(-5px);
+    height: 10%;
+}
+
+.sideright-forthsection .forthsection-buttonsMethodPayment {
+    height: 45%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.sideright-forthsection .forthsection-buttonsMethodPayment > input[type="radio"] {
+    display: none;
+}
+
+.sideright-forthsection .forthsection-buttonsMethodPayment label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    border: none;
+}
+
+.sideright-forthsection .forthsection-buttonsMethodPayment label:hover {
+    background: linear-gradient(
+        90deg,
+        rgba(0, 102, 255, 0.72) 8%, 
+        rgba(0, 102, 255, 1) 100%);
+}
+
+.sideright-forthsection .forthsection-buttonsMethodPayment label:hover svg {
+    color: #fdfefe;
+}
+
+.forthsection-buttonRegisterPay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.buttonRegisterPay-button {
+    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
+    border: none;
+    font-size: var(--fontsize-titles);
+    font-weight: 600;
+    border-radius: 7px;
+    color: #fafafa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 5px;
 }
