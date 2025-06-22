@@ -12,10 +12,8 @@ body {
 }
 
 div#temporaryContent {
-    position: absolute;
-    top: 9vh;
-    left: 0px;
     width: 100vw;
+    box-sizing: content-box;
 }
 
 #calendar {
