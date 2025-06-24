@@ -29,9 +29,6 @@
 
 .main {
     font-weight: 600;
-    color: white;
-    background-color: darkviolet;
-    padding: 3px 15px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -40,38 +37,6 @@
     position: relative;
     cursor: pointer;
     justify-content: space-between;
-}
-
-.arrow {
-    height: 34%;
-    aspect-ratio: 1;
-    margin-block: auto;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.arrow::after,
-.arrow::before {
-    content: "";
-    position: absolute;
-    background-color: white;
-    height: 100%;
-    width: 2.5px;
-    border-radius: 500px;
-    transform-origin: bottom;
-}
-
-.arrow::after {
-    transform: rotate(35deg) translateX(-0.5px);
-}
-.arrow::before {
-    transform: rotate(-35deg) translateX(0.5px);
-}
-
-.main > .inp:checked + .arrow {
-    transform: rotateX(180deg);
 }
 
 .menu-container {
