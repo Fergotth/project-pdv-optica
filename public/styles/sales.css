@@ -2,6 +2,16 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    animation: showForm 0.5s ease-in-out;
+}
+
+@keyframes showForm {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .container-sales > div {
@@ -232,11 +242,14 @@
     flex-grow: 1;
     overflow-y: auto;
     gap: 10px;
+    background: #fafafa;
+    border-radius: 5px;
 }
 
 .sidecenter-thirdsection .thirdsection-content .content-image {
     height: 120px;
     width: 120px;
+    margin-top: 5px;
     background-color: #fdfefe;
     border-radius: 7px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

@@ -3,31 +3,24 @@ const Class = {
         overlay: '.overlay'
     },
     form: {
-        sales: '.formSales',
-        clients: '.formSearchClient'
+        sales: '.container-sales',
     },
     input: {
-        article: '.container--inputArticule',
-        discount: '.inputDiscount',
-        client: '.inputClient',                 // input del contenedor de busqueda de cliente
-        name: '.container--clientName',         // input del contenedor principal
-        typeOfDiscount: 'value-1',
-        payment: '.input_field'                 // input del abono de la venta
+        article: '.sku'
     },
     list: {
-        products: '.container--shoppingArticles',
-        clients: '.listClients',
-        items: '.items'
+        products: '.thirdsection-content',
+        items: '.sideright-secondsection'
     },
     label: {
-        total: '.container--totalPrice',
-        subTotal: '.subtotalValue span',
-        iva: '.ivaValue span',
-        discount: '.discountValue span',
-        percent: '.amount--percentIVA',
-        totalTicket: '.total',              // Total de la nota
-        payment: '.price',                  // Saldo actual de la nota
-        titleCard: '.titleCard'
+        subtotal: '.subtotal',
+        discount: '.discount',
+        iva: '.iva',
+        total: '.thirdsection-total',
+        unitprice: '.details-price',
+        quantity: '.button-quantity',
+        itemprice: '.item-price',
+        client: '.input-client'
     }
 };
 
