@@ -5,7 +5,7 @@ import Class from "./consts.js";
  * Definiciones de los valores a pasar a las funciones a llamar 
  */
 export const getHandlerArgs = {
-    handlerAddItem: () => ({
+    handlerSecondsection_item: () => ({
         itemSearched: getElement(Class.input.article),
         products,
     })
