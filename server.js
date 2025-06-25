@@ -87,6 +87,19 @@ app.post('/save-products', (req, res) => {
     );
 });
 
+// Obtener todos los productos
+app.get('/get-products', (req, res) => {
+    const SQLStr = 'SELECT * FROM Products';
+    
+    dbProducts.all(SQLStr, [], (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows || []);
+    });
+});
+
 // Agregar los detalles del producto
 app.post('/save-productsDetails', (req, res) => {
     const { SKU } = req.body;

@@ -126,6 +126,10 @@
     color: #fafafa;
 }
 
+.sidecenter-secondsection > div svg {
+    pointer-events: none;
+}
+
 .sidecenter-secondsection > div:hover span {
     color: #020202;
     font-weight: 600;

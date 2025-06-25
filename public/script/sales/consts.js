@@ -9,8 +9,8 @@ const Class = {
         article: '.sku'
     },
     list: {
-        products: '.thirdsection-content',
-        items: '.sideright-secondsection'
+        productsInDB: '.thirdsection-content',
+        itemsInCart: '.sideright-secondsection'
     },
     label: {
         subtotal: '.subtotal',

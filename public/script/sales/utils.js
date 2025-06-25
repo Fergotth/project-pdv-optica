@@ -1,4 +1,3 @@
-import { getItemRowInnerHTML, getNewPaymentHTML } from "./salesDom.js";
 import { getState, updateState, flushState } from "./state.js";
 import { getIVA, getTotal, getSubTotal, getDiscount, getNewPrice } from "./calculations.js";
 import { validatePayment, validateValue, validateRegex, validateMaxHeight } from "./validations.js";
