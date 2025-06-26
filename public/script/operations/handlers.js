@@ -36,6 +36,6 @@ export const handlerBtnProductsCancel = () => {
     closeOverlay(getElement('.overlay'));
 };
 
-export const handlerBtnProductsSave = ({ data }) => { debugger
+export const handlerBtnProductsSave = ({ data }) => {
     saveProduct(data);
 }

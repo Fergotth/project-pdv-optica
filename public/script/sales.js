@@ -16,7 +16,6 @@ const sales = () => {
     const onSalesActive = function(event) {
         event.stopPropagation();
         const button = event.target;
-        console.log('Button clicked:', button);
 
         button.classList.forEach(name => {
             const handlerName = `handler${name.charAt(0).toUpperCase() + name.slice(1)}`;
