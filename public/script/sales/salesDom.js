@@ -18,14 +18,14 @@ export const getMaterialCatalogHTML = () => {
     const pathImg = '../../images/';
     
     return `
-        <div class="content-image btnSinglevision" title="Monofocal">
-            <img src="${pathImg}monofocal-frame.jpg">
+        <div class="content-image btnSinglevision" title="Monofocal" style="background-image: url(${pathImg}monofocal-frame.jpg); background-size: cover; background-position: center; background-repeat: no-repeat; display: flex; align-items: center; justify-content: flex-end; flex-direction: column; color: red; font-weight: 600;">
+        Monofocal
         </div>
-        <div class="content-image btnBifocal" title="Bifocal">
-            <img src="${pathImg}bifocal-frame.png">
+        <div class="content-image btnBifocal" title="Bifocal" style="background-image: url(${pathImg}bifocal-frame.png); background-size: cover; background-position: center; background-repeat: no-repeat; display: flex; align-items: center; justify-content: flex-end; flex-direction: column; color: red; font-weight: 600;">
+        Bifocal
         </div>
-        <div class="content-image btnProgresive" title="Progresivo">
-            <img src="${pathImg}progresivo-frame.jpg">
+        <div class="content-image btnProgresive" title="Progresivo" style="background-image: url(${pathImg}progresivo-frame.jpg); background-size: cover; background-position: center; background-repeat: no-repeat; display: flex; align-items: center; justify-content: flex-end; flex-direction: column; color: red; font-weight: 600;">
+        Progresivo
         </div>
     `;
 };
