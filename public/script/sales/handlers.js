@@ -73,4 +73,13 @@ export const handlerBtnServices = async ({ DOM, url, category }) => {
 
 export const handlerBtnSinglevision = async ({ DOM, url, material }) => {
     const products = await getDataDB(url);
+
+    if (!validateData(products, material)) {
+        newAlert({
+            icon: "info",
+            title: "Monofocal",
+            text: "No hay materiales registrados en la base de datos"
+        })
+        return;
+    }
 };
