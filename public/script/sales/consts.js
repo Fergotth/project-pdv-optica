@@ -20,7 +20,13 @@ const Class = {
         unitprice: '.details-price',
         quantity: '.button-quantity',
         itemprice: '.item-price',
-        client: '.input-client'
+        client: '.input-client',
+        cartQuantity: '.cartQuantity'
+    },
+    button: {
+        deleteItem: '.deleteItem',
+        plus: '.plusButton',
+        minus: '.minusButton'
     }
 };
 

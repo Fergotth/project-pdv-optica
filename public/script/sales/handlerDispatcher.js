@@ -43,5 +43,28 @@ export const getHandlerArgs = {
         DOM: getElement(Class.list.productsInDB),
         url: 'http://localhost:5500/get-products',
         material: 'progresivo'
+    }),
+
+    handlerItemSelected: (button) => ({
+        DOM: getElement(Class.list.itemsInCart),
+        sku: button.dataset.sku
+    }),
+
+    handlerDeleteItem: (button) => ({
+        DOM: button.parentElement
+    }),
+
+    handlerPlusButton: (button) => ({
+        DOM: button.closest('.item-button')?.querySelector(Class.label.quantity),
+        param: 'plus'
+    }),
+
+    handlerMinusButton: (button) => ({
+        DOM: button.closest('.item-button')?.querySelector(Class.label.quantity),
+        param: 'minus'
+    }),
+
+    handlerDeleteCart: () => ({
+        DOM: getElement(Class.list.itemsInCart)
     })
 };

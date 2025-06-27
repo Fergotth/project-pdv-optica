@@ -21,7 +21,7 @@ const sales = () => {
             const handlerName = `handler${name.charAt(0).toUpperCase() + name.slice(1)}`;
 
             if (typeof handlers[handlerName] === 'function') {
-                const args = getHandlerArgs[handlerName]?.(button) || { button, state: getState() };
+                const args = getHandlerArgs[handlerName]?.(button) || { button };
                 handlers[handlerName](args);
             }
         });
