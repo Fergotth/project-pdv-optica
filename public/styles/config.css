@@ -19,4 +19,13 @@
     --color-window: #f6f6f6;
     --colortext-price: #e61b0d;
     --colortext-generic: #111111;
+
+    --color-gray-light: #D0D3D4;
+    --color-gray-med: #BDBDBD;
+    --color-bg-white: #fdfefe;
+    --color-bg-soft: #fafafa;
+    --color-red: red;
+    --color-orange: #FFA500;
+    --color-black: #020202;
+    --color-hover: var(--color-hover-gray);
 }   

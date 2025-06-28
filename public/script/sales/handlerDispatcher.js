@@ -66,5 +66,10 @@ export const getHandlerArgs = {
 
     handlerDeleteCart: () => ({
         DOM: getElement(Class.list.itemsInCart)
+    }),
+
+    handlerSku: () => ({
+        DOM: getElement(Class.list.itemsInCart),
+        sku: getElement(Class.input.article).value
     })
 };

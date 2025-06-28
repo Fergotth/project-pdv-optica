@@ -4,7 +4,8 @@ import { getElement, getParsedHTML } from "../utils/getElement.js";
 import { getDataDB } from "./getData.js";
 import { validateData } from "./validations.js";
 import { getDataProductDB } from '../products/getData.js';
-import { handleQuantityButton } from "./utils.js";
+import { handleQuantityButton, updateItemsCart } from "./utils.js";
+import { flushState, getState } from "./state.js";
 import Class from "./consts.js";
 
 export const handlerBtnFrames = async ({ DOM, url, category }) => {
@@ -92,9 +93,11 @@ export const handlerItemSelected = async ({ DOM, sku }) => {
     const [product] = await getDataProductDB(sku);
 
     DOM.appendChild(getParsedHTML(getItemToCardHTML(product)));
+    updateItemsCart(1);
 };
 
 export const handlerDeleteItem = ({ DOM }) => {
+    updateItemsCart(-Number(DOM.querySelector(Class.label.quantity).textContent));
     DOM.remove();
 };
 
@@ -113,4 +116,29 @@ export const handlerDeleteCart = ({ DOM }) => {
         title: "AVISO",
         text: "Articulos eliminados del carrito de compras"
     });
+
+    updateItemsCart(-getState().cartItems);
+    flushState();
 };
+
+export const handlerSku = async ({ DOM, sku }) => {
+    const [product] = await getDataProductDB(sku);
+    const input = getElement(Class.input.article);
+
+    if (!product) {
+        input.blur();
+
+        newAlert({
+            icon: "info",
+            title: "Busqueda",
+            text: `No existe el SKU: ${sku}`
+        });
+
+        return;
+    }
+
+    DOM.appendChild(getParsedHTML(getItemToCardHTML(product)));
+    updateItemsCart(1);
+    input.value = '';
+    input.blur();
+}

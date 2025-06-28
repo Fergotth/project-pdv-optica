@@ -142,10 +142,26 @@
 
 .sidecenter-firstsection-inputs .search-icon {
     position: absolute;
+    display: flex;
+    align-content: center;
     top: 0;
     width: 98%;
     border: 1px solid #D0D3D4;
     border-radius: 7px;
+}
+
+.sidecenter-firstsection-inputs .search-icon:hover,
+.sidecenter-firstsection-inputs .sku-icon:hover {
+    border: 1px solid rgba(0, 102, 255, 1);
+}
+
+.sidecenter-firstsection-inputs .search-icon svg,
+.sidecenter-firstsection-inputs .sku-icon svg {
+    background-color: #fafafa;
+    height: 100%;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    cursor: pointer;
 }
 
 .sidecenter-firstsection-inputs input {
@@ -162,6 +178,8 @@
 
 .sidecenter-firstsection-inputs .sku-icon {
     position: absolute;
+    display: flex;
+    align-items: center;
     bottom: 0;
     width: 98%;
     border: 1px solid #D0D3D4;
@@ -493,9 +511,17 @@
     transform: scale(1.3);
 }
 
+.sideright-secondsection .item .item-button .button-buttons .buttons-minus,
+.sideright-secondsection .item .item-button .button-buttons .buttons-plus {
+    color: #fafafa;
+}
+
 .sideright-secondsection .item .item-button .button-buttons .buttons-minus {
     border-bottom-right-radius: 7px;
-    color: #fafafa;
+}
+
+.sideright-secondsection .item .item-button .button-buttons .buttons-plus {
+    border-top-right-radius: 7px;
 }
 
 .sideright-secondsection .item .item-price {

@@ -21,7 +21,7 @@ const Class = {
         quantity: '.button-quantity',
         itemprice: '.item-price',
         client: '.input-client',
-        cartQuantity: '.cartQuantity'
+        cartTotalItems: '.cartQuantity'
     },
     button: {
         deleteItem: '.deleteItem',
