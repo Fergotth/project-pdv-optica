@@ -18,7 +18,7 @@ export const getHandlerArgs = {
     handlerBtnAccesories: () => ({
         DOM: getElement(Class.list.productsInDB),
         url: 'http://localhost:5500/get-products',
-        category: 'accesories'
+        category: 'accessories'
     }),
 
     handlerBtnServices: () => ({

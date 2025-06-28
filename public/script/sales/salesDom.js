@@ -1,3 +1,5 @@
+import { formatMoney } from "./utils.js";
+
 /**
  * 
  * @param {Object} product 
@@ -50,7 +52,7 @@ export const getItemToCardHTML = (product) => {
                 </div>
                 <div class="product-details">
                     <span class="details-description">${product.Description}</span>
-                    <span class="details-price">$${product.SalePrice}</span>
+                    <span class="details-price">${formatMoney(product.SalePrice)}</span>
                 </div>
             </div>
             <div class="item-button">
@@ -68,7 +70,7 @@ export const getItemToCardHTML = (product) => {
                     </button>
                 </div>
             </div>
-            <div class="item-price">$${product.SalePrice}</div>
+            <div class="item-price">${formatMoney(product.SalePrice)}</div>
         </div>
     `;
 };

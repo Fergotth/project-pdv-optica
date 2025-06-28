@@ -1,5 +1,6 @@
 import { getState, updateState, flushState } from "./state.js";
-import { getElement } from "../utils/getElement.js";
+import { getElement, getParsedHTML } from "../utils/getElement.js";
+import { getProductHTML } from "./salesDom.js";
 import Class from "./consts.js";
 
 /**
@@ -14,35 +15,8 @@ export const handleQuantityButton = (DOM, param) => {
     if (newQuantity > 0) {
         DOM.textContent = newQuantity;
         updateItemsCart(quantity);
+        setSubtotal(quantity * Number(DOM.closest('.item').querySelector(Class.label.itemprice).textContent.replace("$","")));
     }
-
-    // updateState(previousData => {
-    //     const newData = [...previousData.data];
-        
-    //     newData[index] = {
-    //         ...newData[index],
-    //         quantity: newData[index].quantity + quantity,
-    //         discount: quantity < 0 ? 0 : newData[index].discount
-    //     };
-
-    //     const finalData = newData
-    //         .filter(item => item.quantity > 0)
-    //         .map((item, i) => ({
-    //             ...item,
-    //             position: i,
-    //             iva: getIVA(item, previousData.percentIva)
-    //         }))
-    //         .map(item => ({
-    //             ...item,
-    //             amount: getTotal(item)
-    //         }));
-        
-    //     return {
-    //         data: finalData                    
-    //     };
-    // });
-    
-    // refreshDataHTML(getState().data);
 };
 
 /**
@@ -56,38 +30,7 @@ export const resetSale = (formSales) => {
 
     flushState();
 
-    const name = getElement(Class.input.name);
-    const listItems = getElement(Class.list.products);
-    const labelIndicatorIVA = getElement(Class.label.percent);
-    const labelSubtotal = getElement(Class.label.subTotal);
-    const discount = getElement(Class.label.discount);
-    const labelIVA = getElement(Class.label.iva);
-    const labelTotal = getElement(Class.label.total);
-
-    name.value = "Publico General";
-    listItems.innerHTML = '';
-    labelIndicatorIVA.textContent = "0%";
-    labelSubtotal.textContent = "$0.00";
-    discount.textContent = "$0.00";
-    labelIVA.textContent = "$0.00";
-    labelTotal.textContent = "Total $0.00";
-
-    newAlert({
-        icon: "success",
-        title: "AVISO",
-        text: "Venta en proceso cancelada"
-    });
-}
-
-/**
- * 
- * @param {Number} item     // Valor numerico a dar formato de numero 
- * @returns {Number}
- */
-const formatMoney = (item) => {
-    validateValue(item);
-    return Number(item).toFixed(2);
-}
+};
 
 export const updateItemsCart = (quantity) => {
     updateState(previusData => {
@@ -97,4 +40,26 @@ export const updateItemsCart = (quantity) => {
     });
 
     getElement(Class.label.cartTotalItems).textContent = getState().cartItems;
+};
+
+export const setItemsToCart = (DOM, products, category) => {
+    DOM.replaceChildren();
+    products.forEach(product => {
+        if (product.Category == category)
+            DOM.appendChild(getParsedHTML(getProductHTML(product)));
+    });
+};
+
+export const setSubtotal = (price) => {
+    updateState(previusData => {
+        return {
+            subtotal: previusData.subtotal + price
+        };
+    });
+    
+    getElement(Class.label.subtotal).textContent = formatMoney(getState().subtotal);
+};
+
+export const formatMoney = (value) => {
+    return `$${value.toFixed(2)}`;
 }

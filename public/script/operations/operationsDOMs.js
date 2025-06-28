@@ -48,7 +48,7 @@ export const getProductsHTML = () => {
                     <option value="">--- Selecciona una categoria ---</option>
                     <option value="frames">Armazones</option>
                     <option value="glasses">Materiales</option>
-                    <option value="accesories">Accesorios</option>
+                    <option value="accessories">Accesorios</option>
                     <option value="services">Servicios</option>
                 </select>
                 <label for="category--input">Categoria</label>

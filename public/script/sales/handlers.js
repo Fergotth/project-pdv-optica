@@ -4,7 +4,7 @@ import { getElement, getParsedHTML } from "../utils/getElement.js";
 import { getDataDB } from "./getData.js";
 import { validateData } from "./validations.js";
 import { getDataProductDB } from '../products/getData.js';
-import { handleQuantityButton, updateItemsCart } from "./utils.js";
+import { handleQuantityButton, updateItemsCart, setItemsToCart, setSubtotal } from "./utils.js";
 import { flushState, getState } from "./state.js";
 import Class from "./consts.js";
 
@@ -20,11 +20,7 @@ export const handlerBtnFrames = async ({ DOM, url, category }) => {
         return;
     }
 
-    DOM.replaceChildren();
-    products.forEach(product => {
-        if (product.Category == category)
-            DOM.appendChild(getParsedHTML(getProductHTML(product)));
-    });
+    setItemsToCart(DOM, products, category);
 };
 
 export const handlerBtnGlasses = ({ DOM }) => {
@@ -44,11 +40,7 @@ export const handlerBtnAccesories = async ({ DOM, url, category }) => {
         return;
     }
 
-    DOM.replaceChildren();
-    products.forEach(product => {
-        if (product.Category == category )
-            DOM.appendChild(getParsedHTML(getProductHTML(product)));
-    });
+    setItemsToCart(DOM, products, category);
 };
 
 export const handlerBtnServices = async ({ DOM, url, category }) => {
@@ -63,11 +55,7 @@ export const handlerBtnServices = async ({ DOM, url, category }) => {
         return;
     }
 
-    DOM.replaceChildren();
-    products.forEach(product => {
-        if (product.Category == category )
-            DOM.appendChild(getParsedHTML(getProductHTML(product)));
-    });
+    setItemsToCart(DOM, products, category);
 };
 
 export const handlerBtnSinglevision = async ({ DOM, url, material }) => {
@@ -93,6 +81,7 @@ export const handlerItemSelected = async ({ DOM, sku }) => {
     const [product] = await getDataProductDB(sku);
 
     DOM.appendChild(getParsedHTML(getItemToCardHTML(product)));
+    setSubtotal(product.SalePrice)
     updateItemsCart(1);
 };
 

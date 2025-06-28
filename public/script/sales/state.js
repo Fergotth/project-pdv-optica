@@ -1,6 +1,7 @@
 let state = {
     data: [],
     payment: [],
+    subtotal: 0,
     cartItems: 0
 };
 
