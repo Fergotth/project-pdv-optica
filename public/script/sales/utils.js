@@ -1,6 +1,8 @@
 import { getState, updateState, flushState } from "./state.js";
 import { getElement, getParsedHTML } from "../utils/getElement.js";
 import { getProductHTML } from "./salesDom.js";
+import { getElement, getParsedHTML } from "../utils/getElement.js";
+import { getProductHTML } from "./salesDom.js";
 import Class from "./consts.js";
 
 /**
