@@ -87,6 +87,7 @@ export const handlerItemSelected = async ({ DOM, sku }) => {
 
 export const handlerDeleteItem = ({ DOM }) => {
     updateItemsCart(-Number(DOM.querySelector(Class.label.quantity).textContent));
+    setSubtotal(-Number(DOM.closest('.item').querySelector(Class.label.itemprice).textContent.replace("$", "")));
     DOM.remove();
 };
 
@@ -99,6 +100,7 @@ export const handlerMinusButton = ({ DOM, param }) => {
 };
 
 export const handlerDeleteCart = ({ DOM }) => {
+    setSubtotal(-Number(getElement(Class.label.subtotal).textContent.replace("$", "")));
     DOM.replaceChildren();
     newAlert({
         icon: "success",
