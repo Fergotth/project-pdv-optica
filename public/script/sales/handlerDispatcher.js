@@ -1,87 +1,75 @@
-import { getState } from "./state.js";
-import { validateValue } from "./validations.js";
 import { getElement } from "../utils/getElement.js";
-//import products from "../data/products.js";
 import Class from "./consts.js";
 
 /**
  * Definiciones de los valores a pasar a las funciones a llamar 
  */
 export const getHandlerArgs = {
-    handlerAddItem: () => ({
-        itemSearched: getElement(Class.input.article),
-        products,
-        percentIva: getState().percentIva
-    }),
-    
-    handlerMinus: (button) => ({
-        button,
-        index: validateValue(button)
+    handlerBtnFrames: () => ({
+        DOM: getElement(Class.list.productsInDB),
+        url: 'http://localhost:5500/get-products',
+        category: 'frames'
     }),
 
-    handlerPlus: (button) => ({
-        button,
-        index: validateValue(button)
+    handlerBtnGlasses: () => ({
+        DOM: getElement(Class.list.productsInDB),
     }),
 
-    handlerDiscount: (button) => ({
-        index: validateValue(button),
-        dom: getElement(Class.form.sales)
+    handlerBtnAccesories: () => ({
+        DOM: getElement(Class.list.productsInDB),
+        url: 'http://localhost:5500/get-products',
+        category: 'accessories'
     }),
 
-    handlerBtnCancel: (button) => ({
-        button
+    handlerBtnServices: () => ({
+        DOM: getElement(Class.list.productsInDB),
+        url: 'http://localhost:5500/get-products',
+        category: 'services'
     }),
 
-    handlerBtnAccept: (button) => ({
-        button,
-        input: getElement(Class.input.discount),
-        typeOfDiscount: getElement(Class.input.typeOfDiscount),
-        index: validateValue(button)
+    handlerBtnSinglevision: () => ({
+        DOM: getElement(Class.list.productsInDB),
+        url: 'http://localhost:5500/get-products',
+        material: 'monofocal'
     }),
 
-    handlerIva: () => ({
-        dom: getElement(Class.form.sales)
+    handlerBtnBifocal: () => ({
+        DOM: getElement(Class.list.productsInDB),
+        url: 'http://localhost:5500/get-products',
+        material: 'bifocal'
     }),
 
-    handlerTypeOfIva: (button) => ({
-        percentIva: validateValue(button)
-    }),
-    
-    handlerSearchClient: () => ({
-        dom: getElement(Class.form.sales)
-    }),
-    
-    handlerBtnSearchClient: () => ({
-        dom: getElement(Class.form.clients),
-        name: getElement(Class.input.client).value
-    }),
-    
-    handlerBtnCancelClient: () => ({}),
-
-    handlerClientName: (button) => ({
-        name: button.textContent,
-        id: validateValue(button)
+    handlerBtnProgresive: () => ({
+        DOM: getElement(Class.list.productsInDB),
+        url: 'http://localhost:5500/get-products',
+        material: 'progresivo'
     }),
 
-    handlerBtnPay: () => ({
-        dom: getElement(Class.form.sales),
-        data: getState().data,
-        client: getElement(Class.input.name).value
+    handlerItemSelected: (button) => ({
+        DOM: getElement(Class.list.itemsInCart),
+        sku: button.dataset.sku
     }),
 
-    handlerPaymentBtnApply: () => ({
-        pay: getElement(Class.input.payment),
-        total: getElement(Class.label.totalTicket).textContent.replace(/[^0-9.-]+/g, "")
+    handlerDeleteItem: (button) => ({
+        DOM: button.parentElement
     }),
 
-    handlerCheckoutBtnCancel: () => ({}),
-
-    handlerButtonDeletePayment: (button) => ({
-        id: validateValue(button)
+    handlerPlusButton: (button) => ({
+        DOM: button.closest('.item-button')?.querySelector(Class.label.quantity),
+        param: 'plus'
     }),
 
-    handlerBtnResetSale: () => ({
-        formSales: getElement(Class.form.sales)
+    handlerMinusButton: (button) => ({
+        DOM: button.closest('.item-button')?.querySelector(Class.label.quantity),
+        param: 'minus'
+    }),
+
+    handlerDeleteCart: () => ({
+        DOM: getElement(Class.list.itemsInCart)
+    }),
+
+    handlerSku: () => ({
+        DOM: getElement(Class.list.itemsInCart),
+        sku: getElement(Class.input.article).value
     })
 };

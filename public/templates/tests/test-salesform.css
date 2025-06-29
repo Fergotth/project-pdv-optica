@@ -3,7 +3,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #fafafa;
+    background-color: var(--bk-main);
     font-family: var(--font);
 }
 
@@ -20,10 +20,13 @@ body {
 
 .sales-sideleft {
     height: 85vh;
-    width: 5vw;
+    width: 6vw;
     background-color: #fdfefe;
     border-radius: 7px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .sales-sidecenter {
@@ -36,7 +39,7 @@ body {
 
 .sales-sideright {
     height: 85vh;
-    width: 33vw;
+    width: 32vw;
     background-color: #fdfefe;
     border-radius: 7px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -50,6 +53,39 @@ body {
     height: 1px;
     margin: 10px 10px 10px 10px;
     background-color:#D0D3D4;
+}
+
+/* Side left styles */
+.sales-sideleft > * {
+    width: 5.5vw;
+    height: 5.5vw;
+    margin-top: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 7px;
+    background-color: transparent;
+}
+
+.sales-sideleft > .sideleft-button button {
+    color: #D0D3D4;
+}
+
+.sales-sideleft > .sideleft-button:hover {
+    cursor: pointer;
+    background: var(--bk-button);
+}
+
+.sales-sideleft > .sideleft-button:hover > svg {
+    color: var(--colortext-regular);
+}
+
+.sales-sideleft > .sideleft-button:hover > span {
+    font-weight: 600;
+}
+
+.sales-sideleft > .sideleft-button:active {
+    transition: all 0.1 ease-in-out;
+    transform: scale(1.1);
 }
 
 /* Side Center Styles */
@@ -71,7 +107,6 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-top: -3px;
 }
 
 .sidecenter-firstsection-inputs div {
@@ -125,6 +160,7 @@ body {
 
 .sidecenter-firstsection-title span {
     font-size: var(--fontsize-titles);
+    font-weight: 600;
 }
 
 .sidecenter-secondsection {
@@ -159,7 +195,8 @@ body {
 
 .secondsection-item span {
     color: #D0D3D4;
-    margin-top: 5px;
+    position: relative;
+    top: 8px;
 }
 
 .secondsection-item svg {
@@ -169,8 +206,8 @@ body {
 }
 
 .radio-item:checked + .secondsection-item {
-    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
-    color: white;
+    background: var(--bk-button);
+    color: #fafafa;
     border-radius: 7px;
     box-shadow: 0 0 12px rgba(0, 102, 255, 0.5);
 }
@@ -191,6 +228,7 @@ body {
 .sidecenter-thirdsection .thirdsection-title {
     font-size: var(--fontsize-titles);
     margin-top: 30px;
+    font-weight: 600;
 }
 
 .sidecenter-thirdsection .thirdsection-content {
@@ -211,6 +249,11 @@ body {
     background-color: #fdfefe;
     border-radius: 7px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidecenter-thirdsection .thirdsection-content .content-image:hover {
+    box-shadow: 0 0 10px #ffa500aa;
+    cursor: pointer;
 }
 
 .sidecenter-thirdsection .thirdsection-content .content-image img {
@@ -375,7 +418,7 @@ body {
 }
 
 .sideright-secondsection .item .item-button .button-buttons > button {
-    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
+    background: var(--bk-button);
     width: 100%;
     height: 53%;
     font-weight: 600;
@@ -458,7 +501,7 @@ body {
     list-style: none;
     width: max-content;
     padding: 0;
-    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
+    background: var(--bk-button);
     left: 130%;
     top: 0;
     border-radius: 7px;
@@ -491,7 +534,7 @@ body {
 }
 
 .sideright-thirdsection .thirdsection-total {
-    color: red;
+    color: var(--colortext-price);
     font-weight: bolder;
 }
 
@@ -499,17 +542,12 @@ body {
 .sideright-forthsection {
     display: flex;
     flex-direction: column;
-}
-
-.forthsection-buttonRegisterPay {
-    display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 10%;
 }
 
 .buttonRegisterPay-button {
-    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
+    background: var(--bk-button);
     border: none;
     font-size: var(--fontsize-titles);
     font-weight: 600;
@@ -518,6 +556,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 5px 60px 5px 60px;
     cursor: pointer;
+    margin-top: 15px;
 }
 
 .buttonRegisterPay-button:active {

@@ -1,4 +1,4 @@
-@import url('../../styles/config.css');
+@import url('config.css');
 
 .nav-menu {
     margin: 0 auto;
@@ -6,62 +6,121 @@
     background-color: #000;
     width: 85%;
     height: 8vh;
-    position: sticky;
     display: flex;
-    justify-content: end;
     align-items: center;
-
+    justify-content: end;
+    user-select: none;
+    box-sizing: content-box;
+    color: var(--colortext-regular);
 }
 
 .nav-menu .title {
     font-size: var(--fontsize-titles);
     position: absolute;
+    left: 10vw;
+}
+
+/* From Uiverse.io by pathikcomp */ 
+.main > .inp {
+    display: none;
+}
+
+.main {
+    font-weight: 600;
     display: flex;
     align-items: center;
-    left: 15px;
-    color: var(--colortext-regular);
-}
-
-.nav-menu details {
+    height: 2.5rem;
+    width: max-content;
     position: relative;
-    padding-right: 15px;
-    color: var(--colortext-regular);
-}
-
-.nav-menu summary {
-    list-style: none;
-    user-select: none;
-}
-
-.nav-menu summary:hover {
     cursor: pointer;
+    justify-content: space-between;
+    margin-right: 1rem;
 }
 
-.nav-menu summary div {
-    font-size: var(--fontsize-menu-main);
-}
-
-.nav-menu details ul {
+.menu-container {
+    background-color: white;
     position: absolute;
     width: max-content;
-    padding: 0;
-    margin-top: 1px;
-    background-color: var(--bk-window);
-    left: 25px;
+    font-weight: 100;
+    left: 50%;
+    top: 75%;
+    overflow: hidden;
+    clip-path: inset(0% 0% 0% 0% round 5px);
+    transition: all 0.1s;
 }
 
-.nav-menu details ul li {
-    padding: 5px 15px 15px;
-    cursor: pointer;
-    font-size: var(--fontsize-menu-option);
-    height: 10px;
-    color: var(--colortext-options);
+.menu-list {
+    --delay: 0.1s;
+    --trdelay: 0.15s;
+    padding: 8px 5px;
+    position: relative;
+    transform: translateY(30px);
+    opacity: 0;
+    color: var(--colortext-generic);
 }
 
-.nav-menu details ul li:hover {
-    background-color: var(--bk-hover);
+.menu-list::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 95%;
 }
 
-.nav-menu details ul {
-    list-style: none;
+.menu-list:hover {
+    background-color: rgb(223, 223, 223);
+}
+
+.inp:checked ~ .menu-container {
+    clip-path: inset(10% 50% 90% 50% round 10px);
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(1) {
+    transition:
+    transform 0.3s var(--delay),
+    opacity 0.3s var(--delay);
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(2) {
+    transition:
+      transform 0.4s calc(var(--delay) + (var(--trdelay) * 1)),
+      opacity 0.4s calc(var(--delay) + (var(--trdelay) * 1));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(3) {
+    transition:
+      transform 0.4s calc(var(--delay) + (var(--trdelay) * 2)),
+      opacity 0.4s calc(var(--delay) + (var(--trdelay) * 2));
+}
+
+.inp:not(:checked) ~ .menu-container .menu-list:nth-child(4) {
+    transition:
+      transform 0.4s calc(var(--delay) + (var(--trdelay) * 3)),
+      opacity 0.4s calc(var(--delay) + (var(--trdelay) * 3));
+}
+
+.bar {
+    display: flex;
+    height: 50%;
+    width: 20px;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.bar-list {
+    --transform: -25%;
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    transition: all 0.4s;
+    position: relative;
 }

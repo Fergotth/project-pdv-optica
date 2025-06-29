@@ -81,8 +81,7 @@ const menu = () => {
             setActiveModule(moduleName);
         }
     
-        fetch(`/templates/tests/test-salesform.html`)
-        //fetch(`/templates/${templateName}`)
+        fetch(`/templates/${templateName}`)
             .then(response => response.text())
             .then(html => {
                 const tempContentDiv = getElement('temporaryContent');

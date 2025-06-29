@@ -1,189 +1,76 @@
-/**
- * 
- * @param {object} item  // Objeto con los datos a insertar en el elemento 
- * @returns {InnerHTML} // Contenido HTML dentro del nuevo elemento a insertar
- */
-
-export const getItemRowInnerHTML = (item) => {
-    return `
-    <div class="itemRow--1" style="width: calc(1 / 8 * 100%);">
-        <span class="minus" data-id="${item.position}" style="display: flex;">-</span>
-        <span class="itemQuantity">${item.quantity}</span>
-        <span class="plus" data-id="${item.position}" style="display: flex;">+</span>
-    </div>
-    <div class="description" style="width: calc(3 / 8 * 100%);">${item.description} ${item.material}</div>
-    <div class="unitPrice" style="width: calc(1 / 8 * 100%);">${Number(item.price).toFixed(2)}</div>
-    <div class="discount" data-id="${item.position}" style="width: calc(1 / 8 * 100%);">${Number(item.discount).toFixed(2)}</div>
-    <div class="IVA" style="width: calc(1 / 8 * 100%);">${Number(item.iva).toFixed(2)}</div>
-    <div class="price" style="width: calc(1 / 8 * 100%);">${Number(item.amount).toFixed(2)}</div>
-    `;
-};
+import { formatMoney } from "./utils.js";
 
 /**
  * 
- * @param {integer} index   // Indice del elemento
- * @returns {InnerHTML}     // Contenido del contenedor a crear
+ * @param {Object} product 
+ * @returns {String} HTML
  */
-export const getDiscountContainerHTML = (index) => {
-    return `
-    <div class="overlay">   
-        <form class="formDiscount">
-            <label>
-                <span>Cantidad o porcentaje a descontar</span>
-                <input type="text" class="inputDiscount"/>
-            </label>
-            <div>
-                <div class="radio-input">
-                    <input value="value-1" name="value-radio" id="value-1" type="radio" checked>
-                    <label for="value-1">$</label>
-                    <input value="value-2" name="value-radio" id="value-2" type="radio">
-                    <label for="value-2">%</label>
-                </div>
-                <button type="button" class="btnCancel" style="background-color: #374151;">Cancelar</button>
-                <button type="button" class="btnAccept" data-id="${index}" style="background-color: #2563eb;">Aceptar</button>
-            </div>
-        </form>
-    </div>
-    `
-};
 
-/**
- * @returns {InnerHTML} // Contenido del contener de IVA a crear
- */
-export const getContainerIVAHTML = () => {
+export const getProductHTML = (product) => {
+    const pathImg = product.Image ? `../../images/${product.Image}` : "../../images/no-image.jpg";
+    
     return `
-    <div class="overlay">   
-        <div class="containerIVA">
-            <div class="custom-radioIVA">
-                <input class="typeOfIva" type="radio" id="radio-IVA1" name="tabs" data-value="0" checked="">
-                <label class="radio-labelIVA" for="radio-IVA1">
-                    <div class="radio-circleIVA"></div>
-                    <span class="radio-text">0%</span>
-                </label>
-                <input class="typeOfIva" type="radio" id="radio-IVA2" name="tabs" data-value="8">
-                <label class="radio-labelIVA" for="radio-IVA2">
-                    <div class="radio-circleIVA"></div>
-                    <span class="radio-text">8%</span>
-                </label>
-                <input class="typeOfIva" type="radio" id="radio-IVA3" name="tabs" data-value="16">
-                <label class="radio-labelIVA" for="radio-IVA3">
-                    <div class="radio-circleIVA"></div>
-                    <span class="radio-text">16%</span>
-                </label>
-            </div>
+        <div class="content-image itemSelected" title="${product.Description}" data-sku="${product.SKU}">
+            <img src="${pathImg}">
         </div>
-    </div>
-    `
-};
-
-/**
- * @returns {InnerHTML} // Contenedor del cliente a buscar
- */
-export const getSearchClientContainerHTML = () => {
-    return `
-    <div class="overlay">   
-        <form class="formSearchClient">
-            <label>
-                <span>Nombre del cliente</span>
-                <input type="text" class="inputClient"/>
-            </label>
-            <div class="btnContainerClients">
-                <button type="button" class="btnCancelClient" style="background-color: #374151;">Cancelar</button>
-                <button type="button" class="btnSearchClient" style="background-color: #2563eb;">Buscar</button>
-            </div>
-        </form>
-    </div>
-    `
-};
-
-export const getTicketContainerHTML = () => {
-    return `
-    <div class="overlay">
-        <div class="containerTicket">
-            <div class="card cart">
-                <label class="titleCard">RESUMEN</label>
-                <div class="steps">
-                    <div class="step">
-                        <div>
-                            <span class="items">ARTICULOS</span>
-                            <!-- Se insertata un p para cada articulo -->
-                            <span>Total<span class="total" style="font-size: 1.5rem;"></span>
-                            </span>                            
-                        </div>
-                        <hr />
-                        <div>
-                            <span>METODO DE PAGO</span>
-                            <div class="containerPaymentBody">
-                                <div class="payment-container">
-                                    <!-- Efectivo -->
-                                    <label class="payment-option">
-                                        <div class="icon-label">
-                                            <img src="../../icons/payment-cash.svg"></img>
-                                            <p class="label-text">Efectivo</p>
-                                        </div>
-                                        <input class="cash" type="radio" name="payment" value="Efectivo" />
-                                    </label>
-                                    <!-- Transferencia -->
-                                    <label class="payment-option">
-                                        <div class="icon-label">
-                                            <img src="../../icons/payment-transfer.svg"></img>
-                                            <p class="label-text">Transferencia</p>
-                                        </div>
-                                        <input class="transfer" type="radio" name="payment" value="Transferencia" />
-                                    </label>
-                                    <!-- Tarjeta Debito/Credito -->
-                                    <label class="payment-option">
-                                        <div class="icon-label">
-                                            <img src="../../icons/payment-card.svg"></img>
-                                            <p class="label-text">Debito/Credito</p>
-                                        </div>
-                                        <input class="card" type="radio" name="payment" value="Tarjeta" />
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="payment">
-                            <span>PAGO</span>
-                            <div class="form">
-                                <input class="input_field" placeholder="Cantidad" type="text" />
-                                <button class="paymentBtnApply">Aplicar</button>
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="payments">
-                            <div class="details">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card checkout">
-                <div class="footer">
-                    <label class="paymentPrice">$0.00</label>
-                    <div class="btnTicketContainer">
-                        <button class="checkoutBtnCancel">Cancelar</button>
-                        <button class="checkoutBtnPay">Pagar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    `
-};
-
-export const getNewPaymentHTML = (pay, paymentMethod, id) => {
-    return `
-    <div class="payment--${id}">
-        <span>${paymentMethod}</span>
-        <span>$${Number(pay).toFixed(2)}</span>
-        <button class="buttonDeletePayment" data-id="${id}">
-            <svg viewBox="0 0 448 512" class="svgIcon">
-                <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z">
-                </path>
-            </svg>
-        </button> 
-    </div>
     `;
-}
+};
+
+export const getMaterialCatalogHTML = () => {
+    const pathImg = '../../images/';
+    
+    return `
+        <div class="content-image btnSinglevision" title="Monofocal" style="background-image: url(${pathImg}monofocal-frame.jpg); background-size: cover; background-position: center; background-repeat: no-repeat; display: flex; align-items: center; justify-content: flex-end; flex-direction: column; color: #B22222; font-weight: 600; letter-spacing: 3px;">
+        Monofocal
+        </div>
+        <div class="content-image btnBifocal" title="Bifocal" style="background-image: url(${pathImg}bifocal-frame.png); background-size: cover; background-position: center; background-repeat: no-repeat; display: flex; align-items: center; justify-content: flex-end; flex-direction: column; color: #E0E0E0; font-weight: 600; letter-spacing: 3px;">
+        Bifocal
+        </div>
+        <div class="content-image btnProgresive" title="Progresivo" style="background-image: url(${pathImg}progresivo-frame.jpg); background-size: cover; background-position: center; background-repeat: no-repeat; display: flex; align-items: center; justify-content: flex-end; flex-direction: column; color: #8B0000 ; font-weight: 600; letter-spacing: 3px;">
+        Progresivo
+        </div>
+    `;
+};
+
+export const getItemToCardHTML = (product) => {
+    const pathImg = product.Image ? `../../images/${product.Image}` : "../../images/no-image.jpg";
+
+    return `
+        <div class="item" title="${product.Description}">
+            <div class="item-delete deleteItem" title="Quitar producto">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18"/>
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                    <line x1="10" x2="10" y1="11" y2="17"/>
+                    <line x1="14" x2="14" y1="11" y2="17"/>
+                </svg>
+            </div>
+            <div class="item-product">
+                <div class="product-image">
+                    <img src="${pathImg}" alt="">
+                </div>
+                <div class="product-details">
+                    <span class="details-description">${product.Description}</span>
+                    <span class="details-price">${formatMoney(product.SalePrice)}</span>
+                </div>
+            </div>
+            <div class="item-button">
+                <div class="button-quantity">1</div>
+                <div class="button-buttons">
+                    <button class="buttons-plus plusButton">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m18 15-6-6-6 6"/>
+                        </svg>
+                    </button>
+                    <button class="buttons-minus minusButton">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="item-price">${formatMoney(product.SalePrice)}</div>
+        </div>
+    `;
+};

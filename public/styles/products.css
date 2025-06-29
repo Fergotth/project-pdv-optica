@@ -51,7 +51,7 @@
 }
 
 .products--sku input, 
-.products--category input, 
+.products--category select, 
 .products--description input,
 .products--pricePurchaseExcludingIVA input,
 .products--pricePurchaseIncludingIVA input,
@@ -65,7 +65,7 @@
 }
 
 .products--sku input:focus, 
-.products--category input:focus, 
+.products--category select:focus, 
 .products--description input:focus,
 .products--pricePurchaseExcludingIVA input:focus,
 .products--pricePurchaseIncludingIVA input:focus,
@@ -91,8 +91,8 @@
 
 .products--sku input:focus + label,
 .products--sku input:not(:placeholder-shown) + label,
-.products--category input:focus + label,
-.products--category input:not(:placeholder-shown) + label,
+.products--category select:focus + label,
+.products--category select:not(:placeholder-shown) + label,
 .products--description input:focus + label,
 .products--description input:not(:placeholder-shown) + label,
 .products--pricePurchaseExcludingIVA input:focus + label,

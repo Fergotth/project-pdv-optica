@@ -44,7 +44,13 @@ export const getProductsHTML = () => {
                 <label for="sku--input">SKU</label>
             </div>
             <div class="products--category">
-                <input class="category--input" id="category--input" type="text">
+                <select class="category--input" id="category--input" name="category--input">
+                    <option value="">--- Selecciona una categoria ---</option>
+                    <option value="frames">Armazones</option>
+                    <option value="glasses">Materiales</option>
+                    <option value="accessories">Accesorios</option>
+                    <option value="services">Servicios</option>
+                </select>
                 <label for="category--input">Categoria</label>
             </div>
             <div class="products--description">
