@@ -2,7 +2,9 @@ let state = {
     data: [],
     payment: [],
     subtotal: 0,
-    cartItems: 0
+    cartItems: 0,
+    discount: 0,
+    procesing: false
 };
 
 export const getState = () => ({ ...state });
@@ -15,5 +17,8 @@ export const updateState = (updater) => {
 export const flushState = () => updateState(() => ({
     data: [],
     payment: [],
-    cartItems: 0
+    subtotal: 0,
+    cartItems: 0,
+    discount: 0,
+    procesing: false
 }));

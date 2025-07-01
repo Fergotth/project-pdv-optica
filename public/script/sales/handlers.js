@@ -127,9 +127,23 @@ export const handlerSku = async ({ DOM, sku }) => {
 
         return;
     }
-
+    
     DOM.appendChild(getParsedHTML(getItemToCardHTML(product)));
     updateItemsCart(1);
+    setSubtotal(product.SalePrice);
     input.value = '';
     input.blur();
-}
+};
+
+export const handlerDeleteDiscountBtn = ({ DOM }) => {
+    if (getState().discount > 0) {
+        DOM.textContent = "$0.00";
+        // falta logica para actualizar total
+    } else {
+        newAlert({
+            icon: "info",
+            title: "AVISO",
+            text: "No se ha aplicado ningun descuento"
+        });
+    }
+};

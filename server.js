@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const { dbSales, dbClients, dbProducts } = require('./database');
+const { dbSales, dbClients, dbProducts, dbParams } = require('./database');
 const app = express();
 
 app.use(bodyParser.json());

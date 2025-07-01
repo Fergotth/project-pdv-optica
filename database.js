@@ -85,8 +85,20 @@ dbProducts.run(`
     )
 `);
 
+// Crear tabla params (Configuraciones del sistema, datos basicos)
+const dbParams = new sqlite3.Database(path.join(dataDir, 'params.db'));
+
+dbParams.run(`
+        CREATE TABLE IF NOT EXISTS Params (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            IVA REAL
+            PriceDolar REAL
+        )
+`);
+
 module.exports = { 
     dbSales, 
     dbClients, 
-    dbProducts 
+    dbProducts,
+    dbParams
 };
