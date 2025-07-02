@@ -74,7 +74,7 @@ export const getHandlerArgs = {
     }),
 
     handlerApplyDiscountBtn: () => ({
-        DOM: getElement(Class.list.itemsInCart)
+        DOM: getElement(Class.form.sales)
     }),
 
     handlerDeleteDiscountBtn: () => ({

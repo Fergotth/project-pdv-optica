@@ -8,6 +8,21 @@
     position: relative;
 }
 
+.container-sales > :nth-child(4) {
+    all: unset;
+    position: absolute;
+    animation: showForm 0.5s ease-in-out;
+    flex: none;
+
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: #00000022;
+    backdrop-filter: blur(1px);
+    z-index: 1100;
+}
+
 @keyframes showForm {
     0% {
         opacity: 0;
@@ -394,6 +409,7 @@
     flex-direction: row;
     align-items: center;
     border-radius: 7px;
+    animation: showForm 0.2s ease-in-out;
 }
 
 .sideright-secondsection .item:hover {
@@ -568,6 +584,10 @@
 
 .thirdsection-discount details {
     position: relative;
+}
+
+.thirdsection-discount details[open] {
+    animation: showForm 0.1s ease-in-out;
 }
 
 .thirdsection-discount details summary {
