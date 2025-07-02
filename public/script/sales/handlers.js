@@ -135,7 +135,18 @@ export const handlerSku = async ({ DOM, sku }) => {
     input.blur();
 };
 
-export const handlerApplyDiscountBtn = ({ DOM }) => {
+export const handlerApplyDiscountBtn = ({ DOM, items }) => {
+    if (items < 1) {
+        newAlert({
+            icon: "info",
+            title: "AVISO",
+            text: "No hay articulos en el carrito de compras"
+        });
+
+        getElement('.discount-summary-menu').removeAttribute('open');
+        return;
+    }
+
     DOM.appendChild(getParsedHTML(getPromptDiscountHTML()));
 };
 
@@ -149,6 +160,7 @@ export const handlerDeleteDiscountBtn = ({ DOM }) => {
             title: "AVISO",
             text: "No se ha aplicado ningun descuento"
         });
+        getElement('.discount-summary-menu').removeAttribute('open');
     }
 };
 
