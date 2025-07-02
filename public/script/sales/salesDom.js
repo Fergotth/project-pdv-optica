@@ -74,3 +74,17 @@ export const getItemToCardHTML = (product) => {
         </div>
     `;
 };
+
+export const getPromptDiscountHTML = () => {
+    return `
+    <div class="overlayPromptDiscount">
+        <div class="promptDiscount">
+            <div class="discount-container">
+                <input class="discountInputValue" required="" placeholder="Descuento" type="number">
+                <button class="setDiscountBtn" type="button">Aplicar</button>
+            </div>
+            <button class="cancelSetDiscountBtn">Cancelar</button>
+        </div>
+    </div>
+    `;
+};

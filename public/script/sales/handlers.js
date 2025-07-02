@@ -1,5 +1,5 @@
 import { newAlert } from "../utils/alerts.js";
-import { getProductHTML, getMaterialCatalogHTML, getItemToCardHTML } from "./salesDom.js";
+import { getProductHTML, getMaterialCatalogHTML, getItemToCardHTML, getPromptDiscountHTML } from "./salesDom.js";
 import { getElement, getParsedHTML } from "../utils/getElement.js";
 import { getDataDB } from "./getData.js";
 import { validateData } from "./validations.js";
@@ -135,6 +135,10 @@ export const handlerSku = async ({ DOM, sku }) => {
     input.blur();
 };
 
+export const handlerApplyDiscountBtn = ({ DOM }) => {
+    DOM.appendChild(getParsedHTML(getPromptDiscountHTML()));
+};
+
 export const handlerDeleteDiscountBtn = ({ DOM }) => {
     if (getState().discount > 0) {
         DOM.textContent = "$0.00";
@@ -146,4 +150,9 @@ export const handlerDeleteDiscountBtn = ({ DOM }) => {
             text: "No se ha aplicado ningun descuento"
         });
     }
+};
+
+export const handlerCancelSetDiscountBtn = ({ DOM }) => {
+    getElement('.discount-summary-menu').removeAttribute('open');
+    DOM.remove();
 };

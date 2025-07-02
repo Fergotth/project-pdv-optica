@@ -10,7 +10,8 @@ const Class = {
     },
     list: {
         productsInDB: '.thirdsection-content',
-        itemsInCart: '.sideright-secondsection'
+        itemsInCart: '.sideright-secondsection',
+        overlay: '.overlayPromptDiscount'
     },
     label: {
         subtotal: '.subtotal',

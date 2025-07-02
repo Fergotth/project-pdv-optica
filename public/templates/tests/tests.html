@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="test.css">
 </head>
 <body>
-    <div class="formDiscount">
-        <div class="title">Descuento</div>
-        <input class="discountInput" placeholder="Cantidad"></input>
-        <div class="buttons">
-            <button>Aplicar</button>
-            <button>Cancelar</button>
+    <div class="overlay">
+        <div class="promptDiscount">
+            <div class="discount-container">
+                <input class="discountInputValue" required="" placeholder="Descuento" type="number">
+                <button class="setDiscountBtn" type="button">Aplicar</button>
+            </div>
+            <button class="cancelSetDiscountBtn">Cancelar</button>
         </div>
     </div>
 </body>

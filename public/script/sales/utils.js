@@ -69,3 +69,7 @@ export const setNewPrice = (DOM, quantity) => {
 export const formatMoney = (value) => {
     return `$${value.toFixed(2)}`;
 }
+
+export const closeOverlayOpened = (DOM) => {
+    if (DOM) DOM.remove();
+};

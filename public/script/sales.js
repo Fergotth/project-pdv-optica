@@ -34,6 +34,7 @@ const sales = () => {
 
     function clearEvents() {
         getElement(Class.form.sales).removeEventListener('click', onSalesActive);
+        getElement(Class.input.article).removeEventListener('keydown', onSalesActive);
         unregisterGlobals();
     }
 

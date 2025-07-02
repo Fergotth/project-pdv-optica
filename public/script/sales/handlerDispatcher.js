@@ -73,7 +73,15 @@ export const getHandlerArgs = {
         sku: getElement(Class.input.article).value
     }),
 
+    handlerApplyDiscountBtn: () => ({
+        DOM: getElement(Class.list.itemsInCart)
+    }),
+
     handlerDeleteDiscountBtn: () => ({
         DOM: getElement(Class.label.discount)
+    }),
+
+    handlerCancelSetDiscountBtn: () => ({
+        DOM: getElement('.overlayPromptDiscount')
     })
 };
