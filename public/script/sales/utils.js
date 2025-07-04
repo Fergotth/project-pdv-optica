@@ -1,6 +1,6 @@
 import { getState, updateState, flushState } from "./state.js";
 import { getElement, getParsedHTML } from "../utils/getElement.js";
-import { getProductHTML } from "./salesDom.js";
+import { getProductHTML, getLoaderHTML } from "./salesDom.js";
 import { getDataDB } from "./getData.js";
 import { validateData } from "./validations.js";
 import { newAlert } from "../utils/alerts.js";
@@ -108,4 +108,15 @@ export const resetDiscountValue = () => {
         };
     });
     getElement(Class.label.discount).textContent = `${formatMoney(0)}`;
+};
+
+export const loader = () => {
+    const DOM = getElement(Class.form.sales);
+    DOM.appendChild(getParsedHTML(getLoaderHTML()));
+
+    updateState(() => {
+        return {
+            procesing: true
+        };
+    });
 };

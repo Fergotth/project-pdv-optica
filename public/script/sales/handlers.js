@@ -1,14 +1,32 @@
 import { newAlert } from "../utils/alerts.js";
-import { getProductHTML, getMaterialCatalogHTML, getItemToCardHTML, getPromptDiscountHTML } from "./salesDom.js";
-import { getElement, getParsedHTML } from "../utils/getElement.js";
-import { getDataDB } from "./getData.js";
-import { validateData } from "./validations.js";
+import { 
+    getMaterialCatalogHTML, 
+    getItemToCardHTML, 
+    getPromptDiscountHTML 
+} from "./salesDom.js";
+import { 
+    getElement, 
+    getParsedHTML 
+} from "../utils/getElement.js";
 import { getDataProductDB } from '../products/getData.js';
-import { handleQuantityButton, updateItemsCart, setItemsToCart, setSubtotal, formatMoney, resetDiscountValue, handleProductCategory } from "./utils.js";
-import { flushState, getState, updateState } from "./state.js";
+import { 
+    handleQuantityButton, 
+    updateItemsCart, 
+    setSubtotal, 
+    formatMoney, 
+    resetDiscountValue, 
+    handleProductCategory, 
+    loader 
+} from "./utils.js";
+import { 
+    flushState, 
+    getState, 
+    updateState 
+} from "./state.js";
 import Class from "./consts.js";
 
 export const handlerBtnFrames = (params) => {
+    loader();
     handleProductCategory({ ...params, title: "Armazones", message: "armazones" });
 };
 

@@ -88,3 +88,22 @@ export const getPromptDiscountHTML = () => {
     </div>
     `;
 };
+
+export const getLoaderHTML = () => {
+    return `
+    <div class="overlayPromptDiscount">
+        <div class="card">
+            <div class="loader">
+                <p>Cargando</p>
+                <div class="words">
+                    <span class="word">materiales</span>
+                    <span class="word">productos</span>
+                    <span class="word">accesorios</span>
+                    <span class="word">amazones</span>
+                    <span class="word">servicios</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    `;
+};
