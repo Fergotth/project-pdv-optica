@@ -30,19 +30,19 @@ export const getHandlerArgs = {
     handlerBtnSinglevision: () => ({
         DOM: getElement(Class.list.productsInDB),
         url: 'http://localhost:5500/get-products',
-        material: 'monofocal'
+        category: 'monofocal'
     }),
 
     handlerBtnBifocal: () => ({
         DOM: getElement(Class.list.productsInDB),
         url: 'http://localhost:5500/get-products',
-        material: 'bifocal'
+        category: 'bifocal'
     }),
 
     handlerBtnProgresive: () => ({
         DOM: getElement(Class.list.productsInDB),
         url: 'http://localhost:5500/get-products',
-        material: 'progresivo'
+        category: 'progresivo'
     }),
 
     handlerItemSelected: (button) => ({
@@ -84,5 +84,9 @@ export const getHandlerArgs = {
 
     handlerCancelSetDiscountBtn: () => ({
         DOM: getElement('.overlayPromptDiscount')
+    }),
+
+    handlerSetDiscountBtn: () => ({
+        discount: Number(getElement(Class.input.discount).value)
     })
 };

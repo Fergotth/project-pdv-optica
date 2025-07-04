@@ -4,23 +4,12 @@ import { getElement, getParsedHTML } from "../utils/getElement.js";
 import { getDataDB } from "./getData.js";
 import { validateData } from "./validations.js";
 import { getDataProductDB } from '../products/getData.js';
-import { handleQuantityButton, updateItemsCart, setItemsToCart, setSubtotal } from "./utils.js";
-import { flushState, getState } from "./state.js";
+import { handleQuantityButton, updateItemsCart, setItemsToCart, setSubtotal, formatMoney, resetDiscountValue, handleProductCategory } from "./utils.js";
+import { flushState, getState, updateState } from "./state.js";
 import Class from "./consts.js";
 
-export const handlerBtnFrames = async ({ DOM, url, category }) => {
-    const products = await getDataDB(url);
-    
-    if (!validateData(products, category)) {
-        newAlert({
-            icon: "info",
-            title: "Armazones",
-            text: "No hay armazones registrados en la base de datos"
-        })
-        return;
-    }
-
-    setItemsToCart(DOM, products, category);
+export const handlerBtnFrames = (params) => {
+    handleProductCategory({ ...params, title: "Armazones", message: "armazones" });
 };
 
 export const handlerBtnGlasses = ({ DOM }) => {
@@ -28,53 +17,24 @@ export const handlerBtnGlasses = ({ DOM }) => {
     DOM.insertAdjacentHTML('afterbegin', getMaterialCatalogHTML());
 };
 
-export const handlerBtnAccesories = async ({ DOM, url, category }) => {
-    const products = await getDataDB(url);
-    
-    if (!validateData(products, category)) {
-        newAlert({
-            icon: "info",
-            title: "Accesorios",
-            text: "No hay accesorios registrados en la base de datos"
-        })
-        return;
-    }
-
-    setItemsToCart(DOM, products, category);
+export const handlerBtnAccesories = async (params) => {
+    handleProductCategory({ ...params, title: "Accesorios", message: "accesorios" });
 };
 
-export const handlerBtnServices = async ({ DOM, url, category }) => {
-    const products = await getDataDB(url);
-    
-    if (!validateData(products, category)) {
-        newAlert({
-            icon: "info",
-            title: "Servicios",
-            text: "No hay articulos registrados en la base de datos"
-        })
-        return;
-    }
-
-    setItemsToCart(DOM, products, category);
+export const handlerBtnServices = async (params) => {
+    handleProductCategory({ ...params, title: "Servicios", message: "articulos" });
 };
 
-export const handlerBtnSinglevision = async ({ DOM, url, material }) => {
-    const products = await getDataDB(url);
+export const handlerBtnSinglevision = (params) => {
+    handleProductCategory({ ...params, title: "Materiales", message: "materiales" });
+};
 
-    if (!validateData(products, material)) {
-        newAlert({
-            icon: "info",
-            title: "Materiales",
-            text: "No hay materiales registrados en la base de datos"
-        })
-        return;
-    }
+export const handlerBtnBifocal = (params) => {
+    handleProductCategory({ ...params, title: "Materiales", message: "materiales" });
+};
 
-    DOM.replaceChildren();
-    products.forEach(product => {
-        if (product.Description?.toLowerCase().includes(material.toLowerCase()))
-            DOM.appendChild(getParsedHTML(getProductHTML(product)));
-    });
+export const handlerBtnProgresive = (params) => {
+    handleProductCategory({ ...params, title: "Materiales", message: "materiales" });
 };
 
 export const handlerItemSelected = async ({ DOM, sku }) => {
@@ -89,6 +49,7 @@ export const handlerDeleteItem = ({ DOM }) => {
     updateItemsCart(-Number(DOM.querySelector(Class.label.quantity).textContent));
     setSubtotal(-Number(DOM.closest('.item').querySelector(Class.label.itemprice).textContent.replace("$", "")));
     DOM.remove();
+    resetDiscountValue();
 };
 
 export const handlerPlusButton = ({ DOM, param }) => {
@@ -109,6 +70,7 @@ export const handlerDeleteCart = ({ DOM }) => {
     });
 
     updateItemsCart(-getState().cartItems);
+    resetDiscountValue();
     flushState();
 };
 
@@ -160,11 +122,33 @@ export const handlerDeleteDiscountBtn = ({ DOM }) => {
             title: "AVISO",
             text: "No se ha aplicado ningun descuento"
         });
-        getElement('.discount-summary-menu').removeAttribute('open');
     }
+
+    getElement('.discount-summary-menu').removeAttribute('open');
 };
 
 export const handlerCancelSetDiscountBtn = ({ DOM }) => {
     getElement('.discount-summary-menu').removeAttribute('open');
     DOM.remove();
+};
+
+export const handlerSetDiscountBtn = ({ discount }) => {
+    handlerCancelSetDiscountBtn({ DOM: getElement('.overlayPromptDiscount') });
+    
+    if (getState().subtotal <= discount) {
+        newAlert({
+            icon: "info",
+            text: "Descuento invalido. Favor de corregir."
+        });
+
+        return;
+    }
+
+    updateState(() => {
+        return {
+            discount: discount
+        };
+    });
+
+    getElement(Class.label.discount).textContent = `- ${formatMoney(discount)}`;
 };

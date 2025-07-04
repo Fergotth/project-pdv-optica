@@ -1,7 +1,34 @@
 import { getState, updateState, flushState } from "./state.js";
 import { getElement, getParsedHTML } from "../utils/getElement.js";
 import { getProductHTML } from "./salesDom.js";
+import { getDataDB } from "./getData.js";
+import { validateData } from "./validations.js";
+import { newAlert } from "../utils/alerts.js";
 import Class from "./consts.js";
+
+export const handleProductCategory = async ({ DOM, url, category, title, message }) => {
+    const products = await getDataDB(url);
+
+    if (!validateData(products, category)) {
+        newAlert({
+            icon: "info",
+            title: title,
+            text: `No hay ${message} registrados en la base de datos`
+        });
+        return;
+    }
+
+    if (["monofocal", "bifocal", "progresivo"].includes(category.toLowerCase())) {
+        DOM.replaceChildren();
+        products.forEach(product => {
+            if (product.Description?.toLowerCase().includes(category.toLowerCase())) {
+                DOM.appendChild(getParsedHTML(getProductHTML(product)));
+            }
+        });
+    } else {
+        setItemsToCart(DOM, products, category);
+    }
+};
 
 /**
  * 
@@ -72,4 +99,13 @@ export const formatMoney = (value) => {
 
 export const closeOverlayOpened = (DOM) => {
     if (DOM) DOM.remove();
+};
+
+export const resetDiscountValue = () => {
+    updateState(() => {
+        return {
+            discount: 0
+        };
+    });
+    getElement(Class.label.discount).textContent = `${formatMoney(0)}`;
 };

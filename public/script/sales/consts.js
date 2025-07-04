@@ -6,7 +6,8 @@ const Class = {
         sales: '.container-sales',
     },
     input: {
-        article: '.sku'
+        article: '.sku',
+        discount: '.discountInputValue'
     },
     list: {
         productsInDB: '.thirdsection-content',
