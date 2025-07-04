@@ -89,6 +89,10 @@
     color: #D0D3D4;
 }
 
+.sales-sideleft > .sideleft-button span {
+    color: #D0D3D4;
+}
+
 .sales-sideleft > .sideleft-button svg {
     color:#BDBDBD
 }
@@ -105,6 +109,7 @@
 
 .sales-sideleft > .sideleft-button:hover > span {
     font-weight: 600;
+    color: #020202;
 }
 
 .sales-sideleft > .sideleft-button:active {
