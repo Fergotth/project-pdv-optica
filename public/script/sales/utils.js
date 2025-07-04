@@ -110,13 +110,17 @@ export const resetDiscountValue = () => {
     getElement(Class.label.discount).textContent = `${formatMoney(0)}`;
 };
 
-export const loader = () => {
-    const DOM = getElement(Class.form.sales);
-    DOM.appendChild(getParsedHTML(getLoaderHTML()));
-
+export const loader = (param) => {
+    if (!getState().procesing) {
+        const DOM = getElement(Class.form.sales);
+        DOM.appendChild(getParsedHTML(getLoaderHTML()));
+    } else {
+        getElement(Class.list.overlay).remove();
+    }
+    
     updateState(() => {
-        return {
-            procesing: true
-        };
-    });
+            return {
+                procesing: param
+            };
+        });
 };

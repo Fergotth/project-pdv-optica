@@ -1,7 +1,7 @@
 import { getHandlerArgs } from "./sales/handlerDispatcher.js";
 import { getElement } from "./utils/getElement.js";
+import { loader } from "./sales/utils.js";
 import { flushState } from "./sales/state.js";
-import { setActiveModule } from "./utils/globalState.js";
 import Class from "./sales/consts.js";
 import * as handlers from './sales/handlers.js';
 
@@ -16,6 +16,7 @@ const sales = () => {
         if (event instanceof KeyboardEvent && event.key !== 'Enter') return;
         if (event.type === 'click' && event.target.classList.contains('sku')) return;
         
+        loader(true);
         event.stopPropagation();
         const button = event.target;
 
@@ -27,6 +28,8 @@ const sales = () => {
                 handlers[handlerName](args);
             }
         });
+        
+        loader(false);
     };
 
     getElement(Class.form.sales).addEventListener('click', onSalesActive);

@@ -15,8 +15,7 @@ import {
     setSubtotal, 
     formatMoney, 
     resetDiscountValue, 
-    handleProductCategory, 
-    loader 
+    handleProductCategory 
 } from "./utils.js";
 import { 
     flushState, 
@@ -26,7 +25,6 @@ import {
 import Class from "./consts.js";
 
 export const handlerBtnFrames = (params) => {
-    loader();
     handleProductCategory({ ...params, title: "Armazones", message: "armazones" });
 };
 
