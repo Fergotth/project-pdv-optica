@@ -84,4 +84,4 @@ export const getProductsHTML = () => {
         </div>
     </div>
     `;
-}
+};

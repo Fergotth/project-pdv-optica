@@ -1,7 +1,14 @@
 import sales from "./sales.js";
 import operations from "./operations.js";
-import { getElement } from "./utils/getElement.js";
-import { setModuleInstance, setActiveModule } from "./utils/globalState.js";
+import { getParamsSalesHTML } from "./submenu/paramsSalesDOMs.js";
+import { 
+    getElement, 
+    getParsedHTML 
+} from "./utils/getElement.js";
+import { 
+    setModuleInstance, 
+    setActiveModule 
+} from "./utils/globalState.js";
 
 const menu = () => {
     setModuleInstance('sales', { clearEvents: () => {} });
@@ -54,6 +61,10 @@ const menu = () => {
                     loadTemplate(config.template, config.templateId);
                 }
             }
+        }
+
+        if (elementClicked.classList.contains('paramsSales')) {
+            getElement('temporaryContent').appendChild(getParsedHTML(getParamsSalesHTML()));
         }
 
         // if (elementClicked.classList.contains('calendarContainer')) {

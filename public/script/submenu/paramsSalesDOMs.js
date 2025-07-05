@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IVA y Dolar</title>
-    <link rel="stylesheet" href="test.css">
-</head>
-<body>
-    <div class="overlay">
+export const getParamsSalesHTML = () => {
+    return `
+    <div class="overlayParams">
         <div class="paramsContainer">
             <div class="title">Parametros de Venta Basicos</div>
             <h3>IVA</h3>
@@ -30,5 +23,5 @@
             <button class="applyParams">Aplicar</button>
         </div>      
     </div>
-</body>
-</html>
+    `;
+};

@@ -5,6 +5,7 @@ let state = {
     cartItems: 0,
     discount: 0,
     iva: 0,
+    dolar: 0,
     procesing: false
 };
 

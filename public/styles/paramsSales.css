@@ -1,0 +1,250 @@
+.overlayParams {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    top: 0;
+    left: 0;
+}
+
+.paramsContainer {
+    width: 30vw;
+    height: 60vh;
+    background-color: #fafdfd;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 7px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.paramsContainer .title {
+    padding-top: 30px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.paramsContainer h3 {
+    width: 95%;
+    border-bottom: 1px solid #ededed;
+    text-align: center;
+    height: auto;
+    margin: 0;
+    padding-top: 2rem;
+    color: #889988;
+}
+
+.paramsContainer .tab-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    position: relative;
+    width: 90%;
+    padding: 2px;
+    background-color: #ebebec;
+    border-radius: 9px;
+    margin: 5px 20px 0px 20px;
+}
+
+.paramsContainer .tab-container .indicator {
+    content: "";
+    width: calc(50% - 4px);
+    height: 26px;
+    background: #FFFFFF;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 9;
+    border: 0.5px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 7px;
+    transition: all 0.2s ease-out;
+}
+
+.paramsContainer .tab-container .tab {
+    width: 50%;
+    height: 28px;
+    position: relative;
+    z-index: 99;
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    flex: none;
+    align-self: stretch;
+    flex-grow: 1;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.paramsContainer .tab-container .tab:focus {
+    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
+    border-radius: 7px;
+}
+
+.tab--1:hover ~ .indicator {
+    left: 2px;
+}
+
+.tab--2:hover ~ .indicator {
+    left: calc(50% - 2px);
+}
+
+.paramsContainer .applyParams {
+    padding: 12px 50px;
+    font-weight: 600;
+    border: none;
+    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
+    border-radius: 7px;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    position: absolute;
+    bottom: 15px;
+}
+
+.paramsContainer input:placeholder-shown ~ .applyParams {
+    pointer-events: none;
+    background-color: gray;
+    opacity: 0.5;
+}
+
+.paramsContainer input[type="number"] {
+    margin-top: 5px;
+    height: 36px;
+    width: 90%;
+    border-radius: 8px;
+    border: 1px solid  rgb(176, 190, 197);
+    background-color: transparent;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+    color: rgb(69 90 100);
+    outline: none;
+    transition: all .15s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+}
+
+.paramsContainer input[type=number]::-webkit-inner-spin-button,
+.paramsContainer input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.params-radio-inputs {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: #eee;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: 300px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.params-radio-inputs .radio-param {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.params-radio-inputs .radio-param input {
+    display: none;
+}
+
+.params-radio-inputs .radio-param .name {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0.5rem 0;
+    color: rgba(51, 65, 85, 1);
+    transition: all 0.15s ease-in-out;
+}
+
+.params-radio-inputs .radio-param input:checked + .name {
+    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
+    font-weight: 600;
+}
+
+  /* Hover effect */
+.params-radio-inputs .radio-param:hover .name {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+  /* Animation */
+.params-radio-inputs .radio-param input:checked + .name {
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: select 0.3s ease;
+}
+
+@keyframes select {
+    0% {
+    transform: scale(0.95);
+    }
+    50% {
+    transform: scale(1.05);
+    }
+    100% {
+    transform: scale(1);
+    }
+}
+
+  /* Particles */
+.params-radio-inputs .radio-param input:checked + .name::before,
+.params-radio-inputs .radio-param input:checked + .name::after {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #3b82f6;
+    opacity: 0;
+    animation: particles 0.5s ease forwards;
+}
+
+.params-radio-inputs .radio-param input:checked + .name::before {
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.params-radio-inputs .radio-param input:checked + .name::after {
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@keyframes particles {
+    0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0);
+    }
+    50% {
+    opacity: 1;
+    }
+    100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(var(--direction));
+    }
+}
+
+.params-radio-inputs .radio-param input:checked + .name::before {
+    --direction: -10px;
+}
+
+.params-radio-inputs .radio-param input:checked + .name::after {
+    --direction: 10px;
+}
