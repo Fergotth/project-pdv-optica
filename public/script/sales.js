@@ -16,7 +16,6 @@ const sales = () => {
         if (event instanceof KeyboardEvent && event.key !== 'Enter') return;
         if (event.type === 'click' && event.target.classList.contains('sku')) return;
         
-        loader(true);
         event.stopPropagation();
         const button = event.target;
 
@@ -28,8 +27,6 @@ const sales = () => {
                 handlers[handlerName](args);
             }
         });
-        
-        loader(false);
     };
 
     getElement(Class.form.sales).addEventListener('click', onSalesActive);

@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descuento</title>
+    <title>IVA y Dolar</title>
     <link rel="stylesheet" href="test.css">
 </head>
 <body>
     <div class="overlay">
-        <div class="promptDiscount">
-            <div class="discount-container">
-                <input class="discountInputValue" required="" placeholder="Descuento" type="number">
-                <button class="setDiscountBtn" type="button">Aplicar</button>
+        <div class="paramsContainer">
+            <div class="title">Parametros de Venta Basicos</div>
+            <h3>IVA</h3>
+            <div class="tab-container">
+                <button class="tab tab--1">8 %</button>
+                <button class="tab tab--2">16 %</button>
+                <div class="indicator"></div>
             </div>
-            <button class="cancelSetDiscountBtn">Cancelar</button>
-        </div>
+            <h3>Precio Dolar</h3>
+            <input class="dolarValue" required="" placeholder="Precio del dolar" type="number">
+            <button class="applyParams">Aplicar</button>
+        </div>      
     </div>
 </body>
 </html>

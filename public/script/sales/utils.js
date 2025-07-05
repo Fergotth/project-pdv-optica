@@ -1,12 +1,29 @@
-import { getState, updateState, flushState } from "./state.js";
-import { getElement, getParsedHTML } from "../utils/getElement.js";
-import { getProductHTML, getLoaderHTML } from "./salesDom.js";
+import { 
+    getState, 
+    updateState, 
+    flushState 
+} from "./state.js";
+import { 
+    getElement, 
+    getParsedHTML 
+} from "../utils/getElement.js";
+import { 
+    getProductHTML, 
+    getLoaderHTML 
+} from "./salesDom.js";
+import { 
+    subtotal,
+    IVA,
+    total,
+    calculateDOMSubtotal
+} from "./calculation.js";
 import { getDataDB } from "./getData.js";
 import { validateData } from "./validations.js";
 import { newAlert } from "../utils/alerts.js";
 import Class from "./consts.js";
 
 export const handleProductCategory = async ({ DOM, url, category, title, message }) => {
+    loader(true);
     const products = await getDataDB(url);
 
     if (!validateData(products, category)) {
@@ -28,6 +45,7 @@ export const handleProductCategory = async ({ DOM, url, category, title, message
     } else {
         setItemsToCart(DOM, products, category);
     }
+    loader(false);
 };
 
 /**
@@ -42,8 +60,8 @@ export const handleQuantityButton = (DOM, param) => {
     if (newQuantity > 0) {
         DOM.textContent = newQuantity;
         updateItemsCart(quantity);
-        setSubtotal(quantity * Number(DOM.closest('.item').querySelector(Class.label.unitprice).textContent.replace("$","")));
         setNewPrice(DOM.closest('.item'), newQuantity);
+        recalculateSummary();
     }
 };
 
@@ -78,19 +96,23 @@ export const setItemsToCart = (DOM, products, category) => {
 };
 
 export const setSubtotal = (price) => {
-    updateState(previusData => {
-        return {
-            subtotal: previusData.subtotal + price
-        };
-    });
-    
-    getElement(Class.label.subtotal).textContent = formatMoney(getState().subtotal);
+    getElement(Class.label.subtotal).textContent = formatMoney(subtotal(price));
 };
+
+export const setTotal = () => {
+    getElement(Class.label.total).textContent = `${formatMoney(total())}`;
+}
 
 export const setNewPrice = (DOM, quantity) => { 
     const price = DOM.querySelector(Class.label.itemprice);
     const unitPrice = Number(DOM.querySelector(Class.label.unitprice).textContent.replace("$", ""));
     price.textContent = formatMoney(unitPrice * quantity);
+};
+
+export const setIVA = (checked) => {
+    // getElement(Class.label.iva).textContent = `${formatMoney(IVA(checked))}`;
+    // setTotal();
+    recalculateSummary();
 };
 
 export const formatMoney = (value) => {
@@ -104,10 +126,11 @@ export const closeOverlayOpened = (DOM) => {
 export const resetDiscountValue = () => {
     updateState(() => {
         return {
-            discount: 0
+            discount: 0,
+            iva: IVA(getElement('.applyIVA').checked)
         };
     });
-    getElement(Class.label.discount).textContent = `${formatMoney(0)}`;
+    recalculateSummary();
 };
 
 export const loader = (param) => {
@@ -123,4 +146,21 @@ export const loader = (param) => {
                 procesing: param
             };
         });
+};
+
+export const recalculateSummary = () => {
+    const state = getState();
+    const applyIVA = getElement('.applyIVA').checked;
+    
+    setMoneyContent(Class.label.subtotal, calculateDOMSubtotal());
+    setMoneyContent(Class.label.iva, IVA(applyIVA));
+    setMoneyContent(Class.label.discount, state.discount || 0, true);
+    setMoneyContent(Class.label.total, total());
+    getElement(Class.label.cartTotalItems).textContent = state.cartItems;
+};
+
+const setMoneyContent = (selector, value, isNegative = false) => {
+    const el = getElement(selector);
+    const displayValue = `${isNegative ? "- " : ""}$${value.toFixed(2)}`;
+    if (el) el.textContent = displayValue;
 };

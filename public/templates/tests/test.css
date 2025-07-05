@@ -9,24 +9,92 @@
   z-index: 1000;
 }
 
-.promptDiscount {
-  min-width: 230px;
-  max-width: 300px;
-  background-color: #fdfdfd;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
+.paramsContainer {
+  width: 30vw;
+  height: 60vh;
+  background-color: #fafdfd;
   position: relative;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   border-radius: 7px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.promptDiscount .cancelSetDiscountBtn {
+.paramsContainer .title {
+  padding-top: 30px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.paramsContainer h3 {
+  width: 95%;
+  border-bottom: 1px solid #ededed;
+  text-align: center;
+  height: auto;
+  margin: 0;
+  padding-top: 2rem;
+}
+
+.paramsContainer .tab-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  width: 90%;
+  padding: 2px;
+  background-color: #ebebec;
+  border-radius: 9px;
+  margin: 5px 20px 0px 20px;
+}
+
+.paramsContainer .tab-container .indicator {
+  content: "";
+  width: calc(50% - 4px);
+  height: 26px;
+  background: #FFFFFF;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  z-index: 9;
+  border: 0.5px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 7px;
+  transition: all 0.2s ease-out;
+}
+
+.paramsContainer .tab-container .tab {
+  width: 50%;
+  height: 28px;
+  position: relative;
+  z-index: 99;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  flex: none;
+  align-self: stretch;
+  flex-grow: 1;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.paramsContainer .tab-container .tab:focus {
+  background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
+  border-radius: 7px;
+}
+
+.tab--1:hover ~ .indicator {
+  left: 2px;
+}
+
+.tab--2:hover ~ .indicator {
+  left: calc(50% - 2px);
+}
+
+.paramsContainer .applyParams {
   padding: 12px;
   font-weight: 600;
   border: none;
@@ -35,80 +103,21 @@
   cursor: pointer;
   text-transform: uppercase;
   margin-bottom: 12px;
+  position: absolute;
+  bottom: 15px;
 }
 
-.promptDiscount .cancelSetDiscountBtn:hover {
-  transition: color 0.2s;
-  color: #fdfdfd;
-  
-}
-
-.discount-container {
-  position: relative;
-  display: flex;
-  height: 2.8rem;
-  width: 100%;
-  min-width: 200px;
-  max-width: 250px;
-  background-color: #fff;
-  border-radius: 8px;
-  margin-top: 12px;
-}
-
-.discount-container .discountInputValue {
-  height: 100%;
-  width: 100%;
+.paramsContainer input[type="number"] {
+  margin-top: 5px;
+  height: 36px;
+  width: 90%;
   border-radius: 8px;
   border: 1px solid  rgb(176, 190, 197);
   background-color: transparent;
-  padding: 0rem 70px 0rem 0.75rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 400;
   color: rgb(69 90 100);
   outline: none;
   transition: all .15s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.discount-container .discountInputValue:focus {
-  border: 1px solid #FFA500
-}
-
-.discount-container input[type=number]::-webkit-inner-spin-button,
-.discount-container input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.setDiscountBtn {
-  position: absolute;
-  width: auto;
-  right: 4px;
-  top: 4px;
-  bottom: 4px;
-  z-index: 10;
-  border-radius: 4px;
-  background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
-  color: #fff;
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  border: none;
-  transition: .6s ease;
-}
-
-.setDiscountBtn:hover {
-  cursor: pointer;
-}
-
-.discount-container input:placeholder-shown ~ .setDiscountBtn {
-  pointer-events: none;
-  background-color: gray;
-  opacity: 0.5;
 }

@@ -15,7 +15,10 @@ import {
     setSubtotal, 
     formatMoney, 
     resetDiscountValue, 
-    handleProductCategory 
+    handleProductCategory, 
+    setTotal,
+    setIVA,
+    recalculateSummary
 } from "./utils.js";
 import { 
     flushState, 
@@ -29,7 +32,7 @@ export const handlerBtnFrames = (params) => {
 };
 
 export const handlerBtnGlasses = ({ DOM }) => {
-    DOM.innerHTML = '';
+    DOM.replaceChildren();
     DOM.insertAdjacentHTML('afterbegin', getMaterialCatalogHTML());
 };
 
@@ -57,15 +60,15 @@ export const handlerItemSelected = async ({ DOM, sku }) => {
     const [product] = await getDataProductDB(sku);
 
     DOM.appendChild(getParsedHTML(getItemToCardHTML(product)));
-    setSubtotal(product.SalePrice)
+    recalculateSummary();
     updateItemsCart(1);
 };
 
 export const handlerDeleteItem = ({ DOM }) => {
     updateItemsCart(-Number(DOM.querySelector(Class.label.quantity).textContent));
-    setSubtotal(-Number(DOM.closest('.item').querySelector(Class.label.itemprice).textContent.replace("$", "")));
     DOM.remove();
     resetDiscountValue();
+    recalculateSummary();
 };
 
 export const handlerPlusButton = ({ DOM, param }) => {
@@ -88,6 +91,7 @@ export const handlerDeleteCart = ({ DOM }) => {
     updateItemsCart(-getState().cartItems);
     resetDiscountValue();
     flushState();
+    recalculateSummary();
 };
 
 export const handlerSku = async ({ DOM, sku }) => {
@@ -109,6 +113,7 @@ export const handlerSku = async ({ DOM, sku }) => {
     DOM.appendChild(getParsedHTML(getItemToCardHTML(product)));
     updateItemsCart(1);
     setSubtotal(product.SalePrice);
+    setTotal();
     input.value = '';
     input.blur();
 };
@@ -128,10 +133,10 @@ export const handlerApplyDiscountBtn = ({ DOM, items }) => {
     DOM.appendChild(getParsedHTML(getPromptDiscountHTML()));
 };
 
-export const handlerDeleteDiscountBtn = ({ DOM }) => {
+export const handlerDeleteDiscountBtn = ({}) => {
     if (getState().discount > 0) {
-        DOM.textContent = "$0.00";
-        // falta logica para actualizar total
+        resetDiscountValue();
+        recalculateSummary();
     } else {
         newAlert({
             icon: "info",
@@ -166,5 +171,9 @@ export const handlerSetDiscountBtn = ({ discount }) => {
         };
     });
 
-    getElement(Class.label.discount).textContent = `- ${formatMoney(discount)}`;
+    recalculateSummary();
 };
+
+export const handlerApplyIVA = ({ button }) => {
+    recalculateSummary();
+}

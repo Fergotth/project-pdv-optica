@@ -4,6 +4,7 @@ let state = {
     subtotal: 0,
     cartItems: 0,
     discount: 0,
+    iva: 0,
     procesing: false
 };
 

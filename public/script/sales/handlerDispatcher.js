@@ -78,9 +78,7 @@ export const getHandlerArgs = {
         items: Number(getElement(Class.label.cartTotalItems).textContent)
     }),
 
-    handlerDeleteDiscountBtn: () => ({
-        DOM: getElement(Class.label.discount)
-    }),
+    handlerDeleteDiscountBtn: () => ({}),
 
     handlerCancelSetDiscountBtn: () => ({
         DOM: getElement('.overlayPromptDiscount')
@@ -88,5 +86,9 @@ export const getHandlerArgs = {
 
     handlerSetDiscountBtn: () => ({
         discount: Number(getElement(Class.input.discount).value)
+    }),
+
+    handlerApplyIVA: (button) => ({
+        button: button
     })
 };
