@@ -1,13 +1,35 @@
 import { getHandlerArgs } from "./sales/handlerDispatcher.js";
 import { getElement } from "./utils/getElement.js";
-import { loader } from "./sales/utils.js";
-import { flushState } from "./sales/state.js";
+import { flushState, updateState } from "./sales/state.js";
 import Class from "./sales/consts.js";
 import * as handlers from './sales/handlers.js';
 
-const sales = () => {
+const sales = async () => {
     flushState();
     
+    const getDataParams = async (url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error al obtener datos de la base de datos:', error);
+            return [];
+        }
+    };
+
+    const [dataParams] = await getDataParams('http://localhost:5500/get-params');
+
+    updateState(() => {
+        return {
+            percentIVA: dataParams.IVA,
+            dolar: dataParams.PriceDolar
+        };
+    });
+
     getElement(Class.form.sales).addEventListener('submit', (event) => {
         event.preventDefault();
     });

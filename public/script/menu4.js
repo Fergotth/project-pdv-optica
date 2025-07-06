@@ -1,5 +1,6 @@
 import sales from "./sales.js";
 import operations from "./operations.js";
+import params from "./submenu/paramsSales.js";
 import { getParamsSalesHTML } from "./submenu/paramsSalesDOMs.js";
 import { 
     getElement, 
@@ -65,6 +66,7 @@ const menu = () => {
 
         if (elementClicked.classList.contains('paramsSales')) {
             getElement('temporaryContent').appendChild(getParsedHTML(getParamsSalesHTML()));
+            params();
         }
 
         // if (elementClicked.classList.contains('calendarContainer')) {

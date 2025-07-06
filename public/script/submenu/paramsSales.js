@@ -19,7 +19,9 @@ const params = () => {
             });
     
             if (!response.ok) throw new Error('Fallo la respuesta del servidor');
-    
+            
+            overlay.remove();
+
             newAlert({
                 icon: "success",
                 text: "Parámetros guardados exitosamente"

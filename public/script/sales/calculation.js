@@ -16,7 +16,7 @@ export const subtotal = (price) => {
 
 export const IVA = (checked) => {
     updateState(previusData => {
-        return { iva: checked ? (previusData.subtotal - previusData.discount) * 16 / 100 : 0 };
+        return { iva: checked ? (previusData.subtotal - previusData.discount) * previusData.percentIVA / 100 : 0 };
     });
 
     return getState().iva;
