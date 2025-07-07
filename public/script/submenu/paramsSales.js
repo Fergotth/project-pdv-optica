@@ -1,5 +1,6 @@
 import { getElement } from "../utils/getElement.js";
 import { newAlert } from "../utils/alerts.js";
+import { updateState } from "../sales/state.js";
 
 const params = () => {
     getElement('.applyParams').addEventListener('click', async function () {
@@ -21,6 +22,13 @@ const params = () => {
             if (!response.ok) throw new Error('Fallo la respuesta del servidor');
             
             overlay.remove();
+
+            updateState(() => {
+                return {
+                    percentIVA: IVA,
+                    dolar: PriceDolar
+                };
+            });
 
             newAlert({
                 icon: "success",
