@@ -8,27 +8,34 @@
 </head>
 <body>
     <div class="overlay">
-        <div class="paramsContainer">
-            <div class="title">Parametros de Venta Basicos</div>
-            <h3>IVA</h3>
-            <div class="params-radio-inputs">
-                <label class="radio-param">
-                    <input type="radio" name="radio" value="0" checked="" />
-                    <span class="name">0%</span>
-                </label>
-                <label class="radio-param">
-                    <input type="radio" name="radio" value="8"/>
-                    <span class="name">8%</span>
-                </label>
-                <label class="radio-param">
-                    <input type="radio" name="radio" value="16"/>
-                    <span class="name">16%</span>
-                </label>
+        <div class="paymentContainer">
+            <h2 class="title">Registro de pago</h2>
+            <h3>Forma de pago</h3>
+            <div class="sliderContainer">
+                <button class="back">-</button>
+                <div class="sliderPayments">
+                    <img src="../../images/cash-mx.jpg" alt="">
+                    <img src="../../images/cash-eu.jpg" alt="">
+                    <img src="../../images/creditcard.png" alt="">
+                    <img src="../../images/spei.jpg" alt="">
+                    <img src="../../images/giftcard2.png" alt="">
+                </div>
+                <button class="next">+</button>
             </div>
-            <h3>Precio Dolar</h3>
-            <input class="dolarValue" required="" placeholder="Valor del dolar" type="number">
-            <button class="applyParams">Aplicar</button>
         </div>      
     </div>
 </body>
+<script>
+    const slider = document.querySelector('.sliderPayments');
+    const backButton = document.querySelector('.back');
+    const nextButton = document.querySelector('.next');
+
+    backButton.onclick = () => {
+        slider.append(slider.querySelector('img:first-child'));
+    }
+
+    nextButton.onclick = () => {
+        slider.prepend(slider.querySelector('img:last-child'));
+    }
+</script>
 </html>
