@@ -8,27 +8,74 @@
 </head>
 <body>
     <div class="overlay">
-        <div class="paramsContainer">
-            <div class="title">Parametros de Venta Basicos</div>
-            <h3>IVA</h3>
-            <div class="params-radio-inputs">
-                <label class="radio-param">
-                    <input type="radio" name="radio" value="0" checked="" />
-                    <span class="name">0%</span>
-                </label>
-                <label class="radio-param">
-                    <input type="radio" name="radio" value="8"/>
-                    <span class="name">8%</span>
-                </label>
-                <label class="radio-param">
-                    <input type="radio" name="radio" value="16"/>
-                    <span class="name">16%</span>
-                </label>
+        <div class="paymentContainer">
+            <h3>Forma de pago</h3>
+            <div class="sliderCarousel">
+                <div class="list">
+                    <div class="item">
+                        <img src="../../images/cash-mx.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img src="../../images/cash-eu.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img src="../../images/creditcard.png" alt="">
+                    </div>
+                    <div class="item">
+                        <img src="../../images/spei2-removebg.png" alt="">
+                        <div class="topic">Transferencia</div>
+                    </div>
+                    <div class="item">
+                        <img src="../../images/giftcard2.png" alt="">
+                        <div class="topic">Tarjeta de regalo</div>
+                    </div>
+                </div>
+                <div class="arrows">
+                    <button class="prev"><</button>
+                    <button class="next">></button>
+                </div>
             </div>
-            <h3>Precio Dolar</h3>
-            <input class="dolarValue" required="" placeholder="Valor del dolar" type="number">
-            <button class="applyParams">Aplicar</button>
+            <div class="paymentSection">
+                <input class="paymentValue" required="" placeholder="Anticipo" type="number">
+                <button class="applyPayment">Aplicar</button>
+            </div>
         </div>      
     </div>
 </body>
+<script>
+    const slider = document.querySelector('.sliderCarousel');
+    const backButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    const listHTML = document.querySelector('.sliderCarousel .list');
+
+    backButton.onclick = function() {
+        showSlider('back');
+    }
+
+    nextButton.onclick = function() {
+        showSlider('next');
+    }
+
+    let unAcceptClick;
+
+    const showSlider = (type) => {
+        slider.classList.remove('next', 'prev');
+        const items = document.querySelectorAll('.sliderCarousel .list .item');
+
+        if (type === 'next') {
+            
+            listHTML.appendChild(items[0]);
+            slider.classList.add('next');
+        } else {
+        listHTML.prepend(items[items.length - 1]);
+        slider.classList.add('prev');
+        }
+
+        clearTimeout(unAcceptClick);
+        unAcceptClick = setTimeout(() => {
+            backButton.style.pointerEvents = 'auto';
+            nextButton.style.pointerEvents = 'auto';
+        }, 2000);
+    };
+</script>
 </html>
