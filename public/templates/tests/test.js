@@ -1,28 +1,34 @@
-const grid = document.querySelector('.container-operations');
+const slider = document.querySelector('.sliderCarousel');
+const backButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
+const listHTML = document.querySelector('.sliderCarousel .list');
 
-grid.addEventListener('click', async (e) => {
-    const path = e.composedPath();
-    const item = path.find(el => el.classList?.contains('grid-item'));
-    const closeIcon = path.find(el => el.classList?.contains('close-icon'));
+backButton.onclick = function() {
+    showSlider('back');
+}
 
-    if (!item) return;
+nextButton.onclick = function() {
+    showSlider('next');
+}
 
-    if (closeIcon) {
-        // Colapsar
-        item.classList.add('collapsing');
-        item.classList.remove('expanded');
+let unAcceptClick;
 
-        setTimeout(() => {
-            item.classList.remove('collapsing');
-        }, 300); // duración igual que el CSS
+const showSlider = (type) => {
+    slider.classList.remove('next', 'prev');
+    const items = document.querySelectorAll('.sliderCarousel .list .item');
+
+    if (type === 'next') {
+        
+        listHTML.appendChild(items[0]);
+        slider.classList.add('next');
     } else {
-        if (!item.classList.contains('expanded')) {
-            item.classList.add('expanding');
-            item.classList.add('expanded');
-
-            setTimeout(() => {
-                item.classList.remove('expanding');
-            }, 300);
-        }
+    listHTML.prepend(items[items.length - 1]);
+    slider.classList.add('prev');
     }
-});
+
+    clearTimeout(unAcceptClick);
+    unAcceptClick = setTimeout(() => {
+        backButton.style.pointerEvents = 'auto';
+        nextButton.style.pointerEvents = 'auto';
+    }, 2000);
+};
