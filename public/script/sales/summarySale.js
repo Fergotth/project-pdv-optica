@@ -1,3 +1,5 @@
+import { updateState } from "./state.js";
+
 const summarySale = () => {
     const slider = document.querySelector('.sliderCarousel');
     const backButton = document.querySelector('.prev');
@@ -41,6 +43,12 @@ const summarySale = () => {
             listHTML.prepend(items[items.length - 1]);
             slider.classList.add('prev');
         }
+
+        updateState(() => {
+            return {
+                typeOfPayment: typeOfPayment[index]
+            }
+        });
     
         clearTimeout(unAcceptClick);
         unAcceptClick = setTimeout(() => {

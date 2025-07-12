@@ -1,5 +1,6 @@
 @import url('discountPromt.css');
 @import url('loader.css');
+@import url('summarySale.css');
 
 .container-sales {
     display: flex;

@@ -2,7 +2,9 @@ import { newAlert } from "../utils/alerts.js";
 import { 
     getMaterialCatalogHTML, 
     getItemToCardHTML, 
-    getPromptDiscountHTML 
+    getPromptDiscountHTML,
+    getPaymentSummaryHTML,
+    getNewPaymentItemHTML 
 } from "./salesDom.js";
 import { 
     getElement, 
@@ -13,11 +15,9 @@ import {
     handleQuantityButton, 
     updateItemsCart, 
     setSubtotal, 
-    formatMoney, 
     resetDiscountValue, 
     handleProductCategory, 
     setTotal,
-    setIVA,
     recalculateSummary
 } from "./utils.js";
 import { 
@@ -26,6 +26,7 @@ import {
     updateState 
 } from "./state.js";
 import Class from "./consts.js";
+import summarySale from "./summarySale.js";
 
 export const handlerBtnFrames = (params) => {
     handleProductCategory({ ...params, title: "Armazones", message: "armazones" });
@@ -176,4 +177,24 @@ export const handlerSetDiscountBtn = ({ discount }) => {
 
 export const handlerApplyIVA = ({ button }) => {
     recalculateSummary();
-}
+};
+
+export const handlerBtnRegisterPay = ({ DOM, client, total }) => {
+    if (getState().cartItems > 0) {
+        DOM.appendChild(getParsedHTML(getPaymentSummaryHTML(client, total)));
+        summarySale();
+    } else {
+        newAlert({
+            icon: "info",
+            text: "No se ha registrado ningun articulo"
+        });
+    }
+};
+
+export const handlerPaymentCloseIcon = ({ DOM }) => {
+    DOM.remove();
+};
+
+export const handlerApplyPayment = ({ DOM, value, typeOfPayment }) => {
+    DOM.appendChild(getParsedHTML(getNewPaymentItemHTML(value, typeOfPayment)));
+};

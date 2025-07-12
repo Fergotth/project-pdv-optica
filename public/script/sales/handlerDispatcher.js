@@ -1,5 +1,7 @@
 import { getElement } from "../utils/getElement.js";
+import { total } from "./calculation.js";
 import Class from "./consts.js";
+import { getState } from "./state.js";
 
 /**
  * Definiciones de los valores a pasar a las funciones a llamar 
@@ -90,5 +92,21 @@ export const getHandlerArgs = {
 
     handlerApplyIVA: (button) => ({
         button: button
+    }),
+
+    handlerBtnRegisterPay: () => ({
+        DOM: getElement(Class.form.sales),
+        client: getElement('.input-client').textContent,
+        total: total()
+    }),
+
+    handlerPaymentCloseIcon: () => ({
+        DOM: getElement('.overlayPromptDiscount')
+    }),
+
+    handlerApplyPayment: () => ({
+        DOM: getElement('.salePayments'),
+        value: getElement('.paymentValue').value,
+        typeOfPayment: getState().typeOfPayment
     })
 };

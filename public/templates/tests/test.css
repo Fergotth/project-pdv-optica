@@ -47,13 +47,27 @@
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  border-radius: 15px 15px 7px 7px;
+  border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
+.paymentContainer .closeIcon {
+  all: unset;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.paymentContainer .closeIcon:hover {
+  cursor: pointer;
+  transition: all 0.2s;
+  transform: scale(1.3);
+  color: red;
+}
 /* seccion izquierda */
 .paymentContainer .leftsection {
   display: flex;
@@ -291,10 +305,25 @@
 .summarySale .salePayments .paymentItem .itemDeletePayment {
   height: 100%;
   width: 10%;
-  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.summarySale .salePayments .paymentItem .itemCheck {
+  color: #113399;
+}
+
+.summarySale .salePayments .paymentItem .itemDeletePayment {
+  color: #ff1111;
+}
+
+.summarySale .salePayments .paymentItem .itemDeletePayment:hover {
+  cursor: pointer;
+  transition: transform 0.2s;
+  transform: scale(1.3);
+
 }
 
 .summarySale .salePayments .paymentItem span {
@@ -303,8 +332,12 @@
   height: 100%;
   width: 75%;
   margin-left: 5%;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.summarySale .salePayments .paymentItem span:nth-child(3) {
   font-weight: 600;
-  font-size: 1rem;
 }
 
 .summaryPaymentDetail {
