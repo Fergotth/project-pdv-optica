@@ -177,6 +177,71 @@
   box-shadow: 0px 15px 10px #55555559;
 }
 
+
+.rightsection .summaryClient .summaryClientContainer {
+  height: 60%;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rightsection .summaryClient .summaryClientContainer span {
+  width: calc(100% - 15px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 15px;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #fdfdfd;
+  min-width: 0;
+}
+
+.rightsection .summaryClient .summaryClientSaleDetails {
+  height: 40%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  position: absolute;
+  bottom: 10px;
+  background: #acacac;
+  bottom: 0;
+  border-radius: 0 0 7px 7px;
+}
+
+.rightsection .summaryClient .clientIcon {
+  margin: 15px;
+  background: #fdfdfd;
+  width: 36px;
+  border-radius: 7px;
+}
+
+.rightsection .summaryClient .summaryClientSaleDetails span {
+  margin-bottom: 10px;
+  height: 36px;
+}
+
+.rightsection .summaryClient .summaryClientSaleDetails span:nth-child(1) {
+  margin-left: 30px;
+  font-weight: 500;
+  color: red;
+  font-size: 1.3rem;
+}
+
+.rightsection .summaryClient .summaryClientSaleDetails span:nth-child(2) {
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin-left: 10px;
+}
+
+.rightsection .summaryClient .summaryClientSaleDetails span:nth-child(3) {
+  font-weight: 300;
+  font-size: 0.9rem;
+  padding-left: 2px;
+}
+
 .rightsection .summarySale {
   width: 80%;
   height: 67.5%;
@@ -196,17 +261,50 @@
   border-bottom: 1px solid #acacac;
 }
 
-.summarySale .saleArticles {
+.summarySale .salePayments {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
   margin: 29% 10% 0 10%;
   width: 80%;
   max-width: 80%;
   height: 40%;
   max-height: 40%;
-  border: 1px solid #acacac;
+  background: #fdfdfd;
   border-radius: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.summarySale .salePayments .paymentItem {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.summarySale .salePayments .paymentItem:hover {
+  background: #acacac;
+}
+
+.summarySale .salePayments .paymentItem .itemCheck,
+.summarySale .salePayments .paymentItem .itemDeletePayment {
+  height: 100%;
+  width: 10%;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summarySale .salePayments .paymentItem span {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 75%;
+  margin-left: 5%;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .summaryPaymentDetail {
