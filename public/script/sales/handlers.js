@@ -176,7 +176,7 @@ export const handlerSetDiscountBtn = ({ discount }) => {
     recalculateSummary();
 };
 
-export const handlerApplyIVA = ({ button }) => {
+export const handlerApplyIVA = ({}) => {
     recalculateSummary();
 };
 
@@ -213,4 +213,8 @@ export const handlerApplyPayment = ({ DOM, value, typeOfPayment }) => {
 export const handlerItemDeletePayment = ({ DOM, value }) => {
     calcuteNewPayment(-value);
     DOM.remove();
+};
+
+export const handlerBtnApplyPayments = ({}) => {
+
 };

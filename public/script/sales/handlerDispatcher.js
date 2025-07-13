@@ -90,9 +90,7 @@ export const getHandlerArgs = {
         discount: Number(getElement(Class.input.discount).value)
     }),
 
-    handlerApplyIVA: (button) => ({
-        button: button
-    }),
+    handlerApplyIVA: () => ({}),
 
     handlerBtnRegisterPay: () => ({
         DOM: getElement(Class.form.sales),
@@ -113,5 +111,7 @@ export const getHandlerArgs = {
     handlerItemDeletePayment: (button) => ({
         DOM: button.closest('.paymentItem'),
         value: Number(button.closest('.paymentItem').querySelector('.paidValue')?.textContent)
-    })
+    }),
+
+    handlerBtnApplyPayments: () => ({})
 };

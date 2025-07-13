@@ -164,3 +164,22 @@ const setMoneyContent = (selector, value, isNegative = false) => {
     const displayValue = `${isNegative ? "- " : ""}$${value.toFixed(2)}`;
     if (el) el.textContent = displayValue;
 };
+
+export const getCartItems = () => { // falta corregir los campos que se van a obtener para guardar
+    const items = getElement(Class.list.itemsInCart).querySelectorAll('.item');
+    
+    // Creamos un array de objetos desde los ítems
+    const newData = Array.from(items).map(item => ({
+        sku: item.querySelector(Class.label.sku).textContent,
+        description: item.querySelector('.details-description').textContent,
+        quantity: Number(item.querySelector(Class.label.quantity).textContent),
+        price: Number(item.querySelector(Class.label.unitprice).textContent.replace("$", "")),
+        total: Number(item.querySelector(Class.label.itemprice).textContent.replace("$", ""))
+    }));
+
+    // Actualizamos el estado de manera inmutable
+    updateState(previusData => ({
+        ...previusData,
+        data: [...previusData.data, ...newData]
+    }));
+};
