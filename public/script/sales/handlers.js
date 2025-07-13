@@ -26,6 +26,7 @@ import {
     updateState 
 } from "./state.js";
 import Class from "./consts.js";
+import { calcuteNewPayment } from "./calculation.js";
 import summarySale from "./summarySale.js";
 
 export const handlerBtnFrames = (params) => {
@@ -196,5 +197,20 @@ export const handlerPaymentCloseIcon = ({ DOM }) => {
 };
 
 export const handlerApplyPayment = ({ DOM, value, typeOfPayment }) => {
+    if (!calcuteNewPayment(value)) {
+        newAlert({
+            icon: "info",
+            title: "AVISO",
+            text: "El monto ingresado es mayor al total"
+        });
+        return;
+    }
+
+    getElement('.paymentValue').value = '';
     DOM.appendChild(getParsedHTML(getNewPaymentItemHTML(value, typeOfPayment)));
+};
+
+export const handlerItemDeletePayment = ({ DOM, value }) => {
+    calcuteNewPayment(-value);
+    DOM.remove();
 };

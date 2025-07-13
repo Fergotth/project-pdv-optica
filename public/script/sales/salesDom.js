@@ -137,10 +137,10 @@ export const getPaymentSummaryHTML = (client, total) => {
                 <div class="sliderCarousel">
                     <div class="list">
                         <div class="item">
-                            <img src="../../images/cash-mx.jpg" alt="">
+                            <img src="../../images/cash-eu.jpg" alt="">
                         </div>
                         <div class="item">
-                            <img src="../../images/cash-eu.jpg" alt="">
+                            <img src="../../images/cash-mx.jpg" alt="">
                         </div>
                         <div class="item">
                             <img src="../../images/creditcard.png" alt="">
@@ -211,7 +211,7 @@ export const getNewPaymentItemHTML = (payment, typeOfPayment) => {
             </svg>
         </div>
         <span>${typeOfPayment}</span>
-        <span>${Number(payment).toFixed(2)}</span>
+        <span class="paidValue">${Number(payment).toFixed(2)}</span>
         <div class="itemDeletePayment">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M10 11v6"/>

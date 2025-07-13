@@ -3,6 +3,7 @@ import {
     updateState 
 } from "./state.js";
 import Class from "./consts.js";
+import { getElement } from "../utils/getElement.js";
 
 export const subtotal = (price) => {
     updateState(previusData => {
@@ -42,4 +43,23 @@ export const calculateDOMSubtotal = () => {
     });
 
     return total;
+};
+
+export const calcuteNewPayment = (value) => {
+    const actualPaid = getState().paymentsApplicated;
+    const totalPaid = getElement('.detailTotal span');
+    const totalValue = total();
+
+    if (actualPaid + Number(value) > totalValue) {
+        return false;
+    }
+
+    updateState(previusData => {
+        return {
+            paymentsApplicated: previusData.paymentsApplicated + Number(value)
+        };
+    });
+
+    totalPaid.textContent = getState().paymentsApplicated.toFixed(2);
+    return true;
 };

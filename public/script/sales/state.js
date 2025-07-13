@@ -7,7 +7,8 @@ let state = {
     percentIVA: 0,
     iva: 0,
     dolar: 0,
-    typeOfPayment: 'Dolar',
+    typeOfPayment: 'Efectivo',
+    paymentsApplicated: 0,
     procesing: false
 };
 
@@ -25,6 +26,7 @@ export const flushState = () => updateState(() => ({
     cartItems: 0,
     discount: 0,
     iva: 0,
-    typeOfPayment: 'Dolar',
+    typeOfPayment: 'Efectivo',
+    paymentsApplicated: 0,
     procesing: false
 }));

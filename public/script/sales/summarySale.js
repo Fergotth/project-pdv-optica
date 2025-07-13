@@ -6,7 +6,7 @@ const summarySale = () => {
     const nextButton = document.querySelector('.next');
     const listHTML = document.querySelector('.sliderCarousel .list');
     const labelDate = document.querySelector('.header-right span:nth-child(2)');
-    const typeOfPayment = ['Dolar','Tarjeta','Transferencia','Cupon','Efectivo'];
+    const typeOfPayment = ['Efectivo','Tarjeta','Transferencia','Cupon','Dolar'];
     let index = 0;
     
     const getCurrentDate = () => {

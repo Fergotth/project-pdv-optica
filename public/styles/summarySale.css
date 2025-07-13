@@ -58,7 +58,8 @@
     color: red;
 }
 
-.paymentContainer .paymentCloseIcon svg {
+.paymentContainer .paymentCloseIcon svg,
+.paymentContainer .paymentCloseIcon svg * {
     pointer-events: none;
 }
 
@@ -284,8 +285,7 @@
 }
 
 .summarySale .salePayments .paymentItem {
-    width: 100%;
-    height: 25%;
+    flex: 0 0 25%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -311,6 +311,10 @@
 
 .summarySale .salePayments .paymentItem .itemDeletePayment {
     color: #ff1111;
+}
+
+.summarySale .salePayments .paymentItem .itemDeletePayment svg {
+    pointer-events: none;
 }
 
 .summarySale .salePayments .paymentItem .itemDeletePayment:hover {

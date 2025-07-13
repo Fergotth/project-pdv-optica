@@ -108,5 +108,10 @@ export const getHandlerArgs = {
         DOM: getElement('.salePayments'),
         value: getElement('.paymentValue').value,
         typeOfPayment: getState().typeOfPayment
+    }),
+
+    handlerItemDeletePayment: (button) => ({
+        DOM: button.closest('.paymentItem'),
+        value: Number(button.closest('.paymentItem').querySelector('.paidValue')?.textContent)
     })
 };
