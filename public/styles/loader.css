@@ -1,99 +1,35 @@
-.card {
-    display: flex;
-    background-color: #fafdfdaa;
-    border-radius: 1.25rem;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
+.custom-loader {
+    width: 50px;
     height: 50px;
-    width: auto;
-    top: 40%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    padding-bottom: 10px;
-}
-
-.loader {
-    color: rgb(124, 124, 124);
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    font-size: 25px;
-    -webkit-box-sizing: content-box;
-    box-sizing: content-box;
-    height: 40px;
-    padding: 10px 10px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    border-radius: 5px;
-    box-sizing: content-box;
-}
-
-.loader p {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.words {
-    overflow: hidden;
+    display: grid;
+    border-radius: 50%;
+    -webkit-mask: radial-gradient(farthest-side,#0000 40%,#000 41%);
+    background: linear-gradient(0deg ,#766DF480 50%,#766DF4FF 0) center/4px 100%,
+    linear-gradient(90deg,#766DF440 50%,#766DF4BF 0) center/100% 4px;
+    background-repeat: no-repeat;
+    animation: s3 1s infinite steps(12);
     position: relative;
-    margin-top: 10px;
+    top: calc(50% - 25px);
+    left: calc(50% - 25px);
 }
 
-.words::after {
+.custom-loader::before,
+.custom-loader::after {
     content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 20;
+    grid-area: 1/1;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0.915;
+    transform: rotate(30deg);
 }
 
-.word {
-    display: block;
-    height: 100%;
-    padding-left: 6px;
-    color: #956afa;
-    animation: spin_4991 4s infinite;
+.custom-loader::after {
+    opacity: 0.83;
+    transform: rotate(60deg);
 }
 
-@keyframes spin_4991 {
-    10% {
-    -webkit-transform: translateY(-102%);
-    transform: translateY(-102%);
-    }
-
-    25% {
-    -webkit-transform: translateY(-100%);
-    transform: translateY(-100%);
-    }
-
-    35% {
-    -webkit-transform: translateY(-202%);
-    transform: translateY(-202%);
-    }
-
-    50% {
-    -webkit-transform: translateY(-200%);
-    transform: translateY(-200%);
-    }
-
-    60% {
-    -webkit-transform: translateY(-302%);
-    transform: translateY(-302%);
-    }
-
-    75% {
-    -webkit-transform: translateY(-300%);
-    transform: translateY(-300%);
-    }
-
-    85% {
-    -webkit-transform: translateY(-402%);
-    transform: translateY(-402%);
-    }
-
+@keyframes s3 {
     100% {
-    -webkit-transform: translateY(-400%);
-    transform: translateY(-400%);
+    transform: rotate(1turn)
     }
 }

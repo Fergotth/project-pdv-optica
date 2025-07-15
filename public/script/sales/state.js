@@ -1,6 +1,7 @@
 let state = {
-    data: [],
-    payment: [],
+    dataCart: [],
+    dataPayment: [],
+    dataSummary: {},
     subtotal: 0,
     cartItems: 0,
     discount: 0,
@@ -20,8 +21,9 @@ export const updateState = (updater) => {
 }
 
 export const flushState = () => updateState(() => ({
-    data: [],
-    payment: [],
+    dataCart: [],
+    dataPayment: [],
+    dataSummary: {},
     subtotal: 0,
     cartItems: 0,
     discount: 0,

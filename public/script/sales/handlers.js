@@ -27,6 +27,12 @@ import {
 } from "./state.js";
 import Class from "./consts.js";
 import { calcuteNewPayment } from "./calculation.js";
+import { 
+    getCartItems,
+    getPayments,
+    getSummarySale
+} from "./getData.js";
+import { saveData } from "./saveData.js";
 import summarySale from "./summarySale.js";
 
 export const handlerBtnFrames = (params) => {
@@ -193,6 +199,14 @@ export const handlerBtnRegisterPay = ({ DOM, client, total }) => {
 };
 
 export const handlerPaymentCloseIcon = ({ DOM }) => {
+    updateState(() => {
+        return {
+            dataCart: [],
+            dataPayment: [],
+            dataSummary: {}
+        };
+    });
+
     DOM.remove();
 };
 
@@ -216,5 +230,6 @@ export const handlerItemDeletePayment = ({ DOM, value }) => {
 };
 
 export const handlerBtnApplyPayments = ({}) => {
-
+    //saveData(getCartItems(), getPayments(), getSummarySale());
+    //flushState();
 };

@@ -16,6 +16,8 @@ dbSales.run(`
     CREATE TABLE IF NOT EXISTS Sales (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         ClientID INTEGER,
+        Discount REAL,
+        IVA REAL,
         Total REAL,
         Payment REAL,
         Balance REAL,
@@ -34,8 +36,6 @@ dbSales.run(`
         Product TEXT,
         SKU TEXT,
         Price REAL,
-        Discount REAL,
-        IVA REAL,
         FOREIGN KEY(SaleID) REFERENCES Sales(ID)
     )
 `);

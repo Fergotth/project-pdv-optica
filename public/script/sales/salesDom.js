@@ -47,7 +47,7 @@ export const getItemToCardHTML = (product) => {
                 </svg>
             </div>
             <div class="item-product">
-                <div class="product-image">
+                <div class="product-image" data-sku="${product.SKU}">
                     <img src="${pathImg}" alt="">
                 </div>
                 <div class="product-details">
@@ -92,18 +92,7 @@ export const getPromptDiscountHTML = () => {
 export const getLoaderHTML = () => {
     return `
     <div class="overlayPromptDiscount">
-        <div class="card">
-            <div class="loader">
-                <p>Cargando</p>
-                <div class="words">
-                    <span class="word">materiales</span>
-                    <span class="word">productos</span>
-                    <span class="word">accesorios</span>
-                    <span class="word">amazones</span>
-                    <span class="word">servicios</span>
-                </div>
-            </div>
-        </div>
+        <div class="custom-loader"></div>
     </div>
     `;
 };
@@ -210,7 +199,7 @@ export const getNewPaymentItemHTML = (payment, typeOfPayment) => {
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
             </svg>
         </div>
-        <span>${typeOfPayment}</span>
+        <span class="typeOfPaymentValue">${typeOfPayment}</span>
         <span class="paidValue">${Number(payment).toFixed(2)}</span>
         <div class="itemDeletePayment">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">

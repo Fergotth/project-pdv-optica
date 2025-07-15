@@ -1,3 +1,7 @@
+import { getElement } from "../utils/getElement.js";
+import Class from "./consts.js";
+import { updateState } from "./state.js";
+
 /**
  * 
  * @param {String} url 
@@ -15,4 +19,56 @@ export const getDataDB = async (url) => {
         console.error('Error al obtener datos de la base de datos:', error);
         return [];
     }
+};
+
+export const getCartItems = () => {
+    const items = getElement(Class.list.itemsInCart).querySelectorAll('.item');
+    
+    // Creamos un array de objetos desde los ítems
+    const newData = Array.from(items).map(item => ({
+        sku: item.querySelector('.product-image').dataset.sku,
+        description: item.querySelector('.details-description').textContent,
+        quantity: Number(item.querySelector(Class.label.quantity).textContent),
+        price: Number(item.querySelector(Class.label.unitprice).textContent.replace("$", ""))
+    }));
+
+    // Actualizamos el estado de manera inmutable
+    updateState(previusData => ({
+        ...previusData,
+        dataCart: [...previusData.dataCart, ...newData]
+    }));
+
+    return getState().dataCart;
+};
+
+export const getPayments = () => {
+    const items = getElement('.salePayments').querySelectorAll('.paymentItem');
+
+    const newData = Array.from(items).map(item => ({
+        typeOfPayment: item.querySelector('.typeOfPaymentValue').textContent,
+        paid: Number(item.querySelector('.paidValue').textContent)
+    }));
+
+    updateState(previusData => ({
+        ...previusData,
+        dataPayment: [ ...previusData.dataPayment, ...newData]
+    }));
+
+    return getState().dataPayment;
+};
+
+export const getSummarySale = () => {
+    const newData = {
+        subtotal: Number(getElement('.subtotal').textContent.replace("$", "")),
+        discount: Number(getElement('.discount').textContent.replace("- $", "")),
+        iva: Number(getElement('.iva').textContent.replace("$", "")),
+        total: Number(getElement('.thirdsection-total').textContent.replace("$", ""))
+    };
+
+    updateState(previusData => ({
+        ...previusData,
+        dataSummary: newData
+    }));
+
+    return getState().dataSummary;
 };
