@@ -69,12 +69,12 @@ export const handleQuantityButton = (DOM, param) => {
  * 
  * @param {HTMLFormElement} formSales // Contenedor principal
  */
-export const resetSale = (formSales) => {
+export const resetSale = async (formSales) => {
     if (!formSales) {
         throw new Error('DOM formSales no esta disponible');
     }
 
-    flushState();
+    await flushState();
 };
 
 export const updateItemsCart = (quantity) => {

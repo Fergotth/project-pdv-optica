@@ -87,7 +87,7 @@ export const handlerMinusButton = ({ DOM, param }) => {
     handleQuantityButton(DOM, param);
 };
 
-export const handlerDeleteCart = ({ DOM }) => {
+export const handlerDeleteCart = async ({ DOM }) => {
     setSubtotal(-Number(getElement(Class.label.subtotal).textContent.replace("$", "")));
     DOM.replaceChildren();
     newAlert({
@@ -98,7 +98,7 @@ export const handlerDeleteCart = ({ DOM }) => {
 
     updateItemsCart(-getState().cartItems);
     resetDiscountValue();
-    flushState();
+    await flushState();
     recalculateSummary();
 };
 

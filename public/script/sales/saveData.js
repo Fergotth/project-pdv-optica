@@ -1,6 +1,6 @@
 import { getState } from "./state.js";
 
-const sendDataSales = async (url, data) => {
+const postData = async (url, data) => {
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -17,23 +17,56 @@ const sendDataSales = async (url, data) => {
     }
 };
 
-export const saveData = async (itemsCart, itemsPayment, itemsSummary) => {
+export const saveData = async (cartItems, paymentItems, saleSummary) => {
     const urlSale = 'http://localhost:5500/save-sales';
-    const urlSaleDetails = 'http://localhost:5500/payment';   // URL ejemplo para payment
-    const urlSummary = 'http://localhost:5500/save-saledetails';
+    const urlSaleDetails = 'http://localhost:5500/save-saledetails';
+    const urlSalePayments = 'http://localhost:5500/';
 
-    // falta construir todo el codigo para guardar los datos en la base de datos
-    // Mapeamos cada array en un array de promesas que usa sendDataSales
+    const totalPaid = paymentItems.reduce((acc, item) => acc + item.paid, 0);
+    const balance = saleSummary.total - totalPaid;
+    
+    // Constructor de objeto con los datos de la venta
+    const saleData = {
+        ClientID: saleSummary.client,
+        Discount: saleSummary.discount,
+        IVA: saleSummary.iva,
+        Total: saleSummary.total,
+        Payment: totalPaid,
+        Balance: balance,
+        PaymentMethod: paymentItems[0].typeOfPayment,
+        Status: (totalPaid - balance) === 0 ? 'Pagado' : 'Vigente' 
+    };
 
-    const cartRequests = itemsCart.map(item => sendDataSales(urlCart, item));
-    const paymentRequests = itemsPayment.map(item => sendDataSales(urlPayment, item));
-    const summaryRequest = sendDataSales(urlSummary, itemsSummary);
+    // Constructor del objeto con los datos del detalle de la venta
+    const nextID = getState().nextID;
+    const saleDetailsData = cartItems.map(item => ({
+        ...item,
+        SaleID: nextID
+    }));
+
+    // Constructor del objeto con los datos de los pagos
+    const salePayments = paymentItems.map(item => ({
+        ...item,
+        IDSale: nextID,
+        AmountPaid: paid,
+        PaymentMethod: typeOfPayment
+    }));
+
+    // Mapeamos cada array en un array de promesas que usa postData
+    const saleRequest = postData(urlSale, saleData);
+    const saleDetailsRequest = saleDetailsData.map(item => postData(urlSaleDetails, item));
+    const salePaymentsRequest = salePayments.map(item => postData(urlSalePayments, item));
+
+/* 
+Falta crear tabla para los abonos de una nota salePayments
+Falta crear tabla para las notas pendientes sin pagar
+*/
 
     // Esperamos a que todas las promesas se resuelvan
     const results = await Promise.all([
-        ...cartRequests,
-        ...paymentRequests,
-        summaryRequest
+        saleRequest,
+        ...saleDetailsRequest,
+        ...salePaymentsRequest
     ]);
 
     const allSuccessful = results.every(result => result === true);

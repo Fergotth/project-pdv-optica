@@ -27,6 +27,9 @@ dbSales.run(`
     )
 `);
 
+// falta crear una tabla para los abonos de la venta cuando no se liquida en una exihibicion
+
+
 // Crear tabla SaleDetails (Detalles de Venta)
 dbSales.run(`
     CREATE TABLE IF NOT EXISTS SaleDetails (

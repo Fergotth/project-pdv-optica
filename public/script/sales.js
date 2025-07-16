@@ -5,7 +5,7 @@ import Class from "./sales/consts.js";
 import * as handlers from './sales/handlers.js';
 
 const sales = async () => {
-    flushState();
+    await flushState();
     
     const getDataParams = async (url) => {
         try {

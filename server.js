@@ -71,6 +71,35 @@ app.post('/save-saledetails', (req, res) => {
     );
 });
 
+// Buscar alguna venta por ID
+app.get('/find-sale', (req, res) => {
+    const ID = req.query.q;
+    const SQLStr = 'SELECT * FROM Sales WHERE ID = ?';
+
+    dbSales.all(SQLStr, [ID], (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows || []);
+    });
+});
+
+// Busca el ultimo ID de la BD de sales para devolver el proximo
+app.get('/find-nextSaleID', (req, res) => {
+    const SQLStr = "SELECT seq FROM sqlite_sequence WHERE name = 'Sales'";
+
+    dbSales.get(SQLStr, (err, row) => {
+        if (err) {
+            console.error(err.message);
+            return res.status(500).json({ error: err.message });
+        }
+
+        const nextID = row ? row.seq + 1 : 1;
+        res.json({ nextID });
+    });
+});
+
 // Agregar nuevo producto
 app.post('/save-products', (req, res) => {
     const { SKU, Category, Description, PriceExcludingIVA, PriceIncludingIVA, NetProfit, SalePrice, Stock, Image } = req.body;

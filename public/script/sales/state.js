@@ -1,3 +1,5 @@
+import { getNextIDSale } from "./getData.js";
+
 let state = {
     dataCart: [],
     dataPayment: [],
@@ -10,6 +12,7 @@ let state = {
     dolar: 0,
     typeOfPayment: 'Efectivo',
     paymentsApplicated: 0,
+    nextID: 1,
     procesing: false
 };
 
@@ -20,15 +23,20 @@ export const updateState = (updater) => {
     return getState();
 }
 
-export const flushState = () => updateState(() => ({
-    dataCart: [],
-    dataPayment: [],
-    dataSummary: {},
-    subtotal: 0,
-    cartItems: 0,
-    discount: 0,
-    iva: 0,
-    typeOfPayment: 'Efectivo',
-    paymentsApplicated: 0,
-    procesing: false
-}));
+export const flushState = async () => {
+    const nextID = await getNextIDSale();
+
+    updateState(() => ({
+        dataCart: [],
+        dataPayment: [],
+        dataSummary: {},
+        subtotal: 0,
+        cartItems: 0,
+        discount: 0,
+        iva: 0,
+        typeOfPayment: 'Efectivo',
+        paymentsApplicated: 0,
+        nextID,
+        procesing: false
+    }));
+};

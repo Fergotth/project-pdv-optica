@@ -1,6 +1,6 @@
 import { getElement } from "../utils/getElement.js";
 import Class from "./consts.js";
-import { updateState } from "./state.js";
+import { updateState, getState } from "./state.js";
 
 /**
  * 
@@ -26,10 +26,10 @@ export const getCartItems = () => {
     
     // Creamos un array de objetos desde los ítems
     const newData = Array.from(items).map(item => ({
-        sku: item.querySelector('.product-image').dataset.sku,
-        description: item.querySelector('.details-description').textContent,
-        quantity: Number(item.querySelector(Class.label.quantity).textContent),
-        price: Number(item.querySelector(Class.label.unitprice).textContent.replace("$", ""))
+        SKU: item.querySelector('.product-image').dataset.sku,
+        Product: item.querySelector('.details-description').textContent,
+        Quantity: Number(item.querySelector(Class.label.quantity).textContent),
+        Price: Number(item.querySelector(Class.label.unitprice).textContent.replace("$", ""))
     }));
 
     // Actualizamos el estado de manera inmutable
@@ -62,7 +62,8 @@ export const getSummarySale = () => {
         subtotal: Number(getElement('.subtotal').textContent.replace("$", "")),
         discount: Number(getElement('.discount').textContent.replace("- $", "")),
         iva: Number(getElement('.iva').textContent.replace("$", "")),
-        total: Number(getElement('.thirdsection-total').textContent.replace("$", ""))
+        total: Number(getElement('.thirdsection-total').textContent.replace("$", "")),
+        client: getElement('.input-client').dataset.id
     };
 
     updateState(previusData => ({
@@ -71,4 +72,10 @@ export const getSummarySale = () => {
     }));
 
     return getState().dataSummary;
+};
+
+export const getNextIDSale = async () => {
+    const nextIDSale = await getDataDB('http://localhost:5500/find-nextSaleID');
+
+    return nextIDSale?.nextID || 1;
 };
