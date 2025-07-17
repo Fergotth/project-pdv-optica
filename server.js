@@ -1,6 +1,13 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+
+// Crear la carpeta /routes si no existe
+const dataDir = path.join(__dirname, 'routes');
+if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir);
+}
+
 const { dbSales, dbClients, dbProducts, dbParams } = require('./database');
 const app = express();
 
@@ -48,8 +55,8 @@ app.get('/get-clients', (req, res) => {
 app.post('/save-sales', (req, res) => {
     const { ClientID, Total, Payment, Balance, PaymentMethod, Status } = req.body;
     dbSales.run(
-        `INSERT INTO Sales (ClientID, Total, Payment, Balance, PaymentMethod, Status) VALUES (?, ?, ?, ?, ?, ?)`,
-        [ClientID, Total, Payment, Balance, PaymentMethod, Status],
+        `INSERT INTO Sales (ClientID, Discount, IVA, Total, Payment, Balance, PaymentMethod, Status) VALUES (?, ?, ?, ?, ?, ?)`,
+        [ClientID, Discount, IVA, Total, Payment, Balance, PaymentMethod, Status],
         function(err) {
             if (err) return res.status(500).json({ error: err.message });
             res.json({ id: this.lastID });
@@ -64,6 +71,34 @@ app.post('/save-saledetails', (req, res) => {
     dbSales.run(
         `INSERT INTO SaleDetails (SaleID, Quantity, Product, SKU, Price, Discount, IVA) VALUES (?, ?, ?, ?, ?, ?, ?)`,
         [SaleID, Quantity, Product, SKU, Price, Discount, IVA],
+        function(err) {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ id: this.lastID });
+        }
+    );
+});
+
+// Guardar los detalles de pagos de una venta
+app.post('/save-salepayments', (req, res) => {
+    const { SaleID, PaymentMethod, Paid } = req.body;
+
+    dbSales.run(
+        `INSERT INTO SalePayments (SaleID, PaymentMethod, Paid) VALUES (?, ?, ?)`,
+        [SaleID, PaymentMethod, Paid],
+        function(err) {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ id: this.lastID });
+        }
+    );
+});
+
+// Guarda las notas con saldo pendiente
+app.post('/save-unpaidnotes', (req, res) => {
+    const { SaleID, Total, Balance, Status } = req.body;
+
+    dbSales.run(
+        `INSERT INTO UnpaidSales (SaleID, Total, Balance, Status) VALUES (?, ?, ?, ?)`,
+        [SaleID, Total, Balance, Status],
         function(err) {
             if (err) return res.status(500).json({ error: err.message });
             res.json({ id: this.lastID });

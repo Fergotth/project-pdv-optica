@@ -22,13 +22,23 @@ dbSales.run(`
         Payment REAL,
         Balance REAL,
         PaymentMethod TEXT,
-        Date TEXT DEFAULT (date('now','localtime')),
+        PaymentDate TEXT DEFAULT (date('now','localtime')),
         Status TEXT
     )
 `);
 
-// falta crear una tabla para los abonos de la venta cuando no se liquida en una exihibicion
-
+// Crea tabla UnpaidDetails (Notas pendintes por pagar)
+dbSales.run(`
+    CREATE TABLE IF NOT EXISTS UnpaidSales (
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        SaleID INTEGER,
+        Total REAL,
+        Balance REAL,
+        PaymentDate TEXT DEFAULT (date('now','localtime')),
+        Status TEXT,
+        FOREIGN KEY(SaleID) REFERENCES Sales(ID)
+    )
+`);
 
 // Crear tabla SaleDetails (Detalles de Venta)
 dbSales.run(`
@@ -41,6 +51,18 @@ dbSales.run(`
         Price REAL,
         FOREIGN KEY(SaleID) REFERENCES Sales(ID)
     )
+`);
+
+// Crea tabla SalePayments (Abonos o pagos)
+dbSales.run(`
+    CREATE TABLE IF NOT EXISTS SalePayments (
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        SaleID INTEGER,
+        PaymentMethod TEXT,
+        Paid REAL,
+        PaymentDate TEXT DEFAULT (date('now','localtime')),
+        FOREIGN KEY(SaleID) REFERENCES Sales(ID)
+        )
 `);
 
 const dbClients = new sqlite3.Database(path.join(dataDir, 'clients.db'));

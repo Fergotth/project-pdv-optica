@@ -45,8 +45,8 @@ export const getPayments = () => {
     const items = getElement('.salePayments').querySelectorAll('.paymentItem');
 
     const newData = Array.from(items).map(item => ({
-        typeOfPayment: item.querySelector('.typeOfPaymentValue').textContent,
-        paid: Number(item.querySelector('.paidValue').textContent)
+        PaymentMethod: item.querySelector('.typeOfPaymentValue').textContent,
+        Paid: Number(item.querySelector('.paidValue').textContent)
     }));
 
     updateState(previusData => ({

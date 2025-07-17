@@ -20,12 +20,13 @@ const postData = async (url, data) => {
 export const saveData = async (cartItems, paymentItems, saleSummary) => {
     const urlSale = 'http://localhost:5500/save-sales';
     const urlSaleDetails = 'http://localhost:5500/save-saledetails';
-    const urlSalePayments = 'http://localhost:5500/';
+    const urlSalePayments = 'http://localhost:5500/save-salepayments';
+    const urlUnpaidNotes = 'http://localhost:5500/save-unpaidnotes';
 
     const totalPaid = paymentItems.reduce((acc, item) => acc + item.paid, 0);
     const balance = saleSummary.total - totalPaid;
     
-    // Constructor de objeto con los datos de la venta
+    // Constructor del objeto con los datos de la venta
     const saleData = {
         ClientID: saleSummary.client,
         Discount: saleSummary.discount,
@@ -34,7 +35,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
         Payment: totalPaid,
         Balance: balance,
         PaymentMethod: paymentItems[0].typeOfPayment,
-        Status: (totalPaid - balance) === 0 ? 'Pagado' : 'Vigente' 
+        Status: balance === 0 ? "Pagado" : "Vigente"
     };
 
     // Constructor del objeto con los datos del detalle de la venta
@@ -47,9 +48,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     // Constructor del objeto con los datos de los pagos
     const salePayments = paymentItems.map(item => ({
         ...item,
-        IDSale: nextID,
-        AmountPaid: paid,
-        PaymentMethod: typeOfPayment
+        SaleID: nextID
     }));
 
     // Mapeamos cada array en un array de promesas que usa postData
@@ -57,17 +56,27 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     const saleDetailsRequest = saleDetailsData.map(item => postData(urlSaleDetails, item));
     const salePaymentsRequest = salePayments.map(item => postData(urlSalePayments, item));
 
-/* 
-Falta crear tabla para los abonos de una nota salePayments
-Falta crear tabla para las notas pendientes sin pagar
-*/
-
-    // Esperamos a que todas las promesas se resuelvan
-    const results = await Promise.all([
+    const promises = [
         saleRequest,
         ...saleDetailsRequest,
         ...salePaymentsRequest
-    ]);
+    ];
+
+    // Verificaos si la nota tiene o quedo con saldo pendiente
+    if (saleData.Balance > 0) {
+        const saleUnpaidNotes = {
+            SaleID: nextID,
+            Total: saleData.Total,
+            Balance: saleData.Balance,
+            Status: "Vigente"
+        };
+
+        const saleUnpaidNotesRequest = postData(urlUnpaidNotes, saleUnpaidNotes);
+        promises.push(saleUnpaidNotesRequest);
+    }
+
+    // Esperamos a que todas las promesas se resuelvan
+    const results = await Promise.all(promises);
 
     const allSuccessful = results.every(result => result === true);
 
