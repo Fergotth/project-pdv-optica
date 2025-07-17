@@ -2,12 +2,6 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 
-// Crear la carpeta /routes si no existe
-const dataDir = path.join(__dirname, 'routes');
-if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir);
-}
-
 const { dbSales, dbClients, dbProducts, dbParams } = require('./database');
 const app = express();
 

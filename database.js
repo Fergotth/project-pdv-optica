@@ -8,6 +8,12 @@ if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir);
 }
 
+// Crear la carpeta /routes si no existe
+const routeDir = path.join(__dirname, 'routes');
+if (!fs.existsSync(routeDir)) {
+    fs.mkdirSync(routeDir);
+}
+
 const dbSales = new sqlite3.Database(path.join(dataDir, 'sales.db'));
 dbSales.run('PRAGMA foreign_keys = ON');
 
