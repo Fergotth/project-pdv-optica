@@ -23,7 +23,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     const urlSalePayments = 'http://localhost:5500/save-salepayments';
     const urlUnpaidNotes = 'http://localhost:5500/save-unpaidnotes';
 
-    const totalPaid = paymentItems.reduce((acc, item) => acc + item.paid, 0);
+    const totalPaid = paymentItems.reduce((acc, item) => acc + item.Paid, 0);
     const balance = saleSummary.total - totalPaid;
     
     // Constructor del objeto con los datos de la venta
@@ -34,7 +34,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
         Total: saleSummary.total,
         Payment: totalPaid,
         Balance: balance,
-        PaymentMethod: paymentItems[0].typeOfPayment,
+        PaymentMethod: paymentItems[0].PaymentMethod,
         Status: balance === 0 ? "Pagado" : "Vigente"
     };
 
@@ -84,5 +84,6 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
         console.log('Todos los datos fueron guardados exitosamente');
     } else {
         console.warn('Algunos datos no se pudieron guardar');
+        throw new Error('Error');
     }
 };

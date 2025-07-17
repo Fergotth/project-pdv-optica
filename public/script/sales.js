@@ -1,10 +1,13 @@
 import { getHandlerArgs } from "./sales/handlerDispatcher.js";
 import { getElement } from "./utils/getElement.js";
 import { flushState, updateState } from "./sales/state.js";
+import { loader } from "./sales/utils.js";
 import Class from "./sales/consts.js";
 import * as handlers from './sales/handlers.js';
 
 const sales = async () => {
+    globalThis.loader = loader;
+
     await flushState();
     
     const getDataParams = async (url) => {
@@ -33,6 +36,19 @@ const sales = async () => {
     getElement(Class.form.sales).addEventListener('submit', (event) => {
         event.preventDefault();
     });
+
+    const executeHandler = async (handlerFn, args) => {
+        if (getState().procesing) return;
+    
+        try {
+            loader(true);
+            await handlerFn(args);
+        } catch (error) {
+            console.error("Error en handler:", error);
+        } finally {
+            loader(false);
+        }
+    };
     
     const onSalesActive = function(event) {
         if (event instanceof KeyboardEvent && event.key !== 'Enter') return;
@@ -46,7 +62,7 @@ const sales = async () => {
 
             if (typeof handlers[handlerName] === 'function') {
                 const args = getHandlerArgs[handlerName]?.(button) || { button };
-                handlers[handlerName](args);
+                executeHandler(handlers[handlerName](args));
             }
         });
     };
@@ -64,6 +80,8 @@ const sales = async () => {
         Object.keys(handlers).forEach(name => {
             delete globalThis[name];
         });
+
+        delete globalThis.loader;
     }
 
     Object.entries(handlers).forEach(([name, handler]) => {

@@ -98,7 +98,7 @@ const menu = () => {
             .then(response => response.text())
             .then(html => {
                 const tempContentDiv = getElement('temporaryContent');
-                tempContentDiv.innerHTML = '';
+                tempContentDiv.replaceChildren();
                 tempContentDiv.innerHTML = html;
     
                 switch (id) {

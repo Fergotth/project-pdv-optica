@@ -67,7 +67,8 @@ export const getHandlerArgs = {
     }),
 
     handlerDeleteCart: () => ({
-        DOM: getElement(Class.list.itemsInCart)
+        DOM: getElement(Class.list.itemsInCart),
+        param: true
     }),
 
     handlerSku: () => ({

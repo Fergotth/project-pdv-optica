@@ -20,10 +20,13 @@ import {
 import { getDataDB } from "./getData.js";
 import { validateData } from "./validations.js";
 import { newAlert } from "../utils/alerts.js";
+import { 
+    handlerDeleteCart, 
+    handlerPaymentCloseIcon 
+} from "./handlers.js";
 import Class from "./consts.js";
 
 export const handleProductCategory = async ({ DOM, url, category, title, message }) => {
-    loader(true);
     const products = await getDataDB(url);
 
     if (!validateData(products, category)) {
@@ -45,7 +48,6 @@ export const handleProductCategory = async ({ DOM, url, category, title, message
     } else {
         setItemsToCart(DOM, products, category);
     }
-    loader(false);
 };
 
 /**
@@ -67,14 +69,11 @@ export const handleQuantityButton = (DOM, param) => {
 
 /**
  * 
- * @param {HTMLFormElement} formSales // Contenedor principal
+ * 
  */
-export const resetSale = async (formSales) => {
-    if (!formSales) {
-        throw new Error('DOM formSales no esta disponible');
-    }
-
-    await flushState();
+export const restartSaleForm = async () => {
+    await handlerDeleteCart({ DOM: getElement(Class.list.itemsInCart), param: false });
+    handlerPaymentCloseIcon({ DOM: getElement('.overlayPromptDiscount') });
 };
 
 export const updateItemsCart = (quantity) => {
@@ -110,8 +109,6 @@ export const setNewPrice = (DOM, quantity) => {
 };
 
 export const setIVA = (checked) => {
-    // getElement(Class.label.iva).textContent = `${formatMoney(IVA(checked))}`;
-    // setTotal();
     recalculateSummary();
 };
 

@@ -18,7 +18,8 @@ import {
     resetDiscountValue, 
     handleProductCategory, 
     setTotal,
-    recalculateSummary
+    recalculateSummary,
+    restartSaleForm
 } from "./utils.js";
 import { 
     flushState, 
@@ -87,19 +88,24 @@ export const handlerMinusButton = ({ DOM, param }) => {
     handleQuantityButton(DOM, param);
 };
 
-export const handlerDeleteCart = async ({ DOM }) => {
-    setSubtotal(-Number(getElement(Class.label.subtotal).textContent.replace("$", "")));
-    DOM.replaceChildren();
-    newAlert({
-        icon: "success",
-        title: "AVISO",
-        text: "Articulos eliminados del carrito de compras"
-    });
+export const handlerDeleteCart = async ({ DOM, param }) => {
+    const subtotalElement = getElement(Class.label.subtotal);
+    const subtotal = subtotalElement ? Number(subtotalElement.textContent.replace("$", "")) : 0;
+    setSubtotal(-subtotal);
+    DOM.replaceChildren?.();
 
     updateItemsCart(-getState().cartItems);
     resetDiscountValue();
     await flushState();
     recalculateSummary();
+
+    if (param) {
+        newAlert({
+            icon: "success",
+            title: "AVISO",
+            text: "Articulos eliminados del carrito de compras"
+        });
+    }
 };
 
 export const handlerSku = async ({ DOM, sku }) => {
@@ -230,6 +236,11 @@ export const handlerItemDeletePayment = ({ DOM, value }) => {
 };
 
 export const handlerBtnApplyPayments = ({}) => {
-    //saveData(getCartItems(), getPayments(), getSummarySale());
-    //flushState();
+    saveData(getCartItems(), getPayments(), getSummarySale());
+    restartSaleForm();
+    newAlert({
+        icon: "success",
+        title: "VENTA",
+        text: "Venta registrada exitosamente"
+    });
 };

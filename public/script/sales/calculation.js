@@ -32,11 +32,17 @@ export const calculateDOMSubtotal = () => {
     const items = document.querySelectorAll('.item');
     let total = 0;
 
-    items.forEach(item => {
-        const unitPrice = Number(item.querySelector(Class.label.unitprice).textContent.replace("$", ""));
-        const quantity = Number(item.querySelector(Class.label.quantity).textContent);
-        total += unitPrice * quantity;
-    });
+    if (items) {
+        items.forEach(item => {
+            const unitPriceElement = item.querySelector(Class.label.unitprice);
+            const quantityElement = item.querySelector(Class.label.quantity);
+        
+            const unitPrice = unitPriceElement ? Number(unitPriceElement.textContent.replace("$", "")) : 0;
+            const quantity = quantityElement ? Number(quantityElement.textContent) : 0;
+        
+            total += unitPrice * quantity;
+        });
+    }
 
     updateState(() => {
         return { subtotal: total };
