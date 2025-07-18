@@ -108,10 +108,6 @@ export const setNewPrice = (DOM, quantity) => {
     price.textContent = formatMoney(unitPrice * quantity);
 };
 
-export const setIVA = (checked) => {
-    recalculateSummary();
-};
-
 export const formatMoney = (value) => {
     return `$${value.toFixed(2)}`;
 }
