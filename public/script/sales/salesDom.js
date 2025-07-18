@@ -91,7 +91,7 @@ export const getPromptDiscountHTML = () => {
 
 export const getLoaderHTML = () => {
     return `
-    <div class="overlayPromptDiscount">
+    <div class="overlayLoader">
         <div class="custom-loader"></div>
     </div>
     `;

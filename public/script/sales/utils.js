@@ -131,18 +131,22 @@ export const resetDiscountValue = () => {
 };
 
 export const loader = (param) => {
-    if (!getState().procesing) {
-        const DOM = getElement(Class.form.sales);
+    updateState(() => ({
+        procesing: param
+    }));
+
+    const DOM = document.body;
+
+    if (param) {
+        // Mostrar loader
         DOM.appendChild(getParsedHTML(getLoaderHTML()));
     } else {
-        getElement(Class.list.overlay).remove();
+        // Ocultar loader si existe
+        const overlay = getElement('.overlayLoader');
+        if (overlay) {
+            overlay.remove();
+        }
     }
-    
-    updateState(() => {
-            return {
-                procesing: param
-            };
-        });
 };
 
 export const recalculateSummary = () => {

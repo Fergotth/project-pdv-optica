@@ -1,3 +1,14 @@
+.overlayLoader {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #00000022;
+    backdrop-filter: blur(1px);
+    z-index: 9997;
+}
+
 .custom-loader {
     width: 50px;
     height: 50px;

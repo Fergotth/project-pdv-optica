@@ -1,6 +1,6 @@
 import { getHandlerArgs } from "./sales/handlerDispatcher.js";
 import { getElement } from "./utils/getElement.js";
-import { flushState, updateState } from "./sales/state.js";
+import { getState, flushState, updateState } from "./sales/state.js";
 import { loader } from "./sales/utils.js";
 import Class from "./sales/consts.js";
 import * as handlers from './sales/handlers.js';
@@ -36,33 +36,27 @@ const sales = async () => {
     getElement(Class.form.sales).addEventListener('submit', (event) => {
         event.preventDefault();
     });
-
-    const executeHandler = async (handlerFn, args) => {
-        if (getState().procesing) return;
     
-        try {
-            loader(true);
-            await handlerFn(args);
-        } catch (error) {
-            console.error("Error en handler:", error);
-        } finally {
-            loader(false);
-        }
-    };
-    
-    const onSalesActive = function(event) {
+    const onSalesActive = async function(event) {
         if (event instanceof KeyboardEvent && event.key !== 'Enter') return;
         if (event.type === 'click' && event.target.classList.contains('sku')) return;
-        
+    
         event.stopPropagation();
         const button = event.target;
-
-        button.classList.forEach(name => {
+    
+        button.classList.forEach(async name => {
             const handlerName = `handler${name.charAt(0).toUpperCase() + name.slice(1)}`;
-
+    
             if (typeof handlers[handlerName] === 'function') {
                 const args = getHandlerArgs[handlerName]?.(button) || { button };
-                executeHandler(handlers[handlerName](args));
+                try {
+                    loader(true);
+                    await handlers[handlerName](args); // Esperamos al handler si es async
+                } catch (error) {
+                    console.error(`Error en ${handlerName}:`, error);
+                } finally {
+                    loader(false);
+                }
             }
         });
     };
