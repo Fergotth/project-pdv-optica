@@ -5,7 +5,6 @@
     margin: 0;
     padding: 0;
     background-color: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(2px) !important;
     z-index: 1000 !important;
     display: flex;
     align-items: center !important;
@@ -20,6 +19,29 @@
     border-radius: 5px;
     font-family: "Poppins";
     transform: translateY(-5%);
+    animation: showForm 0.5s ease-in-out;
+}
+
+.searchClientForm .searchClientCloseIcon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchClientForm .searchClientCloseIcon:hover {
+    cursor: pointer;
+    transition: all 0.2s;
+    transform: scale(1.3);
+    color: red;
+}
+
+.searchClientForm .searchClientCloseIcon svg,
+.searchClientForm .searchClientCloseIcon svg * {
+    pointer-events: none;
 }
 
 .titleClientForm {
@@ -116,7 +138,7 @@
     box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
 }
 
-.icon {
+.iconSearchFormClient {
     position: absolute;
     left: 1rem;
     fill: #9e9ea7;

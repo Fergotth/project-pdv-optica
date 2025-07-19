@@ -5,7 +5,8 @@ import {
     getPromptDiscountHTML,
     getPaymentSummaryHTML,
     getNewPaymentItemHTML,
-    getSearchClientFormHTML 
+    getSearchClientFormHTML, 
+    getNewClientFoundedHTML
 } from "./salesDom.js";
 import { 
     getElement, 
@@ -34,6 +35,7 @@ import {
     getPayments,
     getSummarySale
 } from "./getData.js";
+import { getDataClientDB } from "../clients/getData.js";
 import { saveData } from "./saveData.js";
 import summarySale from "./summarySale.js";
 
@@ -193,9 +195,9 @@ export const handlerApplyIVA = ({}) => {
     recalculateSummary();
 };
 
-export const handlerBtnRegisterPay = ({ DOM, client, total }) => {
+export const handlerBtnRegisterPay = ({ DOM, client, total, ID }) => {
     if (getState().cartItems > 0) {
-        DOM.appendChild(getParsedHTML(getPaymentSummaryHTML(client, total)));
+        DOM.appendChild(getParsedHTML(getPaymentSummaryHTML(client, total, ID)));
         summarySale();
     } else {
         newAlert({
@@ -248,4 +250,30 @@ export const handlerBtnApplyPayments = ({}) => {
 
 export const handlerSearchClient = ({ DOM }) => {
     DOM.appendChild(getParsedHTML(getSearchClientFormHTML()));
+};
+
+export const handlerSearchClientCloseIcon = ({ DOM }) => {
+    DOM.remove();
+};
+
+export const handlerBtnSearchClientForm = async ({ client, DOM }) => {
+    const data = await getDataClientDB(client);
+    DOM.replaceChildren();
+
+    if (data.length === 0) {
+        newAlert({
+            icon: "info",
+            text: "No se encontro ningun paciente"
+        });
+    } else {
+        data.forEach(element => {
+            DOM.appendChild(getParsedHTML(getNewClientFoundedHTML(element.ID, element.Name)));
+        });
+    }
+};
+
+export const handlerSelectClient = ({ client, ID, DOM }) => {
+    DOM.textContent = client;
+    DOM.dataset.id = ID;
+    getElement('.overlaySearchClient').remove();
 };

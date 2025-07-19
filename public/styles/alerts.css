@@ -9,6 +9,9 @@
     background: #fff;
     animation: fadeIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
     z-index: 9100;
+    display: flex;
+    flex-direction: column;
+    height: auto;
 }
 
 .fadeOut {

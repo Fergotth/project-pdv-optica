@@ -96,7 +96,8 @@ export const getHandlerArgs = {
     handlerBtnRegisterPay: () => ({
         DOM: getElement(Class.form.sales),
         client: getElement('.input-client').textContent,
-        total: total()
+        total: total(),
+        ID: getElement('.input-client').dataset.id
     }),
 
     handlerPaymentCloseIcon: () => ({
@@ -118,5 +119,20 @@ export const getHandlerArgs = {
 
     handlerSearchClient: () => ({
         DOM: getElement(Class.form.sales)
+    }),
+
+    handlerSearchClientCloseIcon: () => ({
+        DOM: getElement('.overlaySearchClient')
+    }),
+
+    handlerBtnSearchClientForm: () => ({
+        client: getElement('.input').value,
+        DOM: getElement('.listClientContainer')
+    }),
+
+    handlerSelectClient: (button) => ({
+        client: button.closest('.clientItem').querySelector('.itemFounded').textContent.trim(),
+        ID: button.dataset.id,
+        DOM: getElement('.input-client')
     })
 };
