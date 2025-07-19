@@ -28,7 +28,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     
     // Constructor del objeto con los datos de la venta
     const saleData = {
-        ClientID: saleSummary.client,
+        ClientID: saleSummary.clientId,
         Discount: saleSummary.discount,
         IVA: saleSummary.iva,
         Total: saleSummary.total,

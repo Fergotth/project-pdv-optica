@@ -63,7 +63,7 @@ export const getSummarySale = () => {
         discount: Number(getElement('.discount').textContent.replace("- $", "")),
         iva: Number(getElement('.iva').textContent.replace("$", "")),
         total: Number(getElement('.thirdsection-total').textContent.replace("$", "")),
-        client: getElement('.input-client').dataset.id
+        clientId: getElement('.input-client').dataset.id
     };
 
     updateState(previusData => ({
