@@ -1,6 +1,7 @@
 @import url('discountPromt.css');
 @import url('loader.css');
 @import url('summarySale.css');
+@import url('searchClientForm.css');
 
 .container-sales {
     display: flex;
@@ -10,7 +11,7 @@
     position: relative;
 }
 
-.container-sales > :nth-child(4) {
+.container-sales > :nth-child(4):not(.overlaySearchClient) {
     all: unset;
     position: absolute;
     animation: showForm 0.5s ease-in-out;

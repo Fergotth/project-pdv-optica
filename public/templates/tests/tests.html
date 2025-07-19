@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="test.css">
 </head>
 <body>
-    <div class="overlay">
+    <div class="overlaySearchClient">
         <div class="searchClientForm">
-            <h2 class="titleClientForm">Busqueda de cliente</h2>
+            <h3 class="titleClientForm">Busqueda de cliente</h3>
             <div class="groupItem1">
                 <div class="group">
                     <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -18,11 +18,20 @@
                         </path>
                         </g>
                     </svg>
-                    <input placeholder="Buscar" type="search" class="input">
+                    <input placeholder="Nombre del paciente" type="search" class="input">
+                    <button class="btnSearchClientForm">Buscar</button>
                 </div>
+            </div>
+            <div class="listClientContainer">
+                <div class="clientItem">
+                    <div class="itemFounded">
+                        Fernando Peralta Rodriguez
+                    </div>
+                    <button class="selectClient" data-id="123">Seleccionar</button>
+                </div>                
             </div>
         </div>
     </div>
 </body>
-<script src="./test.js"></script>
+<script src="./test.js" type="module"></script>
 </html>

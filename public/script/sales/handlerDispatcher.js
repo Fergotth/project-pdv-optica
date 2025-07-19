@@ -114,5 +114,9 @@ export const getHandlerArgs = {
         value: Number(button.closest('.paymentItem').querySelector('.paidValue')?.textContent)
     }),
 
-    handlerBtnApplyPayments: () => ({})
+    handlerBtnApplyPayments: () => ({}),
+
+    handlerSearchClient: () => ({
+        DOM: getElement(Class.form.sales)
+    })
 };

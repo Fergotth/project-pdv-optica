@@ -4,7 +4,8 @@ import {
     getItemToCardHTML, 
     getPromptDiscountHTML,
     getPaymentSummaryHTML,
-    getNewPaymentItemHTML 
+    getNewPaymentItemHTML,
+    getSearchClientFormHTML 
 } from "./salesDom.js";
 import { 
     getElement, 
@@ -243,4 +244,8 @@ export const handlerBtnApplyPayments = ({}) => {
         title: "VENTA",
         text: "Venta registrada exitosamente"
     });
+};
+
+export const handlerSearchClient = ({ DOM }) => {
+    DOM.appendChild(getParsedHTML(getSearchClientFormHTML()));
 };
