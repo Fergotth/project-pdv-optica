@@ -16,8 +16,8 @@
 
 .nav-menu .title {
     font-size: var(--fontsize-titles);
-    position: absolute;
-    left: 10vw;
+    margin-right: auto;
+    margin-left: 2.5%;
 }
 
 /* From Uiverse.io by pathikcomp */ 
@@ -26,7 +26,7 @@
 }
 
 .main {
-    font-weight: 600;
+    font-weight: 300;
     display: flex;
     align-items: center;
     height: 2.5rem;

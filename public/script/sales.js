@@ -1,7 +1,7 @@
 import { getHandlerArgs } from "./sales/handlerDispatcher.js";
 import { getElement } from "./utils/getElement.js";
-import { getState, flushState, updateState } from "./sales/state.js";
-import { loader } from "./sales/utils.js";
+import { flushState, updateState } from "./sales/state.js";
+import { loader } from "./utils/loader.js";
 import Class from "./sales/consts.js";
 import * as handlers from './sales/handlers.js';
 

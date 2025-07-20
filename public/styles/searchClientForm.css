@@ -1,7 +1,9 @@
 .overlaySearchClient {
     width: 100vw !important;
-    height: 100vh !important;
+    height: 120vh !important;
     position: absolute !important;
+    top: -15vh !important;
+    left: 0 !important;
     margin: 0;
     padding: 0;
     background-color: rgba(0, 0, 0, 0.1);
@@ -9,12 +11,11 @@
     display: flex;
     align-items: center !important;
     justify-content: center !important;
-    transform: translateY(-4%);
 }
 
 .searchClientForm {
     width: 40%;
-    height: 80%;
+    height: 80vh;
     background: #fdfafa;
     border-radius: 5px;
     font-family: "Poppins";
@@ -49,7 +50,7 @@
 }
 
 .listClientContainer {
-    width: 100%;
+    width: 95%;
     height: 70%;
     background: #f3f3f4;
     position: relative;

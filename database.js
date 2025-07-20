@@ -14,6 +14,12 @@ if (!fs.existsSync(routeDir)) {
     fs.mkdirSync(routeDir);
 }
 
+// Crear carpeta para los tickets
+const ticketsDir = path.join(__dirname, 'data', 'tickets');
+if (!fs.existsSync(ticketsDir)) {
+    fs.mkdirSync(ticketsDir);
+}
+
 const dbSales = new sqlite3.Database(path.join(dataDir, 'sales.db'));
 dbSales.run('PRAGMA foreign_keys = ON');
 

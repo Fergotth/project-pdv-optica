@@ -1,4 +1,5 @@
 import { newAlert } from "../utils/alerts.js";
+import { generateTicketSale } from "./utils.js";
 import { 
     getMaterialCatalogHTML, 
     getItemToCardHTML, 
@@ -245,6 +246,11 @@ export const handlerBtnApplyPayments = ({}) => {
         icon: "success",
         title: "VENTA",
         text: "Venta registrada exitosamente"
+    });
+
+    generateTicketSale({
+        cliente: "Fernando Peralta",
+        Total: 123.45
     });
 };
 

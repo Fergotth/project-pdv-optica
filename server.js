@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 
+const ticketRoute = require('./routes/ticketRoute');
 const salesRoutes = require('./routes/salesDB');
 const clientsRoutes = require('./routes/clientsDB');
 const productsRoutes = require('./routes/productsDB');
@@ -11,6 +12,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use(ticketRoute);
 app.use(salesRoutes);
 app.use(clientsRoutes);
 app.use(productsRoutes);

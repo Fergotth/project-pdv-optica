@@ -1,16 +1,12 @@
 import { 
     getState, 
-    updateState, 
-    flushState 
+    updateState 
 } from "./state.js";
 import { 
     getElement, 
     getParsedHTML 
 } from "../utils/getElement.js";
-import { 
-    getProductHTML, 
-    getLoaderHTML 
-} from "./salesDom.js";
+import { getProductHTML } from "./salesDom.js";
 import { 
     subtotal,
     IVA,
@@ -130,25 +126,6 @@ export const resetDiscountValue = () => {
     recalculateSummary();
 };
 
-export const loader = (param) => {
-    updateState(() => ({
-        procesing: param
-    }));
-
-    const DOM = document.body;
-
-    if (param) {
-        // Mostrar loader
-        DOM.appendChild(getParsedHTML(getLoaderHTML()));
-    } else {
-        // Ocultar loader si existe
-        const overlay = getElement('.overlayLoader');
-        if (overlay) {
-            overlay.remove();
-        }
-    }
-};
-
 export const recalculateSummary = () => {
     const state = getState();
     const applyIVA = getElement('.applyIVA').checked;
@@ -164,4 +141,25 @@ const setMoneyContent = (selector, value, isNegative = false) => {
     const el = getElement(selector);
     const displayValue = `${isNegative ? "- " : ""}$${value.toFixed(2)}`;
     if (el) el.textContent = displayValue;
+};
+
+export const generateTicketSale = async (data) => {
+    const response = await fetch('/generate-ticket', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'ticket.pdf';
+        link.click();
+    } else {
+        console.error('Error al generar el ticket');
+    }
 };
