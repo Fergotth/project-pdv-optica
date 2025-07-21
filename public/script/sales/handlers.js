@@ -248,10 +248,7 @@ export const handlerBtnApplyPayments = ({}) => {
         text: "Venta registrada exitosamente"
     });
 
-    generateTicketSale({
-        cliente: "Fernando Peralta",
-        Total: 123.45
-    });
+    generateTicketSale();
 };
 
 export const handlerSearchClient = ({ DOM }) => {

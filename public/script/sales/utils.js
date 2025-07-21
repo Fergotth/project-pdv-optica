@@ -143,23 +143,21 @@ const setMoneyContent = (selector, value, isNegative = false) => {
     if (el) el.textContent = displayValue;
 };
 
-export const generateTicketSale = async (data) => {
-    const response = await fetch('/generate-ticket', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+export const generateTicketSale = async () => {
+    try {
+        const response = await fetch('/generate-ticket', {
+            method: 'POST'
+        });
 
-    if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'ticket.pdf';
-        link.click();
-    } else {
-        console.error('Error al generar el ticket');
+        if (!response.ok) {
+            const errorText = await response.text(); // <- captura error
+            throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json(); // <- seguro ahora
+        console.log('✅ PDF creado:', data.file);
+        window.open(data.file, '_blank');
+    } catch (err) {
+        console.error('❌ Error al generar el PDF:', err);
     }
 };

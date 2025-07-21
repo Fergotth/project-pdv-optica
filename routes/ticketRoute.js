@@ -1,15 +1,27 @@
 const express = require('express');
-const crearTicket = require('../public/script/utils/ticket');
+const path = require('path');
 const router = express.Router();
+const { generatePDFTicket } = require('../utils/generateTicket');
 
-router.post('/generate-ticket', async (req, res) => {
-  try {
-    const filePath = await crearTicket(req.body); // recibe datos desde el cliente
-    res.download(filePath); // envía el archivo al cliente
-  } catch (error) {
-    console.error('Error al generar el ticket:', error);
-    res.status(500).send('Error al generar el ticket');
-  }
+router.post('/generate-ticket', (req, res) => {
+    const htmlPath = path.resolve(__dirname, '..', 'public', 'templates', 'template-ticket.html');
+    const outputPath = path.resolve(__dirname, '..', 'data', 'tickets', 'ticket.pdf'); // usa resolve
+
+    // Verifica que el archivo HTML existe antes de continuar
+    const fs = require('fs');
+    if (!fs.existsSync(htmlPath)) {
+        return res.status(404).json({ message: 'Archivo de plantilla no encontrado.' });
+    }
+
+    generatePDFTicket(htmlPath, outputPath, (err, filePath) => {
+        if (err) {
+            console.error('Error al generar el PDF:', err);
+            return res.status(500).json({ message: 'Error al generar el PDF' });
+        }
+
+        // Ruta accesible desde el navegador gracias a express.static('/tickets')
+        res.json({ message: 'PDF generado correctamente', file: '/tickets/ticket.pdf' });
+    });
 });
 
 module.exports = router;

@@ -1,37 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Busqueda de clientes</title>
-    <link rel="stylesheet" href="test.css">
+  <meta charset="UTF-8">
+  <title>Ticket</title>
+  <style>
+    body {
+      font-family: monospace;
+      width: 80mm;
+      padding: 10px;
+    }
+    h2 {
+      text-align: center;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+    }
+    .total {
+      border-top: 1px solid black;
+      margin-top: 10px;
+      padding-top: 5px;
+      font-weight: bold;
+      font-size: 2rem;
+      display: flex;
+      justify-content: end;
+    }
+  </style>
 </head>
 <body>
-    <div class="overlaySearchClient">
-        <div class="searchClientForm">
-            <h3 class="titleClientForm">Busqueda de cliente</h3>
-            <div class="groupItem1">
-                <div class="group">
-                    <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-                        <g>
-                        <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
-                        </path>
-                        </g>
-                    </svg>
-                    <input placeholder="Nombre del paciente" type="search" class="input">
-                    <button class="btnSearchClientForm">Buscar</button>
-                </div>
-            </div>
-            <div class="listClientContainer">
-                <div class="clientItem">
-                    <div class="itemFounded">
-                        Fernando Peralta Rodriguez
-                    </div>
-                    <button class="selectClient" data-id="123">Seleccionar</button>
-                </div>                
-            </div>
-        </div>
-    </div>
+  <h2>TIENDA ABC</h2>
+  <div class="item"><span>Producto 1</span><span>$10</span></div>
+  <div class="item"><span>Producto 2</span><span>$20</span></div>
+  <div class="total"><span>Total:</span><span>$30</span></div>
 </body>
-<script src="./test.js" type="module"></script>
 </html>
