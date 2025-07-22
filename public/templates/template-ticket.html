@@ -7,30 +7,91 @@
     body {
       font-family: monospace;
       width: 80mm;
-      padding: 10px;
     }
+
     h2 {
       text-align: center;
     }
+
+    .headerGrid {
+      display: grid;
+      grid-template-columns: 3fr 1fr 2fr 2fr;
+      margin-bottom: 15px;
+    }
+
+    .headerGrid div {
+      font-weight: bold;
+    }
+
+    .headerGrid div:not(:first-child) {
+      text-align: right;
+    }
+
+    .headerGrid div:nth-child(2) {
+      margin-left: 10px;
+    }
+
     .item {
       display: flex;
       justify-content: space-between;
+      margin-bottom: 5px;
     }
-    .total {
+
+    .productItem {
+      text-align: left;
+      width: 45%;
+    }
+
+    .quantityItem {
+      width: 10%;
+    }
+
+    .unitPriceItem {
+      width: 20%;
+      text-align: left;
+    }
+
+    .subtotalItem {
+      width: 20%;
+      text-align: right;
+    }
+
+    .summaryItems {
       border-top: 1px solid black;
       margin-top: 10px;
       padding-top: 5px;
       font-weight: bold;
       font-size: 2rem;
       display: flex;
-      justify-content: end;
+      justify-content: space-between;
     }
   </style>
 </head>
 <body>
-  <h2>TIENDA ABC</h2>
-  <div class="item"><span>Producto 1</span><span>$10</span></div>
-  <div class="item"><span>Producto 2</span><span>$20</span></div>
-  <div class="total"><span>Total:</span><span>$30</span></div>
+  <h2>PUNTO DE VENTA</h2>
+  <h4>C. Cuarta 440, Zona. Centro</h4>
+  </h4>
+  <div class="headerGrid">
+    <div>Art.</div>
+    <div>Cant.</div>
+    <div>P. Unit</div>
+    <div>Sub Total</div>
+  </div>
+
+  <div class="item">
+    <span class="productItem">Producto 1 monofocal blueblock progresivo</span>
+    <span class="quantityItem">1</span>
+    <span class="unitPriceItem">$1905.00</span>
+    <span class="subtotalItem">$5000.00</span>
+  </div>
+  <div class="item">
+    <span class="productItem">Producto 1</span>
+    <span class="quantityItem">1</span>
+    <span class="unitPriceItem">$1500.00</span>
+    <span class="subtotalItem">$3000.00</span>
+  </div>
+
+  <div class="summaryItems"><span>Total:</span><span>$30</span>
+  </div>
 </body>
 </html>

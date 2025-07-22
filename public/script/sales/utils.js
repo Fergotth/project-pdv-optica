@@ -143,10 +143,14 @@ const setMoneyContent = (selector, value, isNegative = false) => {
     if (el) el.textContent = displayValue;
 };
 
-export const generateTicketSale = async () => {
+export const generateTicketSale = async (NextID) => {
     try {
         const response = await fetch('/generate-ticket', {
-            method: 'POST'
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ NextID })
         });
 
         if (!response.ok) {

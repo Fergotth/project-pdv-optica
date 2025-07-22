@@ -4,8 +4,9 @@ const router = express.Router();
 const { generatePDFTicket } = require('../utils/generateTicket');
 
 router.post('/generate-ticket', (req, res) => {
+    const { NextID } = req.body;
     const htmlPath = path.resolve(__dirname, '..', 'public', 'templates', 'template-ticket.html');
-    const outputPath = path.resolve(__dirname, '..', 'data', 'tickets', 'ticket.pdf'); // usa resolve
+    const outputPath = path.resolve(__dirname, '..', 'data', 'tickets', `ticket-${NextID}.pdf`); // usa resolve
 
     // Verifica que el archivo HTML existe antes de continuar
     const fs = require('fs');
@@ -20,7 +21,7 @@ router.post('/generate-ticket', (req, res) => {
         }
 
         // Ruta accesible desde el navegador gracias a express.static('/tickets')
-        res.json({ message: 'PDF generado correctamente', file: '/tickets/ticket.pdf' });
+        res.json({ message: 'PDF generado correctamente', file: `/tickets/ticket-${NextID}.pdf` });
     });
 });
 
