@@ -202,3 +202,19 @@ export const numberToWords = (number) => {
 
     return result.trim();
 };
+
+export const createTicketSale = () => {
+    const summarySale = getState().dataSummary;
+    const productsSale = getState().dataCart;
+    const paymentsSale = getState().dataPayment;
+
+    let productsItems = '';
+    productsItems.forEach(product => {
+
+    });
+
+    let paymentsItems = '';
+    paymentsItems.forEach(payments => {
+
+    });
+};
