@@ -165,3 +165,40 @@ export const generateTicketSale = async (NextID) => {
         console.error('❌ Error al generar el PDF:', err);
     }
 };
+
+export const numberToWords = (number) => {
+    const units = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"];
+    const tens = ["", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"];
+    const specials = ["diez", "once", "doce", "trece", "catorce", "quince", "dieciseis", "diecisiete", "dieciocho", "diecinueve"];
+    const hundreds = ["", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"];
+
+    if (number === 0) return "cero";
+    if (number === 100) return "cien";
+    if (number === 1000) return "mil";
+
+    let result = '';
+
+    const h = Math.floor(number /100);
+
+    if (h > 0) {
+        result += hundreds[h] + ' ';
+        number %= 100;
+    }
+
+    if (number >= 10 && number < 20) {
+        result += specials[number - 10];
+    } else {
+        const t = Math.floor(number / 10);
+
+        if (t > 0) {
+            result += tens[t];
+            number %= 10;
+
+            if (number > 0) result += ' y ';
+        }
+
+        if (number > 0) result += units[number];
+    }
+
+    return result.trim();
+};
