@@ -1,5 +1,5 @@
 import { getState } from "./state.js";
-import { generateTicketSale } from "./utils.js";
+import { generateTicketSale, createTicketSaleHTML } from "./utils.js";
 
 const postData = async (url, data) => {
     try {
@@ -83,7 +83,8 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
 
     if (allSuccessful) {
         console.log('Todos los datos fueron guardados exitosamente');
-        generateTicketSale(nextID);
+        generateTicketSale(nextID); debugger
+        createTicketSaleHTML(nextID, cartItems, paymentItems, saleSummary); // comprobar si se genera el ticket correctamente
     } else {
         console.warn('Algunos datos no se pudieron guardar');
         throw new Error('Error');
