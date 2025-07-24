@@ -1,5 +1,6 @@
-import { getState } from "./state.js";
-import { generateTicketSale, createTicketSaleHTML } from "./utils.js";
+import { getState } from './state.js';
+import { generateTicketSale } from './utils.js';
+import { createTicketSaleHTML } from '../utils/ticket.js';
 
 const postData = async (url, data) => {
     try {
@@ -23,6 +24,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     const urlSaleDetails = 'http://localhost:5500/save-saledetails';
     const urlSalePayments = 'http://localhost:5500/save-salepayments';
     const urlUnpaidNotes = 'http://localhost:5500/save-unpaidnotes';
+    const urlTicketHTML = 'http://localhost:5500/generate-ticketHTML';
 
     const totalPaid = paymentItems.reduce((acc, item) => acc + item.Paid, 0);
     const balance = saleSummary.total - totalPaid;
@@ -80,11 +82,20 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     const results = await Promise.all(promises);
 
     const allSuccessful = results.every(result => result === true);
+    document.querySelector('.thirdsection-content').replaceChildren();
 
     if (allSuccessful) {
         console.log('Todos los datos fueron guardados exitosamente');
-        generateTicketSale(nextID); debugger
-        createTicketSaleHTML(nextID, cartItems, paymentItems, saleSummary); // comprobar si se genera el ticket correctamente
+        const ticketSaved = await postData(urlTicketHTML, {
+            html: createTicketSaleHTML(nextID, cartItems, paymentItems, saleSummary, getState().percentIVA)
+        });
+
+        if (ticketSaved) {
+            generateTicketSale(nextID);
+        } else {
+            console.warn('No se pudo guardar el HTML del ticket');
+            throw new Error('Error al guardar el ticket HTML');
+        }
     } else {
         console.warn('Algunos datos no se pudieron guardar');
         throw new Error('Error');
