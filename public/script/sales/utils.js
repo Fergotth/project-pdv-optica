@@ -171,40 +171,63 @@ export const generateTicketSale = async (NextID) => {
 };
 
 export const numberToWords = (number) => {
-    const units = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"];
-    const tens = ["", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"];
-    const specials = ["diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve"];
-    const hundreds = ["", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"];
+    const units = ['', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+    const specials = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
+    const tens = ['', '', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+    const hundreds = ['', 'ciento', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
 
-    if (number < 0 || number > 1000) return "fuera de rango";
-    if (number === 0) return "cero";
-    if (number === 100) return "cien";
-    if (number === 1000) return "mil";
+    const toWords = (num) => {
+        if (num === 0) return 'cero';
+        if (num === 100) return 'cien';
 
-    let result = '';
+        let text = '';
 
-    const h = Math.floor(number / 100);
-    if (h > 0) {
-        result += hundreds[h] + ' ';
-        number %= 100;
-    }
+        const millions = Math.floor(num / 1000000);
+        const thousands = Math.floor((num % 1000000) / 1000);
+        const remainder = num % 1000;
 
-    if (number >= 10 && number < 20) {
-        result += specials[number - 10];
-    } else if (number >= 21 && number <= 29) {
-        const specialVeintis = ["veintiuno", "veintidós", "veintitrés", "veinticuatro", "veinticinco", "veintiséis", "veintisiete", "veintiocho", "veintinueve"];
-        result += specialVeintis[number - 21];
-    } else {
-        const t = Math.floor(number / 10);
-        if (t > 0) {
-            result += tens[t];
-            number %= 10;
-            if (number > 0) result += ' y ';
+        if (millions > 0) {
+            if (millions === 1) text += 'un millón ';
+            else text += `${toWords(millions)} millones `;
         }
-        if (number > 0) result += units[number];
-    }
 
-    return result.trim();
+        if (thousands > 0) {
+            if (thousands === 1) text += 'mil ';
+            else text += `${toWords(thousands)} mil `;
+        }
+
+        const hundred = Math.floor(remainder / 100);
+        const dec = Math.floor((remainder % 100) / 10);
+        const unit = remainder % 10;
+
+        if (hundred > 0) text += hundreds[hundred] + ' ';
+
+        if (dec === 1 && unit > 0) {
+            text += specials[unit] + ' ';
+        } else if (dec > 0) {
+            text += tens[dec];
+            if (unit > 0) {
+                if (dec === 2) {
+                    text += 'i' + units[unit];
+                } else {
+                    text += ' y ' + units[unit];
+                }
+            }
+            text += ' ';
+        } else if (unit > 0) {
+            text += units[unit] + ' ';
+        }
+
+        return text.trim();
+    };
+
+    const integerPart = Math.floor(number);
+    const decimalPart = Math.round((number - integerPart) * 100);
+
+    const integerText = toWords(integerPart);
+    const centavos = decimalPart.toString().padStart(2, '0');
+
+    return `${integerText} ${centavos}/100`;
 };
 
 export const getCurrentDateTime = () => {
