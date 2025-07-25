@@ -24,19 +24,19 @@ async function generatePDFTicket(htmlPath, outputPath, callback) {
         });
 
         if (callback) callback(null, outputPath);
-        console.log('✅ PDF generado en:', outputPath);
+        console.log('PDF generado en:', outputPath);
     } catch (err) {
         if (callback) callback(err, null);
-        console.error('❌ Error al generar el PDF:', err);
+        console.error('Error al generar el PDF:', err);
     } finally {
         if (browser) await browser.close();
 
         // 🔄 Siempre intentar borrar el archivo HTML
         try {
             fs.unlinkSync(htmlPath);
-            console.log('🗑️ Archivo HTML eliminado:', htmlPath);
+            console.log('Archivo HTML eliminado:', htmlPath);
         } catch (e) {
-            console.warn('⚠️ No se pudo eliminar el archivo HTML:', e.message);
+            console.warn('No se pudo eliminar el archivo HTML:', e.message);
         }
     }
 }

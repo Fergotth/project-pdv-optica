@@ -134,5 +134,7 @@ export const getHandlerArgs = {
         client: button.closest('.clientItem').querySelector('.itemFounded').textContent.trim(),
         ID: button.dataset.id,
         DOM: getElement('.input-client')
-    })
+    }),
+
+    handlerBtnCreateQuotation: () => ({})
 };

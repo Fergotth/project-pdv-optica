@@ -1,6 +1,12 @@
-import { getState } from './state.js';
-import { generateTicketSale } from './utils.js';
-import { createTicketSaleHTML } from '../utils/ticket.js';
+import { flushState, getState } from './state.js';
+import { 
+    generateTicket, 
+    restartSaleForm 
+} from './utils.js';
+import { 
+    createTicketSaleHTML, 
+    createTicketQuotationHTML 
+} from '../utils/ticket.js';
 
 const postData = async (url, data) => {
     try {
@@ -91,7 +97,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
         });
 
         if (ticketSaved) {
-            generateTicketSale(nextID);
+            generateTicket(nextID, "sale");
         } else {
             console.warn('No se pudo guardar el HTML del ticket');
             throw new Error('Error al guardar el ticket HTML');
@@ -99,5 +105,20 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     } else {
         console.warn('Algunos datos no se pudieron guardar');
         throw new Error('Error');
+    }
+};
+
+export const saveQuotation = async (data) => {
+    const urlTicketHTML = 'http://localhost:5500/generate-ticketHTML';
+    const ticketSaved = await postData(urlTicketHTML, {
+        html: createTicketQuotationHTML(data)
+    });
+
+    if (ticketSaved) {
+        generateTicket(1, "quotation");
+        restartSaleForm();
+    } else {
+        console.warn('No se pudo guardar el HTML del ticket');
+        throw new Error('Error al guardar el ticket HTML');
     }
 };

@@ -70,7 +70,7 @@ export const handleQuantityButton = (DOM, param) => {
  */
 export const restartSaleForm = async () => {
     await handlerDeleteCart({ DOM: getElement(Class.list.itemsInCart), param: false });
-    handlerPaymentCloseIcon({ DOM: getElement('.overlayPromptDiscount') });
+    handlerPaymentCloseIcon({ DOM: document.querySelector('.overlayPromptDiscount') || null });
     
     const inputClient = getElement('.input-client');
     inputClient.textContent = 'Publico General';
@@ -144,15 +144,15 @@ const setMoneyContent = (selector, value, isNegative = false) => {
     if (el) el.textContent = displayValue;
 };
 
-export const generateTicketSale = async (NextID) => {
+export const generateTicket = async (NextID, type) => {
     try {
         loader(true);
-        const response = await fetch('/generate-ticket', {
+        const response = await fetch('/generate-ticketPDF', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ NextID })
+            body: JSON.stringify({ NextID, type })
         });
 
         if (!response.ok) {
@@ -161,10 +161,10 @@ export const generateTicketSale = async (NextID) => {
         }
 
         const data = await response.json(); // <- seguro ahora
-        console.log('✅ PDF creado:', data.file);
+        console.log('PDF creado:', data.file);
         window.open(data.file, '_blank');
     } catch (err) {
-        console.error('❌ Error al generar el PDF:', err);
+        console.error('Error al generar el PDF:', err);
     } finally {
         loader(false);
     }

@@ -36,7 +36,10 @@ import {
     getSummarySale
 } from "./getData.js";
 import { getDataClientDB } from "../clients/getData.js";
-import { saveData } from "./saveData.js";
+import { 
+    saveData, 
+    saveQuotation 
+} from "./saveData.js";
 import summarySale from "./summarySale.js";
 
 export const handlerBtnFrames = (params) => {
@@ -216,7 +219,7 @@ export const handlerPaymentCloseIcon = ({ DOM }) => {
         };
     });
 
-    DOM.remove();
+    if (DOM) DOM.remove();
 };
 
 export const handlerApplyPayment = ({ DOM, value, typeOfPayment }) => {
@@ -288,4 +291,16 @@ export const handlerSelectClient = ({ client, ID, DOM }) => {
     DOM.textContent = client;
     DOM.dataset.id = ID;
     getElement('.overlaySearchClient').remove();
+};
+
+export const handlerBtnCreateQuotation = ({}) => {
+    const data = {
+        products: [
+            ...getCartItems()
+        ],
+        ...getSummarySale(),
+        percentIVA: getState().percentIVA
+    };
+
+    saveQuotation(data);
 };

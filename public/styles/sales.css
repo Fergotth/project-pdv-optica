@@ -96,7 +96,8 @@
 }
 
 .sales-sideleft > .sideleft-button svg {
-    color:#BDBDBD
+    color:#BDBDBD;
+    pointer-events: none;
 }
 
 .sales-sideleft > .sideleft-button:hover {
