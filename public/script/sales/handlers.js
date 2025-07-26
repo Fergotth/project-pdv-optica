@@ -306,3 +306,7 @@ export const handlerBtnCreateQuotation = async ({ items }) => {
 
     saveQuotation(await getDataQuotation());
 };
+
+export const handlerBtnRecoverQuotation = ({ DOM }) => {
+
+};

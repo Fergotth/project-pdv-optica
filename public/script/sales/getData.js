@@ -87,6 +87,17 @@ export const getDataQuotation = async () => {
     return data;
 };
 
+export const getQuoation = async (type) => {
+    try {
+        const response = await fetch(`/get-quotation?q=${encodeURIComponent(type)}`);
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error("Error al obtener los datos de la cotizacion: ", err);
+        return null;
+    }
+};
+
 export const getNextIDSale = async () => {
     const nextIDSale = await getDataDB('/find-nextSaleID');
 

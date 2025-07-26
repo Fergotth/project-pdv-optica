@@ -138,5 +138,9 @@ export const getHandlerArgs = {
 
     handlerBtnCreateQuotation: () => ({
         items: getState().cartItems
+    }),
+
+    handlerBtnRecoverQuotation: () => ({
+        DOM: getElement(Class.form.sales)
     })
 };
