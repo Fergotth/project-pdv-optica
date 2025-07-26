@@ -1,7 +1,9 @@
 import { flushState, getState } from './state.js';
 import { 
     generateTicket, 
-    restartSaleForm 
+    restartSaleForm,
+    createStringProducts,
+    extractProducts
 } from './utils.js';
 import { 
     createTicketSaleHTML, 
@@ -110,15 +112,30 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
 
 export const saveQuotation = async (data) => {
     const urlTicketHTML = '/generate-ticketHTML';
-    const ticketSaved = await postData(urlTicketHTML, {
+    const ticketCreated = await postData(urlTicketHTML, {
         html: createTicketQuotationHTML(data)
     });
 
-    if (ticketSaved) {
-        generateTicket(1, "quotation");
-        restartSaleForm();
-    } else {
+    if (!ticketCreated) {
         console.warn('No se pudo guardar el HTML del ticket');
         throw new Error('Error al guardar el ticket HTML');
     }
+
+    const urlSaveQuotation = '/save-quotation';
+    const quotationSaved = await postData(urlSaveQuotation, {
+        ClientID: data.clientId,
+        Subtotal: data.subtotal,
+        Discount: data.discount,
+        IVA: data.iva,
+        Total: data.total,
+        Products: createStringProducts(data.products)
+    });
+    
+    if (!quotationSaved) {
+        console.warn('No se pudo guardar la cotización');
+        throw new Error('Error al guardar la cotización');
+    }
+    
+    await flushState();
+    restartSaleForm();
 };

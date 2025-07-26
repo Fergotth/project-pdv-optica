@@ -374,7 +374,7 @@ export const createTicketQuotationHTML = (data) => {
     <div class="titleTicket">Cotizacion</div>
     <div class="divisorTicket"></div>
     <div class="detailsTicket">
-        <div class="numberTicket">No. Folio: ${0}</div>
+        <div class="numberTicket">No. Folio: ${data.nextID}</div>
         <div class="dateTicket">${getCurrentDateTime()}</div>
     </div>
     <div class="clientTicket">Cliente: ${clientName}</div>

@@ -74,8 +74,27 @@ export const getSummarySale = () => {
     return getState().dataSummary;
 };
 
+export const getDataQuotation = async () => {
+    const data = {
+        products: [
+            ...getCartItems()
+        ],
+        ...getSummarySale(),
+        percentIVA: getState().percentIVA,
+        nextID: await getNextIDQuotation()
+    };
+
+    return data;
+};
+
 export const getNextIDSale = async () => {
     const nextIDSale = await getDataDB('/find-nextSaleID');
 
     return nextIDSale?.nextID || 1;
+};
+
+export const getNextIDQuotation = async () => {
+    const nextIDQuotation = await getDataDB('/find-nextQuotationID');
+
+    return nextIDQuotation?.nextID || 1;
 };

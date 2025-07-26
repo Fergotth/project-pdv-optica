@@ -33,7 +33,8 @@ import { calcuteNewPayment } from "./calculation.js";
 import { 
     getCartItems,
     getPayments,
-    getSummarySale
+    getSummarySale,
+    getDataQuotation
 } from "./getData.js";
 import { getDataClientDB } from "../clients/getData.js";
 import { 
@@ -293,14 +294,15 @@ export const handlerSelectClient = ({ client, ID, DOM }) => {
     getElement('.overlaySearchClient').remove();
 };
 
-export const handlerBtnCreateQuotation = ({}) => {
-    const data = {
-        products: [
-            ...getCartItems()
-        ],
-        ...getSummarySale(),
-        percentIVA: getState().percentIVA
-    };
+export const handlerBtnCreateQuotation = async ({ items }) => {
+    if (items < 1) {
+        newAlert({
+            icon: "info",
+            title: "AVISO",
+            text: "No hay articulos en el carrito de compras"
+        });
+        return;
+    }
 
-    saveQuotation(data);
+    saveQuotation(await getDataQuotation());
 };

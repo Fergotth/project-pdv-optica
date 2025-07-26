@@ -38,4 +38,13 @@ router.get('/get-quotation', (req, res) => {
     });
 });
 
+// Obtener siguiente ID
+router.get('/find-nextQuotationID', (req, res) => {
+    dbQuotations.get(`SELECT seq FROM sqlite_sequence WHERE name = 'Quotations'`, (err, row) => {
+        if (err) return res.status(500).json({ error: err.message });
+        const nextID = row ? row.seq + 1 : 1;
+        res.json({ nextID });
+    });
+});
+
 module.exports = router;

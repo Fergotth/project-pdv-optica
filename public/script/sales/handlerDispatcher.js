@@ -136,5 +136,7 @@ export const getHandlerArgs = {
         DOM: getElement('.input-client')
     }),
 
-    handlerBtnCreateQuotation: () => ({})
+    handlerBtnCreateQuotation: () => ({
+        items: getState().cartItems
+    })
 };

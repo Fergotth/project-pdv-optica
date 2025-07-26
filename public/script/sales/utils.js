@@ -258,3 +258,7 @@ export const extractProducts = (data) => {
 
     return result;
 };
+
+export const createStringProducts = (products) => {
+    return products.map(item => `s${item.SKU}c${item.Quantity}`).join('');
+};
