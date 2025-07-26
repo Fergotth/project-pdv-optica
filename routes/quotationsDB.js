@@ -7,7 +7,7 @@ router.post('/save-quotation', (req, res) => {
     const { ClientID, Subtotal, Discount, IVA, Total, Products } = req.body;
 
     dbQuotations.run(
-        `INSERT INTO Quotation (ClientID, Subtotal, Discount, IVA, Total, Products)
+        `INSERT INTO Quotations (ClientID, Subtotal, Discount, IVA, Total, Products)
         VALUES (?, ?, ?, ?, ?, ?)`,
         [ClientID, Subtotal, Discount, IVA, Total, Products],
         function(err) {

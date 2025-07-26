@@ -20,6 +20,13 @@ const postData = async (url, data) => {
             body: JSON.stringify(data)
         });
 
+        const result = await response.json();
+
+        if (!response.ok) {
+            console.error("Error en la respuesta: ", result);
+            return false;
+        }
+
         return response.ok;
     } catch (error) {
         console.error('Error al guardar los datos del producto: ', error);
@@ -121,9 +128,11 @@ export const saveQuotation = async (data) => {
         throw new Error('Error al guardar el ticket HTML');
     }
 
+    generateTicket(data.nextID, "quotation");
+    
     const urlSaveQuotation = '/save-quotation';
     const quotationSaved = await postData(urlSaveQuotation, {
-        ClientID: data.clientId,
+        ClientID: parseInt(data.clientId, 10),
         Subtotal: data.subtotal,
         Discount: data.discount,
         IVA: data.iva,
