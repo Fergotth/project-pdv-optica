@@ -75,7 +75,7 @@ export const getSummarySale = () => {
 };
 
 export const getNextIDSale = async () => {
-    const nextIDSale = await getDataDB('http://localhost:5500/find-nextSaleID');
+    const nextIDSale = await getDataDB('/find-nextSaleID');
 
     return nextIDSale?.nextID || 1;
 };

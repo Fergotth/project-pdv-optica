@@ -30,7 +30,7 @@ export const getDataProductForm = () => {
  */
 export const getDataProductDB = async (article) => {
     try {
-        const response = await fetch(`http://localhost:5500/find-article?q=${encodeURIComponent(article)}`);
+        const response = await fetch(`/find-article?q=${encodeURIComponent(article)}`);
         const data = await response.json();
         return data;
     } catch (error) {

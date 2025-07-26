@@ -9,7 +9,7 @@ import { getState } from "./state.js";
 export const getHandlerArgs = {
     handlerBtnFrames: () => ({
         DOM: getElement(Class.list.productsInDB),
-        url: 'http://localhost:5500/get-products',
+        url: '/get-products',
         category: 'frames'
     }),
 
@@ -19,31 +19,31 @@ export const getHandlerArgs = {
 
     handlerBtnAccesories: () => ({
         DOM: getElement(Class.list.productsInDB),
-        url: 'http://localhost:5500/get-products',
+        url: '/get-products',
         category: 'accessories'
     }),
 
     handlerBtnServices: () => ({
         DOM: getElement(Class.list.productsInDB),
-        url: 'http://localhost:5500/get-products',
+        url: '/get-products',
         category: 'services'
     }),
 
     handlerBtnSinglevision: () => ({
         DOM: getElement(Class.list.productsInDB),
-        url: 'http://localhost:5500/get-products',
+        url: '/get-products',
         category: 'monofocal'
     }),
 
     handlerBtnBifocal: () => ({
         DOM: getElement(Class.list.productsInDB),
-        url: 'http://localhost:5500/get-products',
+        url: '/get-products',
         category: 'bifocal'
     }),
 
     handlerBtnProgresive: () => ({
         DOM: getElement(Class.list.productsInDB),
-        url: 'http://localhost:5500/get-products',
+        url: '/get-products',
         category: 'progresivo'
     }),
 

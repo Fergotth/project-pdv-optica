@@ -26,11 +26,11 @@ const postData = async (url, data) => {
 };
 
 export const saveData = async (cartItems, paymentItems, saleSummary) => {
-    const urlSale = 'http://localhost:5500/save-sales';
-    const urlSaleDetails = 'http://localhost:5500/save-saledetails';
-    const urlSalePayments = 'http://localhost:5500/save-salepayments';
-    const urlUnpaidNotes = 'http://localhost:5500/save-unpaidnotes';
-    const urlTicketHTML = 'http://localhost:5500/generate-ticketHTML';
+    const urlSale = '/save-sales';
+    const urlSaleDetails = '/save-saledetails';
+    const urlSalePayments = '/save-salepayments';
+    const urlUnpaidNotes = '/save-unpaidnotes';
+    const urlTicketHTML = '/generate-ticketHTML';
 
     const totalPaid = paymentItems.reduce((acc, item) => acc + item.Paid, 0);
     const balance = saleSummary.total - totalPaid;
@@ -109,7 +109,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
 };
 
 export const saveQuotation = async (data) => {
-    const urlTicketHTML = 'http://localhost:5500/generate-ticketHTML';
+    const urlTicketHTML = '/generate-ticketHTML';
     const ticketSaved = await postData(urlTicketHTML, {
         html: createTicketQuotationHTML(data)
     });

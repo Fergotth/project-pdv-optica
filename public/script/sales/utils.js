@@ -243,3 +243,18 @@ export const getCurrentDateTime = () => {
 
     return `${day}/${month}/${year} ${hours}:${minutes}${ampm}`;
 };
+
+export const extractProducts = (data) => {
+    const regExp = /s\d+c\d+/g;
+    const products = data.match(regExp);
+
+    const result = products.map(item => {
+        const match = item.match(/s(\d+)c(\d+)/);
+        return {
+            sku: match[1],
+            quantity: parseInt(match[2], 10)
+        }
+    });
+
+    return result;
+};

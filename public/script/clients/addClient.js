@@ -5,7 +5,7 @@ import { newAlert } from "../utils/alerts.js";
  */
 export const saveClient = async (data) => {
     try {
-        const response = await fetch('http://localhost:5500/save-clients', {
+        const response = await fetch('/save-clients', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

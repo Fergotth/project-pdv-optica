@@ -24,7 +24,7 @@ const sales = async () => {
         }
     };
 
-    const [dataParams] = await getDataParams('http://localhost:5500/get-params');
+    const [dataParams] = await getDataParams('/get-params');
 
     updateState(() => {
         return {
