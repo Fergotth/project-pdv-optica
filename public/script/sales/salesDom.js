@@ -253,4 +253,18 @@ export const getNewClientFoundedHTML = (ID, client) => {
         <button class="selectClient" data-id="${ID}">Seleccionar</button>
     </div> 
     `;
-}
+};
+
+export const getPromptQuotationHTML = () => {
+    return `
+    <div class="overlayPromptQuotation">
+        <div class="promptQuotation">
+            <div class="quotation-container">
+                <input class="quotationInputValue" required="" placeholder="No. Cotizacion" type="number">
+                <button class="setQuotationBtn" type="button">Aplicar</button>
+            </div>
+            <button class="cancelSetQuotationBtn">Cancelar</button>
+        </div>
+    </div>
+    `;
+};

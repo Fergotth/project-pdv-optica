@@ -1,12 +1,32 @@
-import { getDataClientDB } from "../../script/clients/getData.js";
+const fs = require('fs');
+const pdf = require('html-pdf');
 
-const button = document.querySelector('.btnSearchClientForm');
+function generatePDFTicket(htmlPath, outputPath, callback) {
+  const html = fs.readFileSync(htmlPath, 'utf8');
 
-button.onclick = async function() {
-    debugger
-    const data = await getDataClientDB(document.querySelector('.input').value);
+  const options = {
+    format: 'A6', // Puedes usar 'Letter', 'A4', o [width, height]
+    border: '5mm',
+    type: 'pdf'
+  };
 
-    if (data.length > 0) {
-        alert(data.length);
+  pdf.create(html, options).toFile(outputPath, (err, res) => {
+    if (err) {
+      console.error('❌ Error al generar el PDF:', err);
+      if (callback) callback(err, null);
+    } else {
+      console.log('✅ PDF generado en:', res.filename);
+      if (callback) callback(null, res.filename);
     }
-};
+  });
+}
+
+module.exports = { generatePDFTicket };
+
+// generarPDF('./tests.html', './ticket.pdf', (err, ruta) => {
+//   if (err) {
+//     console.log('Hubo un problema al generar el PDF.');
+//   } else {
+//     console.log('PDF listo en:', ruta);
+//   }
+// });

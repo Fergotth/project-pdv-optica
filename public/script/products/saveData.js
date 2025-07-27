@@ -49,8 +49,8 @@ export const saveProduct = async (data) => {
 
     if (!await existSKU(data.SKU)) {
         const results = await Promise.all([
-            sendProductData('http://localhost:5500/save-products', data),
-            sendProductData('http://localhost:5500/save-productsDetails', data)
+            sendProductData('/save-products', data),
+            sendProductData('/save-productsDetails', data)
         ]);
         
         if (results.every(Boolean)) {

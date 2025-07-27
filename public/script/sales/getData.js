@@ -74,8 +74,38 @@ export const getSummarySale = () => {
     return getState().dataSummary;
 };
 
+export const getDataQuotation = async () => {
+    const data = {
+        products: [
+            ...getCartItems()
+        ],
+        ...getSummarySale(),
+        percentIVA: getState().percentIVA,
+        nextID: await getNextIDQuotation()
+    };
+
+    return data;
+};
+
+export const getQuoationDB = async (type) => {
+    try {
+        const response = await fetch(`/get-quotation?q=${encodeURIComponent(type)}`);
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error("Error al obtener los datos de la cotizacion: ", err);
+        return null;
+    }
+};
+
 export const getNextIDSale = async () => {
-    const nextIDSale = await getDataDB('http://localhost:5500/find-nextSaleID');
+    const nextIDSale = await getDataDB('/find-nextSaleID');
 
     return nextIDSale?.nextID || 1;
+};
+
+export const getNextIDQuotation = async () => {
+    const nextIDQuotation = await getDataDB('/find-nextQuotationID');
+
+    return nextIDQuotation?.nextID || 1;
 };

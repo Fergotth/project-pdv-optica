@@ -1,5 +1,4 @@
 import { newAlert } from "../utils/alerts.js";
-import { generateTicketSale } from "./utils.js";
 import { 
     getMaterialCatalogHTML, 
     getItemToCardHTML, 
@@ -7,7 +6,8 @@ import {
     getPaymentSummaryHTML,
     getNewPaymentItemHTML,
     getSearchClientFormHTML, 
-    getNewClientFoundedHTML
+    getNewClientFoundedHTML,
+    getPromptQuotationHTML
 } from "./salesDom.js";
 import { 
     getElement, 
@@ -22,7 +22,8 @@ import {
     handleProductCategory, 
     setTotal,
     recalculateSummary,
-    restartSaleForm
+    restartSaleForm,
+    findQuotation
 } from "./utils.js";
 import { 
     flushState, 
@@ -34,10 +35,14 @@ import { calcuteNewPayment } from "./calculation.js";
 import { 
     getCartItems,
     getPayments,
-    getSummarySale
+    getSummarySale,
+    getDataQuotation
 } from "./getData.js";
 import { getDataClientDB } from "../clients/getData.js";
-import { saveData } from "./saveData.js";
+import { 
+    saveData, 
+    saveQuotation 
+} from "./saveData.js";
 import summarySale from "./summarySale.js";
 
 export const handlerBtnFrames = (params) => {
@@ -217,7 +222,7 @@ export const handlerPaymentCloseIcon = ({ DOM }) => {
         };
     });
 
-    DOM.remove();
+    if (DOM) DOM.remove();
 };
 
 export const handlerApplyPayment = ({ DOM, value, typeOfPayment }) => {
@@ -240,17 +245,22 @@ export const handlerItemDeletePayment = ({ DOM, value }) => {
 };
 
 export const handlerBtnApplyPayments = ({}) => {
+    if (!document.querySelector('.paymentItem')) {
+        newAlert({
+            icon: "error",
+            title: "AVISO",
+            text: "No se ha registrado ningun pago"
+        });
+
+        return;
+    }
+
     saveData(getCartItems(), getPayments(), getSummarySale());
     restartSaleForm();
     newAlert({
         icon: "success",
         title: "VENTA",
         text: "Venta registrada exitosamente"
-    });
-
-    generateTicketSale({
-        cliente: "Fernando Peralta",
-        Total: 123.45
     });
 };
 
@@ -263,6 +273,8 @@ export const handlerSearchClientCloseIcon = ({ DOM }) => {
 };
 
 export const handlerBtnSearchClientForm = async ({ client, DOM }) => {
+    if (client === "") return;
+    
     const data = await getDataClientDB(client);
     DOM.replaceChildren();
 
@@ -282,4 +294,41 @@ export const handlerSelectClient = ({ client, ID, DOM }) => {
     DOM.textContent = client;
     DOM.dataset.id = ID;
     getElement('.overlaySearchClient').remove();
+};
+
+export const handlerBtnCreateQuotation = async ({ items }) => {
+    if (items < 1) {
+        newAlert({
+            icon: "info",
+            title: "AVISO",
+            text: "No hay articulos en el carrito de compras"
+        });
+        return;
+    }
+
+    saveQuotation(await getDataQuotation());
+};
+
+export const handlerBtnRecoverQuotation = ({ DOM }) => {
+    DOM.appendChild(getParsedHTML(getPromptQuotationHTML()));
+};
+
+export const handlerCancelSetQuotationBtn = ({ DOM }) => {
+    DOM.remove();
+};
+
+export const handlerSetQuotationBtn = async ({ quotation }) => {
+    const data = await findQuotation(quotation);
+    
+    if(!data) {
+        newAlert({
+            icon: "info",
+            title: "AVISO",
+            text: "No se encontro la cotizacion"
+        });
+    }
+debugger
+    data.Products.forEach(item => {
+        handlerItemSelected({ DOM: getElement(Class.list.itemsInCart), sku: item.sku });
+    });
 };

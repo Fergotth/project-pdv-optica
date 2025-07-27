@@ -8,7 +8,7 @@ const params = () => {
         const ID = 1;
         const IVA = Number(getElement('.params-radio-inputs input[name="radio"]:checked').value);
         const PriceDolar = Number(getElement('.dolarValue').value);
-        const url = 'http://localhost:5500/save-params';
+        const url = '/save-params';
     
         try {
             const response = await fetch(url, {

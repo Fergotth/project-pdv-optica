@@ -1,1 +1,7 @@
 .qodo
+.vscode
+node_modules
+data/tickets
+*.env
+*.log
+.DS_Store

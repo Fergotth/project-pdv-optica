@@ -133,9 +133,26 @@ dbParams.run(`
         )
 `);
 
+// Crear tabla Quotations (Cotizaciones)
+const dbQuotations = new sqlite3.Database(path.join(dataDir, 'quotations.db'));
+
+dbQuotations.run(`
+        CREATE TABLE IF NOT EXISTS Quotations (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            DATE TEXT DEFAULT (date('now','localtime')),
+            ClientID INTEGER,
+            Subtotal REAL,
+            Discount REAL,
+            IVA REAL,
+            Total REAL,
+            Products TEXT
+        )
+`);
+
 module.exports = { 
     dbSales, 
     dbClients, 
     dbProducts,
-    dbParams
+    dbParams,
+    dbQuotations
 };

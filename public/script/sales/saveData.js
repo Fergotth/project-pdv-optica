@@ -1,4 +1,14 @@
-import { getState } from "./state.js";
+import { flushState, getState } from './state.js';
+import { 
+    generateTicket, 
+    restartSaleForm,
+    createStringProducts,
+    extractProducts
+} from './utils.js';
+import { 
+    createTicketSaleHTML, 
+    createTicketQuotationHTML 
+} from '../utils/ticket.js';
 
 const postData = async (url, data) => {
     try {
@@ -10,6 +20,13 @@ const postData = async (url, data) => {
             body: JSON.stringify(data)
         });
 
+        const result = await response.json();
+
+        if (!response.ok) {
+            console.error("Error en la respuesta: ", result);
+            return false;
+        }
+
         return response.ok;
     } catch (error) {
         console.error('Error al guardar los datos del producto: ', error);
@@ -18,10 +35,11 @@ const postData = async (url, data) => {
 };
 
 export const saveData = async (cartItems, paymentItems, saleSummary) => {
-    const urlSale = 'http://localhost:5500/save-sales';
-    const urlSaleDetails = 'http://localhost:5500/save-saledetails';
-    const urlSalePayments = 'http://localhost:5500/save-salepayments';
-    const urlUnpaidNotes = 'http://localhost:5500/save-unpaidnotes';
+    const urlSale = '/save-sales';
+    const urlSaleDetails = '/save-saledetails';
+    const urlSalePayments = '/save-salepayments';
+    const urlUnpaidNotes = '/save-unpaidnotes';
+    const urlTicketHTML = '/generate-ticketHTML';
 
     const totalPaid = paymentItems.reduce((acc, item) => acc + item.Paid, 0);
     const balance = saleSummary.total - totalPaid;
@@ -79,11 +97,54 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     const results = await Promise.all(promises);
 
     const allSuccessful = results.every(result => result === true);
+    document.querySelector('.thirdsection-content').replaceChildren();
 
     if (allSuccessful) {
         console.log('Todos los datos fueron guardados exitosamente');
+        const ticketSaved = await postData(urlTicketHTML, {
+            html: createTicketSaleHTML(nextID, cartItems, paymentItems, saleSummary, getState().percentIVA)
+        });
+
+        if (ticketSaved) {
+            generateTicket(nextID, "sale");
+        } else {
+            console.warn('No se pudo guardar el HTML del ticket');
+            throw new Error('Error al guardar el ticket HTML');
+        }
     } else {
         console.warn('Algunos datos no se pudieron guardar');
         throw new Error('Error');
     }
+};
+
+export const saveQuotation = async (data) => {
+    const urlTicketHTML = '/generate-ticketHTML';
+    const ticketCreated = await postData(urlTicketHTML, {
+        html: createTicketQuotationHTML(data)
+    });
+
+    if (!ticketCreated) {
+        console.warn('No se pudo guardar el HTML del ticket');
+        throw new Error('Error al guardar el ticket HTML');
+    }
+
+    generateTicket(data.nextID, "quotation");
+    
+    const urlSaveQuotation = '/save-quotation';
+    const quotationSaved = await postData(urlSaveQuotation, {
+        ClientID: parseInt(data.clientId, 10),
+        Subtotal: data.subtotal,
+        Discount: data.discount,
+        IVA: data.iva,
+        Total: data.total,
+        Products: createStringProducts(data.products)
+    });
+    
+    if (!quotationSaved) {
+        console.warn('No se pudo guardar la cotización');
+        throw new Error('Error al guardar la cotización');
+    }
+    
+    await flushState();
+    restartSaleForm();
 };

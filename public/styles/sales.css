@@ -2,6 +2,7 @@
 @import url('loader.css');
 @import url('summarySale.css');
 @import url('searchClientForm.css');
+@import url('quotationPrompt.css');
 
 .container-sales {
     display: flex;
@@ -96,7 +97,8 @@
 }
 
 .sales-sideleft > .sideleft-button svg {
-    color:#BDBDBD
+    color:#BDBDBD;
+    pointer-events: none;
 }
 
 .sales-sideleft > .sideleft-button:hover {

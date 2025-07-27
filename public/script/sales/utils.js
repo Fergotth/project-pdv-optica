@@ -13,13 +13,17 @@ import {
     total,
     calculateDOMSubtotal
 } from "./calculation.js";
-import { getDataDB } from "./getData.js";
+import { 
+    getDataDB,
+    getQuoationDB 
+} from "./getData.js";
 import { validateData } from "./validations.js";
 import { newAlert } from "../utils/alerts.js";
 import { 
     handlerDeleteCart, 
     handlerPaymentCloseIcon 
 } from "./handlers.js";
+import { loader } from '../utils/loader.js';
 import Class from "./consts.js";
 
 export const handleProductCategory = async ({ DOM, url, category, title, message }) => {
@@ -69,7 +73,7 @@ export const handleQuantityButton = (DOM, param) => {
  */
 export const restartSaleForm = async () => {
     await handlerDeleteCart({ DOM: getElement(Class.list.itemsInCart), param: false });
-    handlerPaymentCloseIcon({ DOM: getElement('.overlayPromptDiscount') });
+    handlerPaymentCloseIcon({ DOM: document.querySelector('.overlayPromptDiscount') || null });
     
     const inputClient = getElement('.input-client');
     inputClient.textContent = 'Publico General';
@@ -143,23 +147,139 @@ const setMoneyContent = (selector, value, isNegative = false) => {
     if (el) el.textContent = displayValue;
 };
 
-export const generateTicketSale = async (data) => {
-    const response = await fetch('/generate-ticket', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+export const generateTicket = async (NextID, type) => {
+    try {
+        loader(true);
+        const response = await fetch('/generate-ticketPDF', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ NextID, type })
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text(); // <- captura error
+            throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json(); // <- seguro ahora
+        console.log('PDF creado:', data.file);
+        window.open(data.file, '_blank');
+    } catch (err) {
+        console.error('Error al generar el PDF:', err);
+    } finally {
+        loader(false);
+    }
+};
+
+export const numberToWords = (number) => {
+    const units = ['', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+    const specials = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
+    const tens = ['', '', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+    const hundreds = ['', 'ciento', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
+
+    const toWords = (num) => {
+        if (num === 0) return 'cero';
+        if (num === 100) return 'cien';
+
+        let text = '';
+
+        const millions = Math.floor(num / 1000000);
+        const thousands = Math.floor((num % 1000000) / 1000);
+        const remainder = num % 1000;
+
+        if (millions > 0) {
+            if (millions === 1) text += 'un millón ';
+            else text += `${toWords(millions)} millones `;
+        }
+
+        if (thousands > 0) {
+            if (thousands === 1) text += 'mil ';
+            else text += `${toWords(thousands)} mil `;
+        }
+
+        const hundred = Math.floor(remainder / 100);
+        const dec = Math.floor((remainder % 100) / 10);
+        const unit = remainder % 10;
+
+        if (hundred > 0) text += hundreds[hundred] + ' ';
+
+        if (dec === 1 && unit > 0) {
+            text += specials[unit] + ' ';
+        } else if (dec > 0) {
+            text += tens[dec];
+            if (unit > 0) {
+                if (dec === 2) {
+                    text += 'i' + units[unit];
+                } else {
+                    text += ' y ' + units[unit];
+                }
+            }
+            text += ' ';
+        } else if (unit > 0) {
+            text += units[unit] + ' ';
+        }
+
+        return text.trim();
+    };
+
+    const integerPart = Math.floor(number);
+    const decimalPart = Math.round((number - integerPart) * 100);
+
+    const integerText = toWords(integerPart);
+    const centavos = decimalPart.toString().padStart(2, '0');
+
+    return `${integerText} ${centavos}/100`;
+};
+
+export const getCurrentDateTime = () => {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Los meses empiezan en 0
+    const year = now.getFullYear();
+
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12 || 12; // Convierte a formato 12 horas
+
+    return `${day}/${month}/${year} ${hours}:${minutes}${ampm}`;
+};
+
+export const extractProducts = (data) => {
+    const regExp = /s\d+c\d+/g;
+    const products = data.match(regExp);
+
+    const result = products.map(item => {
+        const match = item.match(/s(\d+)c(\d+)/);
+        return {
+            sku: match[1],
+            quantity: parseInt(match[2], 10)
+        }
     });
 
-    if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'ticket.pdf';
-        link.click();
-    } else {
-        console.error('Error al generar el ticket');
+    return result;
+};
+
+export const createStringProducts = (products) => {
+    return products.map(item => `s${item.SKU}c${item.Quantity}`).join('');
+};
+
+export const findQuotation = async (quotation) => {
+    const [quotations] = await getQuoationDB(quotation);
+
+    if (!quotations) {
+        console.warn("No se encontraron cotizaciones en la base de datos.");
+        return null;
     }
+
+    return {
+        Subtotal: quotations.Subtotal,
+        Discount: quotations.Discount,
+        IVA: quotations.IVA,
+        ExistIVA: quotation.IVA ? true : false,
+        Total: quotations.Total,
+        Products: extractProducts(quotations.Products)
+    };
 };
