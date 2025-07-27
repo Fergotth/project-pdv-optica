@@ -45,7 +45,6 @@ router.get('/get-quotation', (req, res) => {
     });
 });
 
-
 // Obtener siguiente ID
 router.get('/find-nextQuotationID', (req, res) => {
     dbQuotations.get(`SELECT seq FROM sqlite_sequence WHERE name = 'Quotations'`, (err, row) => {

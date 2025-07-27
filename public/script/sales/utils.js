@@ -74,6 +74,7 @@ export const handleQuantityButton = (DOM, param) => {
 export const restartSaleForm = async () => {
     await handlerDeleteCart({ DOM: getElement(Class.list.itemsInCart), param: false });
     handlerPaymentCloseIcon({ DOM: document.querySelector('.overlayPromptDiscount') || null });
+    handlerPaymentCloseIcon({ DOM: document.querySelector('.overlayPromptDiscount') || null });
     
     const inputClient = getElement('.input-client');
     inputClient.textContent = 'Publico General';

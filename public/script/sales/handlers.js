@@ -36,7 +36,7 @@ import {
     getCartItems,
     getPayments,
     getSummarySale,
-    getDataQuotation
+    getDataQuotation,
 } from "./getData.js";
 import { getDataClientDB } from "../clients/getData.js";
 import { 
@@ -223,6 +223,7 @@ export const handlerPaymentCloseIcon = ({ DOM }) => {
     });
 
     if (DOM) DOM.remove();
+    if (DOM) DOM.remove();
 };
 
 export const handlerApplyPayment = ({ DOM, value, typeOfPayment }) => {
@@ -255,6 +256,16 @@ export const handlerBtnApplyPayments = ({}) => {
         return;
     }
 
+    if (!document.querySelector('.paymentItem')) {
+        newAlert({
+            icon: "error",
+            title: "AVISO",
+            text: "No se ha registrado ningun pago"
+        });
+
+        return;
+    }
+
     saveData(getCartItems(), getPayments(), getSummarySale());
     restartSaleForm();
     newAlert({
@@ -273,6 +284,8 @@ export const handlerSearchClientCloseIcon = ({ DOM }) => {
 };
 
 export const handlerBtnSearchClientForm = async ({ client, DOM }) => {
+    if (client === "") return;
+    
     if (client === "") return;
     
     const data = await getDataClientDB(client);
