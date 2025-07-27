@@ -278,7 +278,6 @@ export const findQuotation = async (quotation) => {
     return {
         Subtotal: quotations.Subtotal,
         Discount: quotations.Discount,
-        IVA: quotations.IVA,
         ExistIVA: quotation.IVA ? true : false,
         Total: quotations.Total,
         Products: extractProducts(quotations.Products)
