@@ -327,8 +327,22 @@ export const handlerSetQuotationBtn = async ({ quotation }) => {
             text: "No se encontro la cotizacion"
         });
     }
-debugger
+
     data.Products.forEach(item => {
         handlerItemSelected({ DOM: getElement(Class.list.itemsInCart), sku: item.sku });
     });
+
+    if (data.Discount > 0) {
+        updateState(() => {
+            return {
+                discount: data.Discount
+            };
+        });
+    }
+    
+    if (data.ExistIVA) {
+        getElement('.applyIVA').checked = true;
+    }
+    
+    recalculateSummary();
 };
