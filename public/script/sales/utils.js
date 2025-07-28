@@ -249,22 +249,22 @@ export const getCurrentDateTime = () => {
 };
 
 export const extractProducts = (data) => {
-    const regExp = /s\d+c\d+/g;
-    const products = data.match(regExp);
+    const regExp = /s[a-zA-Z0-9]+\?\d+/g;
+    const products = data.match(regExp) || [];
 
     const result = products.map(item => {
-        const match = item.match(/s(\d+)c(\d+)/);
+        const match = item.match(/s([a-zA-Z0-9]+)\?(\d+)/);
         return {
             sku: match[1],
             quantity: parseInt(match[2], 10)
-        }
+        };
     });
 
     return result;
 };
 
 export const createStringProducts = (products) => {
-    return products.map(item => `s${item.SKU}c${item.Quantity}`).join('');
+    return products.map(item => `s${item.SKU}?${item.Quantity}`).join('');
 };
 
 export const findQuotation = async (quotation) => {
@@ -282,4 +282,17 @@ export const findQuotation = async (quotation) => {
         Total: quotations.Total,
         Products: extractProducts(quotations.Products)
     };
+};
+
+export const existInCart = (SKU) => {
+    try {
+        const items = Array.from(getElement(Class.list.itemsInCart).querySelectorAll('.product-image')).find(item => item.dataset.sku === SKU);
+        
+        if (!items) return null;
+
+        return items.closest('.item')?.querySelector('.button-quantity') || null;
+    } catch (error) {
+        console.log("Articulo no esta aun en carrito, se agrega nuevo");
+        return null;
+    }
 };

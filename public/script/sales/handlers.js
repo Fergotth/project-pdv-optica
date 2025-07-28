@@ -23,7 +23,8 @@ import {
     setTotal,
     recalculateSummary,
     restartSaleForm,
-    findQuotation
+    findQuotation,
+    existInCart
 } from "./utils.js";
 import { 
     flushState, 
@@ -74,12 +75,21 @@ export const handlerBtnProgresive = (params) => {
     handleProductCategory({ ...params, title: "Materiales", message: "materiales" });
 };
 
-export const handlerItemSelected = async ({ DOM, sku }) => {
+export const handlerItemSelected = async ({ DOM, sku, quantity }) => {
     const [product] = await getDataProductDB(sku);
+    let item = undefined;
 
-    DOM.appendChild(getParsedHTML(getItemToCardHTML(product)));
-    recalculateSummary();
-    updateItemsCart(1);
+    for(let i = 0; i < quantity; i++) {
+        if (i === 1) item = existInCart(sku);
+    
+        if (item) {
+            handlerPlusButton({ DOM: item, param: "plus"});
+        } else {
+            DOM.appendChild(getParsedHTML(getItemToCardHTML(product)));
+            recalculateSummary();
+            updateItemsCart(1);
+        }
+    }
 };
 
 export const handlerDeleteItem = ({ DOM }) => {
@@ -329,7 +339,7 @@ export const handlerSetQuotationBtn = async ({ quotation }) => {
     }
 
     data.Products.forEach(item => {
-        handlerItemSelected({ DOM: getElement(Class.list.itemsInCart), sku: item.sku });
+        handlerItemSelected({ DOM: getElement(Class.list.itemsInCart), sku: item.sku, quantity: item.quantity });
     });
 
     if (data.Discount > 0) {
@@ -343,6 +353,7 @@ export const handlerSetQuotationBtn = async ({ quotation }) => {
     if (data.ExistIVA) {
         getElement('.applyIVA').checked = true;
     }
-    
+
+    handlerCancelSetQuotationBtn({ DOM: getElement('.overlayPromptQuotation') });
     recalculateSummary();
 };

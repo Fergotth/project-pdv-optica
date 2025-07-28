@@ -261,7 +261,7 @@ export const getPromptQuotationHTML = () => {
         <div class="promptQuotation">
             <div class="quotation-container">
                 <input class="quotationInputValue" required="" placeholder="No. Cotizacion" type="number">
-                <button class="setQuotationBtn" type="button">Aplicar</button>
+                <button class="setQuotationBtn" type="button">Buscar</button>
             </div>
             <button class="cancelSetQuotationBtn">Cancelar</button>
         </div>

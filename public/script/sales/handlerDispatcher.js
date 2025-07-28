@@ -54,7 +54,8 @@ export const getHandlerArgs = {
 
     handlerItemSelected: (button) => ({
         DOM: getElement(Class.list.itemsInCart),
-        sku: button.dataset.sku
+        sku: button.dataset.sku,
+        quantity: 1
     }),
 
     handlerDeleteItem: (button) => ({
