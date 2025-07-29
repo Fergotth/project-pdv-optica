@@ -6,7 +6,7 @@ const temporaryContent = document.getElementById('temporaryContent');
 const calendar = document.getElementById('calendar');
 
 const loadMenu = () => {
-    fetch('/templates/template-menu4.html')
+    fetch('/templates/template-menu5.html')
     .then(response => response.text())
     .then(html => {
         app.innerHTML = html;

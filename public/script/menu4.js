@@ -15,7 +15,7 @@ const menu = () => {
     setModuleInstance('sales', { clearEvents: () => {} });
     setModuleInstance('operations', { clearEvents: () => {} });
     
-    getElement('.nav-menu').addEventListener('click', function(event) {
+    getElement('.containerMenu').addEventListener('click', function(event) { debugger
         const elementClicked = event.target;
         const itemMenu = Array.from(elementClicked.classList).find(item => item.includes('menu--item'));
         
