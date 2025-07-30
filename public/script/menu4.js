@@ -33,16 +33,20 @@ const menu = () => {
                     template: 'template-sales.html',
                     templateId: 1
                 },
-                2: { backgroundColor: '#509ec7' },
+                2: { 
+                    backgroundColor: '#509ec7',
+                    template: 'template-billpayments.html',
+                    templateId: 2 
+                },
                 3: { backgroundColor: '#509ec7' },
                 4: { backgroundColor: '#509ec7' },
                 5: { backgroundColor: '#509ec7' },
-                6: { backgroundColor: '#509ec7' },
-                7: {
+                6: { 
                     backgroundColor: '#509ec7',
                     template: 'template-operations.html',
-                    templateId: 7
+                    templateId: 6 
                 },
+                7: { backgroundColor: '#509ec7' },
                 8: {
                     backgroundColor: '#509ec7',
                     borderRadius: '0 25px 25px 0'

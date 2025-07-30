@@ -1,0 +1,54 @@
+.billPaymentsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    animation: showForm 0.5s ease-in-out;
+    position: relative;
+    border-radius: 7px;
+    width: 100vw;
+    height: 87vh;
+}
+
+.billPaymentsContainer > div {
+    width: 31%;
+    height: 80%;
+    background-color: #fdfefe;
+    border-radius: 7px;
+    position: relative;
+    top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.payment__title {
+    width: 100%;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.payment__Container {
+    height: 32px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment__input {
+    width: 80%;
+    border: 1px solid #D0D3D4;
+    outline: none;
+    margin-top: 10px;
+    position: relative;
+    height: 100%;
+    padding-left: 35px;
+}
+
+.payment__label {
+    position: relative;
+    height: 100%;
+    left: -80%;
+    top: 50%;
+    transform: translateY(-25%);
+}
