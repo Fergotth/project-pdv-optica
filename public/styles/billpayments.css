@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .billPaymentsContainer {
     display: flex;
     flex-direction: row;
@@ -6,6 +8,12 @@
     border-radius: 7px;
     width: 100vw;
     height: 87vh;
+    font-family: "Poppins";
+}
+
+.payment__divisor {
+    width: 100%;
+    border-bottom: 1px solid #80808033;
 }
 
 .billPaymentsContainer > div {
@@ -92,11 +100,28 @@
 
 .payment__clientContainer {
     width: 100%;
+    font-size: 0.9rem;
 }
 
 .payment__clientContainer div:nth-child(1) {
     display: flex;
     justify-content: left;
     align-items: center;
-    margin: 15px 0 15px 15px;
+    margin: 15px 0 5px 15px;
+}
+
+.payment__clientName {
+    font-weight: 400;
+    margin: 0 0 15px 15px;
+    width: max-content;
+    color: #0d0d0d;
+}
+
+.payments__summary {
+    position: absolute;
+    bottom: 15px;
+    border-top: 1px solid #80808033;
+    width: 100%;
+    text-align: center;
+    padding-top: 15px;
 }
