@@ -9,6 +9,7 @@
     width: 100vw;
     height: 87vh;
     font-family: "Poppins";
+    left: 15px;
 }
 
 .payment__divisor {
@@ -64,7 +65,7 @@
     outline: none;
     margin-top: 10px;
     position: relative;
-    height: 100%;
+    height: 32px;
     padding-left: 35px;
     border-radius: 10px;
 }
@@ -117,11 +118,101 @@
     color: #0d0d0d;
 }
 
-.payments__summary {
+.payments__summary, .payment__payments {
     position: absolute;
     bottom: 15px;
     border-top: 1px solid #80808033;
     width: 100%;
     text-align: center;
     padding-top: 15px;
+    font-size: 1.5rem;
+}
+
+.payments__summary span {
+    color: red;
+    font-size: 600;
+}
+
+.payment__articles {
+    width: 100%;
+    height: 58%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    box-sizing: content-box;
+}
+
+.payment__articles > label {
+    color: red;
+    margin: 5px 0 10px 0;
+}
+
+.payment__items {
+    width: 100%;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.payment__items .payment__icon {
+    width: 5%;
+    margin-left: 10px;
+}
+
+.payment__items .payment__icon svg {
+    fill: blue;
+}
+
+.payment__items .payment__articleDescription {
+    width: 78%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.payment__items .payment__totalPrice {
+    width: 17%;
+    margin-right: 10px;
+    color: red;
+    font-weight: 600;
+}
+
+.payment__data {
+    width: 100%;
+    font-size: 0.8rem;
+}
+
+.payment__data .payment__dataDate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.payment__data .payment__date {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #80808033;
+    padding-bottom: 12px;
+    color: red;
+    font-weight: 600;
+}
+
+.payment__payments {
+    position: absolute;
+    border-top: 1px solid #80808033;
+    width: 100%;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.payment__payments div:nth-child(1) span:nth-child(2) {
+    color: red;
+}
+
+.payment__payments div:nth-child(2) span:nth-child(2) {
+    color: blue;
 }
