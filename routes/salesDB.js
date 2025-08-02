@@ -64,6 +64,24 @@ router.get('/find-sale', (req, res) => {
     });
 });
 
+// Buscar abonos o pagos de la venta
+router.get('/find-paymentsSale', (req, res) => {
+    const SaleID = req.query.q;
+    dbSales.all('SELECT * FROM SalePayments WHERE SaleID = ?', [SaleID], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows || []);
+    });
+});
+
+// Buscar articulos de la venta
+router.get('/find-articlesSale', (req, res) => {
+    const SaleID = req.query.q;
+    dbSales.all('SELECT * FROM SaleDetails WHERE SaleID = ?', [SaleID], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows || []);
+    });
+});
+
 // Obtener siguiente ID
 router.get('/find-nextSaleID', (req, res) => {
     dbSales.get(`SELECT seq FROM sqlite_sequence WHERE name = 'Sales'`, (err, row) => {

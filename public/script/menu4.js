@@ -1,6 +1,7 @@
 import sales from "./sales.js";
 import operations from "./operations.js";
 import params from "./submenu/paramsSales.js";
+import kardex from './kardex.js'
 import { getParamsSalesHTML } from "./submenu/paramsSalesDOMs.js";
 import { 
     getElement, 
@@ -14,6 +15,7 @@ import {
 const menu = () => {
     setModuleInstance('sales', { clearEvents: () => {} });
     setModuleInstance('operations', { clearEvents: () => {} });
+    setModuleInstance('kardex', { clearEvents: () => {} });
     
     getElement('.containerMenu').addEventListener('click', function(event) {
         const elementClicked = event.target;
@@ -88,6 +90,7 @@ const menu = () => {
     const loadTemplate = (templateName, id) => {
         const moduleNameMap = {
             1: 'sales',
+            2: 'kardex',
             7: 'operations'
         };
     
@@ -109,6 +112,10 @@ const menu = () => {
                     case 1:
                         const salesInstance = sales();
                         setModuleInstance(moduleName, salesInstance);
+                        break;
+                    case 2:
+                        const kardexInstance = kardex();
+                        setModuleInstance(moduleName, kardexInstance);
                         break;
                     case 7:
                         const operationsInstance = operations();

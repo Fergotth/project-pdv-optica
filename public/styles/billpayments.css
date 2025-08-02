@@ -112,10 +112,16 @@
 }
 
 .payment__clientName {
-    font-weight: 400;
+    font-weight: 300;
     margin: 0 0 15px 15px;
     width: max-content;
-    color: #0d0d0d;
+    color: #fafafa;
+    width: 90%;
+    border-radius: 5px;
+    background: #00000099;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .payments__summary, .payment__payments {
@@ -143,11 +149,18 @@
     box-sizing: content-box;
 }
 
-.payment__articles > label,
-.payment__paymentsSummary > label {
+.payment__articles > label {
     color: red;
     margin: 5px 0 10px 0;
     font-size: 1rem;
+}
+
+.payment__data > div:nth-child(3) {
+    color: red;
+    padding: 5px 0 10px 0;
+    font-size: 1rem;
+    width: 100%;
+    text-align: center;
 }
 
 .payment__items,
@@ -163,6 +176,11 @@
 .payment__summaryDetails .payment__iconSummary {
     width: 5%;
     margin-left: 10px;
+}
+
+.payment__datePayment {
+    margin-left: 10px;
+    font-weight: 600;
 }
 
 .payment__items .payment__icon svg {

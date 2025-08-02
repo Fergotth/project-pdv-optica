@@ -15,21 +15,30 @@ router.post('/save-clients', (req, res) => {
     );
 });
 
-// Obtener clientes por nombre o fecha de nacimiento
+// Obtener clientes por nombre, fecha de nacimiento o ID
 router.get('/get-clients', (req, res) => {
-    const typeOfParam = req.query.q; // Por ejemplo, ?q=Pedro o ?q=2023-12-01
+    const q = req.query.q;
 
-    if (!typeOfParam) {
+    if (!q) {
         return res.status(400).json({ error: 'Falta el parámetro de búsqueda.' });
     }
 
-    const SQLStr = isNaN(Date.parse(typeOfParam))
-        ? 'SELECT * FROM Clients WHERE LOWER(Name) LIKE LOWER(?)'
-        : 'SELECT * FROM Clients WHERE Birthdate = ?';
+    let SQLStr = '';
+    let param = '';
 
-    const param = isNaN(Date.parse(typeOfParam))
-        ? `%${typeOfParam}%`
-        : `${typeOfParam}`;
+    const isDate = !isNaN(Date.parse(q));
+    const isNumeric = /^\d+$/.test(q); // solo dígitos
+
+    if (isNumeric) {
+        SQLStr = 'SELECT * FROM Clients WHERE ID = ?';
+        param = q;
+    } else if (isDate) {
+        SQLStr = 'SELECT * FROM Clients WHERE Birthdate = ?';
+        param = q;
+    } else {
+        SQLStr = 'SELECT * FROM Clients WHERE LOWER(Name) LIKE LOWER(?)';
+        param = `%${q}%`;
+    }
 
     dbClients.all(SQLStr, [param], (err, rows) => {
         if (err) {
