@@ -173,11 +173,17 @@
     justify-content: space-between;
 }
 
+.payment__items {
+    justify-content: normal;
+}
+
 .payment__items .payment__icon,
 .payment__summaryDetails .payment__iconSummary {
     width: 5%;
     margin-left: 10px;
 }
+
+
 
 .payment__datePayment {
     margin-left: 10px;
@@ -190,7 +196,7 @@
 
 .payment__items .payment__articleDescription,
 .payment__summaryDetails .payment__type {
-    width: 78%;
+    width: 83%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

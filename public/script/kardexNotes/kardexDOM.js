@@ -9,10 +9,7 @@ export const getArticleHTML = (data) => {
         </div>
         <div class="payment__articleDescription">
             <span>x${data.Quantity} ${data.Product}</span>
-        </div>
-        <div class="payment__totalPrice">
-            <span>$${(data.Price * data.Quantity).toFixed(2)}</span>
-        </div>
+        </div>    
     </div>
     `;
 };
