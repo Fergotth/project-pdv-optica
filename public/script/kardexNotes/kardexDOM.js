@@ -1,6 +1,5 @@
 export const getArticleHTML = (data) => {
-    return 
-    `
+    return `
     <div class="payment__items">
         <div class="payment__icon">
             <svg fill="none" viewBox="0 0 16 16" height="18" width="18">
@@ -19,11 +18,10 @@ export const getArticleHTML = (data) => {
 };
 
 export const getPaymentHTML = (data) => {
-    return 
-    `
+    return `
     <div class="payment__summaryDetails">
         <div class="payment__datePayment">
-            ${data.PaymentDate}
+            ${data.PaymentDate.replace("-", "/").replace("-", "/")}
         </div>
         <div class="payment__iconSummary">
             <svg viewBox="0 0 24 24" fill="currentColor" width="20">

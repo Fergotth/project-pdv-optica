@@ -149,7 +149,8 @@
     box-sizing: content-box;
 }
 
-.payment__articles > label {
+.payment__articles > label,
+.payment__labelArticles {
     color: red;
     margin: 5px 0 10px 0;
     font-size: 1rem;

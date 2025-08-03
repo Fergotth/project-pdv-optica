@@ -88,11 +88,22 @@
     background-color: transparent;
 }
 
+.sales-sideleft > .sideleft-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 7px;
+    transition: background 0.2s ease-in-out;
+}	
+
 .sales-sideleft > .sideleft-button button {
     color: #D0D3D4;
 }
 
 .sales-sideleft > .sideleft-button span {
+    pointer-events: none;
     color: #D0D3D4;
 }
 
@@ -109,11 +120,13 @@
 .sales-sideleft > .sideleft-button:hover > svg {
     color: var(--colortext-regular);
     stroke-width: 2;
+    pointer-events: none;
 }
 
 .sales-sideleft > .sideleft-button:hover > span {
     font-weight: 500;
     color: #020202;
+    pointer-events: none;
 }
 
 .sales-sideleft > .sideleft-button:active {
