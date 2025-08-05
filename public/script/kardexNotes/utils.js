@@ -28,6 +28,7 @@ export const getNoteData = async (noteID) => {
         throw new Error(`No se encontró la nota con el numero de Folio ${noteID}`);
     }
 
+    renderWindow();
     const [note] = noteResult;
 
     const articles = await getDataNoteArticlesDB(noteID);
@@ -39,10 +40,10 @@ export const getNoteData = async (noteID) => {
 
 
 export const renderNoteHeader = ({ note, client }) => {
-    getElement('.payments__second > span').textContent = `Nota: ${note.ID}`;
+    getElement('.payments__second > span').textContent = `Nota No.: ${note.ID}`;
     getElement('.payment__clientName').textContent = client?.Name || "Publico General";
     getElement('.payments__summary span').textContent = `$${note.Total.toFixed(2)}`;
-    getElement('.payment__date').textContent = `${note.PaymentDate}`;
+    getElement('.payment__date').textContent = `${note.PaymentDate.replace("-", "/").replace("-", "/")}`;
 };
 
 export const renderArticles = (articles) => {
@@ -73,4 +74,14 @@ export const renderTotals = (total, paid) => {
     getElement('.payment__payments div:nth-child(1) span:nth-child(2)').textContent = `$${paid.toFixed(2)}`;
     getElement('.payment__payments div:nth-child(2) span:nth-child(2)').textContent = `$${pending.toFixed(2)}`;
     getElement('.payment__input').value = '';
+};
+
+const renderWindow = () => {
+    const inputWindow = getElement('.payments__first');
+    const noteWindow = getElement('.payments__second');
+    const paymentWindow = getElement('.payments__third');
+
+    inputWindow.classList.add('move__window')
+    noteWindow.classList.add('show__window');
+    paymentWindow.classList.add('show__window');
 };
