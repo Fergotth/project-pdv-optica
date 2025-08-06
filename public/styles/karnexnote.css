@@ -24,6 +24,10 @@
     opacity: 0;
 }
 
+.payments__tickets {
+    opacity: 0;
+}
+
 .show__window {
     transition: opacity 0.2s ease-in-out;
     opacity: 1;
@@ -82,7 +86,7 @@
 }
 
 .ticket__items div:nth-child(1),
-.ticket__items div:nth-child(3) {
+.ticket__items a:nth-child(3) {
     width: 10%;
     margin: 5px 10px 0 5px;
 }

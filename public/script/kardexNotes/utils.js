@@ -1,7 +1,8 @@
 import { 
     getDataNoteDB,
     getDataNotePaymentsDB,
-    getDataNoteArticlesDB
+    getDataNoteArticlesDB,
+    getTicketsFile
 } from "./getData.js";
 import { getDataClientDB } from "../clients/getData.js";
 import { 
@@ -10,7 +11,8 @@ import {
 } from "../utils/getElement.js";
 import { 
     getArticleHTML, 
-    getPaymentHTML 
+    getPaymentHTML,
+    getTicketItemHTML 
 } from "./kardexDOM.js";
 import { newAlert } from "../utils/alerts.js";
 
@@ -34,8 +36,9 @@ export const getNoteData = async (noteID) => {
     const articles = await getDataNoteArticlesDB(noteID);
     const payments = await getDataNotePaymentsDB(noteID);
     const [client] = await getDataClientDB(note.ClientID);
+    const tickets = await getTicketsFile('sale', noteID);
 
-    return { note, articles, payments, client };
+    return { note, articles, payments, client, tickets };
 };
 
 
@@ -76,12 +79,20 @@ export const renderTotals = (total, paid) => {
     getElement('.payment__input').value = '';
 };
 
+export const renderTickets = async (type, tickets) => {
+    const container = getElement('.payments__ticketsContainer');
+    container.replaceChildren();
+    container.appendChild(getParsedHTML(getTicketItemHTML(type, tickets)));
+};
+
 const renderWindow = () => {
     const inputWindow = getElement('.payments__first');
     const noteWindow = getElement('.payments__second');
     const paymentWindow = getElement('.payments__third');
+    const ticketWindow = getElement('.payments__tickets');
 
     inputWindow.classList.add('move__window')
     noteWindow.classList.add('show__window');
     paymentWindow.classList.add('show__window');
+    ticketWindow.classList.add('show__window');
 };
