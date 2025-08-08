@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abonos</title>
+    <link rel="stylesheet" href="../styles/billpayments.css">
+</head>
+<body>
+    <div class="billPaymentsContainer">
+        <div class="billPayments__first">
+            <div class="billPayment__title">Busqueda</div>
+            <div class="billPayment__Container">
+                <input class="billPayment__input" id="billPayment__input" type="search" name="billPayment__input" placeholder="No. de folio">
+                <label for="billPayment__input" class="billPayment__label">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m21 21-4.34-4.34"/>
+                        <circle cx="11" cy="11" r="8"/>
+                    </svg>
+                </label>
+                <button class="billPayment__search">Buscar</button>
+            </div>
+        </div>
+        <div class="billPayments__second">
+            <div class="billPayment__title">Informacion de la nota</div>
+            <div class="billPayment__client">
+                <span>Cliente</span><span>Fernando Peralta Rodriguez</span>
+            </div>
+            <div class="billPayment__total">
+                <span>Total: </span><span>$3500.00</span>
+            </div>
+            <div class="billPayment__totalPaid">
+                <span>Pagado: </span><span>$1350.50</span>
+            </div>
+            <div class="billPayment__totalUnpaid">
+                <span>Saldo: </span><span>$1949.50</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

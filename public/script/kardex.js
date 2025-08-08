@@ -2,8 +2,9 @@ import { loader } from "./utils/loader.js";
 import { getElement } from "./utils/getElement.js";
 import { setData } from "./kardexNotes/setData.js";
 
+// falta agregar en la pantalla principal mostrar IVA y Descuentos
 const kardexNote = async () => {
-    getElement('.billPaymentsContainer').addEventListener('submit', (event) => {
+    getElement('.billKardexContainer').addEventListener('submit', (event) => {
         event.preventDefault();
     });
 

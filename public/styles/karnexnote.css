@@ -1,4 +1,4 @@
-.billPaymentsContainer {
+.billKardexContainer {
     display: flex;
     flex-direction: row;
     animation: showForm 0.5s ease-in-out;
@@ -43,7 +43,7 @@
     border-bottom: 1px solid #80808033;
 }
 
-.billPaymentsContainer > div {
+.billKardexContainer > div {
     width: 31%;
     height: 80%;
     background-color: #fdfefe;
@@ -62,7 +62,7 @@
         0px 0px 0px rgba(0, 0, 0, 0.1);
 }
 
-.billPaymentsContainer .payments__tickets {
+.billKardexContainer .payments__tickets {
     position: absolute;
     left: 0;
     width: 20%;
@@ -71,7 +71,7 @@
     background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 15.21%);
 }
 
-.billPaymentsContainer .payments__tickets .payments__ticketsContainer {
+.billKardexContainer .payments__tickets .payments__ticketsContainer {
     width: 100%;
     height: calc(99% - 0.9rem);
     overflow-y: auto;
@@ -95,7 +95,7 @@
     width: 80%;
 }
 
-.billPaymentsContainer .payments__first {
+.billKardexContainer .payments__first {
     width: 20%;
     height: 17%;
     background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 45.21%);

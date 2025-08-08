@@ -58,10 +58,10 @@ router.get('/get-ticketPDF', (req, res) => {
 
     try {
         const files = fs.readdirSync(ticketsDir);
-        console.log("Archivos encontrados:", files);
+        //console.log("Archivos encontrados:", files);
 
         const matchedFile = files.find(file => file.startsWith(filePattern) && file.endsWith('.pdf'));
-        console.log("Archivo coincidente:", matchedFile);
+        //console.log("Archivo coincidente:", matchedFile);
 
         if (matchedFile) {
             const publicURL = `/tickets/${matchedFile}`;

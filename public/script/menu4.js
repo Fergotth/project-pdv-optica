@@ -40,7 +40,11 @@ const menu = () => {
                     template: 'template-kardexnote.html',
                     templateId: 2 
                 },
-                3: { backgroundColor: '#509ec7' },
+                3: { 
+                    backgroundColor: '#509ec7',
+                    template: 'template-billpayments.html',
+                    templateId: 3  
+                },
                 4: { backgroundColor: '#509ec7' },
                 5: { backgroundColor: '#509ec7' },
                 6: { 
