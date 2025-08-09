@@ -2,6 +2,7 @@ import sales from "./sales.js";
 import operations from "./operations.js";
 import params from "./submenu/paramsSales.js";
 import kardexNote from './kardex.js'
+import payments from "./payments.js";
 import { getParamsSalesHTML } from "./submenu/paramsSalesDOMs.js";
 import { 
     getElement, 
@@ -15,6 +16,7 @@ import {
 const menu = () => {
     setModuleInstance('sales', { clearEvents: () => {} });
     setModuleInstance('operations', { clearEvents: () => {} });
+    setModuleInstance('payments', { clearEvents: () => {} });
     setModuleInstance('kardexNote', { clearEvents: () => {} });
     
     getElement('.containerMenu').addEventListener('click', function(event) {
@@ -95,6 +97,7 @@ const menu = () => {
         const moduleNameMap = {
             1: 'sales',
             2: 'kardexNote',
+            3: 'payments',
             7: 'operations'
         };
     
@@ -120,6 +123,10 @@ const menu = () => {
                     case 2:
                         const kardexInstance = kardexNote();
                         setModuleInstance(moduleName, kardexInstance);
+                        break;
+                    case 2:
+                        const paymentsInstance = payments();
+                        setModuleInstance(moduleName, paymentsInstance);
                         break;
                     case 7:
                         const operationsInstance = operations();

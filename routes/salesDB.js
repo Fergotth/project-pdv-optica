@@ -91,4 +91,13 @@ router.get('/find-nextSaleID', (req, res) => {
     });
 });
 
+// Obtener saldo pendiente de una nota por ID
+router.get('/find-noteUnpaid', (req, res) => {
+    const SaleID = req.query.q;
+    dbSales.all('SELECT * FROM UnpaidSales WHERE SaleID = ?', [SaleID], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows || []);
+    });
+});
+
 module.exports = router;
