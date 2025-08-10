@@ -124,7 +124,7 @@ const menu = () => {
                         const kardexInstance = kardexNote();
                         setModuleInstance(moduleName, kardexInstance);
                         break;
-                    case 2:
+                    case 3:
                         const paymentsInstance = payments();
                         setModuleInstance(moduleName, paymentsInstance);
                         break;

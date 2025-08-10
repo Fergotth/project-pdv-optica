@@ -2,7 +2,7 @@ import { newAlert } from '../utils/alerts.js';
 
 export const getData = async (value) => {
     try {
-        const response = await fetch(`/find-sale-full?q=${encodeURIComponent(value)}`);
+        const response = await fetch(`/find-unpaidSale?q=${encodeURIComponent(value)}`);
         
         if (!response.ok) {
             newAlert(`Error HTTP: ${response.status}`, "error");
