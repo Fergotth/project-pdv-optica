@@ -13,7 +13,11 @@ export const getData = async (value) => {
 
         // Validar que venga con datos
         if (!data || !data.SaleID) {
-            newAlert("No se encontró la venta.", "warning");
+            newAlert({
+                icon: "info",
+                title: "Busqueda fallida",
+                text: "No se pudo obtener la información de la venta. Por favor, intente nuevamente.",
+            });
             return null;
         }
 
@@ -21,7 +25,8 @@ export const getData = async (value) => {
             total: data.Total ?? 0,
             unpaid: data.Balance ?? 0,
             totalPaid: (data.Total ?? 0) - (data.Balance ?? 0),
-            client: data.ClientName || "Público General"
+            client: data.ClientName || "Público General",
+            date: data.PaymentDate
         };
 
     } catch (error) {

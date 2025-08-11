@@ -98,24 +98,21 @@ router.get('/find-unpaidSale', (req, res) => {
 
     if (!ID) return res.status(400).json({ error: 'Falta el ID de la venta.' });
 
-    dbSales.serialize(() => {
-        dbSales.run(`ATTACH DATABASE '${path.join(__dirname, '../data/clients.db')}' AS clientsDB`);
-
-        dbSales.get(`
-            SELECT 
-                s.ID AS SaleID,
-                s.ClientID,
-                IFNULL(c.Name, 'Público General') AS ClientName,
-                s.Total,
-                IFNULL(u.Balance, 0) AS Balance
-            FROM Sales s
-            LEFT JOIN clientsDB.Clients c ON s.ClientID = c.ID
-            LEFT JOIN UnpaidSales u ON s.ID = u.SaleID
-            WHERE s.ID = ?
-        `, [ID], (err, row) => {
-            if (err) return res.status(500).json({ error: err.message });
-            res.json(row || {});
-        });
+    dbSales.get(`
+        SELECT 
+            s.ID AS SaleID,
+            s.ClientID,
+            IFNULL(c.Name, 'Público General') AS ClientName,
+            s.Total,
+            IFNULL(u.Balance, 0) AS Balance,
+            s.PaymentDate
+        FROM Sales s
+        LEFT JOIN clientsDB.Clients c ON s.ClientID = c.ID
+        LEFT JOIN UnpaidSales u ON s.ID = u.SaleID
+        WHERE s.ID = ?
+    `, [ID], (err, row) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(row || {});
     });
 });
 

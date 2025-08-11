@@ -20,8 +20,34 @@ if (!fs.existsSync(ticketsDir)) {
     fs.mkdirSync(ticketsDir);
 }
 
+const dbClients = new sqlite3.Database(path.join(dataDir, 'clients.db'));
+
+// Crear la tabla Clients (Clientes)
+dbClients.run(`
+CREATE TABLE IF NOT EXISTS Clients (
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        Name TEXT,
+        Phone TEXT,
+        Birthdate TEXT,
+        Email TEXT,
+        Comments TEXT
+    )
+`);
+
 const dbSales = new sqlite3.Database(path.join(dataDir, 'sales.db'));
 dbSales.run('PRAGMA foreign_keys = ON');
+
+// Adjuntar clients.db una sola vez aquí
+dbSales.run(
+    `ATTACH DATABASE '${path.join(dataDir, 'clients.db')}' AS clientsDB`,
+    (err) => {
+        if (err) {
+            console.error("❌ Error al adjuntar clients.db:", err.message);
+        } else {
+            console.log("✅ clients.db adjuntada a dbSales correctamente");
+        }
+    }
+)
 
 // Crear tabla Sales (Ventas)
 dbSales.run(`
@@ -75,20 +101,6 @@ dbSales.run(`
         PaymentDate TEXT DEFAULT (date('now','localtime')),
         FOREIGN KEY(SaleID) REFERENCES Sales(ID)
         )
-`);
-
-const dbClients = new sqlite3.Database(path.join(dataDir, 'clients.db'));
-
-// Crear la tabla Clients (Clientes)
-dbClients.run(`
-CREATE TABLE IF NOT EXISTS Clients (
-        ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Name TEXT,
-        Phone TEXT,
-        Birthdate TEXT,
-        Email TEXT,
-        Comments TEXT
-    )
 `);
 
 const dbProducts = new sqlite3.Database(path.join(dataDir, 'products.db'));
