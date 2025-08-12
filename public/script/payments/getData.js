@@ -16,7 +16,7 @@ export const getData = async (value) => {
             newAlert({
                 icon: "info",
                 title: "Busqueda fallida",
-                text: "No se pudo obtener la información de la venta. Por favor, intente nuevamente.",
+                text: "No existe esa nota de venta. Por favor, intente nuevamente.",
             });
             return null;
         }
@@ -26,7 +26,7 @@ export const getData = async (value) => {
             unpaid: data.Balance ?? 0,
             totalPaid: (data.Total ?? 0) - (data.Balance ?? 0),
             client: data.ClientName || "Público General",
-            date: data.PaymentDate
+            status: data.StatusByDate
         };
 
     } catch (error) {

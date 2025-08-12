@@ -12,11 +12,11 @@ const payments = async () => {
     btnSearchUnpaidNote.addEventListener('click', async (event) => {
         try {
             loader(true);
-            await setData(getElement('.billPayment__input').value)
+            await setData(getElement('.billPayment__input').value);
         } catch (error) {
-            console.error("Error al obtener los datos de la nota: ", error);
+            console.error("Error al obtener los datos de la nota");
         } finally {
-            loader(false)
+            loader(false);
         }
     });
 };

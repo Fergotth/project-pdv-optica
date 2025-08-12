@@ -105,10 +105,16 @@ router.get('/find-unpaidSale', (req, res) => {
             IFNULL(c.Name, 'Público General') AS ClientName,
             s.Total,
             IFNULL(u.Balance, 0) AS Balance,
-            s.PaymentDate
+            s.PaymentDate,
+        CASE 
+            WHEN DATE('now') > DATE(s.PaymentDate, '+60 days') THEN 'Cancelada'
+            ELSE 'Vigente'
+        END AS StatusByDate
         FROM Sales s
-        LEFT JOIN clientsDB.Clients c ON s.ClientID = c.ID
-        LEFT JOIN UnpaidSales u ON s.ID = u.SaleID
+        LEFT JOIN clientsDB.Clients c 
+            ON s.ClientID = c.ID
+        LEFT JOIN UnpaidSales u 
+            ON s.ID = u.SaleID
         WHERE s.ID = ?
     `, [ID], (err, row) => {
         if (err) return res.status(500).json({ error: err.message });
