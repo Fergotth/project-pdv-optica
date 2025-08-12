@@ -54,7 +54,7 @@ export const calculateDOMSubtotal = () => {
 export const calcuteNewPayment = (value) => {
     const actualPaid = getState().paymentsApplicated;
     const totalPaid = getElement('.detailTotal span');
-    const totalValue = total();
+    const totalValue = total().toFixed(2);
 
     if (actualPaid + Number(value) > totalValue) {
         return false;
