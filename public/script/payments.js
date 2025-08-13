@@ -1,8 +1,4 @@
-import { setData } from "./payments/setData.js";
-import { getParsedHTML } from "./utils/getElement.js";
-import { getBillPaymentSummaryHTML } from './payments/paymentsDom.js';
 import summarySale from "./sales/summarySale.js";
-
 import { getHandlerArgs } from "./payments/handlerDispatcher.js";
 import { getElement } from "./utils/getElement.js";
 import { updateState } from "./sales/state.js";
@@ -12,40 +8,12 @@ import * as handlers from './payments/handlers.js';
 const payments = async () => {
     const billPaymentContainer = getElement('.billPaymentsContainer');
     const btnApplyPaidment = getElement('.third__applyNewPayment');
-    // const btnSearchUnpaidNote = getElement('.billPayment__search');
     
     billPaymentContainer.addEventListener('submit', (event) => {
         event.preventDefault();
     });
     
     btnApplyPaidment.classList.add('unabled__button');
-
-    // btnSearchUnpaidNote.addEventListener('click', async (event) => {
-    //     try {
-    //         loader(true);
-    //         await setData(getElement('.billPayment__input').value);
-    //     } catch (error) {
-    //         console.error("Error al obtener los datos de la nota");
-    //     } finally {
-    //         loader(false);
-    //     }
-    // });
-
-    // btnApplyPaidment.addEventListener('click', () => {
-    //     try {
-    //         loader(true);
-    //         billPaymentContainer.appendChild(getParsedHTML(getBillPaymentSummaryHTML(
-    //             getElement('.second__title div:nth-child(2) > span').textContent, 
-    //             getElement('.summary__total + div').textContent.replace("$", ""), 
-    //             getElement('.second__title div:nth-child(2) > span').dataset.id))
-    //             );
-    //         summarySale();
-    //     } catch (error) {
-    //         console.error("Error al obtener los datos de la nota en el contenedor");
-    //     } finally {
-    //         loader(false);
-    //     }
-    // });
 
     globalThis.loader = loader;
 
@@ -67,7 +35,6 @@ const payments = async () => {
 
     updateState(() => {
         return {
-            percentIVA: dataParams.IVA,
             dolar: dataParams.PriceDolar
         };
     });
