@@ -26,6 +26,7 @@ export const getData = async (value) => {
             unpaid: data.Balance ?? 0,
             totalPaid: (data.Total ?? 0) - (data.Balance ?? 0),
             client: data.ClientName || "Público General",
+            idClient: data.ClientID,
             status: data.StatusByDate
         };
 
