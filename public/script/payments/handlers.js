@@ -8,6 +8,7 @@ import {
 } from '../utils/getElement.js';
 import { getBillPaymentSummaryHTML } from './paymentsDom.js';
 import { setData } from './setData.js';
+import summarySale from '../sales/summarySale.js';
 
 export const handlerPaymentCloseIcon = ({ DOM }) => {
     updateState(() => {
@@ -29,4 +30,5 @@ export const handlerBillPayment__search = async ({ note }) => {
 
 export const handlerThird__applyNewPayment = ({ DOM, client, total, id }) => {
     DOM.appendChild(getParsedHTML(getBillPaymentSummaryHTML(client, total, id)));
+    summarySale();
 };

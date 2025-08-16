@@ -25,6 +25,10 @@
     --item5-opacity: 0;;
 }
 
+svg {
+    pointer-events: none;
+}
+
 .paymentContainer {
     width: 60vw;
     min-width: 60vw;

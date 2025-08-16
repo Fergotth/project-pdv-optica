@@ -4,6 +4,10 @@
 @import url('searchClientForm.css');
 @import url('quotationPrompt.css');
 
+svg {
+    pointer-events: none;
+}
+
 .container-sales {
     display: flex;
     flex-direction: row;

@@ -14,9 +14,9 @@ export const getHandlerArgs = {
     }),
 
     handlerThird__applyNewPayment: () => ({
-        DOM: getElement('.third__applyNewPayment'),
+        DOM: getElement('.billPaymentsContainer'),
         client: getElement('.second__title div:nth-child(2) > span').textContent,
-        total: getElement('.summary__total + div').textContent.replace("$", ""),
+        total: getElement('.summary__totalUnpaid + div').textContent.replace("$", ""),
         ID: getElement('.second__title div:nth-child(2) > span').dataset.id
     })
 };

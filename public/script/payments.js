@@ -1,4 +1,3 @@
-import summarySale from "./sales/summarySale.js";
 import { getHandlerArgs } from "./payments/handlerDispatcher.js";
 import { getElement } from "./utils/getElement.js";
 import { updateState } from "./sales/state.js";
