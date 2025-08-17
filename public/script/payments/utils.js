@@ -1,4 +1,9 @@
 import { getElement } from '../utils/getElement.js';
+import { 
+    updateState, 
+    getState 
+} from '../sales/state.js';
+
 export const renderData = (total, unpaid, totalPaid, client, idClient, status, id) => {
     getElement('.second__title div:nth-child(1) > span').textContent = id;
     getElement('.second__title div:nth-child(2) > span').textContent = client;
@@ -21,4 +26,23 @@ export const renderData = (total, unpaid, totalPaid, client, idClient, status, i
         statusNote.textContent = "Pagada";
         btnApplyPaidment.classList.add('unabled__button');
     }
+};
+
+export const calcuteNewPayment = (value) => {
+    const actualPaid = getState().paymentsApplicated;
+    const totalPaid = getElement('.detailTotal span');
+    const totalValue = Number(getElement('.summaryClientSaleDetails span:nth-child(2)').textContent);
+
+    if (actualPaid + Number(value) > totalValue) {
+        return false;
+    }
+
+    updateState(previusData => {
+        return {
+            paymentsApplicated: previusData.paymentsApplicated + Number(value)
+        };
+    });
+
+    totalPaid.textContent = getState().paymentsApplicated.toFixed(2);
+    return true;
 };

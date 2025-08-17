@@ -18,5 +18,16 @@ export const getHandlerArgs = {
         client: getElement('.second__title div:nth-child(2) > span').textContent,
         total: getElement('.summary__totalUnpaid + div').textContent.replace("$", ""),
         ID: getElement('.second__title div:nth-child(2) > span').dataset.id
+    }),
+
+    handlerApplyPayment: () => ({
+        DOM: getElement('.salePayments'),
+        value: getElement('.paymentValue').value,
+        typeOfPayment: getState().typeOfPayment
+    }),
+
+    handlerItemDeletePayment: (button) => ({
+        DOM: button.closest('.paymentItem'),
+        value: Number(button.closest('.paymentItem').querySelector('.paidValue')?.textContent)
     })
 };
