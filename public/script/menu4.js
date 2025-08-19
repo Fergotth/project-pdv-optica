@@ -47,7 +47,11 @@ const menu = () => {
                     template: 'template-billpayments.html',
                     templateId: 3  
                 },
-                4: { backgroundColor: '#509ec7' },
+                4: { 
+                    backgroundColor: '#509ec7',
+                    template: 'template-params.html',
+                    templateId: 4 
+                },
                 5: { backgroundColor: '#509ec7' },
                 6: { 
                     backgroundColor: '#509ec7',
@@ -76,11 +80,6 @@ const menu = () => {
             }
         }
 
-        if (elementClicked.classList.contains('paramsSales')) {
-            getElement('temporaryContent').appendChild(getParsedHTML(getParamsSalesHTML()));
-            params();
-        }
-
         // if (elementClicked.classList.contains('calendarContainer')) {
         //     const calendarIcon = event.target.closest('.calendarContainer'); // Detecta el SVG clicado
 
@@ -98,6 +97,7 @@ const menu = () => {
             1: 'sales',
             2: 'kardexNote',
             3: 'payments',
+            4: 'params',
             7: 'operations'
         };
     
@@ -127,6 +127,10 @@ const menu = () => {
                     case 3:
                         const paymentsInstance = payments();
                         setModuleInstance(moduleName, paymentsInstance);
+                        break;
+                    case 4:
+                        const paramsInstance = params();
+                        setModuleInstance(moduleName, paramsInstance);
                         break;
                     case 7:
                         const operationsInstance = operations();

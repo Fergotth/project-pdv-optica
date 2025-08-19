@@ -1,4 +1,5 @@
 import { formatMoney } from "./utils.js";
+import { getState } from "./state.js";
 
 /**
  * 
@@ -192,6 +193,9 @@ export const getPaymentSummaryHTML = (client, total, ID) => {
 };
 
 export const getNewPaymentItemHTML = (payment, typeOfPayment) => {
+    const typeOfPaymentConverted = typeOfPayment === 'Dolar' ? `${typeOfPayment} (x${payment})` : null;
+    const paymentConverted = !typeOfPaymentConverted ? payment : payment * getState().dolar;
+    
     return `
     <div class="paymentItem">
         <div class="itemCheck">
@@ -199,8 +203,8 @@ export const getNewPaymentItemHTML = (payment, typeOfPayment) => {
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
             </svg>
         </div>
-        <span class="typeOfPaymentValue">${typeOfPayment}</span>
-        <span class="paidValue">${Number(payment).toFixed(2)}</span>
+        <span class="typeOfPaymentValue">${typeOfPaymentConverted || typeOfPayment}</span>
+        <span class="paidValue">${Number(paymentConverted).toFixed(2)}</span>
         <div class="itemDeletePayment">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M10 11v6"/>
