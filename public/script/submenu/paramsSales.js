@@ -1,6 +1,6 @@
-import { getElement } from "../utils/getElement.js";
-import { newAlert } from "../utils/alerts.js";
-import { updateState } from "../sales/state.js";
+import { getElement } from '../utils/getElement.js';
+import { newAlert } from '../utils/alerts.js';
+import { updateState } from '../sales/state.js';
 
 const params = () => {
     getElement('.applyParams').addEventListener('click', async function () {

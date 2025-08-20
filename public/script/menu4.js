@@ -3,11 +3,7 @@ import operations from "./operations.js";
 import params from "./submenu/paramsSales.js";
 import kardexNote from './kardex.js'
 import payments from "./payments.js";
-import { getParamsSalesHTML } from "./submenu/paramsSalesDOMs.js";
-import { 
-    getElement, 
-    getParsedHTML 
-} from "./utils/getElement.js";
+import { getElement} from "./utils/getElement.js";
 import { 
     setModuleInstance, 
     setActiveModule 
@@ -32,35 +28,29 @@ const menu = () => {
 
             const itemConfig = {
                 1: {
-                    backgroundColor: '#509ec7',
                     borderRadius: '25px 0 0 25px',
                     template: 'template-sales.html',
                     templateId: 1
                 },
                 2: { 
-                    backgroundColor: '#509ec7',
                     template: 'template-kardexnote.html',
                     templateId: 2 
                 },
                 3: { 
-                    backgroundColor: '#509ec7',
                     template: 'template-billpayments.html',
                     templateId: 3  
                 },
                 4: { 
-                    backgroundColor: '#509ec7',
                     template: 'template-params.html',
                     templateId: 4 
                 },
                 5: { backgroundColor: '#509ec7' },
                 6: { 
-                    backgroundColor: '#509ec7',
                     template: 'template-operations.html',
                     templateId: 6 
                 },
                 7: { backgroundColor: '#509ec7' },
                 8: {
-                    backgroundColor: '#509ec7',
                     borderRadius: '0 25px 25px 0'
                 }
             };
@@ -68,8 +58,6 @@ const menu = () => {
             const config = itemConfig[idItem[1]];
             
             if (config) {
-                //elementClicked.style.backgroundColor = config.backgroundColor;
-
                 if(config.borderRadius) {
                     //elementClicked.style.borderRadius = config.borderRadius;
                 }

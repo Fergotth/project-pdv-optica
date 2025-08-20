@@ -37,7 +37,7 @@ export const handlerThird__applyNewPayment = ({ DOM, client, total, id }) => {
 };
 
 export const handlerApplyPayment = async ({ DOM, value, typeOfPayment }) => {
-    if (!calcuteNewPayment(value)) {
+    if (!calcuteNewPayment(value, typeOfPayment)) {
         newAlert({
             icon: "info",
             title: "AVISO",

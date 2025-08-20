@@ -236,7 +236,7 @@ export const handlerPaymentCloseIcon = ({ DOM }) => {
 };
 
 export const handlerApplyPayment = ({ DOM, value, typeOfPayment }) => {
-    if (!calcuteNewPayment(value)) {
+    if (!calcuteNewPayment(value, typeOfPayment)) {
         newAlert({
             icon: "info",
             title: "AVISO",

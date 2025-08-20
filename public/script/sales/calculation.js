@@ -20,6 +20,10 @@ export const IVA = (checked) => {
         return { iva: checked ? (previusData.subtotal - previusData.discount) * previusData.percentIVA / 100 : 0 };
     });
 
+    getElement('.discount + div').innerHTML = checked ? 
+    `<input type="checkbox" class="applyIVA" checked>IVA %${getState().percentIVA}` : 
+    `<input type="checkbox" class="applyIVA">IVA`;
+    
     return getState().iva;
 };
 
@@ -51,18 +55,21 @@ export const calculateDOMSubtotal = () => {
     return total;
 };
 
-export const calcuteNewPayment = (value) => {
-    const actualPaid = getState().paymentsApplicated;
+export const calcuteNewPayment = (value, typeOfPayment = undefined) => {
+    const dataState = getState();
+    const actualPaid = Number(dataState.paymentsApplicated.toFixed(2));
+    const newPayment = typeOfPayment === 'Dolar' ? 
+        Number((dataState.dolar * Number(value)).toFixed(2)) : Number(value);
     const totalPaid = getElement('.detailTotal span');
-    const totalValue = total().toFixed(2);
+    const totalValue = Number(total().toFixed(2));
 
-    if (actualPaid + Number(value) > totalValue) {
+    if (actualPaid + newPayment > totalValue) {
         return false;
     }
 
     updateState(previusData => {
         return {
-            paymentsApplicated: previusData.paymentsApplicated + Number(value)
+            paymentsApplicated: previusData.paymentsApplicated + newPayment
         };
     });
 

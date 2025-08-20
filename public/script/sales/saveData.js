@@ -41,8 +41,8 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     const urlUnpaidNotes = '/save-unpaidnotes';
     const urlTicketHTML = '/generate-ticketHTML';
 
-    const totalPaid = paymentItems.reduce((acc, item) => acc + item.Paid, 0);
-    const balance = saleSummary.total - totalPaid;
+    const totalPaid = Number(paymentItems.reduce((acc, item) => acc + item.Paid, 0).toFixed(2));
+    const balance = Number((saleSummary.total - totalPaid).toFixed(2));
     
     // Constructor del objeto con los datos de la venta
     const saleData = {

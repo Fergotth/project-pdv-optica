@@ -28,6 +28,9 @@ export const createTicketSaleHTML = (nextID, cartItems, payments, summarySale, p
         totalPaid += payment.Paid;
     });
 
+    const unpaidAmount = (summarySale.total - totalPaid) < 0 ?
+        (summarySale.total - totalPaid) * -1 : summarySale.total - totalPaid;
+
     const clientName = document.querySelector('.input-client').textContent;
 
     const ticketInnerHTML = `
@@ -225,7 +228,7 @@ export const createTicketSaleHTML = (nextID, cartItems, payments, summarySale, p
     </div>
     <div class="unpaidSummaryTicket">
         <div>Saldo Pendiente</div>
-        <div>${formatMoney(summarySale.total - totalPaid)}</div>
+        <div>${formatMoney(unpaidAmount)}</div>
     </div>
     <div class="divisorTicket"></div>
     <div class="divisorTicket"></div>
