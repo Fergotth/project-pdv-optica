@@ -124,6 +124,10 @@ export const handlerDeleteCart = async ({ DOM, param }) => {
             title: "AVISO",
             text: "Articulos eliminados del carrito de compras"
         });
+
+        const inputClient = getElement('.input-client');
+        inputClient.textContent = 'Publico General';
+        inputClient.dataset.id = 0;
     }
 };
 
@@ -336,10 +340,20 @@ export const handlerSetQuotationBtn = async ({ quotation }) => {
             title: "AVISO",
             text: "No se encontro la cotizacion"
         });
+
+        return;
     }
 
+    const cartContainer = getElement(Class.list.itemsInCart);
+    const clientLabel = getElement('.input-client');
+    const [clientName] = await getDataClientDB(data.ClientID);
+    cartContainer.replaceChildren();
+    
+    clientLabel.textContent = !Boolean(data.ClientID) ? "Publico General" : clientName.Name;
+    clientLabel.dataset.id = data.ClientID;
+
     data.Products.forEach(item => {
-        handlerItemSelected({ DOM: getElement(Class.list.itemsInCart), sku: item.sku, quantity: item.quantity });
+        handlerItemSelected({ DOM: cartContainer, sku: item.sku, quantity: item.quantity });
     });
 
     if (data.Discount > 0) {

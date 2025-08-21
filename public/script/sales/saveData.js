@@ -102,7 +102,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     if (allSuccessful) {
         console.log('Todos los datos fueron guardados exitosamente');
         const ticketSaved = await postData(urlTicketHTML, {
-            html: createTicketSaleHTML(nextID, cartItems, paymentItems, saleSummary, getState().percentIVA)
+            html: createTicketSaleHTML(nextID, cartItems, paymentItems, saleSummary, getState().percentIVA, getState().dolar)
         });
 
         if (ticketSaved) {

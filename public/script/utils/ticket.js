@@ -4,7 +4,7 @@ import {
     numberToWords 
 } from "../sales/utils.js";
 
-export const createTicketSaleHTML = (nextID, cartItems, payments, summarySale, percentIVA) => {
+export const createTicketSaleHTML = (nextID, cartItems, payments, summarySale, percentIVA, dolar) => {
     let totalItems = 0;
     let productsItems = '';
     cartItems.forEach(product => {
@@ -217,6 +217,8 @@ export const createTicketSaleHTML = (nextID, cartItems, payments, summarySale, p
         <span>${formatMoney(summarySale.total)}</span>
     </div>
     <div class="totalInWords">(${numberToWords(summarySale.total)})</div>
+    <div class="divisorTicket"></div>
+    <div class="dollarValue">Tipo de cambio: $${dolar.toFixed(2)}</div>
     <div class="divisorTicket"></div>
     <div class="titlePaymentsTicket">Pagos realizados</div>
     <div class="paymentsTicket">
