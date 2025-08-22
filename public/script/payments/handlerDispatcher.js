@@ -29,5 +29,9 @@ export const getHandlerArgs = {
     handlerItemDeletePayment: (button) => ({
         DOM: button.closest('.paymentItem'),
         value: Number(button.closest('.paymentItem').querySelector('.paidValue')?.textContent)
+    }),
+
+    handlerBtnApplyPayments: () => ({
+        elements: document.querySelectorAll('.paymentItem')
     })
 };

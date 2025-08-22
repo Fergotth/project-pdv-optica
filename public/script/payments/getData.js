@@ -40,3 +40,12 @@ export const getData = async (value) => {
         return null;
     }
 };
+
+export const getPaymentsData = (elements) => {
+    const newData = Array.from(elements).map(item => ({
+        PaymentMethod: item.querySelector('.typeOfPaymentValue').textContent,
+        Paid: Number(item.querySelector('.paidValue').textContent)
+    }));
+
+    return newData;
+};

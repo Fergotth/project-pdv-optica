@@ -1,9 +1,9 @@
 import { flushState, getState } from './state.js';
+import { newAlert } from '../utils/alerts.js';
 import { 
     generateTicket, 
     restartSaleForm,
-    createStringProducts,
-    extractProducts
+    createStringProducts
 } from './utils.js';
 import { 
     createTicketSaleHTML, 
@@ -29,6 +29,12 @@ const postData = async (url, data) => {
 
         return response.ok;
     } catch (error) {
+        newAlert({
+            icon: 'error',
+            title: url,
+            text: "Error al guardar los datos"
+        });
+
         console.error('Error al guardar los datos del producto: ', error);
         return false;
     }
@@ -108,6 +114,11 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
         if (ticketSaved) {
             generateTicket(nextID, "sale");
         } else {
+            newAlert({
+                icon: 'error',
+                text: `No se pudo guardar el HTML del ticket ${nextID}`
+            });
+
             console.warn('No se pudo guardar el HTML del ticket');
             throw new Error('Error al guardar el ticket HTML');
         }
@@ -118,18 +129,6 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
 };
 
 export const saveQuotation = async (data) => {
-    const urlTicketHTML = '/generate-ticketHTML';
-    const ticketCreated = await postData(urlTicketHTML, {
-        html: createTicketQuotationHTML(data)
-    });
-
-    if (!ticketCreated) {
-        console.warn('No se pudo guardar el HTML del ticket');
-        throw new Error('Error al guardar el ticket HTML');
-    }
-
-    generateTicket(data.nextID, "quotation");
-    
     const urlSaveQuotation = '/save-quotation';
     const quotationSaved = await postData(urlSaveQuotation, {
         ClientID: parseInt(data.clientId, 10),
@@ -141,10 +140,31 @@ export const saveQuotation = async (data) => {
     });
     
     if (!quotationSaved) {
+        newAlert({
+            icon: 'error',
+            text: "No se pudo guardar la cotización"
+        });
+
         console.warn('No se pudo guardar la cotización');
         throw new Error('Error al guardar la cotización');
     }
-    
+
+    const urlTicketHTML = '/generate-ticketHTML';
+    const ticketCreated = await postData(urlTicketHTML, {
+        html: createTicketQuotationHTML(data)
+    });
+
+    if (!ticketCreated) {
+        newAlert({
+            icon: 'error',
+            text: "No se pudo guardar el HTML del ticket"
+        });
+
+        console.warn('No se pudo guardar el HTML del ticket');
+        throw new Error('Error al guardar el ticket HTML');
+    }
+
+    generateTicket(data.nextID, "quotation");
     await flushState();
     restartSaleForm();
 };

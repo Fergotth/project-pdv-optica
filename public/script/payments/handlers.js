@@ -11,6 +11,7 @@ import { getBillPaymentSummaryHTML } from './paymentsDom.js';
 import { getNewPaymentItemHTML } from '../sales/salesDom.js';
 import { calcuteNewPayment } from './utils.js';
 import { setData } from './setData.js';
+import { getPaymentsData } from './getData.js';
 import summarySale from '../sales/summarySale.js';
 
 export const handlerPaymentCloseIcon = ({ DOM }) => {
@@ -53,4 +54,9 @@ export const handlerApplyPayment = async ({ DOM, value, typeOfPayment }) => {
 export const handlerItemDeletePayment = ({ DOM, value }) => {
     calcuteNewPayment(-value);
     DOM.remove();
+};
+
+export const handlerBtnApplyPayments = ({ elements }) => {
+    const payments = getPaymentsData(elements);
+    // guardar datos en la BD, y verificar si se liquido o no para eliminarlo de los saldos pendientes
 };
