@@ -2,6 +2,7 @@ import {
     updateState, 
     getState 
 } from '../sales/state.js';
+import { getElement } from '../utils/getElement.js';
 import { newAlert } from '../utils/alerts.js';
 
 export const getData = async (value) => {
@@ -9,7 +10,10 @@ export const getData = async (value) => {
         const response = await fetch(`/find-unpaidSale?q=${encodeURIComponent(value)}`);
         
         if (!response.ok) {
-            newAlert(`Error HTTP: ${response.status}`, "error");
+            newAlert({
+                icon: "error",
+                text: `Error HTTP: ${response.status}` 
+            });
             return null;
         }
 
@@ -57,4 +61,32 @@ export const getPaymentsData = (elements) => {
     }));
 
     return getState().dataPayment;
+};
+
+export const getUnpaidNoteData = async () => {
+    const SaleID = Number(getElement('.second__title div:nth-child(1) > span').textContent);
+
+    try {
+        const response = await fetch(`/get-unpaidNote?q=${encodeURIComponent(SaleID)}`);
+        
+        if (!response.ok) {
+            newAlert({
+                icon: "error",
+                text: `Error HTTP: ${response.status}` 
+            });
+
+            return false;
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error en getData:", error);
+        newAlert({
+            icon: "error",
+            title: "Busqueda fallida",
+            text: "No se pudo obtener la información de la nota. Por favor, intente nuevamente.",
+        });
+        
+        return false;
+    }
 };

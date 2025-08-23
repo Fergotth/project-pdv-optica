@@ -1,5 +1,6 @@
 import { postData } from "../utils/postDataToDB.js";
 import { newAlert } from "../utils/alerts.js";
+import { getUnpaidNoteData } from "./getData.js";
 
 export const savePayments = async (data) => {
     if (!data) {
@@ -32,6 +33,9 @@ export const savePayments = async (data) => {
 };
 
 export const updateUnpaidNotes = async () => {
-    const SaleID = Number(getElement('.second__title div:nth-child(1) > span').textContent);
+    const unpaidNote = await getUnpaidNoteData();
+
+    if(!unpaidNote) return false;
+
     // 
 };

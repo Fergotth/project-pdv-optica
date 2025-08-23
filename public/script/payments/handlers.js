@@ -36,6 +36,14 @@ export const handlerBillPayment__search = async ({ note }) => {
 };
 
 export const handlerThird__applyNewPayment = ({ DOM, client, total, id }) => {
+    if (!Boolean(total)) {
+        newAlert({
+            icon: 'info',
+            text: "Nota no cuenta con saldo pendiente."
+        });
+        return;
+    }
+
     DOM.appendChild(getParsedHTML(getBillPaymentSummaryHTML(client, total, id)));
     summarySale();
 };
