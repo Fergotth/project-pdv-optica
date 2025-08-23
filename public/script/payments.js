@@ -1,10 +1,15 @@
 import { getHandlerArgs } from "./payments/handlerDispatcher.js";
 import { getElement } from "./utils/getElement.js";
-import { updateState } from "./sales/state.js";
+import { 
+    updateState, 
+    flushState 
+} from "./sales/state.js";
 import { loader } from "./utils/loader.js";
 import * as handlers from './payments/handlers.js';
 
 const payments = async () => {
+    await flushState();
+    
     const billPaymentContainer = getElement('.billPaymentsContainer');
     const btnApplyPaidment = getElement('.third__applyNewPayment');
     

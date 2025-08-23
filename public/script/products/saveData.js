@@ -1,28 +1,6 @@
 import { newAlert } from "../utils/alerts.js";
 import { existSKU } from "./utils.js";
-
-/**
- * Envía los datos del producto a la URL especificada.
- * @param {string} url - Endpoint al que se enviarán los datos.
- * @param {object} data - Datos del producto.
- * @returns {Promise<boolean>} - true si la petición fue exitosa, false en caso contrario.
- */
-const sendProductData = async (url, data) => {
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        return response.ok;
-    } catch (error) {
-        console.error('Error al guardar los datos del producto: ', error);
-        return false;
-    }
-};
+import { postData } from "../utils/postDataToDB.js";
 
 /**
  * Guarda los datos del producto.
@@ -49,8 +27,8 @@ export const saveProduct = async (data) => {
 
     if (!await existSKU(data.SKU)) {
         const results = await Promise.all([
-            sendProductData('/save-products', data),
-            sendProductData('/save-productsDetails', data)
+            postData('/save-products', data),
+            postData('/save-productsDetails', data)
         ]);
         
         if (results.every(Boolean)) {

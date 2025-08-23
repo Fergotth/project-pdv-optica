@@ -1,3 +1,7 @@
+import { 
+    updateState, 
+    getState 
+} from '../sales/state.js';
 import { newAlert } from '../utils/alerts.js';
 
 export const getData = async (value) => {
@@ -44,8 +48,13 @@ export const getData = async (value) => {
 export const getPaymentsData = (elements) => {
     const newData = Array.from(elements).map(item => ({
         PaymentMethod: item.querySelector('.typeOfPaymentValue').textContent,
-        Paid: Number(item.querySelector('.paidValue').textContent)
+        Paid: Number(item.querySelector('.paidValue').textContent),
+        SaleID: Number(getElement('.second__title div:nth-child(1) > span').textContent)
     }));
 
-    return newData;
+    updateState(previusData => ({
+        dataPayment: [ ...previusData.dataPayment, ...newData ]
+    }));
+
+    return getState().dataPayment;
 };

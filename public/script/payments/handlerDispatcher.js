@@ -32,6 +32,7 @@ export const getHandlerArgs = {
     }),
 
     handlerBtnApplyPayments: () => ({
-        elements: document.querySelectorAll('.paymentItem')
+        elements: document.querySelectorAll('.paymentItem'),
+        DOM: getElement('.overlayPromptDiscount')
     })
 };

@@ -1,19 +1,14 @@
 import { newAlert } from "../utils/alerts.js";
+import { postData } from "../utils/postDataToDB.js";
 
 /**
  * @param {Object}  // Datos del cliente a guardar
  */
 export const saveClient = async (data) => {
     try {
-        const response = await fetch('/save-clients', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
+        const res = await postData('/save-clients', data);
 
-        if (response.ok) {
+        if (res) {
             newAlert({
                 icon: "success",
                 title: "Alta de Cliente",
@@ -25,6 +20,8 @@ export const saveClient = async (data) => {
                 title: "Alta de Cliente",
                 text: "Cliente no se pudo agregar"
             });
+
+            throw new Error("Error al agregar al cliente a la DB");
         }
     } catch (error) {
         newAlert({

@@ -1,6 +1,7 @@
 import { getElement } from '../utils/getElement.js';
 import { newAlert } from '../utils/alerts.js';
 import { updateState } from '../sales/state.js';
+import { postData } from '../utils/postDataToDB.js';
 
 const params = () => {
     getElement('.applyParams').addEventListener('click', async function () {
@@ -11,16 +12,10 @@ const params = () => {
         const url = '/save-params';
     
         try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ ID, IVA, PriceDolar })
-            });
-    
-            if (!response.ok) throw new Error('Fallo la respuesta del servidor');
+            const res = await postData(url, { ID, IVA, PriceDolar });
             
+            if (!res) throw new Error('Fallo la respuesta del servidor');
+
             overlay.remove();
 
             updateState(() => {

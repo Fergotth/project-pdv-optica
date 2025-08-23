@@ -13,7 +13,7 @@ export const handlerRegisterClient = ({ DOM, innerHTML }) => {
     DOM.appendChild(getParsedHTML(innerHTML));
 };
 
-export const handlerBtnSaveClient = ({ data }) => {
+export const handlerBtnSaveClient = async ({ data }) => {
     const { Name, Phone, Birthdate } = data;
 
     if (!Name || !Phone || !Birthdate) {

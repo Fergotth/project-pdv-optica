@@ -9,36 +9,7 @@ import {
     createTicketSaleHTML, 
     createTicketQuotationHTML 
 } from '../utils/ticket.js';
-
-const postData = async (url, data) => {
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            console.error("Error en la respuesta: ", result);
-            return false;
-        }
-
-        return response.ok;
-    } catch (error) {
-        newAlert({
-            icon: 'error',
-            title: url,
-            text: "Error al guardar los datos"
-        });
-
-        console.error('Error al guardar los datos del producto: ', error);
-        return false;
-    }
-};
+import { postData } from '../utils/postDataToDB.js';
 
 export const saveData = async (cartItems, paymentItems, saleSummary) => {
     const urlSale = '/save-sales';

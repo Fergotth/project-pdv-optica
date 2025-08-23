@@ -1,5 +1,4 @@
 import { 
-    getState, 
     updateState 
 } from '../sales/state.js';
 import { 
@@ -12,6 +11,10 @@ import { getNewPaymentItemHTML } from '../sales/salesDom.js';
 import { calcuteNewPayment } from './utils.js';
 import { setData } from './setData.js';
 import { getPaymentsData } from './getData.js';
+import { 
+    savePayments, 
+    updateUnpaidNotes 
+} from './saveData.js';
 import summarySale from '../sales/summarySale.js';
 
 export const handlerPaymentCloseIcon = ({ DOM }) => {
@@ -56,7 +59,8 @@ export const handlerItemDeletePayment = ({ DOM, value }) => {
     DOM.remove();
 };
 
-export const handlerBtnApplyPayments = ({ elements }) => {
-    const payments = getPaymentsData(elements);
-    // guardar datos en la BD, y verificar si se liquido o no para eliminarlo de los saldos pendientes
+export const handlerBtnApplyPayments = async ({ elements, DOM }) => {
+    await savePayments(getPaymentsData(elements)) && await updateUnpaidNotes(); // falta esta funcion para guardar los datos de las notas con saldo
+
+    handlerPaymentCloseIcon({ DOM });
 };
