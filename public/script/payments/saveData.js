@@ -39,4 +39,6 @@ export const updateUnpaidNotes = async (elements) => {
     const balance = safeNumber(getElement('.summary__totalPaid + div').textContent) + 
         data.reduce((acc, item) => acc + item.Paid, 0);
 
+    const response = postData('/update-unpaidNote', { Balance: balance, SaleID: data.SaleID });
+    // seguir aqui, validar envio de datos
 };
