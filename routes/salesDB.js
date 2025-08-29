@@ -122,17 +122,15 @@ router.get('/find-unpaidSale', (req, res) => {
     });
 });
 
-// Obtener nota de saldo pendiente
-router.get('/get-unpaidNote', (req, res) => {
-    const SaleID = req.query.q;
+// Actualizar saldo de nota pendiente
+router.post('/update-unpaidNote', (req, res) => {
+    const { Balance, SaleID } = req.body;
 
     if (!SaleID) return res.status(400).json({ error: 'Falta el ID de la nota.' });
 
-    dbSales.get(`
-        SELECT * FROM UnpaidSales WHERE SaleID = ?`, 
-        [SaleID], (err, row) => {
-            if (err) return res.status(500).json({ error: err.message });
-            res.json(row || {});
+    dbSales.get(`UPDATE UnpaidSales SET Balance = ? WHERE SaleID = ?`, 
+        [Balance, SaleID], function (err) {
+            if (err) return console.error(err.message);
         }
     );
 });

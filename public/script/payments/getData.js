@@ -4,6 +4,7 @@ import {
 } from '../sales/state.js';
 import { getElement } from '../utils/getElement.js';
 import { newAlert } from '../utils/alerts.js';
+import { safeNumber } from '../utils/getSafeNumbers.js';
 
 export const getData = async (value) => {
     try {
@@ -49,44 +50,30 @@ export const getData = async (value) => {
     }
 };
 
-export const getPaymentsData = (elements) => {
-    const newData = Array.from(elements).map(item => ({
-        PaymentMethod: item.querySelector('.typeOfPaymentValue').textContent,
-        Paid: Number(item.querySelector('.paidValue').textContent),
-        SaleID: Number(getElement('.second__title div:nth-child(1) > span').textContent)
-    }));
+export const getPaymentsData = (items) => {    
+    const newData = Array.from(items).map(item => {
+        const paid = safeNumber(item.querySelector('.paidValue').textContent);
+        const saleID = safeNumber(getElement('.second__title div:nth-child(1) > span').textContent); 
+
+        return {
+            PaymentMethod: item.querySelector('.typeOfPaymentValue').textContent.trim(),
+            Paid: paid,
+            SaleID: saleID
+        };
+    });
+
+    if (!newData.every(item => !!item.Paid)) {
+        newAlert({
+            icon: 'info',
+            title: "Dato invalido",
+            text: "Algun pago es invalido, favor de corregir e intentar nuevamente."
+        });
+        return;
+    } 
 
     updateState(previusData => ({
         dataPayment: [ ...previusData.dataPayment, ...newData ]
     }));
 
     return getState().dataPayment;
-};
-
-export const getUnpaidNoteData = async () => {
-    const SaleID = Number(getElement('.second__title div:nth-child(1) > span').textContent);
-
-    try {
-        const response = await fetch(`/get-unpaidNote?q=${encodeURIComponent(SaleID)}`);
-        
-        if (!response.ok) {
-            newAlert({
-                icon: "error",
-                text: `Error HTTP: ${response.status}` 
-            });
-
-            return false;
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error("Error en getData:", error);
-        newAlert({
-            icon: "error",
-            title: "Busqueda fallida",
-            text: "No se pudo obtener la información de la nota. Por favor, intente nuevamente.",
-        });
-        
-        return false;
-    }
 };

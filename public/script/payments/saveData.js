@@ -1,6 +1,8 @@
-import { postData } from "../utils/postDataToDB.js";
-import { newAlert } from "../utils/alerts.js";
-import { getUnpaidNoteData } from "./getData.js";
+import { postData } from '../utils/postDataToDB.js';
+import { newAlert } from '../utils/alerts.js';
+import { getElement } from '../utils/getElement.js';
+import { getPaymentsData } from './getData.js';
+import { safeNumber } from '../utils/getSafeNumbers.js';
 
 export const savePayments = async (data) => {
     if (!data) {
@@ -32,10 +34,9 @@ export const savePayments = async (data) => {
     return true;
 };
 
-export const updateUnpaidNotes = async () => {
-    const unpaidNote = await getUnpaidNoteData();
+export const updateUnpaidNotes = async (elements) => {
+    const data = getPaymentsData(elements);
+    const balance = safeNumber(getElement('.summary__totalPaid + div').textContent) + 
+        data.reduce((acc, item) => acc + item.Paid, 0);
 
-    if(!unpaidNote) return false;
-
-    // 
 };

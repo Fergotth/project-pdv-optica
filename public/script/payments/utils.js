@@ -3,6 +3,7 @@ import {
     updateState, 
     getState 
 } from '../sales/state.js';
+import { safeNumber } from '../utils/getSafeNumbers.js'
 
 export const renderData = (total, unpaid, totalPaid, client, idClient, status, id) => {
     getElement('.second__title div:nth-child(1) > span').textContent = id;
@@ -34,7 +35,7 @@ export const calcuteNewPayment = (value, typeOfPayment = undefined) => {
     const newPayment = typeOfPayment === 'Dolar' ? 
         Number((dataState.dolar * Number(value)).toFixed(2)) : Number(value);
     const totalPaid = getElement('.detailTotal span');
-    const totalValue = Number(getElement('.summaryClientSaleDetails span:nth-child(2)').textContent);
+    const totalValue = safeNumber(getElement('.summaryClientSaleDetails span:nth-child(2)').textContent);
 
     if (actualPaid + newPayment > totalValue) {
         return false;

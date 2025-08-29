@@ -68,7 +68,7 @@ export const handlerItemDeletePayment = ({ DOM, value }) => {
 };
 
 export const handlerBtnApplyPayments = async ({ elements, DOM }) => {
-    await savePayments(getPaymentsData(elements)) && await updateUnpaidNotes(); // falta esta funcion para guardar los datos de las notas con saldo
+    await savePayments(getPaymentsData(elements)) && await updateUnpaidNotes(elements); // falta esta funcion para guardar los datos de las notas con saldo
 
     handlerPaymentCloseIcon({ DOM });
 };

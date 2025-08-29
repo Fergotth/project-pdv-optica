@@ -44,10 +44,25 @@ export const getCartItems = () => {
 export const getPayments = () => {
     const items = getElement('.salePayments').querySelectorAll('.paymentItem');
 
-    const newData = Array.from(items).map(item => ({
-        PaymentMethod: item.querySelector('.typeOfPaymentValue').textContent,
-        Paid: Number(item.querySelector('.paidValue').textContent)
-    }));
+    const newData = Array.from(items).map(item => {
+        const paidText = item.querySelector('.paidValue').textContent.trim();
+        const paid = paidText === "" ? null : (Number.isNaN(Number(paidText)) ? null : Number(paidText));
+        
+        return {
+            PaymentMethod: item.querySelector('.typeOfPaymentValue').textContent.trim(),
+            Paid: Number.isNaN(paid) ? null : paid
+        };
+    });
+
+    if (!newData.every(item => !!item.Paid)) {
+        newAlert({
+            icon: 'info',
+            title: "Dato invalido",
+            text: "Algun pago es invalido, favor de corregir e intentar nuevamente."
+        });
+        
+        throw new Error("Algun valor no es correcto en la cantidad de pago");
+    } 
 
     updateState(previusData => ({
         ...previusData,
