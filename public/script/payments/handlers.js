@@ -1,5 +1,6 @@
 import { 
-    updateState 
+    updateState,
+    flushState
 } from '../sales/state.js';
 import { 
     getParsedHTML,
@@ -68,7 +69,16 @@ export const handlerItemDeletePayment = ({ DOM, value }) => {
 };
 
 export const handlerBtnApplyPayments = async ({ elements, DOM }) => {
-    await savePayments(getPaymentsData(elements)) && await updateUnpaidNotes(elements); // falta esta funcion para guardar los datos de las notas con saldo
+    const data = getPaymentsData(elements);
+    await savePayments(data) && await updateUnpaidNotes(data);
 
     handlerPaymentCloseIcon({ DOM });
+    // falta generar ticket de abono
+    
+    newAlert({
+        icon: 'success',
+        text: "Abono registrado exitosamente."
+    });
+
+    await flushState();
 };

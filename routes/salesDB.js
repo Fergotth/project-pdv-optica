@@ -106,10 +106,7 @@ router.get('/find-unpaidSale', (req, res) => {
             s.Total,
             IFNULL(u.Balance, 0) AS Balance,
             s.PaymentDate,
-        CASE 
-            WHEN DATE('now') > DATE(s.PaymentDate, '+60 days') THEN 'Cancelada'
-            ELSE 'Vigente'
-        END AS StatusByDate
+            s.Status
         FROM Sales s
         LEFT JOIN clientsDB.Clients c 
             ON s.ClientID = c.ID
@@ -122,15 +119,46 @@ router.get('/find-unpaidSale', (req, res) => {
     });
 });
 
-// Actualizar saldo de nota pendiente
-router.post('/update-unpaidNote', (req, res) => {
-    const { Balance, SaleID } = req.body;
+// Actualizar status de nota de venta
+router.post('/update-statusSale', (req, res) => {
+    const { SaleID, Status } = req.body;
 
     if (!SaleID) return res.status(400).json({ error: 'Falta el ID de la nota.' });
+    if (Status === undefined) return res.status(400).json({ error: 'Falta el Status.' });
 
-    dbSales.get(`UPDATE UnpaidSales SET Balance = ? WHERE SaleID = ?`, 
-        [Balance, SaleID], function (err) {
+    dbSales.run(
+        'UPDATE Sales SET Status = ? WHERE ID = ?',
+        [Status, SaleID], function(err) {
+            if (err) {
+                console.error(err.message);
+                return res.status(500).json({ error: 'Error al actualizar la venta' });
+            }
+
+            if (this.changes === 0) return res.status(404).json({ error: 'Venta no encontrada' });
+
+            res.json({ success: true, updated: this.changes });
+        }
+    );
+});
+
+// Actualizar saldo de nota pendiente
+router.post('/update-unpaidNote', (req, res) => {
+    const { Balance, SaleID, Status } = req.body;
+
+    if (!SaleID) return res.status(400).json({ error: 'Falta el ID de la nota' });
+    if (Balance === undefined) return res.status(400).json({ error: 'Falta el valor del saldo' });
+    if (!Status) return res.status(400).json({ error: 'Falta el valor del Status' });
+
+    dbSales.run('UPDATE UnpaidSales SET Balance = ?, Status = ? WHERE SaleID = ?', 
+        [Balance, Status, SaleID], function(err) {
             if (err) return console.error(err.message);
+            
+            // this.changes indica cuántas filas fueron afectadas
+            if (this.changes === 0) {
+                return res.status(404).json({ error: 'Nota no encontrada' });
+            }
+
+            res.json({ success: true, updated: this.changes });
         }
     );
 });

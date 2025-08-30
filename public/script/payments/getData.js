@@ -1,6 +1,6 @@
 import { 
     updateState, 
-    getState 
+    getState
 } from '../sales/state.js';
 import { getElement } from '../utils/getElement.js';
 import { newAlert } from '../utils/alerts.js';
@@ -36,7 +36,7 @@ export const getData = async (value) => {
             totalPaid: (data.Total ?? 0) - (data.Balance ?? 0),
             client: data.ClientName || "Público General",
             idClient: data.ClientID,
-            status: data.StatusByDate
+            status: data.Status
         };
 
     } catch (error) {

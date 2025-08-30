@@ -1,7 +1,6 @@
 import { postData } from '../utils/postDataToDB.js';
 import { newAlert } from '../utils/alerts.js';
 import { getElement } from '../utils/getElement.js';
-import { getPaymentsData } from './getData.js';
 import { safeNumber } from '../utils/getSafeNumbers.js';
 
 export const savePayments = async (data) => {
@@ -26,19 +25,39 @@ export const savePayments = async (data) => {
         return false;
     }
 
-    newAlert({
-        icon: 'success',
-        text: "Pagos registrados exitosamente"
-    });
-
     return true;
 };
 
-export const updateUnpaidNotes = async (elements) => {
-    const data = getPaymentsData(elements);
-    const balance = safeNumber(getElement('.summary__totalPaid + div').textContent) + 
-        data.reduce((acc, item) => acc + item.Paid, 0);
+export const updateUnpaidNotes = async (data) => {
+    const balance = safeNumber(getElement('.summary__totalUnpaid + div').textContent.replace("$", "")) - 
+        data.reduce((acc, item) => acc + item.Paid, 0); 
 
-    const response = postData('/update-unpaidNote', { Balance: balance, SaleID: data.SaleID });
-    // seguir aqui, validar envio de datos
+    let response = await postData('/update-unpaidNote', { 
+        Balance: balance, 
+        SaleID: data[0].SaleID,
+        Status: !!balance ? 'Vigente' : 'Pagada'
+    });
+    
+    if (!response) {
+        newAlert({
+            icon: 'info',
+            text: "No se pudo actualiar correctamente la BD UnpaidSales, intente nuevamente."
+        });
+        return false;
+    }
+
+    response = await postData('/update-statusSale', { 
+        SaleID: data[0].SaleID, 
+        Status: !!balance ? 'Vigente' : 'Pagada' 
+    });
+
+    if (!response) {
+        newAlert({
+            icon: 'info',
+            text: "No se pudo actualiar correctamente el status de la BD Sales, intente nuevamente."
+        });
+        return false;
+    }
+
+    return true;
 };
