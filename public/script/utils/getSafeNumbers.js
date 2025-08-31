@@ -1,9 +1,11 @@
 export const safeNumber = (value) => {
-    if (value === null || value === undefined) return null;
+    if (value === null || value === undefined) 
+        throw new Error("El valor proporcionado no es un número válido");
 
     const text = String(value).trim();
-    if (text === "") return null;
+    
+    if (text === "" || Number.isNaN(Number(text)))
+        throw new Error("El valor proporcionado no es un número válido");
 
-    const num = Number(text);
-    return Number.isNaN(num) ? null : num;
+    return Number(text);
 };
