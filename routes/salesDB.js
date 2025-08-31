@@ -83,12 +83,27 @@ router.get('/find-articlesSale', (req, res) => {
     });
 });
 
-// Obtener siguiente ID
+// Obtener siguiente ID de venta
 router.get('/find-nextSaleID', (req, res) => {
     dbSales.get(`SELECT seq FROM sqlite_sequence WHERE name = 'Sales'`, (err, row) => {
         if (err) return res.status(500).json({ error: err.message });
         const nextID = row ? row.seq + 1 : 1;
         res.json({ nextID });
+    });
+});
+
+// Obtener siguiente ID de abono
+router.get('/find-nextPaymentID', (req, res) => {
+    dbSales.get(`
+        SELECT CASE 
+            WHEN COUNT(*) = 0 THEN 1 
+            ELSE COUNT(DISTINCT Date) 
+        END AS NextID 
+        FROM SalePayments;
+    `, (err, row) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        res.json({ nextID: row ? row.NextID : 1 });
     });
 });
 

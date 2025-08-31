@@ -50,3 +50,7 @@ export const calcuteNewPayment = (value, typeOfPayment = undefined) => {
     totalPaid.textContent = getState().paymentsApplicated.toFixed(2);
     return true;
 };
+
+export const generateTicket = () => {
+    // continuar para general el ticket, html y pdf
+};

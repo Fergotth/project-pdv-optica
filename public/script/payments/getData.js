@@ -77,3 +77,29 @@ export const getPaymentsData = (items) => {
 
     return getState().dataPayment;
 };
+
+export const getNextId = async () => { // corregir aqui para obtener el siguiente ID del abono
+    try {
+        const response = await fetch('');
+        
+        if (!response.ok) {
+            newAlert({
+                icon: "error",
+                text: `Error HTTP: ${response.status}` 
+            });
+            return null;
+        }
+
+        const data = await response.json();
+        return data.NextID ?? null;
+
+    } catch (error) {
+        console.error("Error en getNextId:", error);
+        newAlert({
+            icon: "info",
+            title: "Error",
+            text: "No se pudo obtener el siguiente ID. Por favor, intente nuevamente.",
+        });
+        return null;
+    }
+};
