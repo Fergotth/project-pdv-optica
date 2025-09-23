@@ -58,7 +58,8 @@ export const getPaymentsData = (items) => {
         return {
             PaymentMethod: item.querySelector('.typeOfPaymentValue').textContent.trim(),
             Paid: paid,
-            SaleID: saleID
+            SaleID: saleID,
+            ReceiptID: 0 // obtener el siguiente id del recibo
         };
     });
 
@@ -78,9 +79,9 @@ export const getPaymentsData = (items) => {
     return getState().dataPayment;
 };
 
-export const getNextId = async () => { // corregir aqui para obtener el siguiente ID del abono
+export const getNextReceiptId = async (IDSale) => {
     try {
-        const response = await fetch('');
+        const response = await fetch(`/find-nextReceiptID?q=${encodeURIComponent(IDSale)}`);
         
         if (!response.ok) {
             newAlert({
@@ -91,7 +92,7 @@ export const getNextId = async () => { // corregir aqui para obtener el siguient
         }
 
         const data = await response.json();
-        return data.NextID ?? null;
+        return data.NextReceiptID ?? null;
 
     } catch (error) {
         console.error("Error en getNextId:", error);

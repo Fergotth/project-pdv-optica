@@ -32,10 +32,10 @@ router.post('/save-saledetails', (req, res) => {
 
 // Guardar pagos
 router.post('/save-salepayments', (req, res) => {
-    const { SaleID, PaymentMethod, Paid } = req.body;
+    const { SaleID, PaymentMethod, Paid, ReceiptID } = req.body;
     dbSales.run(
-        `INSERT INTO SalePayments (SaleID, PaymentMethod, Paid) VALUES (?, ?, ?)`,
-        [SaleID, PaymentMethod, Paid],
+        `INSERT INTO SalePayments (SaleID, PaymentMethod, Paid, ReceiptID) VALUES (?, ?, ?, ?)`,
+        [SaleID, PaymentMethod, Paid, ReceiptID],
         function(err) {
             if (err) return res.status(500).json({ error: err.message });
             res.json({ id: this.lastID });
@@ -74,6 +74,22 @@ router.get('/find-paymentsSale', (req, res) => {
     });
 });
 
+// Devuelve el ultimo ID para el siguiente recibo de algun abono
+router.get('/find-paymentsNextReceipt', (req, res) => {
+    const SaleID = req.query.q;
+
+    const sql = `
+        SELECT COALESCE(MAX(ReceiptID), 0) + 1 AS NextReceiptID
+        FROM SalePayments
+        WHERE SaleID = ?
+    `;
+
+    dbSales.get(sql, [SaleID], (err, row) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(row); // { NextReceiptID: valor }
+    });
+});
+
 // Buscar articulos de la venta
 router.get('/find-articlesSale', (req, res) => {
     const SaleID = req.query.q;
@@ -93,18 +109,13 @@ router.get('/find-nextSaleID', (req, res) => {
 });
 
 // Obtener siguiente ID de abono
-router.get('/find-nextPaymentID', (req, res) => {
-    dbSales.get(`
-        SELECT CASE 
-            WHEN COUNT(*) = 0 THEN 1 
-            ELSE COUNT(DISTINCT Date) 
-        END AS NextID 
-        FROM SalePayments;
-    `, (err, row) => {
-        if (err) return res.status(500).json({ error: err.message });
+router.get('/find-nextReceiptID', (req, res) => { // corrgir este codigo, de la logica para el sig. recibo
+    dbSales.get(`SELECT INFULL(MAX(ReceiptID), 0) + 1 AS NextReceiptID FROM SalePayments`, 
+        (err, row) => {
+            if (err) return res.status(500).json({ error: err.message });
 
-        res.json({ nextID: row ? row.NextID : 1 });
-    });
+            res.json({ nextReceiptID: row.NextReceiptID });
+        });
 });
 
 // Obtener saldo pendiente de una nota por ID

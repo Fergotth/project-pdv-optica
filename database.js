@@ -96,6 +96,7 @@ dbSales.run(`
     CREATE TABLE IF NOT EXISTS SalePayments (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         SaleID INTEGER,
+        ReceiptID INTEGER,
         PaymentMethod TEXT,
         Paid REAL,
         PaymentDate TEXT DEFAULT (date('now','localtime')),
