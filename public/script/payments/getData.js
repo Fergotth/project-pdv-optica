@@ -50,16 +50,17 @@ export const getData = async (value) => {
     }
 };
 
-export const getPaymentsData = (items) => {    
+export const getPaymentsData = async (items) => {
+    const saleID = safeNumber(getElement('.second__title div:nth-child(1) > span').textContent);
+    const nextReceiptID = await getNextReceiptId(saleID);    
     const newData = Array.from(items).map(item => {
         const paid = safeNumber(item.querySelector('.paidValue').textContent);
-        const saleID = safeNumber(getElement('.second__title div:nth-child(1) > span').textContent); 
 
         return {
             PaymentMethod: item.querySelector('.typeOfPaymentValue').textContent.trim(),
             Paid: paid,
             SaleID: saleID,
-            ReceiptID: 0 // obtener el siguiente id del recibo
+            ReceiptID: nextReceiptID
         };
     });
 
@@ -79,9 +80,9 @@ export const getPaymentsData = (items) => {
     return getState().dataPayment;
 };
 
-export const getNextReceiptId = async (IDSale) => {
+const getNextReceiptId = async (IDSale) => {
     try {
-        const response = await fetch(`/find-nextReceiptID?q=${encodeURIComponent(IDSale)}`);
+        const response = await fetch(`/find-paymentsNextReceipt?q=${encodeURIComponent(IDSale)}`);
         
         if (!response.ok) {
             newAlert({

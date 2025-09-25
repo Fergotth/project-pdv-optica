@@ -69,7 +69,7 @@ export const handlerItemDeletePayment = ({ DOM, value }) => {
 };
 
 export const handlerBtnApplyPayments = async ({ elements, DOM }) => {
-    const data = getPaymentsData(elements);
+    const data = await getPaymentsData(elements);
     await savePayments(data) && await updateUnpaidNotes(data);
 
     handlerPaymentCloseIcon({ DOM });

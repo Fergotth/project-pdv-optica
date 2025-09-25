@@ -108,16 +108,6 @@ router.get('/find-nextSaleID', (req, res) => {
     });
 });
 
-// Obtener siguiente ID de abono
-router.get('/find-nextReceiptID', (req, res) => { // corrgir este codigo, de la logica para el sig. recibo
-    dbSales.get(`SELECT INFULL(MAX(ReceiptID), 0) + 1 AS NextReceiptID FROM SalePayments`, 
-        (err, row) => {
-            if (err) return res.status(500).json({ error: err.message });
-
-            res.json({ nextReceiptID: row.NextReceiptID });
-        });
-});
-
 // Obtener saldo pendiente de una nota por ID
 router.get('/find-unpaidSale', (req, res) => {
     const ID = req.query.q;
