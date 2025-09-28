@@ -74,7 +74,8 @@ export const handlerBtnApplyPayments = async ({ elements, DOM }) => {
 
     handlerPaymentCloseIcon({ DOM });
     // falta generar ticket de abono
-    
+    //createTicketPaymemnt(data, ID); // definir esta funcion
+
     newAlert({
         icon: 'success',
         text: "Abono registrado exitosamente."

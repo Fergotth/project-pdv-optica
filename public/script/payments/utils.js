@@ -3,7 +3,8 @@ import {
     updateState, 
     getState 
 } from '../sales/state.js';
-import { safeNumber } from '../utils/getSafeNumbers.js'
+import { safeNumber } from '../utils/getSafeNumbers.js';
+import { createTicketPaymentHTML } from '../utils/ticket.js';
 
 export const renderData = (total, unpaid, totalPaid, client, idClient, status, id) => {
     getElement('.second__title div:nth-child(1) > span').textContent = id;
@@ -51,6 +52,7 @@ export const calcuteNewPayment = (value, typeOfPayment = undefined) => {
     return true;
 };
 
-export const generateTicket = () => {
+export const createTicketPaymemnt = async (data, ID) => {
     // continuar para general el ticket, html y pdf
+    const ticketHTML = createTicketPaymentHTML(data, ID);
 };

@@ -147,7 +147,7 @@ const setMoneyContent = (selector, value, isNegative = false) => {
     if (el) el.textContent = displayValue;
 };
 
-export const generateTicket = async (NextID, type) => {
+export const generateTicket = async (NextID, type, receiptID = undefined) => {
     try {
         loader(true);
         const response = await fetch('/generate-ticketPDF', {
@@ -155,7 +155,7 @@ export const generateTicket = async (NextID, type) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ NextID, type })
+            body: JSON.stringify({ NextID, type, receiptID })
         });
 
         if (!response.ok) {
