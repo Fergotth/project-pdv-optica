@@ -9,7 +9,10 @@ import {
 import { newAlert } from '../utils/alerts.js';
 import { getBillPaymentSummaryHTML } from './paymentsDom.js';
 import { getNewPaymentItemHTML } from '../sales/salesDom.js';
-import { calcuteNewPayment } from './utils.js';
+import { 
+    calcuteNewPayment,
+    createTicketPayment 
+} from './utils.js';
 import { setData } from './setData.js';
 import { getPaymentsData } from './getData.js';
 import { 
@@ -17,6 +20,7 @@ import {
     updateUnpaidNotes 
 } from './saveData.js';
 import summarySale from '../sales/summarySale.js';
+import { safeNumber } from '../utils/getSafeNumbers.js';
 
 export const handlerPaymentCloseIcon = ({ DOM }) => {
     updateState(() => {
@@ -69,12 +73,13 @@ export const handlerItemDeletePayment = ({ DOM, value }) => {
 };
 
 export const handlerBtnApplyPayments = async ({ elements, DOM }) => {
+    const ID = safeNumber(getElement('.second__title div:nth-child(1) > span').textContent);
     const data = await getPaymentsData(elements);
-    await savePayments(data) && await updateUnpaidNotes(data);
 
+    await savePayments(data) && await updateUnpaidNotes(data);
+    // falta corregir nombre correcto de archivo de abono payment-idrecibo-idabono-"idventa"
+    await createTicketPayment(ID); 
     handlerPaymentCloseIcon({ DOM });
-    // falta generar ticket de abono
-    //createTicketPaymemnt(data, ID); // definir esta funcion
 
     newAlert({
         icon: 'success',

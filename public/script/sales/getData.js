@@ -17,7 +17,7 @@ export const getDataDB = async (url) => {
         return data;
     } catch (error) {
         console.error('Error al obtener datos de la base de datos:', error);
-        return [];
+        return null; //ajuste a []
     }
 };
 

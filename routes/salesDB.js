@@ -90,6 +90,15 @@ router.get('/find-paymentsNextReceipt', (req, res) => {
     });
 });
 
+// Obtener siguiente ID de venta
+router.get('/find-nextPaymentID', (req, res) => {
+    dbSales.get(`SELECT seq FROM sqlite_sequence WHERE name = 'SalePayments'`, (err, row) => {
+        if (err) return res.status(500).json({ error: err.message });
+        const nextID = row ? row.seq + 1 : 1;
+        res.json({ nextID });
+    });
+});
+
 // Buscar articulos de la venta
 router.get('/find-articlesSale', (req, res) => {
     const SaleID = req.query.q;

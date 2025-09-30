@@ -7,9 +7,9 @@ const { generatePDFTicket } = require('../utils/generateTicket');
 router.post('/generate-ticketPDF', (req, res) => {
     const { NextID, type, receiptID } = req.body;
     const htmlPath = path.resolve(__dirname, '..', 'public', 'templates', 'template-ticket.html');
-    const outputTypeOfTicket = type === 'sale' ?
+    const fileReceipt = type === 'sale' ?
         `${type}-${NextID}` : `${type}-${NextID}-${receiptID}`;
-    const outputPath = path.resolve(__dirname, '..', 'data', 'tickets', `${outputTypeOfTicket}.pdf`); // usa resolve
+    const outputPath = path.resolve(__dirname, '..', 'data', 'tickets', `${fileReceipt}.pdf`); // usa resolve
 
     // Verifica que el archivo HTML existe antes de continuar
     const fs = require('fs');
@@ -24,7 +24,7 @@ router.post('/generate-ticketPDF', (req, res) => {
         }
 
         // Ruta accesible desde el navegador gracias a express.static('/tickets')
-        res.json({ message: 'PDF generado correctamente', file: `/tickets/${type}-${NextID}.pdf` });
+        res.json({ message: 'PDF generado correctamente', file: `/tickets/${fileReceipt}.pdf` });
     });
 });
 

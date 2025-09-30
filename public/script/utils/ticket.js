@@ -218,7 +218,7 @@ export const createTicketSaleHTML = (nextID, cartItems, payments, summarySale, p
     </div>
     <div class="totalInWords">(${numberToWords(summarySale.total)})</div>
     <div class="divisorTicket"></div>
-    <div class="dollarValue">Tipo de cambio: $${dolar.toFixed(2)}</div>
+    <div class="dollarValue">Tipo de cambio: $${dolar}</div>
     <div class="divisorTicket"></div>
     <div class="titlePaymentsTicket">Pagos realizados</div>
     <div class="paymentsTicket">
@@ -445,8 +445,8 @@ export const createTicketPaymentHTML = (nextID, cartItems, payments, summarySale
         totalPaid += payment.Paid;
     });
 
-    const unpaidAmount = (summarySale.total - totalPaid) < 0 ?
-        (summarySale.total - totalPaid) * -1 : summarySale.total - totalPaid;
+    const unpaidAmount = (summarySale - totalPaid) < 0 ?
+        (summarySale - totalPaid) * -1 : summarySale - totalPaid;
 
     // nombre del cliente
     const clientName = document.querySelector('.second__title div:nth-child(2) span').textContent.trim();
@@ -632,11 +632,11 @@ export const createTicketPaymentHTML = (nextID, cartItems, payments, summarySale
         <div class="ivaTicket"></div>
         <span></span>
         <div class="totalTicket">Saldo:</div>
-        <span>${formatMoney(summarySale.total)}</span>
+        <span>${formatMoney(summarySale)}</span>
     </div>
-    <div class="totalInWords">(${numberToWords(summarySale.total)})</div>
+    <div class="totalInWords">(${numberToWords(summarySale)})</div>
     <div class="divisorTicket"></div>
-    <div class="dollarValue">Tipo de cambio: $${dolar.toFixed(2)}</div>
+    <div class="dollarValue">Tipo de cambio: $${dolar}</div>
     <div class="divisorTicket"></div>
     <div class="titlePaymentsTicket">Pagos realizados</div>
     <div class="paymentsTicket">

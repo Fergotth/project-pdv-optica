@@ -5,6 +5,10 @@ import {
 } from '../sales/state.js';
 import { safeNumber } from '../utils/getSafeNumbers.js';
 import { createTicketPaymentHTML } from '../utils/ticket.js';
+import { getDataTicket } from './getData.js';
+import { getDataDB } from '../sales/getData.js';
+import { generateTicket } from '../sales/utils.js';
+import { postData } from '../utils/postDataToDB.js';
 
 export const renderData = (total, unpaid, totalPaid, client, idClient, status, id) => {
     getElement('.second__title div:nth-child(1) > span').textContent = id;
@@ -52,7 +56,34 @@ export const calcuteNewPayment = (value, typeOfPayment = undefined) => {
     return true;
 };
 
-export const createTicketPaymemnt = async (data, ID) => {
+export const createTicketPayment = async (ID) => {
     // continuar para general el ticket, html y pdf
-    const ticketHTML = createTicketPaymentHTML(data, ID);
+    const getNextIDReceipt = async (ID) => {
+        const nextID = await getDataDB(`/find-paymentsNextReceipt?q=${encodeURIComponent(ID)}`);
+        return nextID?.NextReceiptID || 1;
+    };
+
+    const getNextPaymentID = async () => {
+        const nextID = await getDataDB(`/find-nextPaymentID`);
+        return nextID?.nextID || 1;
+    };
+
+    const nextIDPayment = await getNextPaymentID();
+    const nextIDReceipt = await getNextIDReceipt(ID);
+    const { cartItems, payments, summarySale } = await getDataTicket(ID);
+    const ticketSaved = await postData('/generate-ticketHTML', {
+        html: createTicketPaymentHTML(nextIDPayment, cartItems, payments, summarySale, getState().dolar)
+    });
+
+    if (ticketSaved) {
+        generateTicket(nextIDPayment, "payment", nextIDReceipt);
+    } else {
+        newAlert({
+            icon: 'error',
+            text: `No se pudo guardar el HTML del ticket ${nextIDPayment}`
+        });
+
+        console.warn('No se pudo guardar el HTML del ticket');
+        throw new Error('Error al guardar el ticket HTML');
+    }
 };

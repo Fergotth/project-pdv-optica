@@ -5,6 +5,7 @@ import {
 import { getElement } from '../utils/getElement.js';
 import { newAlert } from '../utils/alerts.js';
 import { safeNumber } from '../utils/getSafeNumbers.js';
+import { getDataNoteArticlesDB } from '../kardexNotes/getData.js';
 
 export const getData = async (value) => {
     try {
@@ -104,4 +105,20 @@ const getNextReceiptId = async (IDSale) => {
         });
         return null;
     }
+};
+
+export const getDataTicket = async (ID) => {
+    const summarySale = safeNumber(getElement('.summaryClientSaleDetails span:nth-child(2)').textContent);
+    
+    const cartItems = (await getDataNoteArticlesDB(ID)).map(item => ({
+        Quantity: item.Quantity,
+        Product: item.Product
+    }));
+
+    const payments = Array.from(document.querySelectorAll('.paymentItem')).map(e => ({
+        PaymentMethod: e.querySelector('.typeOfPaymentValue').textContent.trim(),
+        Paid: safeNumber(e.querySelector('.paidValue').textContent.trim())
+    }));
+
+    return { cartItems, payments, summarySale };
 };
