@@ -53,7 +53,8 @@ export const getData = async (value) => {
 
 export const getPaymentsData = async (items) => {
     const saleID = safeNumber(getElement('.second__title div:nth-child(1) > span').textContent);
-    const nextReceiptID = await getNextReceiptId(saleID);    
+    const nextReceiptID = await getNextReceiptId(saleID);
+    const nextPaymentID = await getNextPaymentID();
     const newData = Array.from(items).map(item => {
         const paid = safeNumber(item.querySelector('.paidValue').textContent);
 
@@ -61,7 +62,8 @@ export const getPaymentsData = async (items) => {
             PaymentMethod: item.querySelector('.typeOfPaymentValue').textContent.trim(),
             Paid: paid,
             SaleID: saleID,
-            ReceiptID: nextReceiptID
+            ReceiptID: nextReceiptID,
+            PaymentID: nextPaymentID
         };
     });
 
@@ -81,7 +83,7 @@ export const getPaymentsData = async (items) => {
     return getState().dataPayment;
 };
 
-const getNextReceiptId = async (IDSale) => {
+export const getNextReceiptId = async (IDSale) => {
     try {
         const response = await fetch(`/find-paymentsNextReceipt?q=${encodeURIComponent(IDSale)}`);
         
@@ -95,6 +97,32 @@ const getNextReceiptId = async (IDSale) => {
 
         const data = await response.json();
         return data.NextReceiptID ?? null;
+
+    } catch (error) {
+        console.error("Error en getNextId:", error);
+        newAlert({
+            icon: "info",
+            title: "Error",
+            text: "No se pudo obtener el siguiente ID. Por favor, intente nuevamente.",
+        });
+        return null;
+    }
+};
+
+export const getNextPaymentID = async () => {
+    try {
+        const response = await fetch(`/find-nextPaymentID`);
+        
+        if (!response.ok) {
+            newAlert({
+                icon: "error",
+                text: `Error HTTP: ${response.status}` 
+            });
+            return null;
+        }
+
+        const nextID = await response.json();
+        return nextID?.NextPaymentID || 1;
 
     } catch (error) {
         console.error("Error en getNextId:", error);

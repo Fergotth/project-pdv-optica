@@ -97,6 +97,7 @@ dbSales.run(`
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         SaleID INTEGER,
         ReceiptID INTEGER,
+        PaymentID INTEGER,
         PaymentMethod TEXT,
         Paid REAL,
         PaymentDate TEXT DEFAULT (date('now','localtime')),

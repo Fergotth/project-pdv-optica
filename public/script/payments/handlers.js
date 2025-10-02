@@ -77,10 +77,10 @@ export const handlerBtnApplyPayments = async ({ elements, DOM }) => {
     const data = await getPaymentsData(elements);
 
     await savePayments(data) && await updateUnpaidNotes(data);
-    // falta corregir nombre correcto de archivo de abono payment-idrecibo-idabono-"idventa"
-    await createTicketPayment(ID); 
+    await createTicketPayment(ID, data[data.length - 1].ReceiptID, data[data.length - 1].PaymentID); 
     handlerPaymentCloseIcon({ DOM });
 
+    // falta limpiar la pantalla de la nota que se busco para abono
     newAlert({
         icon: 'success',
         text: "Abono registrado exitosamente."

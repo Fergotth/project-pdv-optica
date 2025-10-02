@@ -43,8 +43,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     // Constructor del objeto con los datos de los pagos
     const salePayments = paymentItems.map(item => ({
         ...item,
-        SaleID: nextID,
-        ReceiptID: 0
+        SaleID: nextID
     }));
 
     // Mapeamos cada array en un array de promesas que usa postData

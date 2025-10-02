@@ -5,10 +5,10 @@ const router = express.Router();
 const { generatePDFTicket } = require('../utils/generateTicket');
 
 router.post('/generate-ticketPDF', (req, res) => {
-    const { NextID, type, receiptID } = req.body;
+    const { NextID, type, ReceiptID, SaleID } = req.body;
     const htmlPath = path.resolve(__dirname, '..', 'public', 'templates', 'template-ticket.html');
     const fileReceipt = type === 'sale' ?
-        `${type}-${NextID}` : `${type}-${NextID}-${receiptID}`;
+        `${type}-${NextID}` : `${type}-${NextID}-${ReceiptID}-${SaleID}`;
     const outputPath = path.resolve(__dirname, '..', 'data', 'tickets', `${fileReceipt}.pdf`); // usa resolve
 
     // Verifica que el archivo HTML existe antes de continuar

@@ -32,10 +32,10 @@ router.post('/save-saledetails', (req, res) => {
 
 // Guardar pagos
 router.post('/save-salepayments', (req, res) => {
-    const { SaleID, PaymentMethod, Paid, ReceiptID } = req.body;
+    const { SaleID, PaymentMethod, Paid, ReceiptID = 0, PaymentID = 0 } = req.body;
     dbSales.run(
-        `INSERT INTO SalePayments (SaleID, PaymentMethod, Paid, ReceiptID) VALUES (?, ?, ?, ?)`,
-        [SaleID, PaymentMethod, Paid, ReceiptID],
+        `INSERT INTO SalePayments (SaleID, PaymentMethod, Paid, ReceiptID, PaymentID) VALUES (?, ?, ?, ?, ?)`,
+        [SaleID, PaymentMethod, Paid, ReceiptID, PaymentID],
         function(err) {
             if (err) return res.status(500).json({ error: err.message });
             res.json({ id: this.lastID });
@@ -77,12 +77,7 @@ router.get('/find-paymentsSale', (req, res) => {
 // Devuelve el ultimo ID para el siguiente recibo de algun abono
 router.get('/find-paymentsNextReceipt', (req, res) => {
     const SaleID = req.query.q;
-
-    const sql = `
-        SELECT COALESCE(MAX(ReceiptID), 0) + 1 AS NextReceiptID
-        FROM SalePayments
-        WHERE SaleID = ?
-    `;
+    const sql = `SELECT MAX(ReceiptID) + 1 AS NextReceiptID FROM SalePayments WHERE SaleID = ?`;
 
     dbSales.get(sql, [SaleID], (err, row) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -90,12 +85,18 @@ router.get('/find-paymentsNextReceipt', (req, res) => {
     });
 });
 
-// Obtener siguiente ID de venta
+// Obtener siguiente ID de pago
 router.get('/find-nextPaymentID', (req, res) => {
-    dbSales.get(`SELECT seq FROM sqlite_sequence WHERE name = 'SalePayments'`, (err, row) => {
+    const sql = `
+        SELECT IFNULL(MAX(PaymentID), 0) + 1 AS NextPaymentID
+        FROM SalePayments
+    `;
+
+    dbSales.get(sql, (err, row) => {
         if (err) return res.status(500).json({ error: err.message });
-        const nextID = row ? row.seq + 1 : 1;
-        res.json({ nextID });
+        
+        // Siempre devolverá un valor válido
+        res.json(row || { NextPaymentID: 1 });
     });
 });
 
