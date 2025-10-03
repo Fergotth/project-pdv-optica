@@ -31,12 +31,12 @@ export const getNoteData = async (noteID) => {
     }
 
     renderWindow();
-    const [note] = noteResult;
 
+    const [note] = noteResult;
     const articles = await getDataNoteArticlesDB(noteID);
     const payments = await getDataNotePaymentsDB(noteID);
     const [client] = await getDataClientDB(note.ClientID);
-    const tickets = await getTicketsFile('sale', noteID);
+    const tickets = await getTicketsFile(noteID);
 
     return { note, articles, payments, client, tickets };
 };
@@ -79,10 +79,14 @@ export const renderTotals = (total, paid) => {
     getElement('.payment__input').value = '';
 };
 
-export const renderTickets = async (type, tickets) => {
+export const renderTickets = async (tickets) => {
     const container = getElement('.payments__ticketsContainer');
     container.replaceChildren();
-    container.appendChild(getParsedHTML(getTicketItemHTML(type, tickets)));
+
+    tickets.forEach((ticket, index) => {
+        const type = index === 0 ? 'sale' : 'payment';
+        container.appendChild(getParsedHTML(getTicketItemHTML(type, ticket)));
+    });
 };
 
 const renderWindow = () => {
@@ -95,4 +99,25 @@ const renderWindow = () => {
     noteWindow.classList.add('show__window');
     paymentWindow.classList.add('show__window');
     ticketWindow.classList.add('show__window');
+};
+
+export const sortTickets = (tickets) => {
+    if (!tickets || tickets.length === 0) return [];
+
+    // Buscar ticket de venta
+    const sale = tickets.find(f => f.includes('/sale-'));
+
+    // Tickets de pago
+    let payments = tickets.filter(f => f.includes('/payment-'));
+
+    // Ordenar pagos por el primer número
+    payments.sort((a, b) => {
+        const numsA = a.match(/\d+/g).map(Number);
+        const numsB = b.match(/\d+/g).map(Number);
+        return numsA[0] - numsB[0];
+    });
+
+    // Devolver: sale primero si existe, si no solo payments
+    if (sale) return [sale, ...payments];
+    return payments;
 };

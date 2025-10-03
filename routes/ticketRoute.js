@@ -48,28 +48,46 @@ router.post('/generate-ticketHTML', (req, res) => {
 });
 
 router.get('/get-ticketPDF', (req, res) => {
-    const { type, id } = req.query;
-    console.log("Consulta recibida:", { type, id });
+    const { id } = req.query;
+    console.log("Consulta recibida:", { id });
 
-    if (!type || !id) {
-        return res.status(400).json({ message: 'Faltan parámetros: type o id.' });
+    if (!id) {
+        return res.status(400).json({ message: 'Faltan parámetros: id.' });
     }
 
-    const filePattern = `${type}-${id}`;
+    const filePatternSale = `sale-${id}`;
+    const filePatternPayment = `-${id}`;
     const ticketsDir = path.resolve(__dirname, '..', 'data', 'tickets');
 
     try {
         const files = fs.readdirSync(ticketsDir);
-        //console.log("Archivos encontrados:", files);
 
-        const matchedFile = files.find(file => file.startsWith(filePattern) && file.endsWith('.pdf'));
-        //console.log("Archivo coincidente:", matchedFile);
+        // Busca el archivo de venta (único)
+        const matchedFileSale = files.find(file => file.startsWith(filePatternSale) && file.endsWith('.pdf'));
 
-        if (matchedFile) {
-            const publicURL = `/tickets/${matchedFile}`;
-            return res.json({ message: 'Archivo encontrado.', url: publicURL });
+        // Busca TODOS los archivos de pago relacionados con el ID
+        const matchedFilesPayment = files.filter(file => file.startsWith('payment') && file.endsWith(`${filePatternPayment}.pdf`));
+
+        //console.log("Archivo de venta:", matchedFileSale);
+        //console.log("Archivos de pago:", matchedFilesPayment);
+
+        if (matchedFileSale || matchedFilesPayment.length > 0) {
+            const urls = [];
+
+            if (matchedFileSale) {
+                urls.push(`/tickets/${matchedFileSale}`);
+            }
+
+            if (matchedFilesPayment.length > 0) {
+                urls.push(...matchedFilesPayment.map(file => `/tickets/${file}`));
+            }
+
+            return res.json({ 
+                message: 'Archivos encontrados.', 
+                urls 
+            });
         } else {
-            return res.status(404).json({ message: 'Archivo PDF no encontrado.' });
+            return res.status(404).json({ message: 'Archivos PDF no encontrados.' });
         }
     } catch (err) {
         console.error("Error leyendo carpeta de tickets:", err);

@@ -11,7 +11,8 @@ import { getBillPaymentSummaryHTML } from './paymentsDom.js';
 import { getNewPaymentItemHTML } from '../sales/salesDom.js';
 import { 
     calcuteNewPayment,
-    createTicketPayment 
+    createTicketPayment,
+    renderData
 } from './utils.js';
 import { setData } from './setData.js';
 import { getPaymentsData } from './getData.js';
@@ -80,7 +81,7 @@ export const handlerBtnApplyPayments = async ({ elements, DOM }) => {
     await createTicketPayment(ID, data[data.length - 1].ReceiptID, data[data.length - 1].PaymentID); 
     handlerPaymentCloseIcon({ DOM });
 
-    // falta limpiar la pantalla de la nota que se busco para abono
+    renderData("", true, "", "", "", "", "");
     newAlert({
         icon: 'success',
         text: "Abono registrado exitosamente."

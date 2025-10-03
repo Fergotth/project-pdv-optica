@@ -31,9 +31,9 @@ export const getDataNoteArticlesDB = async (value) => {
     }
 };
 
-export const getTicketsFile = async (type, ID) => {
+export const getTicketsFile = async (ID) => {
     try {
-        const response = await fetch(`/get-ticketPDF?type=${type}&id=${ID}`);
+        const response = await fetch(`/get-ticketPDF?id=${ID}`);
         
         if (!response.ok) {
             console.warn("Respuesta inesperada del servidor:", response.status);
@@ -42,15 +42,12 @@ export const getTicketsFile = async (type, ID) => {
 
         const data = await response.json();
 
-        if (!data.url) {
-            console.warn("No se encontró la URL del archivo en la respuesta.");
+        if (!data.urls || data.urls.length === 0) {
+            console.warn("No se encontraron URLs de tickets en la respuesta.");
             return null;
         }
 
-        return {
-            url: data.url,
-            message: data.message || 'Archivo encontrado.'
-        };
+        return data.urls;
 
     } catch (error) {
         console.error("Error al obtener los datos: ", error);
