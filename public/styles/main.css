@@ -2,6 +2,7 @@
 @import url('menu5.css');
 @import url('karnexnote.css');
 @import url('billpayments.css');
+@import url('errorMessage.css');
 
 body {
     margin: 0;

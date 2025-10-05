@@ -164,5 +164,10 @@ export const getHandlerArgs = {
 
     handlerSetQuotationBtn: () => ({
         quotation: getElement('.quotationInputValue').value
+    }),
+
+    handlerBtnTestErrorMessage: () => ({
+        DOM: document.body,
+        message: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at velit maximus, molestie est a, tempor magna."
     })
 };

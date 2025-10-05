@@ -1,5 +1,11 @@
 import { newAlert } from "../utils/alerts.js";
 import { 
+    getElement, 
+    getParsedHTML 
+} from "../utils/getElement.js";
+import { showErrorMessage } from "../utils/errorMessage.js";
+import { getDataProductDB } from '../products/getData.js';
+import { 
     getMaterialCatalogHTML, 
     getItemToCardHTML, 
     getPromptDiscountHTML,
@@ -9,11 +15,6 @@ import {
     getNewClientFoundedHTML,
     getPromptQuotationHTML
 } from "./salesDom.js";
-import { 
-    getElement, 
-    getParsedHTML 
-} from "../utils/getElement.js";
-import { getDataProductDB } from '../products/getData.js';
 import { 
     handleQuantityButton, 
     updateItemsCart, 
@@ -370,4 +371,8 @@ export const handlerSetQuotationBtn = async ({ quotation }) => {
 
     handlerCancelSetQuotationBtn({ DOM: getElement('.overlayPromptQuotation') });
     recalculateSummary();
+};
+
+export const handlerBtnTestErrorMessage = ({ DOM, message }) => {
+    showErrorMessage(DOM, message);
 };
