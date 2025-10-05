@@ -196,7 +196,7 @@
 
 .payment__articles, .payment__paymentsSummary {
     width: 100%;
-    height: 38.5vh;
+    height: 33vh;
     display: flex;
     flex-direction: column;
     align-items: center;
