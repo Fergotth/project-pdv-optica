@@ -5,6 +5,7 @@ import {
 import { getElement } from '../utils/getElement.js';
 import { newAlert } from '../utils/alerts.js';
 import { safeNumber } from '../utils/getSafeNumbers.js';
+import { showErrorMessage } from '../utils/errorMessage.js';
 import { getDataNoteArticlesDB } from '../kardexNotes/getData.js';
 
 export const getData = async (value) => {
@@ -41,12 +42,8 @@ export const getData = async (value) => {
         };
 
     } catch (error) {
+        showErrorMessage(document.body, `Error en getData: ${error}`);
         console.error("Error en getData:", error);
-        newAlert({
-            icon: "info",
-            title: "Busqueda fallida",
-            text: "No se pudo obtener la información de la venta. Por favor, intente nuevamente.",
-        });
         return null;
     }
 };
@@ -99,12 +96,8 @@ export const getNextReceiptId = async (IDSale) => {
         return data.NextReceiptID ?? null;
 
     } catch (error) {
+        showErrorMessage(document.body, `Error en getNetID: ${error}`);
         console.error("Error en getNextId:", error);
-        newAlert({
-            icon: "info",
-            title: "Error",
-            text: "No se pudo obtener el siguiente ID. Por favor, intente nuevamente.",
-        });
         return null;
     }
 };
@@ -125,12 +118,8 @@ export const getNextPaymentID = async () => {
         return nextID?.NextPaymentID || 1;
 
     } catch (error) {
+        showErrorMessage(document.body, `Error en getNetID: ${error}`);
         console.error("Error en getNextId:", error);
-        newAlert({
-            icon: "info",
-            title: "Error",
-            text: "No se pudo obtener el siguiente ID. Por favor, intente nuevamente.",
-        });
         return null;
     }
 };

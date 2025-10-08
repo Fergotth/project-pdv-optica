@@ -1,8 +1,9 @@
 import menu from "./menu4.js";
 import renderCalendar from "./calendar.js";
+import { showErrorMessage } from "./utils/errorMessage.js";
 
 const app = document.getElementById('app');
-const temporaryContent = document.getElementById('temporaryContent');
+//const temporaryContent = document.getElementById('temporaryContent');
 const calendar = document.getElementById('calendar');
 
 const loadMenu = () => {
@@ -12,7 +13,10 @@ const loadMenu = () => {
         app.innerHTML = html;
         menu();
     })
-    .catch(error => console.error("Error al cargar el menu: ", error));
+    .catch(error => {
+        showErrorMessage(document.body, `Error al cargar el menu: ${error}`);
+        console.error("Error al cargar el menu: ", error)
+    });
 }
 
 loadMenu();
@@ -24,7 +28,10 @@ const loadCalendar = () => {
         calendar.innerHTML = html;
         renderCalendar();
     })
-    .catch(error => console.error("Error al cargar el calendario: ", error));
+    .catch(error => {
+        showErrorMessage(document.body, `Error al cargar el calendario: ${error}`);
+        console.error("Error al cargar el calendario: ", error)
+    });
 };
 
 loadCalendar();

@@ -22,6 +22,7 @@ import {
 } from './saveData.js';
 import summarySale from '../sales/summarySale.js';
 import { safeNumber } from '../utils/getSafeNumbers.js';
+import { showErrorMessage } from '../utils/errorMessage.js';
 
 export const handlerPaymentCloseIcon = ({ DOM }) => {
     updateState(() => {
@@ -37,6 +38,7 @@ export const handlerBillPayment__search = async ({ note }) => {
     try {
         await setData(note);
     } catch (error) {
+        showErrorMessage(document.body, "Error al obtener los datos de la nota");
         console.error("Error al obtener los datos de la nota");
     }
 };

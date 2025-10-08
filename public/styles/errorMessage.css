@@ -9,7 +9,7 @@
     transform: translateY(100vh);
     position: absolute;
 }
-  
+
 .error-alert-error {
     cursor: default;
     display: flex;
@@ -20,14 +20,14 @@
     background-color: #232531;
     border-radius: 0.5rem;
     padding: 0 10px;
-  }
-  
+}
+
 .alert-content-error {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
-  
+
 .alert-icon-error {
     color: #d65563;
     background-color: rgba(255, 255, 255, 0.05);
@@ -35,27 +35,27 @@
     padding: 0.25rem;
     border-radius: 0.5rem;
 }
-  
+
 .icon {
     width: 24px;
     height: 24px;
-  }
-  
+}
+
 .alert-text-error {
     display: flex;
     flex-direction: column;
 }
-  
+
 .alert-title-error {
     color: white;
     margin: 0;
 }
-  
+
 .alert-description-error {
     color: #9ca3af; /* gris claro */
     margin: 0;
 }
-  
+
 .alert-close-error {
     color: #6b7280;
     background: transparent;
@@ -65,12 +65,12 @@
     transition: background-color 0.2s ease;
     cursor: pointer;
 }
-  
+
 .alert-close-error:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
 .alert-error-show {
     transition: all 0.5s ease-in-out;
-    transform: translateY(-3vh);
+    transform: translateY(-7vh);
 }

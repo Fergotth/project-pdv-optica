@@ -1,3 +1,5 @@
+import { showErrorMessage } from './errorMessage.js';
+
 /**
  * 
  * @param {HTMLElement} element     // Elemento HTML
@@ -8,6 +10,7 @@ export const getElement = (strClass) => {
     const element = strClass.includes('.') ? document.querySelector(strClass) : document.getElementById(strClass);
 
     if (!element || !(element instanceof HTMLElement)) {
+        showErrorMessage(document.body, `Elemento (${strClass}) no existe en el DOM`);
         throw new Error(`Elemento (${strClass}) no existe en el DOM`);
     }
 

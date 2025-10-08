@@ -7,11 +7,8 @@ import { safeNumber } from '../utils/getSafeNumbers.js';
 import { createTicketPaymentHTML } from '../utils/ticket.js';
 import { generateTicket } from '../sales/utils.js';
 import { postData } from '../utils/postDataToDB.js';
-import { 
-    getNextReceiptId,
-    getNextPaymentID,
-    getDataTicket 
-} from './getData.js';
+import { showErrorMessage } from '../utils/errorMessage.js';
+import { getDataTicket } from './getData.js';
 
 export const renderData = (total, unpaid, totalPaid, client, idClient, status, id) => {
     getElement('.second__title div:nth-child(1) > span').textContent = id;
@@ -72,11 +69,7 @@ export const createTicketPayment = async (ID, nextIDReceipt, nextIDPayment) => {
     if (ticketSaved) {
         generateTicket(nextIDPayment, "payment", nextIDReceipt, ID);
     } else {
-        newAlert({
-            icon: 'error',
-            text: `No se pudo guardar el HTML del ticket ${nextIDPayment}`
-        });
-
+        showErrorMessage(document.body, `No se pudo guardar el HTML del ticket ${nextIDPayment}`);
         console.warn('No se pudo guardar el HTML del ticket');
         throw new Error('Error al guardar el ticket HTML');
     }

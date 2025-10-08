@@ -4,6 +4,7 @@ import params from "./submenu/paramsSales.js";
 import kardexNote from './kardex.js'
 import payments from "./payments.js";
 import { getElement} from "./utils/getElement.js";
+import { showErrorMessage } from "./utils/errorMessage.js";
 import { 
     setModuleInstance, 
     setActiveModule 
@@ -126,7 +127,10 @@ const menu = () => {
                         break;
                 }
             })
-            .catch(error => console.error('Error al cargar el archivo: ', error));
+            .catch(error => {
+                showErrorMessage(document.body, `Error al cargar el archivo: ${error}`);
+                console.error('Error al cargar el archivo: ', error)
+            });
     };
 };
 

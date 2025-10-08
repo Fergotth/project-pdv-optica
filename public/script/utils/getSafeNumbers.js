@@ -1,13 +1,16 @@
+import { showErrorMessage } from "./errorMessage.js";
+
 export const safeNumber = (value) => {
-    if (value === null || value === undefined) 
-        throw new Error(`El valor "${value}" no es un número válido`);
+    const showError = () => {
+        const msg = `El valor "${value}" no es un número válido`;
+        showErrorMessage(document.body, msg);
+        throw new Error(msg);
+    };
 
-    const text = String(value).trim();
-    if (text === "") throw new Error(`El valor "${value}" no es un número válido`);
+    if (value == null) showError(); // cubre null y undefined
 
-    const num = Number(text);
-    if (Number.isNaN(num)) 
-        throw new Error(`El valor "${value}" no es un número válido`);
+    const num = Number(String(value).trim());
+    if (Number.isNaN(num) || String(value).trim() === "") showError();
 
     return num;
 };

@@ -1,5 +1,6 @@
 import { getDataClientDB } from "./getData.js";
 import { newAlert } from "../utils/alerts.js";
+import { showErrorMessage } from "../utils/errorMessage.js";
 
 export const showClientHTML = async (param) => {
     try {
@@ -16,10 +17,6 @@ export const showClientHTML = async (param) => {
             });
         }
     } catch {
-        newAlert({
-            icon: "error",
-            title: "Error",
-            text: `Error al buscar el cliente en la Base Datos: ${error}`
-        });
+        showErrorMessage(document.body, `Error al buscar el cliente en la Base Datos: ${error}`);
     }
 };

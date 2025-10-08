@@ -20,11 +20,12 @@ export const IVA = (checked) => {
         return { iva: checked ? (previusData.subtotal - previusData.discount) * previusData.percentIVA / 100 : 0 };
     });
 
+    const { percentIVA, iva } = getState();
     getElement('.discount + div').innerHTML = checked ? 
-    `<input type="checkbox" class="applyIVA" checked>IVA %${getState().percentIVA}` : 
+    `<input type="checkbox" class="applyIVA" checked>IVA %${percentIVA}` : 
     `<input type="checkbox" class="applyIVA">IVA`;
     
-    return getState().iva;
+    return iva;
 };
 
 export const total = () => {

@@ -1,5 +1,6 @@
 import { getElement } from '../utils/getElement.js';
 import { newAlert } from '../utils/alerts.js';
+import { showErrorMessage } from '../utils/errorMessage.js';
 import { updateState } from '../sales/state.js';
 import { postData } from '../utils/postDataToDB.js';
 
@@ -14,7 +15,10 @@ const params = () => {
         try {
             const res = await postData(url, { ID, IVA, PriceDolar });
             
-            if (!res) throw new Error('Fallo la respuesta del servidor');
+            if (!res) {
+                showErrorMessage(document.body, "Fallo la respuesta del servidor");
+                throw new Error('Fallo la respuesta del servidor');
+            }
 
             overlay.remove();
 
@@ -31,11 +35,8 @@ const params = () => {
             });
     
         } catch (error) {
+            showErrorMessage(document.body, `Error al guardar los datos del producto: ${error}`);
             console.error('Error al guardar los datos del producto:', error);
-            newAlert({
-                icon: "error",
-                text: "Error al guardar los parámetros"
-            });
         }
     });
 };

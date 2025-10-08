@@ -2,6 +2,7 @@ import { getParsedHTML } from "../utils/getElement.js";
 import { saveClient } from "../clients/addClient.js";
 import { closeOverlay } from "../utils/removeOverlay.js";
 import { getElement } from "../utils/getElement.js";
+import { showErrorMessage } from "../utils/errorMessage.js";
 import { saveProduct } from "../products/saveData.js";
 
 /**
@@ -17,6 +18,7 @@ export const handlerBtnSaveClient = async ({ data }) => {
     const { Name, Phone, Birthdate } = data;
 
     if (!Name || !Phone || !Birthdate) {
+        showErrorMessage(document.body, "Todos los campos son obligatorios");
         throw new Error("Todos los campos son obligatorios");
     }
 

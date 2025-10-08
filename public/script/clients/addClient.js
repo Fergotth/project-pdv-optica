@@ -1,4 +1,5 @@
 import { newAlert } from "../utils/alerts.js";
+import { showErrorMessage } from "../utils/errorMessage.js";
 import { postData } from "../utils/postDataToDB.js";
 
 /**
@@ -18,15 +19,12 @@ export const saveClient = async (data) => {
             newAlert({
                 icon: "error",
                 title: "Alta de Cliente",
-                text: "Cliente no se pudo agregar"
+                text: "Error al agregar al cliente a la DB"
             });
 
             throw new Error("Error al agregar al cliente a la DB");
         }
     } catch (error) {
-        newAlert({
-            icon: "error",
-            text: `Ha ocurrido un error: ${error}`
-        });
+        showErrorMessage(document.body, `Ha ocurrido un error: ${error}`);
     }
 };

@@ -1,6 +1,6 @@
 import { getParsedHTML } from './getElement.js';
 
-const getErrorMessage = (message) => {
+const getErrorMessageHTML = (message) => {
     return `
     <div class="alert-container-error">
         <div class="error-alert-error">
@@ -34,16 +34,18 @@ const getErrorMessage = (message) => {
 };
 
 export const showErrorMessage = (DOM, message) => {
-    DOM.appendChild(getParsedHTML(getErrorMessage(message)));
+    const existAlert = DOM.querySelector('.alert-container-error');
+    
+    if (existAlert) existAlert.remove();
 
-    const closeButton = DOM.querySelector('.alert-close-error');
+    DOM.appendChild(getParsedHTML(getErrorMessageHTML(message)));
     const alertContainer = DOM.querySelector('.alert-container-error');
+    const closeButton = DOM.querySelector('.alert-close-error');
 
     setTimeout(() => {
         alertContainer.classList.add('alert-error-show');
     }, 0);
 
-    closeButton.addEventListener('click', () => {
-        alertContainer.remove();
-    });
+    if (closeButton) 
+        closeButton.addEventListener('click', () => alertContainer.remove());
 };

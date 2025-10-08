@@ -2,6 +2,7 @@ import { getHandlerArgs } from "./sales/handlerDispatcher.js";
 import { getElement } from "./utils/getElement.js";
 import { flushState, updateState } from "./sales/state.js";
 import { loader } from "./utils/loader.js";
+import { showErrorMessage } from "./utils/errorMessage.js";
 import Class from "./sales/consts.js";
 import * as handlers from './sales/handlers.js';
 
@@ -19,6 +20,7 @@ const sales = async () => {
             const data = await response.json();
             return data;
         } catch (error) {
+            showErrorMessage(document.body, `Error al obtenr datos de la base de datos: ${error}`);
             console.error('Error al obtener datos de la base de datos:', error);
             return [];
         }
@@ -53,6 +55,7 @@ const sales = async () => {
                     loader(true);
                     await handlers[handlerName](args); // Esperamos al handler si es async
                 } catch (error) {
+                    showErrorMessage(document.body, `Error en ${handlerName}: ${error}`);
                     console.error(`Error en ${handlerName}:`, error);
                 } finally {
                     loader(false);

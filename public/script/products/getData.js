@@ -1,4 +1,5 @@
 import { getElement } from "../utils/getElement.js";
+import { showErrorMessage } from "../utils/errorMessage.js";
 
 /**
  * Obtiene los datos del formulario de productos.
@@ -20,13 +21,14 @@ export const getDataProductForm = () => {
     
         return data;
     } catch (error) {
+        showErrorMessage(document.body, `No se puedieron obtener los datos de los articulos: ${error}`);
         console.error("No se puedieron obtener los datos de los articulos", error);
     }
 };
 
 /**
  * @param {String} article // Nombre del articulo a buscar
- * @returns {Promise<Object>} // Devuelve un objeto con los datos encontrar o un array vacio si no
+ * @returns {Promise<Object> || []} // Devuelve un objeto con los datos encontrar o un array vacio si no
  */
 export const getDataProductDB = async (article) => {
     try {
@@ -34,6 +36,7 @@ export const getDataProductDB = async (article) => {
         const data = await response.json();
         return data;
     } catch (error) {
+        showErrorMessage(document.body, `Error al obtener datos del articulo: ${error}`);
         console.error('Error al obtener datos del articulo:', error);
         return [];
     }

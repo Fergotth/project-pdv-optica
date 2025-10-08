@@ -1,4 +1,5 @@
 import { getElement} from "../utils/getElement.js";
+import { showErrorMessage } from "../utils/errorMessage.js";
 
 /**
  * 
@@ -27,6 +28,7 @@ export const getDataClientDB = async (typeOfParam) => {
         const data = await response.json();
         return data;
     } catch (error) {
+        showErrorMessage(document.body, `Error al obtener datos del cliente: ${error}`);
         console.error('Error al obtener datos del cliente:', error);
         return [];
     }

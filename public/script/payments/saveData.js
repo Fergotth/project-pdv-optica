@@ -2,6 +2,7 @@ import { postData } from '../utils/postDataToDB.js';
 import { newAlert } from '../utils/alerts.js';
 import { getElement } from '../utils/getElement.js';
 import { safeNumber } from '../utils/getSafeNumbers.js';
+import { showErrorMessage } from '../utils/errorMessage.js';
 
 export const savePayments = async (data) => {
     if (!data) {
@@ -39,10 +40,7 @@ export const updateUnpaidNotes = async (data) => {
     });
     
     if (!response) {
-        newAlert({
-            icon: 'info',
-            text: "No se pudo actualiar correctamente la BD UnpaidSales, intente nuevamente."
-        });
+        showErrorMessage(document.body, "No se pudo actualiar correctamente la BD UnpaidSales, intente nuevamente");
         return false;
     }
 
@@ -52,10 +50,7 @@ export const updateUnpaidNotes = async (data) => {
     });
 
     if (!response) {
-        newAlert({
-            icon: 'info',
-            text: "No se pudo actualiar correctamente el status de la BD Sales, intente nuevamente."
-        });
+        showErrorMessage(document.body, "No se pudo actualiar correctamente la BD Sales, intente nuevamente");
         return false;
     }
 

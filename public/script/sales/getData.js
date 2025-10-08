@@ -1,4 +1,5 @@
 import { getElement } from "../utils/getElement.js";
+import { showErrorMessage } from "../utils/errorMessage.js";
 import Class from "./consts.js";
 import { updateState, getState } from "./state.js";
 
@@ -11,11 +12,13 @@ export const getDataDB = async (url) => {
     try {
         const response = await fetch(url);
         if (!response.ok) {
+            showErrorMessage(document.body, `HTTP error! status: ${response.status}`);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         return data;
     } catch (error) {
+        showErrorMessage(document.body, `Error al obtener datos de la base de datos: ${error}`);
         console.error('Error al obtener datos de la base de datos:', error);
         return null; //ajuste a []
     }
@@ -108,6 +111,7 @@ export const getQuoationDB = async (type) => {
         const data = await response.json();
         return data;
     } catch (err) {
+        showErrorMessage(document.body, `Error al obtener los datos de la cotiacion: ${err}`);
         console.error("Error al obtener los datos de la cotizacion: ", err);
         return null;
     }
