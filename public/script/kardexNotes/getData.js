@@ -1,4 +1,4 @@
-import { showErrorMessage } from "../utils/errorMessage";
+import { showErrorMessage } from "../utils/errorMessage.js";
 
 export const getDataNoteDB = async (value) => {
     try {

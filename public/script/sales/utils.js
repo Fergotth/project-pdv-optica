@@ -6,6 +6,7 @@ import {
     getElement, 
     getParsedHTML 
 } from "../utils/getElement.js";
+import { showErrorMessage } from "../utils/errorMessage.js";
 import { getProductHTML } from "./salesDom.js";
 import { 
     subtotal,
@@ -160,6 +161,7 @@ export const generateTicket = async (NextID, type, ReceiptID = undefined, SaleID
 
         if (!response.ok) {
             const errorText = await response.text(); // <- captura error
+            showErrorMessage(document.body, `HTTP ${response.status}: ${errorText}`);
             throw new Error(`HTTP ${response.status}: ${errorText}`);
         }
 
@@ -167,6 +169,7 @@ export const generateTicket = async (NextID, type, ReceiptID = undefined, SaleID
         console.log('PDF creado:', data.file);
         window.open(data.file, '_blank');
     } catch (err) {
+        showErrorMessage(document.body, `Error al generar el PDF: ${err}`);
         console.error('Error al generar el PDF:', err);
     } finally {
         loader(false);
@@ -270,6 +273,10 @@ export const findQuotation = async (quotation) => {
     const [quotations] = await getQuoationDB(quotation);
 
     if (!quotations) {
+        newAlert({
+            icon: 'info',
+            text: "No se encontraron cotizaciones en la base de datos"
+        });
         console.warn("No se encontraron cotizaciones en la base de datos.");
         return null;
     }

@@ -1,5 +1,6 @@
 import { flushState, getState } from './state.js';
 import { newAlert } from '../utils/alerts.js';
+import { showErrorMessage } from '../utils/errorMessage.js';
 import { 
     generateTicket, 
     restartSaleForm,
@@ -86,15 +87,12 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
         if (ticketSaved) {
             generateTicket(nextID, "sale");
         } else {
-            newAlert({
-                icon: 'error',
-                text: `No se pudo guardar el HTML del ticket ${nextID}`
-            });
-
+            showErrorMessage(document.body, `No se pudo guardar el HTML del ticket ${nextID}`);
             console.warn('No se pudo guardar el HTML del ticket');
             throw new Error('Error al guardar el ticket HTML');
         }
     } else {
+        showErrorMessage(document.body, "Algunos datos no se pudieron guardar");
         console.warn('Algunos datos no se pudieron guardar');
         throw new Error('Error');
     }
@@ -112,11 +110,7 @@ export const saveQuotation = async (data) => {
     });
     
     if (!quotationSaved) {
-        newAlert({
-            icon: 'error',
-            text: "No se pudo guardar la cotización"
-        });
-
+        showErrorMessage(document.body, "No se pudo guardar la cotizacion");
         console.warn('No se pudo guardar la cotización');
         throw new Error('Error al guardar la cotización');
     }
@@ -127,11 +121,7 @@ export const saveQuotation = async (data) => {
     });
 
     if (!ticketCreated) {
-        newAlert({
-            icon: 'error',
-            text: "No se pudo guardar el HTML del ticket"
-        });
-
+        showErrorMessage(document.body, "No se pudo guardar el HTML del ticket");
         console.warn('No se pudo guardar el HTML del ticket');
         throw new Error('Error al guardar el ticket HTML');
     }

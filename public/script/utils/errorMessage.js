@@ -44,8 +44,10 @@ export const showErrorMessage = (DOM, message) => {
 
     setTimeout(() => {
         alertContainer.classList.add('alert-error-show');
-    }, 0);
+    }, 10);
 
     if (closeButton) 
-        closeButton.addEventListener('click', () => alertContainer.remove());
+        closeButton.addEventListener('click', () => {
+            alertContainer.classList.add('alert-error-hide');
+        });
 };
