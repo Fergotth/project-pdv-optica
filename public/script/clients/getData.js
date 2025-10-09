@@ -19,8 +19,8 @@ export const getDataClientForm = () => {
 
 /**
  * 
- * @param {String} name // Nombre del cliente a buscar 
- * @returns             // Devuelve un objeto con los datos encontrar o un array vacio si no
+ * @param {String} name                 // Nombre del cliente a buscar 
+ * @returns {Promise<Object> || Array}  // Devuelve un objeto con los datos encontrar o un array vacio si no
  */
 export const getDataClientDB = async (typeOfParam) => {
     try {

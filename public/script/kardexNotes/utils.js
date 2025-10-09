@@ -16,6 +16,11 @@ import {
 } from "./kardexDOM.js";
 import { newAlert } from "../utils/alerts.js";
 
+/**
+ * 
+ * @param {Integer} noteID // ID de la nota a buscar
+ * @returns {Object<Integer, String, String, String, Array>} // Objetos con los datos obtenidos
+ */
 export const getNoteData = async (noteID) => {
     const noteResult = await getDataNoteDB(noteID);
 
@@ -42,6 +47,10 @@ export const getNoteData = async (noteID) => {
 };
 
 
+/**
+ * 
+ * @param {Object<Array>, String} param // Objeto con los datos a utilizar 
+ */
 export const renderNoteHeader = ({ note, client }) => {
     getElement('.payments__second > span').textContent = `Nota No.: ${note.ID}`;
     getElement('.payment__clientName').textContent = client?.Name || "Publico General";
@@ -49,6 +58,10 @@ export const renderNoteHeader = ({ note, client }) => {
     getElement('.payment__date').textContent = `${note.PaymentDate.replace("-", "/").replace("-", "/")}`;
 };
 
+/**
+ * 
+ * @param {Array} articles // Array con los datos de los articulos
+ */
 export const renderArticles = (articles) => {
     const container = getElement('.payment__articles');
     container.replaceChildren();
@@ -58,6 +71,11 @@ export const renderArticles = (articles) => {
     }
 };
 
+/**
+ * 
+ * @param {Array} payments  // Array con los datos de los pagos
+ * @returns {Number}        // Total de los pagos registrados
+ */
 export const renderPayments = (payments) => {
     const container = getElement('.payment__paymentsSummary');
     container.replaceChildren();
@@ -72,6 +90,11 @@ export const renderPayments = (payments) => {
     return totalPaid;
 };
 
+/**
+ * 
+ * @param {Number} total // Total de la nota
+ * @param {Number} paid  // Pago realizado
+ */
 export const renderTotals = (total, paid) => {
     const pending = total - paid;
     getElement('.payment__payments div:nth-child(1) span:nth-child(2)').textContent = `$${paid.toFixed(2)}`;
@@ -79,6 +102,10 @@ export const renderTotals = (total, paid) => {
     getElement('.payment__input').value = '';
 };
 
+/**
+ * 
+ * @param {Array} tickets // Datos de los tickets a insertar 
+ */
 export const renderTickets = async (tickets) => {
     const container = getElement('.payments__ticketsContainer');
     container.replaceChildren();
@@ -89,6 +116,9 @@ export const renderTickets = async (tickets) => {
     });
 };
 
+/**
+ * Mostrar Elementos DIV en pantalla
+ */
 const renderWindow = () => {
     const inputWindow = getElement('.payments__first');
     const noteWindow = getElement('.payments__second');
@@ -101,6 +131,11 @@ const renderWindow = () => {
     ticketWindow.classList.add('show__window');
 };
 
+/**
+ * 
+ * @param {Array} tickets   // Elementos con las rutas de los tickets 
+ * @returns {Array}         // Elementos re-ordenados
+ */
 export const sortTickets = (tickets) => {
     if (!tickets || tickets.length === 0) return [];
 

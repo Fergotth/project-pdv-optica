@@ -10,6 +10,16 @@ import { postData } from '../utils/postDataToDB.js';
 import { showErrorMessage } from '../utils/errorMessage.js';
 import { getDataTicket } from './getData.js';
 
+/**
+ * 
+ * @param {Number} total        // Total
+ * @param {Number} unpaid       // Saldo pendiente
+ * @param {Number} totalPaid    // Cantidad pagada
+ * @param {String} client       // Cliente
+ * @param {Integer} idClient    // ID de cliente
+ * @param {String} status       // Estatus de la venta
+ * @param {Integer} id          // ID de la nota
+ */
 export const renderData = (total, unpaid, totalPaid, client, idClient, status, id) => {
     getElement('.second__title div:nth-child(1) > span').textContent = id;
     getElement('.second__title div:nth-child(2) > span').textContent = client;
@@ -38,6 +48,12 @@ export const renderData = (total, unpaid, totalPaid, client, idClient, status, i
     }
 };
 
+/**
+ * 
+ * @param {Number} value                        // Cantidad pagada
+ * @param {String || undefined} typeOfPayment   // Tipo de pago
+ * @returns {Boolean}                           // Resultado del proceso
+ */
 export const calcuteNewPayment = (value, typeOfPayment = undefined) => {
     const dataState = getState();
     const actualPaid = Number(dataState.paymentsApplicated.toFixed(2));
@@ -60,6 +76,12 @@ export const calcuteNewPayment = (value, typeOfPayment = undefined) => {
     return true;
 };
 
+/**
+ * 
+ * @param {Integer} ID              // ID de la nota 
+ * @param {Integer} nextIDReceipt   // ID del siguiente recibo
+ * @param {Integer} nextIDPayment   // ID del siguiente pago
+ */
 export const createTicketPayment = async (ID, nextIDReceipt, nextIDPayment) => {
     const { cartItems, payments, summarySale } = await getDataTicket(ID);
     const ticketSaved = await postData('/generate-ticketHTML', {

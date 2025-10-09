@@ -14,6 +14,10 @@ export const handlerRegisterClient = ({ DOM, innerHTML }) => {
     DOM.appendChild(getParsedHTML(innerHTML));
 };
 
+/**
+ * 
+ * @param {Object<String, String, Date>} param0     // Objeto con los datos a guardar
+ */
 export const handlerBtnSaveClient = async ({ data }) => {
     const { Name, Phone, Birthdate } = data;
 
@@ -26,18 +30,32 @@ export const handlerBtnSaveClient = async ({ data }) => {
     closeOverlay(getElement('.overlay'));
 };
 
+/**
+ * @param {void}    // Cierra el HTMLDivElement overlay
+ */
 export const handlerCloseFormClient = () => {
     closeOverlay(getElement('.overlay'));
 };
 
+/**
+ * 
+ * @param {Object<HTMLElement, String>} param0  // HTMLElement donde se insertara el nuevo elemento contenido innerHTML  
+ */
 export const handlerRegisterArticles = ({ DOM, innerHTML }) => {
     DOM.appendChild(getParsedHTML(innerHTML));
 };
 
+/**
+ * @param {void}    // Cierra el HTMLDivElement overlay
+ */
 export const handlerBtnProductsCancel = () => {
     closeOverlay(getElement('.overlay'));
 };
 
+/**
+ * 
+ * @param {Object} param0   // Objeto contenedor de los datos de los productos a guardar 
+ */
 export const handlerBtnProductsSave = ({ data }) => {
     saveProduct(data);
-}
+};

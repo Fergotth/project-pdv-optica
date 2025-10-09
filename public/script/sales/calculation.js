@@ -5,6 +5,11 @@ import {
 import Class from "./consts.js";
 import { getElement } from "../utils/getElement.js";
 
+/**
+ * Actualiza el valor del subtotal
+ * @param {Number} price 
+ * @returns 
+ */
 export const subtotal = (price) => {
     updateState(previusData => {
         return {
@@ -15,6 +20,11 @@ export const subtotal = (price) => {
     return getState().subtotal;
 };
 
+/**
+ * Regresa el valor del iva y marca o desmarca la casilla de iva segun sea el caso
+ * @param {Boolean} checked 
+ * @returns {Number}
+ */
 export const IVA = (checked) => {
     updateState(previusData => {
         return { iva: checked ? (previusData.subtotal - previusData.discount) * previusData.percentIVA / 100 : 0 };
@@ -28,6 +38,10 @@ export const IVA = (checked) => {
     return iva;
 };
 
+/**
+ * Calcula el total de la nota
+ * @returns {Number}
+ */
 export const total = () => {
     const state = getState();
     return  state.subtotal - state.discount + state.iva;
@@ -56,6 +70,12 @@ export const calculateDOMSubtotal = () => {
     return total;
 };
 
+/**
+ * Calcula el nuevo pago
+ * @param {Number} value 
+ * @param {String || undefined} typeOfPayment 
+ * @returns {Boolean}
+ */
 export const calcuteNewPayment = (value, typeOfPayment = undefined) => {
     const dataState = getState();
     const actualPaid = Number(dataState.paymentsApplicated.toFixed(2));

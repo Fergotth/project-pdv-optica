@@ -1,3 +1,7 @@
+/**
+ * @param {void}
+ * @returns {String}    // Contenido para el elemento HTNL nuevo
+ */
 export const getClientHTML = () => {
     return `
     <div class="overlay">
@@ -34,6 +38,10 @@ export const getClientHTML = () => {
     `;
 };
 
+/**
+ * @param {void}
+ * @returns {String}    // Contenido para el elemento HTNL nuevo
+ */
 export const getProductsHTML = () => {
     return `
     <div class="overlay">

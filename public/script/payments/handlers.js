@@ -24,6 +24,10 @@ import summarySale from '../sales/summarySale.js';
 import { safeNumber } from '../utils/getSafeNumbers.js';
 import { showErrorMessage } from '../utils/errorMessage.js';
 
+/**
+ * 
+ * @param {Object<HTMLDivElement>} param0   // Elemento a remover
+ */
 export const handlerPaymentCloseIcon = ({ DOM }) => {
     updateState(() => {
         return {
@@ -34,6 +38,10 @@ export const handlerPaymentCloseIcon = ({ DOM }) => {
     if (DOM) DOM.remove();
 };
 
+/**
+ * 
+ * @param {Object} param0 // Datos de la nota
+ */
 export const handlerBillPayment__search = async ({ note }) => {
     try {
         await setData(note);
@@ -43,6 +51,11 @@ export const handlerBillPayment__search = async ({ note }) => {
     }
 };
 
+/**
+ * 
+ * @param {Object<HTMLDivElement, String, Number, Integer>} param0  // Elementos a insertar
+ * @returns {void?}
+ */
 export const handlerThird__applyNewPayment = ({ DOM, client, total, id }) => {
     if (!Boolean(total)) {
         newAlert({
@@ -56,6 +69,11 @@ export const handlerThird__applyNewPayment = ({ DOM, client, total, id }) => {
     summarySale();
 };
 
+/**
+ * 
+ * @param {Object<HTMLDivElement, Integer, String>} param0  // Elementos del nuevo pago
+ * @returns {void?}
+ */
 export const handlerApplyPayment = async ({ DOM, value, typeOfPayment }) => {
     if (!calcuteNewPayment(value, typeOfPayment)) {
         newAlert({
@@ -70,11 +88,19 @@ export const handlerApplyPayment = async ({ DOM, value, typeOfPayment }) => {
     DOM.appendChild(getParsedHTML(getNewPaymentItemHTML(value, typeOfPayment)));
 };
 
+/**
+ * 
+ * @param {Object<HTMLDivElement, Number>} param0   // HTMLElemento y valor a descontar
+ */
 export const handlerItemDeletePayment = ({ DOM, value }) => {
     calcuteNewPayment(-value);
     DOM.remove();
 };
 
+/**
+ * 
+ * @param {Object<NodeList, HTMLDivElement>} param0 // Lista de elementos a recorrer y elemento a quitar
+ */
 export const handlerBtnApplyPayments = async ({ elements, DOM }) => {
     const ID = safeNumber(getElement('.second__title div:nth-child(1) > span').textContent);
     const data = await getPaymentsData(elements);

@@ -4,6 +4,11 @@ import { getElement } from '../utils/getElement.js';
 import { safeNumber } from '../utils/getSafeNumbers.js';
 import { showErrorMessage } from '../utils/errorMessage.js';
 
+/**
+ * 
+ * @param {Object} data // Objeto con los datos a guardar 
+ * @returns {Boolean}   // Resultado del proceso
+ */
 export const savePayments = async (data) => {
     if (!data) {
         newAlert({
@@ -29,6 +34,11 @@ export const savePayments = async (data) => {
     return true;
 };
 
+/**
+ * 
+ * @param {Object} data // Datos de los pagos
+ * @returns {Boolean}   // Resultado del proceso
+ */
 export const updateUnpaidNotes = async (data) => {
     const balance = safeNumber(getElement('.summary__totalUnpaid + div').textContent.replace("$", "")) - 
         data.reduce((acc, item) => acc + item.Paid, 0); 

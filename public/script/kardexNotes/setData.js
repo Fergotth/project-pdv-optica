@@ -8,6 +8,10 @@ import {
     sortTickets
 } from "./utils.js";
 
+/** 
+ * 
+ * @param {Integer} noteID  // ID de la nota a buscar 
+ */
 export const setData = async (noteID) => {
     const { note, articles, payments, client, tickets } = await getNoteData(noteID);
 

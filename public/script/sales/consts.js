@@ -1,3 +1,6 @@
+/**
+ * Nombre de las clases
+ */
 const Class = {
     main: { 
         overlay: '.overlay'

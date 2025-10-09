@@ -47,35 +47,67 @@ import {
 } from "./saveData.js";
 import summarySale from "./summarySale.js";
 
+/**
+ * Manejador del boton Armazones
+ * @param {Object} params 
+ */
 export const handlerBtnFrames = (params) => {
     handleProductCategory({ ...params, title: "Armazones", message: "armazones" });
 };
 
+/**
+ * Manejador del boton Materiales
+ * @param {Object<HTMLDivElement>} DOM 
+ */
 export const handlerBtnGlasses = ({ DOM }) => {
     DOM.replaceChildren();
     DOM.insertAdjacentHTML('afterbegin', getMaterialCatalogHTML());
 };
 
+/**
+ * Manejador del boton Accesorios
+ * @param {Onject} params 
+ */
 export const handlerBtnAccesories = async (params) => {
     handleProductCategory({ ...params, title: "Accesorios", message: "accesorios" });
 };
 
+/**
+ * Manejador del boton Servicios
+ * @param {Object} params 
+ */
 export const handlerBtnServices = async (params) => {
     handleProductCategory({ ...params, title: "Servicios", message: "articulos" });
 };
 
+/**
+ * Manejador del boton Vision Sencilla
+ * @param {Object} params 
+ */
 export const handlerBtnSinglevision = (params) => {
     handleProductCategory({ ...params, title: "Materiales", message: "materiales" });
 };
 
+/**
+ * Manejador del boton Bifocal
+ * @param {Objeto} params 
+ */
 export const handlerBtnBifocal = (params) => {
     handleProductCategory({ ...params, title: "Materiales", message: "materiales" });
 };
 
+/**
+ * Manejador del boton Progresivos
+ * @param {Object} params 
+ */
 export const handlerBtnProgresive = (params) => {
     handleProductCategory({ ...params, title: "Materiales", message: "materiales" });
 };
 
+/**
+ * Manejador de seleccion de elemento de ventas
+ * @param {OBject<HTMLDivElement, Integer, Integer>} param0 
+ */
 export const handlerItemSelected = async ({ DOM, sku, quantity }) => {
     const [product] = await getDataProductDB(sku);
     let item = undefined;
@@ -93,6 +125,10 @@ export const handlerItemSelected = async ({ DOM, sku, quantity }) => {
     }
 };
 
+/**
+ * Manejador de borrar un elemento del carrito
+ * @param {Object<HTMLDivElement>} param0 
+ */
 export const handlerDeleteItem = ({ DOM }) => {
     updateItemsCart(-Number(DOM.querySelector(Class.label.quantity).textContent));
     DOM.remove();
@@ -100,14 +136,26 @@ export const handlerDeleteItem = ({ DOM }) => {
     recalculateSummary();
 };
 
+/**
+ * Manejador del boton + del carrito de ventas
+ * @param {Object<HTMLDivElement, String>} param0 
+ */
 export const handlerPlusButton = ({ DOM, param }) => {
     handleQuantityButton(DOM, param);
 };
 
+/**
+ * Manejador del boton - del carrito de ventas
+ * @param {Object<HTMLDivElement, String>} param0 
+ */
 export const handlerMinusButton = ({ DOM, param }) => {
     handleQuantityButton(DOM, param);
 };
 
+/**
+ * Manejador del boton borrar el carrito de ventas (vaciar)
+ * @param {Object<HTMLDivElement, Boolean>} param0 
+ */
 export const handlerDeleteCart = async ({ DOM, param }) => {
     const subtotalElement = getElement(Class.label.subtotal);
     const subtotal = subtotalElement ? Number(subtotalElement.textContent.replace("$", "")) : 0;
@@ -132,6 +180,11 @@ export const handlerDeleteCart = async ({ DOM, param }) => {
     }
 };
 
+/**
+ * Manejador de la busqueda del articulo por SKU
+ * @param {Object<HTMLDivElement, Integer>} param0 
+ * @returns {Promise<void>}
+ */
 export const handlerSku = async ({ DOM, sku }) => {
     const [product] = await getDataProductDB(sku);
     const input = getElement(Class.input.article);
@@ -156,6 +209,11 @@ export const handlerSku = async ({ DOM, sku }) => {
     input.blur();
 };
 
+/**
+ * Manejador del boton aplicar descuento
+ * @param {Object<HTMLDivElement, Integer>} param0 
+ * @returns {void}
+ */
 export const handlerApplyDiscountBtn = ({ DOM, items }) => {
     if (items < 1) {
         newAlert({
@@ -371,8 +429,4 @@ export const handlerSetQuotationBtn = async ({ quotation }) => {
 
     handlerCancelSetQuotationBtn({ DOM: getElement('.overlayPromptQuotation') });
     recalculateSummary();
-};
-
-export const handlerBtnTestErrorMessage = ({ DOM, message }) => {
-    showErrorMessage(DOM, message);
 };

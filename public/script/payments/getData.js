@@ -8,6 +8,11 @@ import { safeNumber } from '../utils/getSafeNumbers.js';
 import { showErrorMessage } from '../utils/errorMessage.js';
 import { getDataNoteArticlesDB } from '../kardexNotes/getData.js';
 
+/**
+ * 
+ * @param {Integer} value       // ID de la nota a buscar
+ * @returns {Promise<Object>}   // Objeto con los datos de la nota
+ */
 export const getData = async (value) => {
     try {
         const response = await fetch(`/find-unpaidSale?q=${encodeURIComponent(value)}`);
@@ -48,6 +53,11 @@ export const getData = async (value) => {
     }
 };
 
+/**
+ * 
+ * @param {Object<NodeList>} items  // Coleccion de DivElements para extraer los datos para el Array de pagos
+ * @returns {Array}                 // Array con los datos de los pagos
+ */
 export const getPaymentsData = async (items) => {
     const saleID = safeNumber(getElement('.second__title div:nth-child(1) > span').textContent);
     const nextReceiptID = await getNextReceiptId(saleID);
@@ -80,15 +90,17 @@ export const getPaymentsData = async (items) => {
     return getState().dataPayment;
 };
 
+/**
+ * 
+ * @param {Integer} IDSale              // ID de la nota a buscar
+ * @returns {Promise<Integer> || null}  // ID siguiente de recibo
+ */
 export const getNextReceiptId = async (IDSale) => {
     try {
         const response = await fetch(`/find-paymentsNextReceipt?q=${encodeURIComponent(IDSale)}`);
         
         if (!response.ok) {
-            newAlert({
-                icon: "error",
-                text: `Error HTTP: ${response.status}` 
-            });
+            showErrorMessage(document.body, `Error HTTP en getNextReceiptID: ${response.status}`);
             return null;
         }
 
@@ -96,21 +108,23 @@ export const getNextReceiptId = async (IDSale) => {
         return data.NextReceiptID ?? null;
 
     } catch (error) {
-        showErrorMessage(document.body, `Error en getNetID: ${error}`);
+        showErrorMessage(document.body, `Error en getNextReceiptID: ${error}`);
         console.error("Error en getNextId:", error);
         return null;
     }
 };
 
+/**
+ * 
+ * @param {void}
+ * @returns {Promise<Integer> || null}  // ID siguiente de pago
+ */
 export const getNextPaymentID = async () => {
     try {
         const response = await fetch(`/find-nextPaymentID`);
         
         if (!response.ok) {
-            newAlert({
-                icon: "error",
-                text: `Error HTTP: ${response.status}` 
-            });
+            showErrorMessage(document.body, `Error HTTP en getNextPaymentID: ${response.status}`);
             return null;
         }
 
@@ -118,12 +132,17 @@ export const getNextPaymentID = async () => {
         return nextID?.NextPaymentID || 1;
 
     } catch (error) {
-        showErrorMessage(document.body, `Error en getNetID: ${error}`);
+        showErrorMessage(document.body, `Error en getNextPaymentID: ${error}`);
         console.error("Error en getNextId:", error);
         return null;
     }
 };
 
+/**
+ * 
+ * @param {Integer} ID                      // ID de la nota a buscar
+ * @returns {Object<Array, Array, Number>}  // Objetos con los datos para el nuevo ticket
+ */
 export const getDataTicket = async (ID) => {
     const summarySale = safeNumber(getElement('.summaryClientSaleDetails span:nth-child(2)').textContent);
     

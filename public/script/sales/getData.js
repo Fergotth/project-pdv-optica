@@ -4,9 +4,9 @@ import Class from "./consts.js";
 import { updateState, getState } from "./state.js";
 
 /**
- * 
+ * Obtiene los datos de la base de datos
  * @param {String} url 
- * @returns {Promise<Object[]>} 
+ * @returns {Promise<Object[]> || Promise<[]>} 
  */
 export const getDataDB = async (url) => {
     try {
@@ -24,6 +24,10 @@ export const getDataDB = async (url) => {
     }
 };
 
+/**
+ * Obtiene los elementos del carrito de compras
+ * @returns {Array}
+ */
 export const getCartItems = () => {
     const items = getElement(Class.list.itemsInCart).querySelectorAll('.item');
     
@@ -44,6 +48,10 @@ export const getCartItems = () => {
     return getState().dataCart;
 };
 
+/**
+ * Obtiene los pagos
+ * @returns {Array}
+ */
 export const getPayments = () => {
     const items = getElement('.salePayments').querySelectorAll('.paymentItem');
 
@@ -75,6 +83,10 @@ export const getPayments = () => {
     return getState().dataPayment;
 };
 
+/**
+ * Obtiene los datos de la venta
+ * @returns {Array}
+ */
 export const getSummarySale = () => {
     const newData = {
         subtotal: Number(getElement('.subtotal').textContent.replace("$", "")),
@@ -92,6 +104,10 @@ export const getSummarySale = () => {
     return getState().dataSummary;
 };
 
+/**
+ * Obtiene los datos de la cotizacion
+ * @returns {Promise<Array>}
+ */
 export const getDataQuotation = async () => {
     const data = {
         products: [
@@ -105,6 +121,11 @@ export const getDataQuotation = async () => {
     return data;
 };
 
+/**
+ * Obtiene la cotizacion de la base de datos
+ * @param {String} type 
+ * @returns {Promise<Object> || Promise<null>}
+ */
 export const getQuoationDB = async (type) => {
     try {
         const response = await fetch(`/get-quotation?q=${encodeURIComponent(type)}`);
@@ -117,12 +138,20 @@ export const getQuoationDB = async (type) => {
     }
 };
 
+/**
+ * Obtiene el siguiente ID de venta
+ * @returns {Promise<Integer>}
+ */
 export const getNextIDSale = async () => {
     const nextIDSale = await getDataDB('/find-nextSaleID');
 
     return nextIDSale?.nextID || 1;
 };
 
+/**
+ * Obtiene el siguiente ID de cotizacion
+ * @returns {Promise<Integer>}
+ */
 export const getNextIDQuotation = async () => {
     const nextIDQuotation = await getDataDB('/find-nextQuotationID');
 

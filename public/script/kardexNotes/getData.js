@@ -1,5 +1,10 @@
 import { showErrorMessage } from "../utils/errorMessage.js";
 
+/**
+ * 
+ * @param {Integer} value               // ID de la nota a buscar
+ * @returns {Promise<Object> || null}   // Retorno del objeto con los datos o null si hay un error
+ */
 export const getDataNoteDB = async (value) => {
     try {
         const response = await fetch(`/find-sale?q=${encodeURIComponent(value)}`);
@@ -12,6 +17,11 @@ export const getDataNoteDB = async (value) => {
     }
 };
 
+/**
+ * 
+ * @param {Integer} value               // ID de la nota a buscar
+ * @returns {Promise<Object> || null}   // OBjeto con los datos encontrados o null si fue un error en la consulta
+ */
 export const getDataNotePaymentsDB = async (value) => {
     try {
         const response = await fetch(`/find-paymentsSale?q=${encodeURIComponent(value)}`);
@@ -24,6 +34,11 @@ export const getDataNotePaymentsDB = async (value) => {
     }
 };
 
+/**
+ * 
+ * @param {Integer} value               // Id de la nota a buscar
+ * @returns {Promise<Object> || null}   // Objeto con los datos encontrados o null
+ */
 export const getDataNoteArticlesDB = async (value) => {
     try {
         const response = await fetch(`/find-articlesSale?q=${encodeURIComponent(value)}`);
@@ -35,6 +50,11 @@ export const getDataNoteArticlesDB = async (value) => {
     }
 };
 
+/**
+ * 
+ * @param {Integer} ID                  // ID del ticket a buscar 
+ * @returns {Promise<Object> || null}   // Objeto con los datos encontrados o null
+ */
 export const getTicketsFile = async (ID) => {
     try {
         const response = await fetch(`/get-ticketPDF?id=${ID}`);

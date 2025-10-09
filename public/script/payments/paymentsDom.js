@@ -1,3 +1,10 @@
+/**
+ * 
+ * @param {String} client   // Nombre del cliente
+ * @param {Number} total    // Total
+ * @param {Intger} ID       // ID
+ * @returns {String}        // innerHTML para el nuevo elemento
+ */
 export const getBillPaymentSummaryHTML = (client, total, ID) => {
     return `
     <div class="overlayPromptDiscount">

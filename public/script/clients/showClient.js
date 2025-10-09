@@ -2,6 +2,10 @@ import { getDataClientDB } from "./getData.js";
 import { newAlert } from "../utils/alerts.js";
 import { showErrorMessage } from "../utils/errorMessage.js";
 
+/**
+ * 
+ * @param {String} param    // Nombre o ID del cliente a buscar 
+ */
 export const showClientHTML = async (param) => {
     try {
         const clients = await getDataClientDB(param);
