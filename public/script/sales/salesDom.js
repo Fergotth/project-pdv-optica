@@ -2,11 +2,10 @@ import { formatMoney } from "./utils.js";
 import { getState } from "./state.js";
 
 /**
- * 
+ * Regresa el innerHTML para cada elemento
  * @param {Object} product 
  * @returns {String} HTML
  */
-
 export const getProductHTML = (product) => {
     const pathImg = product.Image ? `../../images/${product.Image}` : "../../images/no-image.jpg";
     
@@ -17,6 +16,10 @@ export const getProductHTML = (product) => {
     `;
 };
 
+/**
+ * Regresa el innerHTML para las categorias de los materiales
+ * @returns {String}
+ */
 export const getMaterialCatalogHTML = () => {
     const pathImg = '../../images/';
     
@@ -33,6 +36,11 @@ export const getMaterialCatalogHTML = () => {
     `;
 };
 
+/**
+ * Regresa el innerHTML para cada elemento del carrito
+ * @param {Object} product 
+ * @returns {String}
+ */
 export const getItemToCardHTML = (product) => {
     const pathImg = product.Image ? `../../images/${product.Image}` : "../../images/no-image.jpg";
 
@@ -76,6 +84,10 @@ export const getItemToCardHTML = (product) => {
     `;
 };
 
+/**
+ * Regresa el innerHtml para prompt para aplicar descuento
+ * @returns {String}
+ */
 export const getPromptDiscountHTML = () => {
     return `
     <div class="overlayPromptDiscount">
@@ -90,6 +102,10 @@ export const getPromptDiscountHTML = () => {
     `;
 };
 
+/**
+ * Regresa el innerHTML para el loader
+ * @returns {String}
+ */
 export const getLoaderHTML = () => {
     return `
     <div class="overlayLoader">
@@ -98,6 +114,13 @@ export const getLoaderHTML = () => {
     `;
 };
 
+/**
+ * Obtener el innerHTML para el formulario de pago
+ * @param {String} client 
+ * @param {Number} total 
+ * @param {Integer} ID 
+ * @returns {String}
+ */
 export const getPaymentSummaryHTML = (client, total, ID) => {
     return `
     <div class="overlayPromptDiscount">
@@ -192,6 +215,12 @@ export const getPaymentSummaryHTML = (client, total, ID) => {
     `;
 };
 
+/**
+ * Obtener el innerHTML para cada pago realizado
+ * @param {Number} payment 
+ * @param {String} typeOfPayment 
+ * @returns {String}
+ */
 export const getNewPaymentItemHTML = (payment, typeOfPayment) => {
     const typeOfPaymentConverted = typeOfPayment === 'Dolar' ? `${typeOfPayment} (x${payment})` : null;
     const paymentConverted = !typeOfPaymentConverted ? payment : payment * getState().dolar;
@@ -218,6 +247,10 @@ export const getNewPaymentItemHTML = (payment, typeOfPayment) => {
     `;
 };
 
+/**
+ * Regresa el innerHTML para el formulario de busqueda de cliente
+ * @returns {String}
+ */
 export const getSearchClientFormHTML = () => {
     return `
     <div class="overlaySearchClient">
@@ -248,6 +281,12 @@ export const getSearchClientFormHTML = () => {
     `;
 };
 
+/**
+ * Obtiene el innerHTML para cada cliente encontrado
+ * @param {Integer} ID 
+ * @param {String} client 
+ * @returns {String}
+ */
 export const getNewClientFoundedHTML = (ID, client) => {
     return `
     <div class="clientItem">
@@ -259,6 +298,10 @@ export const getNewClientFoundedHTML = (ID, client) => {
     `;
 };
 
+/**
+ * Regresa el innerHTML para el prompt de cotizar venta
+ * @returns {String}
+ */
 export const getPromptQuotationHTML = () => {
     return `
     <div class="overlayPromptQuotation">

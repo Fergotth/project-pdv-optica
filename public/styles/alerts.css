@@ -374,9 +374,10 @@
     display: flex;
     justify-content: center; /* Centra el botón horizontalmente */
     margin: 30px 0 15px 0; /* agrega espacio superior */
+    gap: 15px;
 }
 
-.btnCloseAlert {
+.btnCloseAlert, .btnYesAlert {
     background-color: #87adbd;
     border: 1px solid #888;
     border-radius: 10px;
@@ -387,7 +388,7 @@
     transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
 }
 
-.btnCloseAlert:hover {
+.btnCloseAlert:hover, .btnYesAlert:hover {
     background-color: #6f9aad; /* Un tono más oscuro */
     color: #fff; /* Cambia el texto a blanco */
     border-color: #6f9aad; /* Ajusta el borde al nuevo color */

@@ -16,13 +16,24 @@ let state = {
     procesing: false
 };
 
+/**
+ * Regresa el contenido del objeto
+ * @returns {Object}
+ */
 export const getState = () => ({ ...state });
 
+/**
+ * Actualiza el contenido del objeto
+ * @returns {Object}
+ */
 export const updateState = (updater) => {
     state = { ...state, ...updater(state) };
     return getState();
 }
 
+/**
+ * Reinicializa el estado del objeto
+ */
 export const flushState = async () => {
     const nextID = await getNextIDSale();
 

@@ -1,3 +1,9 @@
+/**
+ * Devuelve si la categoria buscada existe
+ * @param {Object} data 
+ * @param {String} param 
+ * @returns {Boolean || false}
+ */
 export const validateData = (data, param) => {
     if (!Array.isArray(data) || data.length === 0) return false;
 

@@ -1,6 +1,7 @@
 import { 
     getState, 
-    updateState 
+    updateState,
+    flushState
 } from "./state.js";
 import { 
     getElement, 
@@ -27,6 +28,11 @@ import {
 import { loader } from '../utils/loader.js';
 import Class from "./consts.js";
 
+/**
+ * Manejador para mostrar la categoria de material seeccionada
+ * @param {Object<HTMLDivElement, String, String, String, String>} param0 
+ * @returns {Promise<void>}
+ */
 export const handleProductCategory = async ({ DOM, url, category, title, message }) => {
     const products = await getDataDB(url);
 
@@ -52,7 +58,7 @@ export const handleProductCategory = async ({ DOM, url, category, title, message
 };
 
 /**
- * 
+ * Manejador del evento de + o - del elemento del carrito de ventas
  * @param {HTMLElement} button  // Elemento seleccionado
  * @param {Integer} index       // Indice del objeto
  */
@@ -68,12 +74,35 @@ export const handleQuantityButton = (DOM, param) => {
     }
 };
 
+export const handleFlushCart = async (DOM, param) => {
+    const subtotalElement = getElement(Class.label.subtotal);
+    const subtotal = subtotalElement ? Number(subtotalElement.textContent.replace("$", "")) : 0;
+    setSubtotal(-subtotal);
+    DOM.replaceChildren?.();
+
+    updateItemsCart(-getState().cartItems);
+    resetDiscountValue();
+    await flushState();
+    recalculateSummary();
+
+    if (param) {
+        newAlert({
+            icon: "success",
+            title: "AVISO",
+            text: "Articulos eliminados del carrito de compras"
+        });
+
+        const inputClient = getElement('.input-client');
+        inputClient.textContent = 'Publico General';
+        inputClient.dataset.id = 0;
+    }
+};
+
 /**
- * 
- * 
+ * Reinicia el formulario de ventas
  */
 export const restartSaleForm = async () => {
-    await handlerDeleteCart({ DOM: getElement(Class.list.itemsInCart), param: false });
+    await handleFlushCart(getElement(Class.list.itemsInCart), false);
     handlerPaymentCloseIcon({ DOM: document.querySelector('.overlayPromptDiscount') || null });
     
     const inputClient = getElement('.input-client');
@@ -81,6 +110,10 @@ export const restartSaleForm = async () => {
     inputClient.dataset.id = 0;
 };
 
+/**
+ * Actualiza el valor del elemento del carrito de ventas
+ * @param {Integer} quantity 
+ */
 export const updateItemsCart = (quantity) => {
     updateState(previusData => {
         return { 
@@ -91,6 +124,12 @@ export const updateItemsCart = (quantity) => {
     getElement(Class.label.cartTotalItems).textContent = getState().cartItems;
 };
 
+/**
+ * Agrega los elementos al carrito de ventas
+ * @param {HTMLDivElement} DOM 
+ * @param {Object} products 
+ * @param {String} category 
+ */
 export const setItemsToCart = (DOM, products, category) => {
     DOM.replaceChildren();
     products.forEach(product => {
@@ -99,28 +138,52 @@ export const setItemsToCart = (DOM, products, category) => {
     });
 };
 
+/**
+ * Muestra el subtotal
+ * @param {Number} price 
+ */
 export const setSubtotal = (price) => {
     getElement(Class.label.subtotal).textContent = formatMoney(subtotal(price));
 };
 
+/**
+ * Muestra el total de la venta
+ */
 export const setTotal = () => {
     getElement(Class.label.total).textContent = `${formatMoney(total())}`;
 }
 
+/**
+ * Muestra el nuevo precio
+ * @param {HTMLDivElement} DOM 
+ * @param {Integer} quantity 
+ */
 export const setNewPrice = (DOM, quantity) => { 
     const price = DOM.querySelector(Class.label.itemprice);
     const unitPrice = Number(DOM.querySelector(Class.label.unitprice).textContent.replace("$", ""));
     price.textContent = formatMoney(unitPrice * quantity);
 };
 
+/**
+ * Convierne el numero en formato monedo
+ * @param {Number} value 
+ * @returns {String}
+ */
 export const formatMoney = (value) => {
     return `$${value.toFixed(2)}`;
 }
 
+/**
+ * Cierra el overlay
+ * @param {HTMLDivElement} DOM 
+ */
 export const closeOverlayOpened = (DOM) => {
     if (DOM) DOM.remove();
 };
 
+/**
+ * Elimina el descuento aplicado
+ */
 export const resetDiscountValue = () => {
     updateState(() => {
         return {
@@ -131,6 +194,9 @@ export const resetDiscountValue = () => {
     recalculateSummary();
 };
 
+/**
+ * Actualiza los datos de pago
+ */
 export const recalculateSummary = () => {
     const state = getState();
     const applyIVA = getElement('.applyIVA').checked;
@@ -142,12 +208,25 @@ export const recalculateSummary = () => {
     getElement(Class.label.cartTotalItems).textContent = state.cartItems;
 };
 
+/**
+ * Muestra el valor en formato moneda
+ * @param {HTMLDivElement} selector 
+ * @param {Number} value 
+ * @param {Boolean} isNegative 
+ */
 const setMoneyContent = (selector, value, isNegative = false) => {
     const el = getElement(selector);
     const displayValue = `${isNegative ? "- " : ""}$${value.toFixed(2)}`;
     if (el) el.textContent = displayValue;
 };
 
+/**
+ * Genera el ticket de venta o abono
+ * @param {Integer} NextID 
+ * @param {String} type 
+ * @param {Integer || undefined} ReceiptID 
+ * @param {Integer || undefined} SaleID 
+ */
 export const generateTicket = async (NextID, type, ReceiptID = undefined, SaleID = undefined) => {
     try {
         loader(true);
@@ -176,6 +255,11 @@ export const generateTicket = async (NextID, type, ReceiptID = undefined, SaleID
     }
 };
 
+/**
+ * Convierte el numero en texto
+ * @param {Number} number 
+ * @returns {String}
+ */
 export const numberToWords = (number) => {
     const units = ['', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
     const specials = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
@@ -236,6 +320,10 @@ export const numberToWords = (number) => {
     return `${integerText} ${centavos}/100`;
 };
 
+/**
+ * Devuelve la fecha actual dd/mm/aaaa hh:mm am/pm
+ * @returns {String}
+ */
 export const getCurrentDateTime = () => {
     const now = new Date();
     const day = String(now.getDate()).padStart(2, '0');
@@ -250,6 +338,11 @@ export const getCurrentDateTime = () => {
     return `${day}/${month}/${year} ${hours}:${minutes}${ampm}`;
 };
 
+/**
+ * Extrae los productos y los devuelve en un objeto cada uno
+ * @param {Object} data 
+ * @returns {Object}
+ */
 export const extractProducts = (data) => {
     const regExp = /s[a-zA-Z0-9]+\?\d+/g;
     const products = data.match(regExp) || [];
@@ -265,10 +358,20 @@ export const extractProducts = (data) => {
     return result;
 };
 
+/**
+ * Crea la string con los productos para guardar en la DB 
+ * @param {Object} products 
+ * @returns {String}
+ */
 export const createStringProducts = (products) => {
     return products.map(item => `s${item.SKU}?${item.Quantity}`).join('');
 };
 
+/**
+ * Busca y devuelve el objeto con los datos de la cotizacion
+ * @param {Integer} quotation 
+ * @returns {Promise<Object> || null}
+ */
 export const findQuotation = async (quotation) => {
     const [quotations] = await getQuoationDB(quotation);
 
@@ -291,6 +394,11 @@ export const findQuotation = async (quotation) => {
     };
 };
 
+/**
+ * Devuelve el elemento donde se encuentra el elemento buscado en el carrito
+ * @param {Integer} SKU 
+ * @returns {HTMLDivElement || null}
+ */
 export const existInCart = (SKU) => {
     try {
         const items = Array.from(getElement(Class.list.itemsInCart).querySelectorAll('.product-image')).find(item => item.dataset.sku === SKU);

@@ -4,6 +4,16 @@ import {
     numberToWords 
 } from "../sales/utils.js";
 
+/**
+ * Costruye la estructura HTML para generar el ticket y devuelve su innerHTML
+ * @param {Integer} nextID 
+ * @param {Object} cartItems 
+ * @param {Object} payments 
+ * @param {Object} summarySale 
+ * @param {Integer} percentIVA 
+ * @param {Number} dolar 
+ * @returns {String}
+ */
 export const createTicketSaleHTML = (nextID, cartItems, payments, summarySale, percentIVA, dolar) => {
     let totalItems = 0;
     let productsItems = '';
@@ -247,6 +257,11 @@ export const createTicketSaleHTML = (nextID, cartItems, payments, summarySale, p
     return ticketInnerHTML;
 };
 
+/**
+ * Crea y devuelve el innerHTML para el ticket de cotizacion
+ * @param {Object} data 
+ * @returns {String}
+ */
 export const createTicketQuotationHTML = (data) => {
     let totalItems = 0;
     let productsItems = '';
@@ -420,7 +435,15 @@ export const createTicketQuotationHTML = (data) => {
     return ticketInnerHTML;
 };
 
-//modificar esta funcion para crear correctamente el ticket de abono
+/**
+ * Crea y devuelve el innerHTML para el ticket de abono
+ * @param {Integer} nextID 
+ * @param {Object} cartItems 
+ * @param {Object} payments 
+ * @param {Number} summarySale 
+ * @param {Number} dolar 
+ * @returns {String}
+ */
 export const createTicketPaymentHTML = (nextID, cartItems, payments, summarySale, dolar) => {
     let totalItems = 0;
     let productsItems = '';

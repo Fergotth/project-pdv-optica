@@ -25,7 +25,8 @@ import {
     recalculateSummary,
     restartSaleForm,
     findQuotation,
-    existInCart
+    existInCart,
+    handleFlushCart
 } from "./utils.js";
 import { 
     flushState, 
@@ -130,10 +131,19 @@ export const handlerItemSelected = async ({ DOM, sku, quantity }) => {
  * @param {Object<HTMLDivElement>} param0 
  */
 export const handlerDeleteItem = ({ DOM }) => {
-    updateItemsCart(-Number(DOM.querySelector(Class.label.quantity).textContent));
-    DOM.remove();
-    resetDiscountValue();
-    recalculateSummary();
+    newAlert({
+        icon: 'question',
+        title: "AVISO",
+        text: "¿Desea quitar este articulo del carrito de venta?"
+    })
+    .then(response => {
+        if (response){
+            updateItemsCart(-Number(DOM.querySelector(Class.label.quantity).textContent));
+            DOM.remove();
+            resetDiscountValue();
+            recalculateSummary();
+        }
+    });
 };
 
 /**
@@ -157,26 +167,23 @@ export const handlerMinusButton = ({ DOM, param }) => {
  * @param {Object<HTMLDivElement, Boolean>} param0 
  */
 export const handlerDeleteCart = async ({ DOM, param }) => {
-    const subtotalElement = getElement(Class.label.subtotal);
-    const subtotal = subtotalElement ? Number(subtotalElement.textContent.replace("$", "")) : 0;
-    setSubtotal(-subtotal);
-    DOM.replaceChildren?.();
-
-    updateItemsCart(-getState().cartItems);
-    resetDiscountValue();
-    await flushState();
-    recalculateSummary();
-
-    if (param) {
+    if (getState().cartItems > 0) {
         newAlert({
-            icon: "success",
+            icon: 'question',
             title: "AVISO",
-            text: "Articulos eliminados del carrito de compras"
+            text: "¿Desea quitar todos los arituculos del carrito de venta?"
+        })
+        .then(async response => {
+            if (response) {
+                await handleFlushCart(DOM, param);
+            }
         });
-
-        const inputClient = getElement('.input-client');
-        inputClient.textContent = 'Publico General';
-        inputClient.dataset.id = 0;
+    } else {
+        newAlert({
+            icon: 'info',
+            title: "AVISO",
+            text: "No hay articulos en el carrito de ventas"
+        });
     }
 };
 
@@ -229,6 +236,10 @@ export const handlerApplyDiscountBtn = ({ DOM, items }) => {
     DOM.appendChild(getParsedHTML(getPromptDiscountHTML()));
 };
 
+/**
+ * Manejador del boton borrar descuento
+ * @param {void} param0 
+ */
 export const handlerDeleteDiscountBtn = ({}) => {
     if (getState().discount > 0) {
         resetDiscountValue();
@@ -244,11 +255,20 @@ export const handlerDeleteDiscountBtn = ({}) => {
     getElement('.discount-summary-menu').removeAttribute('open');
 };
 
+/**
+ * Manejador del boton eliminar descuento
+ * @param {Object<HTMLDivElement>} param0 
+ */
 export const handlerCancelSetDiscountBtn = ({ DOM }) => {
     getElement('.discount-summary-menu').removeAttribute('open');
     DOM.remove();
 };
 
+/**
+ * Manejador del boton aplicar descuento
+ * @param {Object<Number} param0 
+ * @returns {void}
+ */
 export const handlerSetDiscountBtn = ({ discount }) => {
     handlerCancelSetDiscountBtn({ DOM: getElement('.overlayPromptDiscount') });
     
@@ -270,10 +290,18 @@ export const handlerSetDiscountBtn = ({ discount }) => {
     recalculateSummary();
 };
 
+/**
+ * Manejador del boton applicar IVA
+ * @param {void} param0 
+ */
 export const handlerApplyIVA = ({}) => {
     recalculateSummary();
 };
 
+/**
+ * Manejador del boton aplicar pago
+ * @param {Object<HTMLDivElement, String, Number, Integer>} param0 
+ */
 export const handlerBtnRegisterPay = ({ DOM, client, total, ID }) => {
     if (getState().cartItems > 0) {
         DOM.appendChild(getParsedHTML(getPaymentSummaryHTML(client, total, ID)));
@@ -286,6 +314,10 @@ export const handlerBtnRegisterPay = ({ DOM, client, total, ID }) => {
     }
 };
 
+/**
+ * Manejador del boton X para cerrar la ventana
+ * @param {Object<HTMLDivElement} param0 
+ */
 export const handlerPaymentCloseIcon = ({ DOM }) => {
     updateState(() => {
         return {
@@ -298,6 +330,11 @@ export const handlerPaymentCloseIcon = ({ DOM }) => {
     if (DOM) DOM.remove();
 };
 
+/**
+ * Manejador del boton aplicar abono
+ * @param {Object<HTMLDivElement. Number, String>} param0
+ * @returns {void}
+ */
 export const handlerApplyPayment = ({ DOM, value, typeOfPayment }) => {
     if (!calcuteNewPayment(value, typeOfPayment)) {
         newAlert({
@@ -312,11 +349,20 @@ export const handlerApplyPayment = ({ DOM, value, typeOfPayment }) => {
     DOM.appendChild(getParsedHTML(getNewPaymentItemHTML(value, typeOfPayment)));
 };
 
+/**
+ * Manejador del boton de borrar abono
+ * @param {Object<HTMLDivElement, Number>} param0 
+ */
 export const handlerItemDeletePayment = ({ DOM, value }) => {
     calcuteNewPayment(-value);
     DOM.remove();
 };
 
+/**
+ * Manejador del boton de aplicar pagos
+ * @param {void} param0 
+ * @returns {void}
+ */
 export const handlerBtnApplyPayments = ({}) => {
     if (!document.querySelector('.paymentItem')) {
         newAlert({
@@ -337,14 +383,27 @@ export const handlerBtnApplyPayments = ({}) => {
     });
 };
 
+/**
+ * Manejador del boton buscar cliente para mostrar el formulario de busqueda
+ * @param {Object<HTMLDivElement>} param0 
+ */
 export const handlerSearchClient = ({ DOM }) => {
     DOM.appendChild(getParsedHTML(getSearchClientFormHTML()));
 };
 
+/**
+ * Manejador del boton X de cerrar formualrio de busqueda de cliente
+ * @param {Object<HTMLDivElement>} param0 
+ */
 export const handlerSearchClientCloseIcon = ({ DOM }) => {
     DOM.remove();
 };
 
+/**
+ * Manejador del boton buscar cliente
+ * @param {Object<String, HTMLDivElement>} param0 
+ * @returns {Promise<void>}
+ */
 export const handlerBtnSearchClientForm = async ({ client, DOM }) => {
     if (client === "") return;
     
@@ -363,12 +422,21 @@ export const handlerBtnSearchClientForm = async ({ client, DOM }) => {
     }
 };
 
+/**
+ * Manejador del boton selecionar cliente
+ * @param {Object<String, Integer, HTMLDivElement} param0 
+ */
 export const handlerSelectClient = ({ client, ID, DOM }) => {
     DOM.textContent = client;
     DOM.dataset.id = ID;
     getElement('.overlaySearchClient').remove();
 };
 
+/**
+ * Manejador del boton crear cotizacion
+ * @param {Object<Integer>} param0 
+ * @returns {Promise<void>}
+ */
 export const handlerBtnCreateQuotation = async ({ items }) => {
     if (items < 1) {
         newAlert({
@@ -382,14 +450,27 @@ export const handlerBtnCreateQuotation = async ({ items }) => {
     saveQuotation(await getDataQuotation());
 };
 
+/**
+ * Manejador del boton recuperar cotizacion
+ * @param {Object<HTMLDivElement} param0 
+ */
 export const handlerBtnRecoverQuotation = ({ DOM }) => {
     DOM.appendChild(getParsedHTML(getPromptQuotationHTML()));
 };
 
+/**
+ * Manejador del boton cancelar en la busqueda de cotizacion
+ * @param {Object<HTMLDivElement} param0 
+ */
 export const handlerCancelSetQuotationBtn = ({ DOM }) => {
     DOM.remove();
 };
 
+/**
+ * Manejador del boton de buscar cotizacion
+ * @param {Object<Integer>} param0 
+ * @returns {Promise<void>}
+ */
 export const handlerSetQuotationBtn = async ({ quotation }) => {
     const data = await findQuotation(quotation);
     
@@ -429,4 +510,17 @@ export const handlerSetQuotationBtn = async ({ quotation }) => {
 
     handlerCancelSetQuotationBtn({ DOM: getElement('.overlayPromptQuotation') });
     recalculateSummary();
+};
+
+export const handlerTestAlertButton = ({}) => {
+    newAlert({
+        icon: 'question',
+        title: "Prueba",
+        text: "Elemento de prueba"
+    })
+    .then(response => {
+        if (response) {
+            newAlert("Mensaje de prueba");
+        } 
+    });
 };

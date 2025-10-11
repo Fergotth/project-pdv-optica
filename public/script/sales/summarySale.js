@@ -1,5 +1,8 @@
 import { updateState } from "./state.js";
 
+/**
+ * Inicializa el formulario de pagos
+ */
 const summarySale = () => {
     const slider = document.querySelector('.sliderCarousel');
     const backButton = document.querySelector('.prev');

@@ -12,6 +12,12 @@ import {
 } from '../utils/ticket.js';
 import { postData } from '../utils/postDataToDB.js';
 
+/**
+ * Guarda la venta en la BD
+ * @param {Object} cartItems 
+ * @param {Object} paymentItems 
+ * @param {Object} saleSummary 
+ */
 export const saveData = async (cartItems, paymentItems, saleSummary) => {
     const urlSale = '/save-sales';
     const urlSaleDetails = '/save-saledetails';
@@ -98,6 +104,10 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     }
 };
 
+/**
+ * Guarda la cotizacion en la BD
+ * @param {Object} data 
+ */
 export const saveQuotation = async (data) => {
     const urlSaveQuotation = '/save-quotation';
     const quotationSaved = await postData(urlSaveQuotation, {

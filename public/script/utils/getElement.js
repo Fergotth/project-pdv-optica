@@ -1,7 +1,7 @@
 import { showErrorMessage } from './errorMessage.js';
 
 /**
- * 
+ * Devuelve el elemento HTML validado de que exista
  * @param {HTMLElement} element     // Elemento HTML
  * @returns {HTMLElement}           // Regresa el elemento validado
  */
@@ -18,9 +18,9 @@ export const getElement = (strClass) => {
 };
 
 /**
- * 
+ * Devuelve el elemento HTML para insertarse en el DOM
  * @param {String} innerHTML    // Contenido html
- * @returns                     // Nuevo elemento creado con el codigo HTML
+ * @returns {HTMLElement}       // Nuevo elemento creado con el codigo HTML
  */
 export const getParsedHTML = (innerHTML) => {
     const parser = new DOMParser();

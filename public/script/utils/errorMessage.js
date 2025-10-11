@@ -1,5 +1,10 @@
 import { getParsedHTML } from './getElement.js';
 
+/**
+ * Devuelve el innerHTML de mensaje de error
+ * @param {String} message 
+ * @returns {String}
+ */
 const getErrorMessageHTML = (message) => {
     return `
     <div class="alert-container-error">
@@ -33,6 +38,11 @@ const getErrorMessageHTML = (message) => {
     `;
 };
 
+/**
+ * Muestra el mensaje de error
+ * @param {HTMLDivElement} DOM 
+ * @param {String} message 
+ */
 export const showErrorMessage = (DOM, message) => {
     const existAlert = DOM.querySelector('.alert-container-error');
     

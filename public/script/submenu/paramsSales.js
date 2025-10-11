@@ -4,6 +4,9 @@ import { showErrorMessage } from '../utils/errorMessage.js';
 import { updateState } from '../sales/state.js';
 import { postData } from '../utils/postDataToDB.js';
 
+/**
+ * Funcion para iniciar los modulos de parametros
+ */
 const params = () => {
     getElement('.applyParams').addEventListener('click', async function () {
         const overlay = getElement('.overlayParams');

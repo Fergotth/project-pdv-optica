@@ -164,5 +164,7 @@ export const getHandlerArgs = {
 
     handlerSetQuotationBtn: () => ({
         quotation: getElement('.quotationInputValue').value
-    })
+    }),
+
+    handlerTestAlertButton: () => ({})
 };

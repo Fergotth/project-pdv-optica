@@ -36,7 +36,8 @@ export const alerts = [
         <div class="textTitle"></div>
         <div class="textMessage"></div>
         <div class="buttonContainer">
-            <button class="btnCloseAlert">Aceptar</button>
+            <button class="btnYesAlert">Si</button>
+            <button class="btnCloseAlert">No</button>
         </div>
         `
     },

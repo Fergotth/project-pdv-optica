@@ -33,64 +33,77 @@ const createObject = (title, text, timer, dataObject) => {
 };
 
 const newAlert = (input) => {
-    /**
-     * @param {string|object} input - Puede ser un string o un objeto con propiedades icon, title, text y timer.
-     */
+    return new Promise((resolve) => {
+        /**
+         * @param {string|object} input - Puede ser un string o un objeto con propiedades icon, title, text y timer.
+         */
 
-    /**
-     * @param {boolean} isObject - Verifica si el input es un objeto.
-     */
-    
-    const isObject = typeof input === "object" && input !== null;
-    const { icon, title, text, timer = 60000 } = isObject ? input : {};
-    const alertData = isObject
-        ? alerts.find(item => item.icon === icon) || alerts[4]
-        : alerts[4];
-    const newObject = createObject(
-        isObject ? title : input,
-        isObject ? text : "",
-        timer,
-        alertData
-    );
+        /**
+         * @param {boolean} isObject - Verifica si el input es un objeto.
+         */
+        
+        const isObject = typeof input === "object" && input !== null;
+        const { icon, title, text, timer = 60000 } = isObject ? input : {};
+        const alertData = isObject
+            ? alerts.find(item => item.icon === icon) || alerts[4]
+            : alerts[4];
+        const newObject = createObject(
+            isObject ? title : input,
+            isObject ? text : "",
+            timer,
+            alertData
+        );
 
-    // Elimina overlay existente si lo hay
-    const existingOverlay = document.body.querySelector('.overlayAlert');
-    if (existingOverlay) existingOverlay.remove();
+        // Elimina overlay existente si lo hay
+        const existingOverlay = document.body.querySelector('.overlayAlert');
+        if (existingOverlay) existingOverlay.remove();
 
-    // Inserta el contenedor de la alerta
-    document.body.insertAdjacentHTML('afterbegin', container);
+        // Inserta el contenedor de la alerta
+        document.body.insertAdjacentHTML('afterbegin', container);
 
-    // Asigna contenido al contenedor de la alerta
-    const alertContainer = document.querySelector('.containerAlert');
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(alertData.innerHTML, 'text/html');
-    assignContent(doc, alertContainer, newObject);
+        // Asigna contenido al contenedor de la alerta
+        const alertContainer = document.querySelector('.containerAlert');
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(alertData.innerHTML, 'text/html');
+        assignContent(doc, alertContainer, newObject);
 
-    // Configura el temporizador para eliminar la alerta
-    const timeoutId = setTimeout(() => {
-        closeAlertWithAnimation();
-    }, timer);
-
-    // Configura el evento para cerrar la alerta al presionar el botón
-    const closeButton = document.querySelector('.btnCloseAlert');
-    if (closeButton) {
-        closeButton.addEventListener('click', () => {
-            clearTimeout(timeoutId); // Limpia el temporizador
+        // Configura el temporizador para eliminar la alerta
+        const timeoutId = setTimeout(() => {
             closeAlertWithAnimation();
-        });
-    }
+        }, timer);
 
-    // Función para cerrar la alerta con animación
-    const closeAlertWithAnimation = () => {
-        const overlay = document.body.querySelector('.overlayAlert');
-        const alertContainer = document.querySelector('.containerAlert'); // Selecciona el contenedor de la alerta
-        if (overlay && alertContainer) {
-            alertContainer.classList.add('fadeOut'); // Aplica la animación al contenedor de la alerta
-            alertContainer.addEventListener('animationend', () => {
-                overlay.remove(); // Elimina el overlay después de que termine la animación
+        // Configura el evento para cerrar la alerta al presionar el botón
+        const closeButton = document.querySelector('.btnCloseAlert');
+        if (closeButton) {
+            closeButton.addEventListener('click', () => {
+                clearTimeout(timeoutId); // Limpia el temporizador
+                closeAlertWithAnimation();
+                resolve(false);
             });
         }
-    };
+
+        //Configura el evento para la opcion si, si es question el tipo
+        const yesButton = document.querySelector('.btnYesAlert');
+        if (yesButton) {
+            yesButton.addEventListener('click', () => {
+                clearTimeout(timeoutId); // Limpia el temporizador
+                closeAlertWithAnimation();
+                resolve(true);
+            });
+        }
+
+        // Función para cerrar la alerta con animación
+        const closeAlertWithAnimation = () => {
+            const overlay = document.body.querySelector('.overlayAlert');
+            const alertContainer = document.querySelector('.containerAlert'); // Selecciona el contenedor de la alerta
+            if (overlay && alertContainer) {
+                alertContainer.classList.add('fadeOut'); // Aplica la animación al contenedor de la alerta
+                alertContainer.addEventListener('animationend', () => {
+                    overlay.remove(); // Elimina el overlay después de que termine la animación
+                });
+            }
+        };
+    });
 };
 
 export { newAlert };
