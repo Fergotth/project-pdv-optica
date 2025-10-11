@@ -8,13 +8,13 @@ const assignContent = (doc, alertContainer, innerText) => {
             // Mapeo de clases a propiedades de innerText
             const classToTextMap = {
                 textTitle: innerText.title || innerText.text || "",
-                textMessage: innerText.title ? innerText.text || "" : "",
+                textMessage: innerText.title ? `<span>${innerText.text}</span>` || "" : "",
             };
 
             // Verificar si el nodo tiene alguna de las clases y asignar el texto correspondiente
             Object.keys(classToTextMap).forEach((className) => {
                 if (node.classList.contains(className)) {
-                    node.innerText = classToTextMap[className];
+                    node.innerHTML = classToTextMap[className];
                 }
             });
         }

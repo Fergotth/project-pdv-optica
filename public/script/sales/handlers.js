@@ -134,7 +134,7 @@ export const handlerDeleteItem = ({ DOM }) => {
     newAlert({
         icon: 'question',
         title: "AVISO",
-        text: "¿Desea quitar este articulo del carrito de venta?"
+        text: `¿Desea quitar este articulo <span style="color: #000;">${DOM.title}</span> del carrito de venta?`
     })
     .then(response => {
         if (response){
@@ -447,7 +447,14 @@ export const handlerBtnCreateQuotation = async ({ items }) => {
         return;
     }
 
-    saveQuotation(await getDataQuotation());
+    newAlert({
+        icon: 'question',
+        title: "AVISO",
+        text: "¿Desea generar una cotizacion?"
+    })
+    .then(async response => {
+        if (response) saveQuotation(await getDataQuotation());
+    });
 };
 
 /**
@@ -510,17 +517,4 @@ export const handlerSetQuotationBtn = async ({ quotation }) => {
 
     handlerCancelSetQuotationBtn({ DOM: getElement('.overlayPromptQuotation') });
     recalculateSummary();
-};
-
-export const handlerTestAlertButton = ({}) => {
-    newAlert({
-        icon: 'question',
-        title: "Prueba",
-        text: "Elemento de prueba"
-    })
-    .then(response => {
-        if (response) {
-            newAlert("Mensaje de prueba");
-        } 
-    });
 };

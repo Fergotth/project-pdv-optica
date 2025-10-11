@@ -16,26 +16,15 @@ import { getDataNoteArticlesDB } from '../kardexNotes/getData.js';
 export const getData = async (value) => {
     try {
         const response = await fetch(`/find-unpaidSale?q=${encodeURIComponent(value)}`);
-        
+
         if (!response.ok) {
-            newAlert({
-                icon: "error",
-                text: `Error HTTP: ${response.status}` 
-            });
-            return null;
+            throw new Error(`Error HTTP: ${response.status}`);
         }
 
         const data = await response.json();
 
         // Validar que venga con datos
-        if (!data || !data.SaleID) {
-            newAlert({
-                icon: "info",
-                title: "Busqueda fallida",
-                text: "No existe esa nota de venta. Por favor, intente nuevamente.",
-            });
-            return null;
-        }
+        if (!data || !data.SaleID) return null;
 
         return {
             total: data.Total ?? 0,
@@ -47,9 +36,8 @@ export const getData = async (value) => {
         };
 
     } catch (error) {
-        showErrorMessage(document.body, `Error en getData: ${error}`);
-        console.error("Error en getData:", error);
-        return null;
+        showErrorMessage(document.body, `Error en getData: ${error.message}`);
+        throw error;
     }
 };
 

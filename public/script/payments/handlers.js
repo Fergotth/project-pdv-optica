@@ -43,12 +43,7 @@ export const handlerPaymentCloseIcon = ({ DOM }) => {
  * @param {Object} param0 // Datos de la nota
  */
 export const handlerBillPayment__search = async ({ note }) => {
-    try {
-        await setData(note);
-    } catch (error) {
-        showErrorMessage(document.body, "Error al obtener los datos de la nota");
-        console.error("Error al obtener los datos de la nota");
-    }
+    await setData(note);
 };
 
 /**
