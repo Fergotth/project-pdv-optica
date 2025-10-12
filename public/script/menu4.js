@@ -87,7 +87,7 @@ const menu = () => {
             2: 'kardexNote',
             3: 'payments',
             4: 'params',
-            7: 'operations'
+            6: 'operations'
         };
     
         const moduleName = moduleNameMap[id];
@@ -121,7 +121,7 @@ const menu = () => {
                         const paramsInstance = params();
                         setModuleInstance(moduleName, paramsInstance);
                         break;
-                    case 7:
+                    case 6:
                         const operationsInstance = operations();
                         setModuleInstance(moduleName, operationsInstance);
                         break;
