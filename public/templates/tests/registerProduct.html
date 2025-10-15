@@ -3,9 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Plantilla de registro de articulos</title>
+    <link rel="stylesheet" href="./registerProduct.css">
 </head>
 <body>
-    
+    <div class="containerRegisterArticles">
+        <section class="fs--ra">
+            <h1>Registro de nuevos articulos</h1>
+            <span>Capture los datos del articulo nuevo</span>
+        </section>
+        <section class="ss--ra">
+            <div class="ss--sku">
+                <div class="sku--title">SKU</div>
+                <span class="sku--description">Codigo del articulo</span>
+                <input type="text" class="sku--input">
+            </div>
+            <div class="ss--description">
+                <div class="description--title">Description</div>
+                <span class="description--description">Descripcon del articulo</span>
+                <input type="text" class="description--input">
+            </div>
+            <div class="ss--category">
+                <div class="category--title">Categoria</div>
+                <span class="category--description">Tipo de producto</span>
+                <input type="text" class="category--input">
+            </div>
+            <div class="ss--price">
+                <div class="price--title">Costo</div>
+                <span class="price--description">Costo sin IVA</span>
+                <input type="text" class="price--input">
+                <div class="price--iva">
+                    <div class="iva--title">IVA</div>
+                    <span class="iva--description">Valor del IVA</span>
+                    <div class="iva--value">16%</div>
+                </div>
+            </div>
+            <div class="ss--price">
+                <div class="price--title">Costo</div>
+                <span class="price--description">Costo con IVA</span>
+                <input type="text" class="price--input" disabled>
+            </div>
+            <div class="ss--salePrice">
+                <div class="salePrice--title">Precio</div>
+                <span class="salePrice--description">Precio de Venta</span>
+                <input type="text" class="salePrice--input">
+            </div>
+        </section>
+    </div>
 </body>
 </html>
