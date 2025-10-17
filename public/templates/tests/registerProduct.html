@@ -26,22 +26,41 @@
             <div class="ss--category">
                 <div class="category--title">Categoria</div>
                 <span class="category--description">Tipo de producto</span>
-                <input type="text" class="category--input">
+                <select name="category--input" class="category--input">
+                    <option value="frame">Armazones</option>
+                    <option value="material">Materiales</option>
+                    <option value="accesory">Accesorios</option>
+                    <option value="services">Servicios</option>
+                </select>
+                <div class="category--imageContainer">
+                    <label for="imageContainer--button" class="imageContainer--label">Subir imagen</label>
+                    <input type="file" class="imageContainer--button" id="imageContainer--button" accept="image/" hidden>
+                    <div class="imageContainer--image"></div>
+                </div>
             </div>
             <div class="ss--price">
                 <div class="price--title">Costo</div>
                 <span class="price--description">Costo sin IVA</span>
-                <input type="text" class="price--input">
+                <input type="text" class="price--input priceWithoutIVA">
                 <div class="price--iva">
                     <div class="iva--title">IVA</div>
                     <span class="iva--description">Valor del IVA</span>
-                    <div class="iva--value">16%</div>
+                    <select name="iva--value" class="iva--value">
+                        <option value="0">0%</option>
+                        <option value="8">8%</option>
+                        <option value="16">16%</option>
+                    </select>
                 </div>
             </div>
             <div class="ss--price">
                 <div class="price--title">Costo</div>
                 <span class="price--description">Costo con IVA</span>
-                <input type="text" class="price--input" disabled>
+                <input type="text" class="price--input priceWithIVA">
+            </div>
+            <div class="ss--utility">
+                <div class="utility--title">Utilidad</div>
+                <span class="utility--description">Utilidad neta en %</span>
+                <input type="text" class="utility--input">
             </div>
             <div class="ss--salePrice">
                 <div class="salePrice--title">Precio</div>
@@ -49,6 +68,53 @@
                 <input type="text" class="salePrice--input">
             </div>
         </section>
+        <section class="ts--ra">
+            <button class="ts--btnAccept">Guardar</button>
+            <button class="ts--btnCancel">Cancelar</button>
+        </section>
     </div>
+
+    <script>
+        const priceWithoutIVA = document.querySelector('.priceWithoutIVA');
+        const priceWithIVA = document.querySelector('.priceWithIVA');
+        const fileInput = document.querySelector('.imageContainer--button');
+        const preview = document.querySelector('.imageContainer--image');
+        const utility = document.querySelector('.utility--input');
+        const priceToSale = document.querySelector('.salePrice--input');
+        
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Imagen cargada">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        priceWithoutIVA.addEventListener('input', (event) => {
+            const iva = Number(document.querySelector('.iva--value').value);
+            const price = event.target.value * (1 + (iva > 0 ? iva / 100 : 0));
+            priceWithIVA.value = price.toFixed(2);
+        });
+
+        priceWithIVA.addEventListener('input', (event) => {
+            const iva = Number(document.querySelector('.iva--value').value);
+            const price = event.target.value / (1 + (iva > 0 ? iva / 100 : 0));
+            priceWithoutIVA.value = price.toFixed(2);
+        });
+
+        utility.addEventListener('input', (event) => {
+            const value = Number(priceWithIVA.value) * (1 + event.target.value / 100);
+            priceToSale.value = value.toFixed(2);
+        });
+
+        priceToSale.addEventListener('input', (event) => {
+            const value = (event.target.value - priceWithIVA.value) / priceWithIVA.value * 100;
+            utility.value = value.toFixed(2);
+        });
+
+    </script>
 </body>
 </html>
