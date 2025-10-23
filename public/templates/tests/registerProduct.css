@@ -11,9 +11,9 @@ body {
     font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans';
 }
 
-.containerRegisterArticles {
+.container--ra {
     min-height: 80vh;
-    min-width: 80vw;
+    min-width: 95vw;
     margin: 0;
     padding: 0;
     left: 50%;
@@ -22,174 +22,104 @@ body {
     position: absolute;
     transform: translate(-50%, -50%);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
-.containerRegisterArticles input:hover, .containerRegisterArticles select:hover {
-    border: 1px solid #1299aa;
-    border-radius: 5px;
-}
-
-.containerRegisterArticles .fs--ra {
+.ra--section1 {
     display: flex;
-    flex-direction: column;
-    min-width: 80vw;
-    max-height: 15vh;
+    padding: 0;
+    margin: 0;
+    width: 95vw;
+    height: 10vh;
+    background-color: blue;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
 }
 
-.containerRegisterArticles .fs--ra h1 {
-    text-align: center;
-    margin: 10px;
-}
-
-.containerRegisterArticles .fs--ra span {
-    font-size: 0.8rem;
-    position: relative;
-    text-align: center;
-    color: #000000aa;
-    margin: 0 10px 0 10px;
-    border-bottom: 0.5px solid #00000033;
-}
-
-.containerRegisterArticles .ss--ra {
-    display: flex;
-    flex-direction: column;
-    min-width: 80vw;
-    max-height: 65vh;
-    height: 65vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.containerRegisterArticles .ts--ra {
+.section1--logo {
     display: flex;
     justify-content: center;
-    gap: 3rem;
-    position: absolute;
-    bottom: 0;
+    align-items: center;
+    width: 15%;
+    height: 100%;
+    border-top-left-radius: 7px;
+}
+
+.section1--header {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    height: 100%;
+    color: #fff;
+    
+}
+
+.header--title {
+    border-top-right-radius: 7px;
+    font-size: 1.5rem;
+}
+
+.header--subtitle {
+    font-size: 0.7rem;
+}
+
+.ra--section2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
     left: 50%;
     transform: translateX(-50%);
-    margin-bottom: 1rem;
-}
-
-.ss--ra .ss--sku, .ss--description, .ss--category, .ss--price, .ss--salePrice, .ss--utility {
-    height: 3rem;
-    width: 80vw;
-    /* background: pink; */
-    position: relative;
-}
-
-.sku--title, .description--title, .category--title, .price--title, .salePrice--title, .utility--title {
-    width: 10vw;
-    margin-left: 10px;
-    font-weight: 600;
-}
-
-.sku--description, .description--description, .category--description, .price--description, .salePrice--description, .utility--description {
-    font-size: 0.6rem;
-    position: absolute;
-    left: 10px;
-}
-
-.sku--input, .description--input, .category--input, .price--input, .salePrice--input, .utility--input {
-    position: absolute;
-    height: 2rem;
-    width: 10rem;
-    top: 50%;
-    left: 11rem;
-    transform: translateY(-50%);
-    font-size: 1rem;
-}
-
-.category--input {
-    height: 2.5rem;
-    font-size: 1rem;
-}
-
-.description--input {
-    width: 50rem;
-}
-
-.iva--title {
-    font-weight: 600;
-}
-
-.price--iva {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    top: 0;
-    left: 28vw;
-    width: 10vw;
-}
-
-.price--iva .iva--description {
-    font-size: 0.6rem;
-}
-
-.iva--value {
-    position: absolute;
-    height: 2.5rem;
-    width: 4rem;
-    left: 8vw;
-    top: 1.5rem;
-    transform: translate(-50%, -50%);
-    color: red;
-    font-weight: 600;
+    padding: 0;
+    margin: 0;
+    width: 93vw;
+    height: 12vh;
+    top: 5px;
+    border-radius: 7px;
     border: 1px solid #00000033;
+    background-color: #f8eff8;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section2--sku, .section2--description {
+    width: 25%;
+    height: 90%;
+    border-radius: 7px;
+    margin-left: 5px;
+}
+
+.section2--description {
+    width: 55%;
+}
+
+.sku--title, .description--title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.input--skuCode, .input--description {
+    position: absolute;
+    bottom: 3px;
+    height: 1.4rem;
     font-size: 1rem;
-}
-
-.category--imageContainer {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    left: 55%;
-    height: 15rem;
-    width: fit-content;
-    top: -1rem;
-}
-
-.imageContainer--image {
-    height: 14rem;
-    width: 14rem;
-    border: 1px solid #000;
-    margin-left: 1px;
-    margin-top: 10px;
-    overflow: hidden;
-}
-
-.imageContainer--image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-}
-
-.imageContainer--label {
-    font-weight: 500;
+    font-weight: 600;
+    width: calc(25% - 5px);
+    background: #e3e3e3;
     border: none;
-    background: linear-gradient(90deg, rgba(90, 130, 190, 0.6) 8%, rgba(40, 70, 130, 1) 100%);
-    color: #fafdfd;
     border-radius: 7px;
-    cursor: pointer;
-    text-transform: uppercase;
-    opacity: 0.9;
-    box-shadow: 1px 1px 5px rgba(220, 0, 0, 0.82);
-    text-align: center;
-    padding: 5px 0;
 }
 
-.ts--ra button {
-    width: 50%;
-    padding: 12px 50px;
-    font-weight: 500;
-    border: none;
-    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
-    color: #fafdfd;
-    border-radius: 7px;
-    cursor: pointer;
-    text-transform: uppercase;
-    opacity: 0.9;
-    box-shadow: 1px 1px 5px rgba(255, 0, 0, 0.82);
+.input--description {
+    width: 55%;
+}
+
+.input--skuCode:focus, .input--description:focus {
+    background: #f8eff8;
+}
+
+.input--labelSkuCode, .input--labelFescription {
+    position: absolute;
+    font-size: 0.7rem;
+    font-weight: 600;
+    bottom: calc(0px + 1.6rem);
 }

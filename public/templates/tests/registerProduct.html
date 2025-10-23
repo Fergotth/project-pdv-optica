@@ -7,114 +7,105 @@
     <link rel="stylesheet" href="./registerProduct.css">
 </head>
 <body>
-    <div class="containerRegisterArticles">
-        <section class="fs--ra">
-            <h1>Registro de nuevos articulos</h1>
-            <span>Capture los datos del articulo nuevo</span>
-        </section>
-        <section class="ss--ra">
-            <div class="ss--sku">
-                <div class="sku--title">SKU</div>
-                <span class="sku--description">Codigo del articulo</span>
-                <input type="text" class="sku--input">
+    <div class="container--ra">
+        <section class="ra--section1">
+            <div class="section1--logo">
+                <img src="../../icons/FernaSoft.svg" alt="">
             </div>
-            <div class="ss--description">
-                <div class="description--title">Description</div>
-                <span class="description--description">Descripcon del articulo</span>
-                <input type="text" class="description--input">
-            </div>
-            <div class="ss--category">
-                <div class="category--title">Categoria</div>
-                <span class="category--description">Tipo de producto</span>
-                <select name="category--input" class="category--input">
-                    <option value="frame">Armazones</option>
-                    <option value="material">Materiales</option>
-                    <option value="accesory">Accesorios</option>
-                    <option value="services">Servicios</option>
-                </select>
-                <div class="category--imageContainer">
-                    <label for="imageContainer--button" class="imageContainer--label">Subir imagen</label>
-                    <input type="file" class="imageContainer--button" id="imageContainer--button" accept="image/" hidden>
-                    <div class="imageContainer--image"></div>
-                </div>
-            </div>
-            <div class="ss--price">
-                <div class="price--title">Costo</div>
-                <span class="price--description">Costo sin IVA</span>
-                <input type="text" class="price--input priceWithoutIVA">
-                <div class="price--iva">
-                    <div class="iva--title">IVA</div>
-                    <span class="iva--description">Valor del IVA</span>
-                    <select name="iva--value" class="iva--value">
-                        <option value="0">0%</option>
-                        <option value="8">8%</option>
-                        <option value="16">16%</option>
-                    </select>
-                </div>
-            </div>
-            <div class="ss--price">
-                <div class="price--title">Costo</div>
-                <span class="price--description">Costo con IVA</span>
-                <input type="text" class="price--input priceWithIVA">
-            </div>
-            <div class="ss--utility">
-                <div class="utility--title">Utilidad</div>
-                <span class="utility--description">Utilidad neta en %</span>
-                <input type="text" class="utility--input">
-            </div>
-            <div class="ss--salePrice">
-                <div class="salePrice--title">Precio</div>
-                <span class="salePrice--description">Precio de Venta</span>
-                <input type="text" class="salePrice--input">
+            <div class="section1--header">
+                <span class="header--title">Alta de nuevos productos</span>
+                <span class="header--subtitle">Registro de productos</span>
             </div>
         </section>
-        <section class="ts--ra">
-            <button class="ts--btnAccept">Guardar</button>
-            <button class="ts--btnCancel">Cancelar</button>
+        
+        <section class="ra--section2">
+            <div class="section2--sku">
+                <div class="sku--title">
+                    <span>SKU</span>
+                </div>
+                <div class="sku--input">
+                    <input type="text" name="input--skuCode" class="input--skuCode" id="input--skuCode">
+                    <label for="input--skuCode" class="input--labelSkuCode">Codigo del articulo</label>
+                </div>
+            </div>
+            <div class="section2--description">
+                <div class="description--title">
+                    <span>Descripcion</span>
+                </div>
+                <div class="description--input">
+                    <input type="text" name="input--skuCode" class="input--description" id="input--description">
+                    <label for="input--description" class="input--labelFescription">Descripcion del articulo</label>
+                </div>
+            </div>
+        </section>
+        
+        <section class="ra--section3">
+
+        </section>
+        
+        <section class="ra--section4">
+
+        </section>
+        
+        <section class="ra--section5">
+
         </section>
     </div>
 
     <script>
-        const priceWithoutIVA = document.querySelector('.priceWithoutIVA');
-        const priceWithIVA = document.querySelector('.priceWithIVA');
-        const fileInput = document.querySelector('.imageContainer--button');
-        const preview = document.querySelector('.imageContainer--image');
-        const utility = document.querySelector('.utility--input');
-        const priceToSale = document.querySelector('.salePrice--input');
+        // const priceWithoutIVA = document.querySelector('.priceWithoutIVA');
+        // const priceWithIVA = document.querySelector('.priceWithIVA');
+        // const fileInput = document.querySelector('.imageContainer--button');
+        // const preview = document.querySelector('.imageContainer--image');
+        // const utility = document.querySelector('.utility--input');
+        // const priceToSale = document.querySelector('.salePrice--input');
+        // const iva = document.querySelector('.iva--value');
         
-        fileInput.addEventListener('change', () => {
-            const file = fileInput.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    preview.innerHTML = `<img src="${e.target.result}" alt="Imagen cargada">`;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+        // fileInput.addEventListener('change', () => {
+        //     const file = fileInput.files[0];
+        //     if (file) {
+        //         const reader = new FileReader();
+        //         reader.onload = (e) => {
+        //             preview.innerHTML = `<img src="${e.target.result}" alt="Imagen cargada">`;
+        //         };
+        //         reader.readAsDataURL(file);
+        //     }
+        // });
 
-        priceWithoutIVA.addEventListener('input', (event) => {
-            const iva = Number(document.querySelector('.iva--value').value);
-            const price = event.target.value * (1 + (iva > 0 ? iva / 100 : 0));
-            priceWithIVA.value = price.toFixed(2);
-        });
+        // const keydownPriceWithoutIVA = function(event) {
+        //     const iva = Number(document.querySelector('.iva--value').value);
+        //     const price = event.target.value * (1 + (iva > 0 ? iva / 100 : 0));
+        //     priceWithIVA.value = price.toFixed(2);
+        // };
 
-        priceWithIVA.addEventListener('input', (event) => {
-            const iva = Number(document.querySelector('.iva--value').value);
-            const price = event.target.value / (1 + (iva > 0 ? iva / 100 : 0));
-            priceWithoutIVA.value = price.toFixed(2);
-        });
+        // const keydownPriceWithIVA = function(event) {
+        //     const iva = Number(document.querySelector('.iva--value').value);
+        //     const price = event.target.value / (1 + (iva > 0 ? iva / 100 : 0));
+        //     priceWithoutIVA.value = price.toFixed(2);
+        // };
 
-        utility.addEventListener('input', (event) => {
-            const value = Number(priceWithIVA.value) * (1 + event.target.value / 100);
-            priceToSale.value = value.toFixed(2);
-        });
+        // const keydownUtility = function(event) {
+        // const value = Number(priceWithIVA.value) * (1 + event.target.value / 100);
+        // priceToSale.value = utility.value !== "" ? value.toFixed(2) : "";
+        // };
 
-        priceToSale.addEventListener('input', (event) => {
-            const value = (event.target.value - priceWithIVA.value) / priceWithIVA.value * 100;
-            utility.value = value.toFixed(2);
-        });
+        // const keydownPriceToSale = function(event) {
+        //     const value = (event.target.value - priceWithIVA.value) / priceWithIVA.value * 100;
+        //     utility.value = priceToSale.value !== "" && priceWithIVA.value !== "" && Number(priceWithIVA.value) !== 0 ? value.toFixed(2) + "%" : "";
+        // };
 
+        // priceWithoutIVA.addEventListener('input', keydownPriceWithoutIVA);
+        // priceWithIVA.addEventListener('input', keydownPriceWithIVA);
+        // utility.addEventListener('input', keydownUtility);
+        // priceToSale.addEventListener('input', keydownPriceToSale);
+
+        // iva.addEventListener('change', () => {
+        //     if (priceWithoutIVA.value !== "") {
+        //         const iva = Number(document.querySelector('.iva--value').value);
+        //         const price = priceWithoutIVA.value * (1 + iva / 100);
+        //         priceWithIVA.value = price.toFixed(2);
+        //     } 
+        // })
     </script>
 </body>
 </html>
