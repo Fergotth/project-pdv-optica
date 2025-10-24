@@ -63,7 +63,7 @@ body {
     font-size: 0.7rem;
 }
 
-.ra--section2 {
+.ra--section2, .ra--section3 {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -76,12 +76,21 @@ body {
     height: 12vh;
     top: 5px;
     border-radius: 7px;
-    border: 1px solid #00000033;
-    background-color: #f8eff8;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.23), -2px -1px 12px rgba(0, 0, 0, 0.1);
 }
 
-.section2--sku, .section2--description {
+.ra--section3 {
+    height: 28vh;
+    margin-top: 14px;
+}
+
+.sku--title svg, .description--title svg, .kindOfArticle--title svg, .image--title svg {
+    fill: blue;
+    position: absolute;
+    transform: translate(10px, 5px);
+}
+
+.section2--sku, .section2--description, .section3--kindOfArticle, .section3--image {
     width: 25%;
     height: 90%;
     border-radius: 7px;
@@ -92,7 +101,7 @@ body {
     width: 55%;
 }
 
-.sku--title, .description--title {
+.sku--title, .description--title, .kindOfArticle--title, .image--title {
     font-size: 1.2rem;
     font-weight: 600;
 }
@@ -110,16 +119,61 @@ body {
 }
 
 .input--description {
-    width: 55%;
+    width: 73.5%;
 }
 
 .input--skuCode:focus, .input--description:focus {
     background: #f8eff8;
 }
 
-.input--labelSkuCode, .input--labelFescription {
+.input--labelSkuCode, .input--labelDescription {
     position: absolute;
     font-size: 0.7rem;
     font-weight: 600;
     bottom: calc(0px + 1.6rem);
+}
+
+.input--radiobutton {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.input--radiobutton * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.input--radiobutton label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 20px;
+    width: max-content;
+    cursor: pointer;
+}
+
+.input--radiobutton .radiobutton--label .radiobutton--text {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.input--subtitle, .image--subtitle {
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.image--container {
+    width: 60%;
+    height: 60%;
+    border: 1px solid red;
+    overflow: hidden;
+}
+
+.image--container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
