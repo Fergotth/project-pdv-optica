@@ -63,7 +63,7 @@ body {
     font-size: 0.7rem;
 }
 
-.ra--section2, .ra--section3 {
+.ra--section2, .ra--section3, .ra--section4 {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -84,13 +84,27 @@ body {
     margin-top: 14px;
 }
 
-.sku--title svg, .description--title svg, .kindOfArticle--title svg, .image--title svg {
+.ra--section4 {
+    height: 14vh;
+    margin-top: 14px;
+    position: relative;
+}
+
+.section4--inputs {
+    height: 9vh;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+}
+
+.sku--title svg, .description--title svg, .kindOfArticle--title svg, .image--title svg, .summary--title svg {
     fill: blue;
     position: absolute;
     transform: translate(10px, 5px);
 }
 
-.section2--sku, .section2--description, .section3--kindOfArticle, .section3--image {
+.section2--sku, .section2--description, .section3--kindOfArticle, .section3--image, .section4--summary {
     width: 25%;
     height: 90%;
     border-radius: 7px;
@@ -101,7 +115,7 @@ body {
     width: 55%;
 }
 
-.sku--title, .description--title, .kindOfArticle--title, .image--title {
+.sku--title, .description--title, .kindOfArticle--title, .image--title, .summary--title {
     font-size: 1.2rem;
     font-weight: 600;
 }
@@ -160,9 +174,28 @@ body {
     font-weight: 500;
 }
 
+.input--radiobutton .radiobutton--label .radiobutton--text:hover {
+    transition: all 0.1s linear;
+    transform: scale(1.1);
+}
+
+.input--radiobutton .radiobutton--label .radiobutton--text:active {
+    transition: all 0.1s linear;
+    transform: scale(0.9);
+}
+
+/* .input--radiobutton .radiobutton--label input[type="radio"]:checked {
+    transition: accent-color 2s linear;
+    accent-color: #000;
+} */
+
 .input--subtitle, .image--subtitle {
     font-size: 0.7rem;
     font-weight: 600;
+}
+
+.image--subtitle:hover {
+    cursor: pointer;
 }
 
 .image--container {
@@ -170,10 +203,88 @@ body {
     height: 60%;
     border: 1px solid red;
     overflow: hidden;
+    position: relative;
+}
+
+.image--zoom {
+    position: absolute;
+    right: calc(55vw - 25px);
+    top: calc(50% - 22px);
+    transition: transform 0.2s ease;
+    transform: scale(1);
+}
+
+.image--zoom:hover {
+    transform: scale(1.2);
+    cursor: zoom-in;
 }
 
 .image--container img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+  /* El cuadro flotante */
+.image--preview {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(1%, -49%);
+    width: 40vw;
+    height: 25vw;
+    background-size: contain;
+    background-position: center;
+    border-radius: 8px;
+    box-shadow: 0 0 25px rgba(0,0,200,0.3);
+    z-index: 10;
+    animation: zoomIn 0.2s ease-out;
+}
+
+.image--preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: translate(1%, -49%) scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: translate(1%, -49%) scale(1);
+        opacity: 1;
+    }
+}
+
+.section4--inputs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.section4--inputs > div {
+    width: 15%;
+    height: 80%;
+    border-radius: 7px;
+    box-shadow: 0 0 25px rgba(0,0,200,0.3);
+}
+
+.section4--inputs label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.section4--inputs input {
+    width: calc(100% - 20px);
+    margin-left: 5px;
+    transform: translateY(-5px);
+    height: 1.3rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background: #e3e3e3;
+    border: none;
+    border-radius: 7px;
 }
