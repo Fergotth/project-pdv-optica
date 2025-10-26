@@ -6,6 +6,8 @@ import { showErrorMessage } from "../utils/errorMessage.js";
 import { saveProduct } from "../products/saveData.js";
 import productSctipt from "../products/loadScript.js";
 
+let producsInstanceEvents = null;
+
 /**
  * 
  * @param {HTMLDivElement} DOM  // Elemendo padre donde se insertara el nuevo elemento
@@ -44,13 +46,17 @@ export const handlerCloseFormClient = () => {
  */
 export const handlerRegisterArticles = ({ DOM, innerHTML }) => {
     DOM.appendChild(getParsedHTML(innerHTML));
-    productSctipt();
+    producsInstanceEvents = productSctipt();
 };
 
 /**
  * @param {void}    // Cierra el HTMLDivElement overlay
  */
-export const handlerBtnProductsCancel = () => {
+export const handlerBtnProductsCancel = ({ events }) => {
+    if (producsInstanceEvents) {
+        producsInstanceEvents.removeListeners();
+        producsInstanceEvents = null;
+    }
     closeOverlay(getElement('.overlay'));
 };
 
