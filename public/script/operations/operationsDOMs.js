@@ -193,7 +193,7 @@ export const getProductsHTML = () => {
         
             <section class="ra--section5">
                 <button class="section5--accept">Registrar</button>
-                <button class="section5--cancel">Cancelar</button>
+                <button class="section5--cancel btnProductsCancel">Cancelar</button>
             </section>
         </div>
     </div>

@@ -4,6 +4,7 @@ import { closeOverlay } from "../utils/removeOverlay.js";
 import { getElement } from "../utils/getElement.js";
 import { showErrorMessage } from "../utils/errorMessage.js";
 import { saveProduct } from "../products/saveData.js";
+import productSctipt from "../products/loadScript.js";
 
 /**
  * 
@@ -43,6 +44,7 @@ export const handlerCloseFormClient = () => {
  */
 export const handlerRegisterArticles = ({ DOM, innerHTML }) => {
     DOM.appendChild(getParsedHTML(innerHTML));
+    productSctipt();
 };
 
 /**

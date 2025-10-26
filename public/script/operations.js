@@ -6,7 +6,7 @@ import * as handlers from "./operations/handlers.js";
  * Carga el menu de operaciones en la app principal
  */
 const operations = () => {    
-    getElement('.containerOperations').addEventListener('submit', (event) => { debugger
+    getElement('.containerOperations').addEventListener('submit', (event) => {
         event.preventDefault();
     });
     

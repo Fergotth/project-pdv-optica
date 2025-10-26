@@ -1,11 +1,11 @@
 .container--ra {
     position: relative;
-    min-height: 80vh;
-    min-width: 95vw;
+    height: 80vh;
+    max-width: 95vw;
     margin: 0;
     padding: 0;
     left: 50%;
-    top: 45%;
+    top: 42%;
     transform: translate(-50%, -50%);
     background: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -16,7 +16,7 @@
     display: flex;
     padding: 0;
     margin: 0;
-    width: 93vw;
+    width: 95vw;
     height: 10vh;
     background-color: blue;
     border-top-right-radius: 7px;
@@ -43,7 +43,7 @@
 
 .header--title {
     border-top-right-radius: 7px;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
 }
 
 .header--subtitle {
@@ -287,7 +287,7 @@
 .ra--section5 {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: right;
     width: 100%;
     position: absolute;
     bottom: 0;
@@ -298,6 +298,13 @@
     padding: 10px 20px;
     border-radius: 7px;
     font-size: 1.2rem;
+    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
+    border: none;
+    margin-right: 3rem;
+}
+
+.ra--section5 button:hover {
+    cursor: pointer;
 }
 
 .ra--section5 button:active {
