@@ -7,18 +7,19 @@ import { showErrorMessage } from "../utils/errorMessage.js";
  */
 export const getDataProductForm = () => {
     try {
+        const imgSrc = getElement('.image--input');
         const data = {
-            SKU: getElement('.sku--input').value,
-            Category: getElement('.category--input').value,
-            Description: getElement('.description--input').value,
-            PriceExcludingIVA: getElement('.pricePurchaseExcludingIVA--input').value,
-            PriceIncludingIVA: getElement('.pricePurchaseIncludingIVA--input').value,
-            NetProfit: getElement('.netProfit--input').textContent,
-            SalePrice: getElement('.salePrice--input').value,
-            Stock: getElement('.quantity--input').value,
-            Image: ""
+            SKU: getElement('.input--skuCode').value,
+            Category: getElement('.input--radiobutton input[name="radiobutton--value"]:checked').value,
+            Description: getElement('.input--description').value,
+            PriceExcludingIVA: getElement('.priceWithoutIVA--input').value,
+            PriceIncludingIVA: getElement('.priceWithIVA--input').value,
+            NetProfit: getElement('.utility--input').value,
+            SalePrice: getElement('.priceSale--input').value,
+            Stock: getElement('.units--input').value,
+            Image: imgSrc.files.length > 0 ? imgSrc.files[0].name : "" 
         };
-    
+
         return data;
     } catch (error) {
         showErrorMessage(document.body, `No se puedieron obtener los datos de los articulos: ${error}`);
