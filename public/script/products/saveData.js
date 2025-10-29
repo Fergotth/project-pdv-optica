@@ -1,6 +1,7 @@
 import { newAlert } from "../utils/alerts.js";
 import { existSKU } from "./utils.js";
 import { postData } from "../utils/postDataToDB.js";
+import { showErrorMessage } from "../utils/errorMessage.js";
 
 /**
  * Guarda los datos del producto.
@@ -8,28 +9,16 @@ import { postData } from "../utils/postDataToDB.js";
  * @returns {Promise<void>}
  */
 export const saveProduct = async (data) => {
-    const requiredFields = [
-        "SKU", "Category", "Description", "PriceExcludingIVA", "PriceIncludingIVA", "Stock"
-    ];
-
-    const hasMissingFields = requiredFields.some(field => !data[field]);
-
-    // Verifica si hay campos obligatorios que no están completos
-    if (hasMissingFields) {
-        newAlert({
-            icon: "error",
-            title: "Datos incompletos",
-            text: "Por favor, completa todos los campos obligatorios."
-        });
-
-        return;
-    }
-
     if (!await existSKU(data.SKU)) {
         const results = await Promise.all([
             postData('/save-products', data),
             postData('/save-productsDetails', data)
         ]);
+
+        const fileInput = document.querySelector('.image--input').files[0];
+        if (data.Image && fileInput) {
+            results.push(await saveImageProduct(fileInput));
+        }
         
         if (results.every(Boolean)) {
             newAlert({
@@ -50,5 +39,31 @@ export const saveProduct = async (data) => {
             title: "ALTA",
             text: "SKU ya existe, favor de corregirlo."
         });
+    }
+};
+
+export const saveImageProduct = async (img) => {
+    const formData = new FormData();
+    formData.append('image', img);
+
+    try {
+        const response = await fetch('/upload-image', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            showErrorMessage(`Error HTTP al guardar la imagen: ${response.status}`);
+            throw new Error(`Error HTTP al guardar la imagen: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        return response.ok;
+    } catch (error) {
+        showErrorMessage(`Error al subir la imagen: ${error}`);
+        console.error('Error al subir la imagen:', error);
+        
+        return false;
     }
 };

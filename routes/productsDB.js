@@ -1,16 +1,43 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
 const { dbProducts } = require('../database');
+
+// Configurar almacenamiento de imágenes
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../public/images')); // ruta a /public/images
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+    }
+});
+
+const upload = multer({ storage });
+
+// Subir imagen de producto
+router.post('/upload-image', upload.single('image'), (req, res) => {
+    try {
+        // req.file contiene la información del archivo
+        const imagePath = `/images/${req.file.filename}`;
+        res.json({ success: true, imagePath });
+    } catch (err) {
+        res.status(500).json({ error: 'Error al subir imagen', details: err.message });
+    }
+});
 
 // Agregar nuevo producto
 router.post('/save-products', (req, res) => {
-    const { SKU, Category, Description, PriceExcludingIVA, PriceIncludingIVA, NetProfit, SalePrice, Stock, Image } = req.body;
+    const { SKU, Category, Description, IVA, PriceExcludingIVA, PriceIncludingIVA, NetProfit, SalePrice, Stock, Image } = req.body;
 
     dbProducts.run(
-        `INSERT INTO Products (SKU, Category, Description, PriceExcludingIVA, 
+        `INSERT INTO Products (SKU, Category, Description, IVA, PriceExcludingIVA, 
         PriceIncludingIVA, NetProfit, SalePrice, Stock, Image)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [SKU, Category, Description, PriceExcludingIVA, PriceIncludingIVA, NetProfit, SalePrice, Stock, Image],
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [SKU, Category, Description, IVA, PriceExcludingIVA, PriceIncludingIVA, NetProfit, SalePrice, Stock, Image],
         function(err) {
             if (err) return res.status(500).json({ error: err.message });
             res.json ({ id: this.lastID });

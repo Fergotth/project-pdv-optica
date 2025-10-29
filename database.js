@@ -116,6 +116,7 @@ dbProducts.run(`
         SKU TEXT,
         Category TEXT,
         Description TEXT,
+        IVA REAL,
         PriceExcludingIVA REAL,
         PriceIncludingIVA REAL,
         NetProfit REAL,
