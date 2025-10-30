@@ -1,6 +1,8 @@
-import { getElement } from "./utils/getElement.js";
-import { getHandlerArgs } from "./operations/handlerDispatcher.js";
-import * as handlers from "./operations/handlers.js";
+import { getElement } from './utils/getElement.js';
+import { getHandlerArgs } from './operations/handlerDispatcher.js';
+import { loader } from './utils/loader.js';
+import { showErrorMessage } from './utils/errorMessage.js';
+import * as handlers from './operations/handlers.js';
 
 /**
  * Carga el menu de operaciones en la app principal
@@ -19,7 +21,15 @@ const operations = () => {
 
             if (typeof handlers[handlerName] === 'function') {
                 const args = getHandlerArgs[handlerName]?.(button) || { button };
-                handlers[handlerName](args);
+                try {
+                    loader(true);
+                    handlers[handlerName](args);
+                } catch (error) {
+                    showErrorMessage(document.body, `Error en ${handlerName}: ${error}`);
+                    console.error(`Error en ${handlerName}:`, error);
+                } finally {
+                    loader(false);
+                }
             }
         });
     };

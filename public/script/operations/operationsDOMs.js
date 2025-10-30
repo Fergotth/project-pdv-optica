@@ -78,6 +78,11 @@ export const getProductsHTML = () => {
                     <div class="description--input">
                         <input type="text" name="input--skuCode" class="input--description" id="input--description">
                         <label for="input--description" class="input--labelDescription">Descripcion del articulo</label>
+                        <select type="text" class="input--description-category">
+                            <option value="Monofocal" class="category--option"></option>
+                            <option value="Bifocal">Bifocal</option>
+                            <option value="Progresivo">Progresivo</option>
+                        </select>
                     </div>
                 </div>
             </section>

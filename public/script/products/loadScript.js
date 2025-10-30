@@ -7,8 +7,12 @@ const productSctipt = () => {
     const utility = document.querySelector('.utility--input');
     const priceToSale = document.querySelector('.priceSale--input');
     const IVA = document.querySelector('.IVA--input');
+    const radioInput = document.querySelector('.kindOfArticle--input');
+    const selectInput = document.querySelector('.input--description-category');
     const section = document.querySelector('.ra--section3');
     let imgSrc = undefined;
+
+    selectInput.disabled = true;
 
     // Seleccionar y previsualizar imagen
     const selectImage = function() {
@@ -74,6 +78,21 @@ const productSctipt = () => {
         }
     };
 
+    const selectRadioInput = function(event) {
+        if (event.target.type === 'radio') {
+            const radioValue =  event.target.closest('label').querySelector('.radiobutton--text').textContent;
+            const selectOption = document.querySelector('.category--option');
+            
+            if (event.target.value !== "glasses") {
+                selectOption.textContent = radioValue;
+                selectInput.disabled = true;
+            } else {
+                selectOption.textContent = "Monofocal";
+                selectInput.disabled = false;
+            }
+        }
+    };
+
     // Mapeo de todos los eventos en un array
     const eventBindings = [
         { element: fileInput, type: 'change', handler: selectImage },
@@ -84,6 +103,7 @@ const productSctipt = () => {
         { element: utility, type: 'input', handler: keydownUtility },
         { element: priceToSale, type: 'input', handler: keydownPriceToSale },
         { element: IVA, type: 'input', handler: keydownIVA },
+        { element: radioInput, type: 'change', handler: selectRadioInput }
     ];
 
     // funcion para agregar los listeners

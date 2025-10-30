@@ -26,6 +26,8 @@ export const saveProduct = async (data) => {
                 title: "Alta de Artículos",
                 text: "Artículo agregado correctamente."
             });
+
+            return true;
         } else {
             newAlert({
                 icon: "error",
@@ -40,6 +42,8 @@ export const saveProduct = async (data) => {
             text: "SKU ya existe, favor de corregirlo."
         });
     }
+    
+    return false;
 };
 
 export const saveImageProduct = async (img) => {

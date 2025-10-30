@@ -50,9 +50,10 @@ export const handlerRegisterArticles = ({ DOM, innerHTML }) => {
 };
 
 /**
+ * Cierra el formulario de registro de nuevos articulos
  * @param {void}    // Cierra el HTMLDivElement overlay
  */
-export const handlerBtnProductsCancel = ({ events }) => {
+export const handlerBtnProductsCancel = ({}) => {
     if (producsInstanceEvents) {
         producsInstanceEvents.removeListeners();
         producsInstanceEvents = null;
@@ -61,9 +62,9 @@ export const handlerBtnProductsCancel = ({ events }) => {
 };
 
 /**
- * 
+ * Guarda los nuevos productos y cierra el formulario si se guardan exitosamente
  * @param {Object} param0   // Objeto contenedor de los datos de los productos a guardar 
  */
-export const handlerBtnProductsSave = ({ data }) => {
-    saveProduct(data);
+export const handlerBtnProductsSave = async ({ data }) => {
+    if (await saveProduct(data)) handlerBtnProductsCancel({});
 };
