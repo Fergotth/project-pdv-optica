@@ -24,7 +24,7 @@ export const getDataProductForm = () => {
         Stock: getElement('.units--input').value,
         Image: getElement('.image--input').files[0]?.name || ""
     };
-
+    
     return validateDataform(data);
 };
 

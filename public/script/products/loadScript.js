@@ -84,9 +84,12 @@ const productSctipt = () => {
             const selectOption = document.querySelector('.category--option');
             
             if (event.target.value !== "glasses") {
+                selectInput.selectedIndex = 0;
+                selectOption.value = radioValue;
                 selectOption.textContent = radioValue;
                 selectInput.disabled = true;
             } else {
+                selectOption.value = "Monofocal";
                 selectOption.textContent = "Monofocal";
                 selectInput.disabled = false;
             }
