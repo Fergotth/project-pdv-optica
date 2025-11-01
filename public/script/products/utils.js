@@ -35,12 +35,24 @@ export const validateDataform = (data) => {
         Image: data.Image
     };
 
+    const fieldNames = {
+        IVA: "IVA",
+        SKU: "Código SKU",
+        Category: "Categoría",
+        Description: "Descripción",
+        PriceExcludingIVA: "Precio sin IVA",
+        PriceIncludingIVA: "Precio con IVA",
+        NetProfit: "Utilidad",
+        SalePrice: "Precio de venta",
+        Stock: "Unidades"
+    };
+
     for (const key in validatedData) {
         if (validatedData[key] === false) {
             newAlert({
                 icon: 'info',
                 title: "AVISO",
-                text: "Ningun campo debe de estar vacio"
+                text: `El campo "${fieldNames[key]}" no debe estar vacío o es inválido.`
             });
             throw new Error(`Campo inválido: ${key}`);
         }

@@ -7,11 +7,16 @@ import { validateDataform } from "./utils.js";
  * @returns {Object} // Devuelve un objeto con los datos del formulario de productos
  */
 export const getDataProductForm = () => {
+    const description = getElement('.input--description').value.trim();
+    const category = getElement('.input--description-category').value;
+    const excluded = ["Armazones", "Servicios", "Accesorios"];
+    const fullDescription = (category && !excluded.includes(category)) ? `${category} ${description}` : description;
+    
     const data = {
         IVA: getElement('.IVA--input').value,
         SKU: getElement('.input--skuCode').value,
         Category: getElement('.input--radiobutton input[name="radiobutton--value"]:checked')?.value || "",
-        Description: getElement('.input--description').value,
+        Description: fullDescription,
         PriceExcludingIVA: getElement('.priceWithoutIVA--input').value,
         PriceIncludingIVA: getElement('.priceWithIVA--input').value,
         NetProfit: getElement('.utility--input').value,
