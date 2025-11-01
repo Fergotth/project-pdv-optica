@@ -123,7 +123,7 @@ export const getProductsHTML = () => {
                                     id="radiobutton--accesories" 
                                     class="radiobutton--accesories" 
                                     name="radiobutton--value" 
-                                    value="acceories"
+                                    value="accessories"
                                 />
                                 <p class="radiobutton--text">Accesorios</p>
                             </label>
