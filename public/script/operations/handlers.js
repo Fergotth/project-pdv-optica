@@ -66,5 +66,5 @@ export const handlerBtnProductsCancel = ({}) => {
  * @param {Object} param0   // Objeto contenedor de los datos de los productos a guardar 
  */
 export const handlerBtnProductsSave = async ({ data }) => {
-    //if (await saveProduct(data)) handlerBtnProductsCancel({});
+    if (await saveProduct(data)) handlerBtnProductsCancel({});
 };
