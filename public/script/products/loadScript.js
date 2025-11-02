@@ -1,21 +1,88 @@
 const productSctipt = () => {
     const priceWithoutIVA = document.querySelector('.priceWithoutIVA--input');
     const priceWithIVA = document.querySelector('.priceWithIVA--input');
-    const fileInput = document.querySelector('.image--input');
-    const preview = document.querySelector('.image--container');
-    const zoom = document.querySelector('.image--zoom');
     const utility = document.querySelector('.utility--input');
     const priceToSale = document.querySelector('.priceSale--input');
     const IVA = document.querySelector('.IVA--input');
+    const fileInput = document.querySelector('.image--input');
+    const preview = document.querySelector('.image--container');
+    const zoom = document.querySelector('.image--zoom');
     const radioInput = document.querySelector('.kindOfArticle--input');
     const selectInput = document.querySelector('.input--description-category');
     const section = document.querySelector('.ra--section3');
-    let imgSrc = undefined;
+
+    let imgSrc;
 
     selectInput.disabled = true;
 
-    // Seleccionar y previsualizar imagen
-    const selectImage = function() {
+    /* ======================================
+       FUNCIÓN CENTRAL REACTIVA DE CÁLCULO
+       ====================================== */
+    const recalculate = (source) => {
+        const iva = parseFloat(IVA.value) || 0;
+        let base = parseFloat(priceWithoutIVA.value) || 0;
+        let total = parseFloat(priceWithIVA.value) || 0;
+        let util = parseFloat(utility.value) || 0;
+        let sale = parseFloat(priceToSale.value) || 0;
+    
+        // función auxiliar para recalcular utilidad
+        const updateUtility = () => {
+            if (sale > 0 && total > 0) {
+                const newUtil = ((sale - total) / total) * 100;
+                utility.value = newUtil.toFixed(2);
+            }
+        };
+    
+        // función auxiliar para recalcular precio de venta
+        const updatePriceToSale = () => {
+            if (utility.value !== "" && total > 0) {
+                const newSale = total * (1 + util / 100);
+                priceToSale.value = newSale.toFixed(2);
+            }
+        };
+    
+        switch (source) {
+            case "priceWithoutIVA":
+                total = base * (1 + iva / 100);
+                priceWithIVA.value = total.toFixed(2);
+                updatePriceToSale();
+                updateUtility();
+                break;
+    
+            case "priceWithIVA":
+                base = total / (1 + iva / 100);
+                priceWithoutIVA.value = base.toFixed(2);
+                updatePriceToSale();
+                updateUtility();
+                break;
+    
+            case "utility":
+                updatePriceToSale();
+                updateUtility(); // recalcula si hay inconsistencia
+                break;
+    
+            case "priceToSale":
+                updateUtility();
+                break;
+    
+            case "IVA":
+                if (priceWithoutIVA.value !== "") {
+                    total = base * (1 + iva / 100);
+                    priceWithIVA.value = total.toFixed(2);
+                } else if (priceWithIVA.value !== "") {
+                    base = total / (1 + iva / 100);
+                    priceWithoutIVA.value = base.toFixed(2);
+                }
+                updatePriceToSale();
+                updateUtility();
+                break;
+        }
+    };
+    
+    /* ==============================
+       IMAGEN Y ZOOM
+       ============================== */
+    const selectImage = () => {
         const file = fileInput.files[0];
         if (file) {
             const reader = new FileReader();
@@ -28,8 +95,7 @@ const productSctipt = () => {
         }
     };
 
-    // Mostrar el cuadro de zoom al pasar el mouse
-    const mouseEnterZoom = function() {
+    const mouseEnterZoom = () => {
         if (!imgSrc) return;
         const floatBox = document.createElement('div');
         floatBox.classList.add('image--preview');
@@ -37,50 +103,17 @@ const productSctipt = () => {
         section.appendChild(floatBox);
     };
 
-    // Eliminar el cuadro de zoom al salir
-    const mouseLeaveZoom = function() {
+    const mouseLeaveZoom = () => {
         const floatBox = section.querySelector('.image--preview');
         if (floatBox) floatBox.remove();
     };
 
-    // Calculo del precio sin IVA
-    const keydownPriceWithoutIVA = function(event) {
-        const iva = Number(IVA.value);
-        const price = event.target.value * (1 + (iva > 0 ? iva / 100 : 0));
-        priceWithIVA.value = price.toFixed(2);
-    };
-
-    // Calculo del precio con IVA
-    const keydownPriceWithIVA = function(event) {
-        const iva = Number(IVA.value);
-        const price = event.target.value / (1 + (iva > 0 ? iva / 100 : 0));
-        priceWithoutIVA.value = price.toFixed(2);
-    };
-
-    // Calculo de la utilidad
-    const keydownUtility = function(event) {
-        const value = Number(priceWithIVA.value) * (1 + event.target.value / 100);
-        priceToSale.value = utility.value !== "" ? value.toFixed(2) : "";
-    };
-
-    // Calculo del precio de venta
-    const keydownPriceToSale = function(event) {
-        const value = (event.target.value - priceWithIVA.value) / priceWithIVA.value * 100;
-        utility.value = priceToSale.value !== "" && priceWithIVA.value !== "" && Number(priceWithIVA.value) !== 0 ? value.toFixed(2) : "";
-    };
-
-    // Calculo del IVA
-    const keydownIVA = function(event) {
-        if (priceWithoutIVA.value !== "") {
-            const iva = event.target.value;
-            const price = priceWithoutIVA.value * (1 + iva / 100);
-            priceWithIVA.value = price.toFixed(2);
-        }
-    };
-
-    const selectRadioInput = function(event) {
+    /* ==============================
+       RADIO INPUTS
+       ============================== */
+    const selectRadioInput = (event) => {
         if (event.target.type === 'radio') {
-            const radioValue =  event.target.closest('label').querySelector('.radiobutton--text').textContent;
+            const radioValue = event.target.closest('label').querySelector('.radiobutton--text').textContent;
             const selectOption = document.querySelector('.category--option');
             
             if (event.target.value !== "glasses") {
@@ -96,40 +129,36 @@ const productSctipt = () => {
         }
     };
 
-    // Mapeo de todos los eventos en un array
+    /* ==============================
+       EVENTOS REACTIVOS
+       ============================== */
     const eventBindings = [
         { element: fileInput, type: 'change', handler: selectImage },
         { element: zoom, type: 'mouseenter', handler: mouseEnterZoom },
         { element: zoom, type: 'mouseleave', handler: mouseLeaveZoom },
-        { element: priceWithoutIVA, type: 'input', handler: keydownPriceWithoutIVA },
-        { element: priceWithIVA, type: 'input', handler: keydownPriceWithIVA },
-        { element: utility, type: 'input', handler: keydownUtility },
-        { element: priceToSale, type: 'input', handler: keydownPriceToSale },
-        { element: IVA, type: 'input', handler: keydownIVA },
+        { element: priceWithoutIVA, type: 'input', handler: () => recalculate("priceWithoutIVA") },
+        { element: priceWithIVA, type: 'input', handler: () => recalculate("priceWithIVA") },
+        { element: utility, type: 'input', handler: () => recalculate("utility") },
+        { element: priceToSale, type: 'input', handler: () => recalculate("priceToSale") },
+        { element: IVA, type: 'input', handler: () => recalculate("IVA") },
         { element: radioInput, type: 'change', handler: selectRadioInput }
     ];
 
-    // funcion para agregar los listeners
     const addListeners = () => {
-        eventBindings.forEach(({ element, type, handler }) => 
+        eventBindings.forEach(({ element, type, handler }) =>
             element.addEventListener(type, handler)
         );
     };
 
-    // se inicializan los listeners
-    addListeners();
-
-    // funcion para eliminar los listeners
     const removeListeners = () => {
-        eventBindings.forEach(({ element, type, handler }) => 
+        eventBindings.forEach(({ element, type, handler }) =>
             element.removeEventListener(type, handler)
         );
     };
-    
-    // se retorna la funcion para eliminar los listeners
-    return {
-        removeListeners
-    };
+
+    addListeners();
+
+    return { removeListeners };
 };
 
 export default productSctipt;
