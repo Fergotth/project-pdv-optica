@@ -16,8 +16,8 @@ const productSctipt = () => {
     selectInput.disabled = true;
 
     /* ======================================
-       FUNCIÓN CENTRAL REACTIVA DE CÁLCULO
-       ====================================== */
+        FUNCIÓN CENTRAL REACTIVA DE CÁLCULO
+    ====================================== */
     const recalculate = (source) => {
         const iva = parseFloat(IVA.value) || 0;
         let base = parseFloat(priceWithoutIVA.value) || 0;
@@ -80,8 +80,8 @@ const productSctipt = () => {
     };
     
     /* ==============================
-       IMAGEN Y ZOOM
-       ============================== */
+        IMAGEN Y ZOOM
+    ============================== */
     const selectImage = () => {
         const file = fileInput.files[0];
         if (file) {
@@ -109,8 +109,8 @@ const productSctipt = () => {
     };
 
     /* ==============================
-       RADIO INPUTS
-       ============================== */
+        RADIO INPUTS
+    ============================== */
     const selectRadioInput = (event) => {
         if (event.target.type === 'radio') {
             const radioValue = event.target.closest('label').querySelector('.radiobutton--text').textContent;
@@ -130,8 +130,8 @@ const productSctipt = () => {
     };
 
     /* ==============================
-       EVENTOS REACTIVOS
-       ============================== */
+        EVENTOS REACTIVOS
+    ============================== */
     const eventBindings = [
         { element: fileInput, type: 'change', handler: selectImage },
         { element: zoom, type: 'mouseenter', handler: mouseEnterZoom },

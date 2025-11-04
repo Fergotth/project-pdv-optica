@@ -1,3 +1,17 @@
+:root {
+    --header-width-1: calc(100% / 10 / 1.2);
+    --header-width-2: calc(100% / 10 * 4.273);
+    --header-width-3: calc(100% / 10 / 1.3);
+    --header-width-4: calc(100% / 10 / 2.9);
+    --header-width-5: calc(100% / 10 / 1.5);
+    --header-width-6: calc(100% / 10 / 1.5);
+    --header-width-7: calc(100% / 10 / 1.5);
+    --header-width-8: calc(100% / 10 / 1.7);
+    --header-width-9: calc(100% / 10 / 1.6);
+    --header-width-10: calc(100% / 10 / 3);
+    --list-item-height: calc(100% / 14);
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -12,7 +26,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    width: 80vw;
+    width: 95vw;
     height: 80vh;
     margin: 0;
     padding: 0;
@@ -48,4 +62,165 @@ body {
     padding: 0 20px;
     border-bottom: 1px solid #00000033;
     box-sizing: border-box;
+}
+
+.pd--list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: calc(100% - 160px);
+    border-bottom: 1px solid #00000033;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background-color: #00000005;
+}
+
+.pd--footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: calc(40px);
+    padding: 0 20px;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-bottom: 1px solid #00000033;
+    box-sizing: border-box;
+    background-color: #00000033;
+}
+
+/* Cabecera de la lista de productos */
+.pd--list .list--header {
+    width: 100%;
+    height: calc(100% / 10);
+    background-color: #000000bb;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.pd--list .list--header span {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    padding: 0 0 0 5px;
+    width: calc(100% / 10);
+    height: 100%;
+    border: 1px solid #ffffff22;
+    color: #fff;
+}
+
+/* SKU */
+.pd--list .list--header span:nth-child(1) {
+    width: var(--header-width-1);
+}
+
+/* Descripcion */
+.pd--list .list--header span:nth-child(2) {
+    width: var(--header-width-2);
+}
+
+/* Categoria */
+.pd--list .list--header span:nth-child(3) {
+    width: var(--header-width-3);
+}
+
+/* IVA */
+.pd--list .list--header span:nth-child(4) {
+    width: var(--header-width-4);
+}
+
+/* Costo sin IVA */
+.pd--list .list--header span:nth-child(5) {
+    width: var(--header-width-5);
+}
+
+/* Costo con IVA */
+.pd--list .list--header span:nth-child(6) {
+    width: var(--header-width-6);
+}
+
+/* Precio de venta */
+.pd--list .list--header span:nth-child(7) {
+    width: var(--header-width-7);
+}
+
+/* Utilidad % */
+.pd--list .list--header span:nth-child(8) {
+    width: var(--header-width-8);
+}
+
+/* Unidades */
+.pd--list .list--header span:nth-child(9) {
+    width: var(--header-width-9);
+}
+
+/* Imagen */
+.pd--list .list--header span:nth-child(10) {
+    width: var(--header-width-10);
+}
+
+/* Lista de arituculos a mostrar */
+.pd--list .list--items {
+    width: 100%;
+    height: var(--list-item-height);
+}
+
+.pd--list .list--items .items--item {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background-color: red;
+}
+
+.pd--list .list--items .items--item span {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    padding: 0 0 0 5px;
+    width: calc(100% / 10);
+    height: 100%;
+    border: 1px solid #ffffff22;
+    color: #fff;
+}
+
+.pd--list .list--items .items--item span:nth-child(1) {
+    width: var(--header-width-1);
+}
+
+.pd--list .list--items .items--item span:nth-child(2) {
+    width: var(--header-width-2);
+}
+
+.pd--list .list--items .items--item span:nth-child(3) {
+    width: var(--header-width-3);
+}
+
+.pd--list .list--items .items--item span:nth-child(4) {
+    width: var(--header-width-4);
+}
+
+.pd--list .list--items .items--item span:nth-child(5) {
+    width: var(--header-width-5);
+}
+
+.pd--list .list--items .items--item span:nth-child(6) {
+    width: var(--header-width-6);
+}
+
+.pd--list .list--items .items--item span:nth-child(7) {
+    width: var(--header-width-7);
+}
+
+.pd--list .list--items .items--item span:nth-child(8) {
+    width: var(--header-width-8);
+}
+
+.pd--list .list--items .items--item span:nth-child(9) {
+    width: var(--header-width-9);
+}
+
+.pd--list .list--items .items--item span:nth-child(10) {
+    width: var(--header-width-10);
 }
