@@ -30,11 +30,27 @@ export const getDataProductForm = () => {
 
 /**
  * @param {String} article // Nombre del articulo a buscar
- * @returns {Promise<Object> || []} // Devuelve un objeto con los datos encontrar o un array vacio si no
+ * @returns {Promise<Object> || []} // Devuelve un objeto con los datos encontrados o un array vacio si no
  */
 export const getDataProductDB = async (article) => {
     try {
         const response = await fetch(`/find-article?q=${encodeURIComponent(article)}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        showErrorMessage(document.body, `Error al obtener datos del articulo: ${error}`);
+        console.error('Error al obtener datos del articulo:', error);
+        return [];
+    }
+};
+
+/**
+ * @param {String} article // Nombre del articulo o articulos a buscar
+ * @returns {Promise<Object> || []} // Devuelve un objeto con los datos encontrados o un array vacio si no
+ */
+export const getDataProductsDB = async (article) => {
+    try {
+        const response = await fetch(`/consult-articles?q=${encodeURIComponent(article)}`);
         const data = await response.json();
         return data;
     } catch (error) {

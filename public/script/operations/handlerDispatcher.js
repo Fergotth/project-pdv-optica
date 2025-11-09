@@ -1,7 +1,14 @@
 import { getElement } from "../utils/getElement.js";
-import { getClientHTML, getProductsHTML } from "./operationsDOMs.js";
+import { 
+    getClientHTML, 
+    getProductsHTML, 
+    getProductInventary 
+} from "./operationsDOMs.js";
 import { getDataClientForm } from "../clients/getData.js";
-import { getDataProductForm } from "../products/getData.js";
+import { 
+    getDataProductForm,
+    getDataProductsDB 
+} from "../products/getData.js";
 
 /**
  * Objeto con los manejadores de funciones
@@ -27,5 +34,16 @@ export const getHandlerArgs = {
 
     handlerBtnProductsSave: () => ({
         data: getDataProductForm()
+    }),
+
+    handlerConsultArticles: () => ({
+        DOM: getElement('.containerOperations'),
+        innerHTML: getProductInventary()
+    }),
+
+    handlerBtnCloseProductContainer: () => ({}),
+
+    handlerBtnSearchArticles: async () => ({
+        data: await getDataProductsDB(getElement('.searcher--input'))
     })
 };

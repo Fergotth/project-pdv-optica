@@ -1,9 +1,13 @@
-import { getParsedHTML } from "../utils/getElement.js";
+import { 
+    getParsedHTML,
+    getElement 
+} from "../utils/getElement.js";
+import { newAlert } from "../utils/alerts.js";
 import { saveClient } from "../clients/addClient.js";
 import { closeOverlay } from "../utils/removeOverlay.js";
-import { getElement } from "../utils/getElement.js";
 import { showErrorMessage } from "../utils/errorMessage.js";
 import { saveProduct } from "../products/saveData.js";
+import { renderArticlesFounded } from "../products/utils.js"
 import productSctipt from "../products/loadScript.js";
 
 let producsInstanceEvents = null;
@@ -67,4 +71,34 @@ export const handlerBtnProductsCancel = ({}) => {
  */
 export const handlerBtnProductsSave = async ({ data }) => {
     if (await saveProduct(data)) handlerBtnProductsCancel({});
+};
+
+/**
+ * 
+ * @param {Object<HTMLDivElement, String} param0 
+ */
+export const handlerConsultArticles = ({ DOM, innerHTML }) => {
+    DOM.appendChild(getParsedHTML(innerHTML));
+};
+
+/**
+ * Cierra el contenedor de consulta de articulos
+ */
+export const handlerCloseProductContainer = ({}) => {
+    closeOverlay(getElement('.overlay'));
+};
+
+/**
+ * Busca los articulos en la base de datos 
+ * @param {Object} param0 // Objeto contenedor de los datos encontrados de la DB 
+ */
+export const handlerBtnSearchArticles = ({ data }) => {
+    if (data.length > 0) {
+        renderArticlesFounded(data);
+    } else {
+        newAlert({
+            icon: 'info',
+            text: "No se encontro ningun articulo."
+        });
+    }
 };

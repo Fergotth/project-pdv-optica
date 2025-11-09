@@ -83,4 +83,31 @@ router.get('/find-article', (req, res) => {
     });
 });
 
+// Obtener los articulos para consultar
+router.get('/consult-articles', (req, res) => {
+    const q = req.query.q?.trim() || "";
+    let SQLStr;
+    let params = [];
+
+    if (q === "") {
+        SQLStr = 'SELECT * FROM Products';
+    } else {
+        SQLStr = `
+            SELECT * FROM Products 
+                WHERE LOWER(SKU) = LOWER(?) 
+                OR LOWER(SKU) LIKE LOWER(?) 
+                OR LOWER(Description) LIKE LOWER(?)
+            `;
+        params = [q, `%${q}%`, `%${q}%`];
+    }
+
+    dbProducts.all(SQLStr, params, (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows || []);
+    });
+});
+
 module.exports = router;
