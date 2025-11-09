@@ -5,10 +5,7 @@ import {
     getProductInventary 
 } from "./operationsDOMs.js";
 import { getDataClientForm } from "../clients/getData.js";
-import { 
-    getDataProductForm,
-    getDataProductsDB 
-} from "../products/getData.js";
+import { getDataProductForm } from "../products/getData.js";
 
 /**
  * Objeto con los manejadores de funciones
@@ -43,7 +40,7 @@ export const getHandlerArgs = {
 
     handlerBtnCloseProductContainer: () => ({}),
 
-    handlerBtnSearchArticles: async () => ({
-        data: await getDataProductsDB(getElement('.searcher--input'))
+    handlerBtnSearchArticles: () => ({
+        value: getElement('.searcher--input').value
     })
 };

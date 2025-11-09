@@ -8,6 +8,7 @@ import { closeOverlay } from "../utils/removeOverlay.js";
 import { showErrorMessage } from "../utils/errorMessage.js";
 import { saveProduct } from "../products/saveData.js";
 import { renderArticlesFounded } from "../products/utils.js"
+import { getDataProductsDB } from "../products/getData.js";
 import productSctipt from "../products/loadScript.js";
 
 let producsInstanceEvents = null;
@@ -84,7 +85,7 @@ export const handlerConsultArticles = ({ DOM, innerHTML }) => {
 /**
  * Cierra el contenedor de consulta de articulos
  */
-export const handlerCloseProductContainer = ({}) => {
+export const handlerBtnCloseProductContainer = ({}) => {
     closeOverlay(getElement('.overlay'));
 };
 
@@ -92,7 +93,9 @@ export const handlerCloseProductContainer = ({}) => {
  * Busca los articulos en la base de datos 
  * @param {Object} param0 // Objeto contenedor de los datos encontrados de la DB 
  */
-export const handlerBtnSearchArticles = ({ data }) => {
+export const handlerBtnSearchArticles = async ({ value }) => {
+    const data = await getDataProductsDB(value);
+    
     if (data.length > 0) {
         renderArticlesFounded(data);
     } else {

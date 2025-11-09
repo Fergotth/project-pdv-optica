@@ -59,6 +59,7 @@
     z-index: 100;
     transition: all 0.2s ease;
     transform: scale(1);
+    color: #fff;
 }
 
 .pd--header .header--closeIcon:hover {
