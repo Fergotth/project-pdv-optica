@@ -9,7 +9,7 @@ import { showErrorMessage } from "../utils/errorMessage.js";
 import { saveProduct } from "../products/saveData.js";
 import { renderArticlesFounded } from "../products/utils.js"
 import { getDataProductsDB } from "../products/getData.js";
-import productSctipt from "../products/loadScript.js";
+import productSctipt from "../products/addProductScript.js";
 
 let producsInstanceEvents = null;
 
@@ -75,11 +75,12 @@ export const handlerBtnProductsSave = async ({ data }) => {
 };
 
 /**
- * 
+ * Abre la ventana para ver el listado de articulos
  * @param {Object<HTMLDivElement, String} param0 
  */
-export const handlerConsultArticles = ({ DOM, innerHTML }) => {
+export const handlerConsultArticles = async ({ DOM, innerHTML }) => {
     DOM.appendChild(getParsedHTML(innerHTML));
+    await handlerBtnSearchArticles({ value: "" });
 };
 
 /**

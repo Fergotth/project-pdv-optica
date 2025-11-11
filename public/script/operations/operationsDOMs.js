@@ -211,7 +211,7 @@ export const getProductInventary = () => {
     <div class="overlay">
         <div class="container--pd">
             <section class="pd--header">
-                <h1>Consulta de articulos</h1>
+                <h1>Lista de articulos</h1>
                 <div class="header--closeIcon btnCloseProductContainer" title="Cerrar">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 6 6 18"/>
@@ -222,7 +222,7 @@ export const getProductInventary = () => {
             
             <section class="pd--searcher">
                 <label for="searcher--input" class="searcher--label">Codigo</label>
-                <input type="text" class="searcher--input" id="searcher--input">
+                <input type="text" class="searcher--input" id="searcher--input" placeholder="Mostrar todos los articulos">
                 <label class="searcher--icon btnSearchArticles" title="Buscar">
                     <svg fill="#f6f6f6" width="33px" height="33px" viewBox="0 0 612 612">
                         <g><path d="M33.851,410.035H8.685c-4.796,0-8.685-3.889-8.685-8.686V69.911c0-4.796,3.889-8.685,8.685-8.685h25.166
@@ -264,8 +264,8 @@ export const getProductInventary = () => {
 
             <section class="pd--footer">
                 <div class="footer--summary">
-                    <label>Articulos encontrados</label>
-                    <label>125</label>
+                    <label></label>
+                    <label></label>
                 </div>
             </section>
         </div>

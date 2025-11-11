@@ -136,6 +136,12 @@
     box-shadow: 1px 3px 7px #00000066;
 }
 
+.pd--searcher .searcher--input::placeholder {
+    color: #888;
+    font-weight: 100;
+    font-size: 0.8rem;
+}
+
 .pd--searcher .searcher--icon {
     display: flex;
     align-items: center;
@@ -281,6 +287,9 @@
     padding: 0 0 0 5px;
     height: 100%;
     transform: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .pd--list .list--items .items--item:hover {
@@ -298,6 +307,7 @@
 
 .pd--list .list--items .items--item span:nth-child(2) {
     width: var(--header-width-2);
+    display: inline-block;
 }
 
 .pd--list .list--items .items--item span:nth-child(3) {
