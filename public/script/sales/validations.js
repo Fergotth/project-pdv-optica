@@ -1,3 +1,5 @@
+import { newAlert } from "../utils/alerts.js";
+
 /**
  * Devuelve si la categoria buscada existe
  * @param {Object} data 
@@ -17,4 +19,16 @@ export const validateData = (data, param) => {
             return element.Description?.toLowerCase().includes(paramLower);
         }
     });
+};
+
+export const checkInventory = async (stock, quantity) => {
+    if (stock - quantity < 0) {
+        const response = await newAlert({
+            icon: 'question',
+            title: "AVISO",
+            text: "No quedan mas articulos en el inventario<br>¿Desea agregarlo de todas formas?"
+        });
+        return response;
+    }
+    return true;
 };

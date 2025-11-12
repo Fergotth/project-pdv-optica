@@ -10,7 +10,6 @@ export const getHandlerArgs = {
     handlerBtnFrames: () => ({
         DOM: getElement(Class.list.productsInDB),
         url: '/get-products',
-        url: '/get-products',
         category: 'frames'
     }),
 
@@ -21,13 +20,11 @@ export const getHandlerArgs = {
     handlerBtnAccesories: () => ({
         DOM: getElement(Class.list.productsInDB),
         url: '/get-products',
-        url: '/get-products',
         category: 'accessories'
     }),
 
     handlerBtnServices: () => ({
         DOM: getElement(Class.list.productsInDB),
-        url: '/get-products',
         url: '/get-products',
         category: 'services'
     }),
@@ -35,13 +32,11 @@ export const getHandlerArgs = {
     handlerBtnSinglevision: () => ({
         DOM: getElement(Class.list.productsInDB),
         url: '/get-products',
-        url: '/get-products',
         category: 'monofocal'
     }),
 
     handlerBtnBifocal: () => ({
         DOM: getElement(Class.list.productsInDB),
-        url: '/get-products',
         url: '/get-products',
         category: 'bifocal'
     }),

@@ -3,33 +3,23 @@ import {
     getElement, 
     getParsedHTML 
 } from "../utils/getElement.js";
-import { showErrorMessage } from "../utils/errorMessage.js";
 import { getDataProductDB } from '../products/getData.js';
-import { 
-    getMaterialCatalogHTML, 
-    getItemToCardHTML, 
-    getPromptDiscountHTML,
-    getPaymentSummaryHTML,
-    getNewPaymentItemHTML,
-    getSearchClientFormHTML, 
-    getNewClientFoundedHTML,
-    getPromptQuotationHTML
-} from "./salesDom.js";
+import * as DOMs from "./salesDom.js";
 import { 
     handleQuantityButton, 
     updateItemsCart, 
-    setSubtotal, 
     resetDiscountValue, 
     handleProductCategory, 
-    setTotal,
     recalculateSummary,
     restartSaleForm,
     findQuotation,
     existInCart,
-    handleFlushCart
+    handleFlushCart,
+    renderItemToCard,
+    onItemAdded,
+    onItemRemoved
 } from "./utils.js";
 import { 
-    flushState, 
     getState, 
     updateState 
 } from "./state.js";
@@ -39,13 +29,14 @@ import {
     getCartItems,
     getPayments,
     getSummarySale,
-    getDataQuotation,
+    getDataQuotation
 } from "./getData.js";
 import { getDataClientDB } from "../clients/getData.js";
 import { 
     saveData, 
     saveQuotation 
 } from "./saveData.js";
+import { checkInventory } from "./validations.js";
 import summarySale from "./summarySale.js";
 
 /**
@@ -62,7 +53,7 @@ export const handlerBtnFrames = (params) => {
  */
 export const handlerBtnGlasses = ({ DOM }) => {
     DOM.replaceChildren();
-    DOM.insertAdjacentHTML('afterbegin', getMaterialCatalogHTML());
+    DOM.insertAdjacentHTML('afterbegin', DOMs.getMaterialCatalogHTML());
 };
 
 /**
@@ -111,17 +102,19 @@ export const handlerBtnProgresive = (params) => {
  */
 export const handlerItemSelected = async ({ DOM, sku, quantity }) => {
     const [product] = await getDataProductDB(sku);
-    let item = undefined;
+    const currentCount = getState().dataArticlesAdded[sku] || 0;
 
-    for(let i = 0; i < quantity; i++) {
-        if (i === 1) item = existInCart(sku);
-    
-        if (item) {
-            handlerPlusButton({ DOM: item, param: "plus"});
-        } else {
-            DOM.appendChild(getParsedHTML(getItemToCardHTML(product)));
-            recalculateSummary();
-            updateItemsCart(1);
+    if (await checkInventory(product.Stock, currentCount + quantity)) {
+        let item = existInCart(sku);
+
+        for (let i = 0; i < quantity; i++) {
+            if (item) {
+                handlerPlusButton({ DOM: item, param: "plus", skipCheck: true });
+            } else {
+                renderItemToCard(DOM, product);
+                item = existInCart(sku);
+                onItemAdded(sku, 1);
+            }
         }
     }
 };
@@ -138,10 +131,14 @@ export const handlerDeleteItem = ({ DOM }) => {
     })
     .then(response => {
         if (response){
+            const sku = DOM.querySelector('.product-image').dataset.sku;
+            const quantity = getState().dataArticlesAdded[sku];
+            
             updateItemsCart(-Number(DOM.querySelector(Class.label.quantity).textContent));
             DOM.remove();
             resetDiscountValue();
             recalculateSummary();
+            onItemRemoved(sku, quantity);
         }
     });
 };
@@ -150,8 +147,19 @@ export const handlerDeleteItem = ({ DOM }) => {
  * Manejador del boton + del carrito de ventas
  * @param {Object<HTMLDivElement, String>} param0 
  */
-export const handlerPlusButton = ({ DOM, param }) => {
+export const handlerPlusButton = async ({ DOM, param, skipCheck = false }) => {
+    const sku = DOM.closest('.item').querySelector('.product-image').dataset.sku;
+    
+    if (!skipCheck) {
+        const [product] = await getDataProductDB(sku);
+        const currentCount = getState().dataArticlesAdded[sku] || 0;
+
+        const canAdd = await checkInventory(product.Stock, currentCount + 1);
+        if (!canAdd) return; // usuario canceló o no hay stock
+    }
+
     handleQuantityButton(DOM, param);
+    onItemAdded(sku, 1);
 };
 
 /**
@@ -160,6 +168,11 @@ export const handlerPlusButton = ({ DOM, param }) => {
  */
 export const handlerMinusButton = ({ DOM, param }) => {
     handleQuantityButton(DOM, param);
+    
+    const sku = DOM.closest('.item').querySelector('.product-image').dataset.sku;
+    const currentCount = getState().dataArticlesAdded[sku];
+
+    if (param === 'minus' && currentCount > 1) onItemRemoved(sku, 1);
 };
 
 /**
@@ -208,10 +221,7 @@ export const handlerSku = async ({ DOM, sku }) => {
         return;
     }
     
-    DOM.appendChild(getParsedHTML(getItemToCardHTML(product)));
-    updateItemsCart(1);
-    setSubtotal(product.SalePrice);
-    setTotal();
+    renderItemToCard(DOM, product);
     input.value = '';
     input.blur();
 };
@@ -233,7 +243,7 @@ export const handlerApplyDiscountBtn = ({ DOM, items }) => {
         return;
     }
 
-    DOM.appendChild(getParsedHTML(getPromptDiscountHTML()));
+    DOM.appendChild(getParsedHTML(DOMs.getPromptDiscountHTML()));
 };
 
 /**
@@ -304,7 +314,7 @@ export const handlerApplyIVA = ({}) => {
  */
 export const handlerBtnRegisterPay = ({ DOM, client, total, ID }) => {
     if (getState().cartItems > 0) {
-        DOM.appendChild(getParsedHTML(getPaymentSummaryHTML(client, total, ID)));
+        DOM.appendChild(getParsedHTML(DOMs.getPaymentSummaryHTML(client, total, ID)));
         summarySale();
     } else {
         newAlert({
@@ -346,7 +356,7 @@ export const handlerApplyPayment = ({ DOM, value, typeOfPayment }) => {
     }
 
     getElement('.paymentValue').value = '';
-    DOM.appendChild(getParsedHTML(getNewPaymentItemHTML(value, typeOfPayment)));
+    DOM.appendChild(getParsedHTML(DOMs.getNewPaymentItemHTML(value, typeOfPayment)));
 };
 
 /**
@@ -388,7 +398,7 @@ export const handlerBtnApplyPayments = ({}) => {
  * @param {Object<HTMLDivElement>} param0 
  */
 export const handlerSearchClient = ({ DOM }) => {
-    DOM.appendChild(getParsedHTML(getSearchClientFormHTML()));
+    DOM.appendChild(getParsedHTML(DOMs.getSearchClientFormHTML()));
 };
 
 /**
@@ -417,7 +427,7 @@ export const handlerBtnSearchClientForm = async ({ client, DOM }) => {
         });
     } else {
         data.forEach(element => {
-            DOM.appendChild(getParsedHTML(getNewClientFoundedHTML(element.ID, element.Name)));
+            DOM.appendChild(getParsedHTML(DOMs.getNewClientFoundedHTML(element.ID, element.Name)));
         });
     }
 };
@@ -462,7 +472,7 @@ export const handlerBtnCreateQuotation = async ({ items }) => {
  * @param {Object<HTMLDivElement} param0 
  */
 export const handlerBtnRecoverQuotation = ({ DOM }) => {
-    DOM.appendChild(getParsedHTML(getPromptQuotationHTML()));
+    DOM.appendChild(getParsedHTML(DOMs.getPromptQuotationHTML()));
 };
 
 /**

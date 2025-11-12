@@ -110,4 +110,49 @@ router.get('/consult-articles', (req, res) => {
     });
 });
 
+// Actualizar o modificar algun valor de la DB de productos
+router.post('/update-stocks', (req, res) => {
+    const updates = req.body;
+
+    if (typeof updates !== 'object' || Array.isArray(updates)) {
+        return res.status(400).json({ error: 'Formato inválido de datos.' });
+    }
+
+    dbProducts.serialize(() => {
+        dbProducts.run('BEGIN TRANSACTION');
+
+        const stmt = dbProducts.prepare('UPDATE Products SET Stock = Stock - ? WHERE SKU = ?');
+        let errorDetected = false;
+
+        for (const [sku, quantityChange] of Object.entries(updates)) {
+            stmt.run([quantityChange, sku], (err) => {
+                if (err && !errorDetected) {
+                    errorDetected = true;
+                    console.error(`Error actualizando SKU ${sku}:`, err.message);
+                    dbProducts.run('ROLLBACK');
+                    res.status(500).json({ error: `Error actualizando SKU ${sku}` });
+                }
+            });
+        }
+
+        stmt.finalize((err) => {
+            if (errorDetected) return; // Ya se envió respuesta con error
+            if (err) {
+                dbProducts.run('ROLLBACK');
+                console.error('Error al finalizar statement:', err.message);
+                return res.status(500).json({ error: 'Error al finalizar la actualización.' });
+            }
+
+            dbProducts.run('COMMIT', (commitErr) => {
+                if (commitErr) {
+                    console.error('Error al confirmar la transacción:', commitErr.message);
+                    return res.status(500).json({ error: 'Error al confirmar la transacción.' });
+                }
+
+                res.json({ success: true, message: 'Stocks actualizados correctamente.' });
+            });
+        });
+    });
+});
+
 module.exports = router;

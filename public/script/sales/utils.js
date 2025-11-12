@@ -8,7 +8,10 @@ import {
     getParsedHTML 
 } from "../utils/getElement.js";
 import { showErrorMessage } from "../utils/errorMessage.js";
-import { getProductHTML } from "./salesDom.js";
+import { 
+    getProductHTML,
+    getItemToCardHTML 
+} from "./salesDom.js";
 import { 
     subtotal,
     IVA,
@@ -21,10 +24,7 @@ import {
 } from "./getData.js";
 import { validateData } from "./validations.js";
 import { newAlert } from "../utils/alerts.js";
-import { 
-    handlerDeleteCart, 
-    handlerPaymentCloseIcon 
-} from "./handlers.js";
+import { handlerPaymentCloseIcon } from "./handlers.js";
 import { loader } from '../utils/loader.js';
 import Class from "./consts.js";
 
@@ -411,3 +411,48 @@ export const existInCart = (SKU) => {
         return null;
     }
 };
+
+export const renderItemToCard = (DOM, product) => {
+    DOM.appendChild(getParsedHTML(getItemToCardHTML(product)));
+    updateItemsCart(1);
+    recalculateSummary();
+};
+
+/**
+ * Agregar la cantidad de articulos para verificar si aun quedan en el inventario
+ * @param {String} code 
+ * @param {Integer} quantity 
+ */
+export const onItemAdded = (code, quantity) => {
+    updateState(previus => {
+        const { dataArticlesAdded } = previus;
+        const sku = code;
+
+        const updatedItems = {
+            ...dataArticlesAdded,
+            [sku]: (dataArticlesAdded[sku] || 0) + quantity
+        };
+
+        return{ dataArticlesAdded: updatedItems };
+    });
+};
+
+/**
+ * Eliminar la cantidad de articulos del objeto donde se registran la cantidad de articulos agregagos al carrito de ventas
+ * @param {String} code 
+ * @param {Integer} quantity 
+ */
+export const onItemRemoved = (code, quantity) => {
+    updateState(previus => {
+        const { dataArticlesAdded } = previus;
+        const sku = code;
+    
+        const newQty = Math.max((dataArticlesAdded[sku] || 0) - quantity, 0);
+    
+        const updatedArticles = { ...dataArticlesAdded };
+        if (newQty === 0) delete updatedArticles[sku];
+        else updatedArticles[sku] = newQty;
+    
+        return { dataArticlesAdded: updatedArticles };
+    });
+}

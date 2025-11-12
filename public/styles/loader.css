@@ -6,7 +6,7 @@
     left: 0;
     background-color: #00000022;
     backdrop-filter: blur(1px);
-    z-index: 9997;
+    z-index: 8900;
 }
 
 .custom-loader {

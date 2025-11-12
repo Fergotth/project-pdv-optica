@@ -70,6 +70,7 @@ const newAlert = (input) => {
         // Configura el temporizador para eliminar la alerta
         const timeoutId = setTimeout(() => {
             closeAlertWithAnimation();
+            resolve(false);
         }, timer);
 
         // Configura el evento para cerrar la alerta al presionar el botón
