@@ -111,7 +111,7 @@ router.get('/consult-articles', (req, res) => {
 });
 
 // Actualizar o modificar algun valor de la DB de productos
-router.post('/update-stocks', (req, res) => {
+router.post('/update-stocks-afterSale', (req, res) => {
     const updates = req.body;
 
     if (typeof updates !== 'object' || Array.isArray(updates)) {

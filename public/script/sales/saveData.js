@@ -24,7 +24,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
     const urlSalePayments = '/save-salepayments';
     const urlUnpaidNotes = '/save-unpaidnotes';
     const urlTicketHTML = '/generate-ticketHTML';
-    const urlUpdateStock = '/update-stocks';
+    const urlUpdateStock = '/update-stocks-afterSale';
 
     const totalPaid = Number(paymentItems.reduce((acc, item) => acc + item.Paid, 0).toFixed(2));
     const balance = Number((saleSummary.total - totalPaid).toFixed(2));

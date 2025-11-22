@@ -1,0 +1,472 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body {
+    padding: 0;
+    margin: 0;
+    display: relative;
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans';
+}
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.prescriptionContainer {
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    box-shadow: 2px 2px 14px #00000033;
+}
+
+.prescriptionContainer .p--closeIcon {
+    all: unset;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 100;
+    transition: all 0.2s ease;
+    transform: scale(1);
+    color: #fff;
+}
+
+.prescriptionContainer .p--closeIcon:hover {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: scale(1.3);
+    color: red;
+}
+
+.prescriptionContainer .p--closeIcon svg {
+    pointer-events: none;
+}
+
+.prescriptionContainer svg {
+    pointer-events: none;
+}
+
+.prescriptionContainer .p--header {
+    width: 100%;
+    height: 10%;
+    background-color: rgb(76, 76, 243);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.prescriptionContainer .p--header h1 {
+    padding-left: 20px;
+}
+
+.prescriptionContainer .p--body {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: row;
+}
+
+.prescriptionContainer .p--body .body--left-section {
+    width: 15%;
+    height: 100%;
+    background: linear-gradient(90deg,rgba(255, 165, 0, 0.72) 8%, rgba(255, 165, 0, 1) 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+.prescriptionContainer .left--section--logo {
+    width: 100%;
+    height: 40%;
+    user-select: none;
+}
+
+.prescriptionContainer .p--body .body--left-section .left-section--menu {
+    width: 100%;
+}
+
+.prescriptionContainer .end--menu {
+    border-radius: 4px;
+    border: 1px solid #999;
+    outline: none;
+    font-weight: 600;
+}
+
+.prescriptionContainer .end--menu option:not(:first-child) {
+    font-weight: 600;
+}
+
+.prescriptionContainer .menu--glasses, 
+.prescriptionContainer .menu--contactGlasses {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    height: 80px;
+    width: 100%;
+    padding: 0 10px;
+    position: relative;
+    box-sizing: border-box;
+    z-index: 1;
+    color: #fff;
+}
+
+.prescriptionContainer .menu--glasses + div,
+.prescriptionContainer .menu--contactGlasses + div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.prescriptionContainer .menu--glasses label,
+.prescriptionContainer .menu--contactGlasses label {
+    padding-left: 10px;
+    pointer-events: none;
+    user-select: none;
+}
+
+.prescriptionContainer .menu--glasses:hover, 
+.prescriptionContainer .menu--contactGlasses:hover {
+    cursor: pointer;
+}
+
+.prescriptionContainer .menu--glasses::after, 
+.prescriptionContainer .menu--contactGlasses::after {
+    content: "";
+    position: absolute; 
+    left: 8px;
+    top: 15%;
+    height: 70%;
+    width: 0;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: all 0.1s ease-in;
+    z-index: -1;
+}
+
+.prescriptionContainer .menu--glasses:hover::after, 
+.prescriptionContainer .menu--contactGlasses:hover::after {
+    width: 90%;
+    background-color: #000;
+}
+
+.prescriptionContainer .menu--contactGlasses {
+    border-bottom: 1px solid #00000033;
+}
+
+.prescriptionContainer .body--right-section {
+    width: 85%;
+    height: 100%;
+    background-color: #e4dddd77;
+    display: flex;
+    flex-direction: column;
+}
+
+.prescriptionContainer .right-section--title {
+    margin: 15px;
+}
+
+.prescriptionContainer .title--h3 {
+    color: red;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.prescriptionContainer .title--kindOfPrescription {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.prescriptionContainer .right-section--infoClient {
+    width: 95%;
+    height: 20%;
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.prescriptionContainer .infoClient--title,
+.prescriptionContainer .prescription--title {
+    font-weight: 500;
+}
+
+.prescriptionContainer .infoClient--name {
+    margin-left: 15px;
+    display: flex;
+    flex-direction: row;
+    height: 30px;
+    align-items: center;
+    align-content: center;
+}
+
+.prescriptionContainer .name--clientName {
+    margin-left: 15px;
+    padding-left: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    width: 50%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    font-size: 0.88rem;
+}
+
+.prescriptionContainer .right-section--presciption {
+    width: 95%;
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.prescriptionContainer .dates--start, .prescriptionContainer .dates--end {
+    display: flex;
+    flex-direction: row;
+    margin-left: 15px;
+}
+
+.prescriptionContainer .dates--start div:nth-child(1), 
+.prescriptionContainer .dates--end div:nth-child(1) {
+    width: 170px;
+    text-align: right;
+}
+
+.prescriptionContainer .start--prescription, 
+.prescriptionContainer .end--prescription {
+    margin-left: 15px;
+    padding-left: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    width: 11%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    overflow: hidden;
+    font-size: 0.84rem;
+    height: 24px;
+}
+
+.prescriptionContainer .end--prescription {
+    color: red;
+}
+
+.prescriptionContainer .prescription--OD, 
+.prescriptionContainer .prescription--OS {
+    width: 100%;
+    height: 70px;
+    display: flex;
+}
+
+.prescriptionContainer .OD--data,
+.prescriptionContainer .OS--data {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin-top: 15px;
+    transition: all 0.2s ease-in;
+    opacity: 1;
+}
+
+.prescriptionContainer .OD--data label,
+.prescriptionContainer .OS--data label {
+    position: absolute;
+    font-size: 0.9rem;
+}
+
+.prescriptionContainer .OD--data div:nth-child(1), 
+.prescriptionContainer .OS--data div:nth-child(1) {
+    width: 60px;
+    height: 70px;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.prescriptionContainer .data--OD-InputSignSph,
+.prescriptionContainer .data--OS-InputSignSph,
+.prescriptionContainer .data--OD-InputSignCyl,
+.prescriptionContainer .data--OS-InputSignCyl {
+    height: 25px;
+    width: 20px;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+.prescriptionContainer .data--OD-InputSph,
+.prescriptionContainer .data--OS-InputSph,
+.prescriptionContainer .data--OD-InputCyl,
+.prescriptionContainer .data--OS-InputCyl,
+.prescriptionContainer .data--OD-InputAxis,
+.prescriptionContainer .data--OS-InputAxis,
+.prescriptionContainer .data--OD-InputADD, 
+.prescriptionContainer .data--OS-InputADD,
+.prescriptionContainer .data--OD-InputDNP,
+.prescriptionContainer .data--OS-InputDNP,
+.prescriptionContainer .data--OD-InputPrism,
+.prescriptionContainer .data--OS-InputPrism,
+.prescriptionContainer .data--OD-InputBase,
+.prescriptionContainer .data--OS-InputBase {
+    height: 25px;
+    width: 40px;
+    position: absolute;
+    bottom: 0;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+/* Labels */
+.prescriptionContainer .OD--data label:nth-child(2),
+.prescriptionContainer .OS--data label:nth-child(2),
+.prescriptionContainer .OD--data label:nth-child(5),
+.prescriptionContainer .OS--data label:nth-child(5),
+.prescriptionContainer .OD--data label:nth-child(8),
+.prescriptionContainer .OS--data label:nth-child(8),
+.prescriptionContainer .OD--data label:nth-child(10),
+.prescriptionContainer .OS--data label:nth-child(10),
+.prescriptionContainer .OD--data label:nth-child(11),
+.prescriptionContainer .OS--data label:nth-child(11),
+.prescriptionContainer .OD--data label:nth-child(13),
+.prescriptionContainer .OS--data label:nth-child(13),
+.prescriptionContainer .OD--data label:nth-child(15),
+.prescriptionContainer .OS--data label:nth-child(15),
+.prescriptionContainer .OD--data label:nth-child(17),
+.prescriptionContainer .OS--data label:nth-child(17),
+.prescriptionContainer .OD--data label:nth-child(19),
+.prescriptionContainer .OS--data label:nth-child(19) {
+    font-weight: 300;
+}
+
+/* Label "Esfera" */
+.prescriptionContainer .OD--data label:nth-child(2),
+.prescriptionContainer .OS--data label:nth-child(2) {
+    left: 100px;
+}
+
+/* Input "Signo Esfera OD y OI" */
+.prescriptionContainer .data--OD-InputSignSph,
+.prescriptionContainer .data--OS-InputSignSph {
+    left: 100px;
+    bottom: 5px;
+}
+
+/* Input "Esfera OD y OI" */
+.prescriptionContainer .data--OD-InputSph,
+.prescriptionContainer .data--OS-InputSph {
+    left: 128px;
+    bottom: 5px;
+}
+
+/* Label "Cilindro" */
+.prescriptionContainer .OD--data label:nth-child(5),
+.prescriptionContainer .OS--data label:nth-child(5) {
+    left: 200px;
+}
+
+/* Input "Signo Cilindro OD y OI" */
+.prescriptionContainer .data--OD-InputSignCyl,
+.prescriptionContainer .data--OS-InputSignCyl {
+    left: 200px;
+    bottom: 5px;
+}
+
+/* Input "Cilindro OD y OI" */
+.prescriptionContainer .data--OD-InputCyl,
+.prescriptionContainer .data--OS-InputCyl {
+    left: 228px;
+    bottom: 5px;
+}
+
+/* Label "Eje OD y OI" */
+.prescriptionContainer .OD--data label:nth-child(8),
+.prescriptionContainer .OS--data label:nth-child(8) {
+    left: 300px;
+}
+
+/* Input "Eje OD y OI" */
+.prescriptionContainer .data--OD-InputAxis,
+.prescriptionContainer .data--OS-InputAxis {
+    left: 300px;
+    bottom: 5px;
+}
+
+/* Label "ADD OD y OI" */
+.prescriptionContainer .OD--data label:nth-child(10),
+.prescriptionContainer .OS--data label:nth-child(10) {
+    left: 380px;
+}
+
+/* Label "Signo + de la ADD OD y OI */
+.prescriptionContainer .OD--data label:nth-child(11),
+.prescriptionContainer .OS--data label:nth-child(11) {
+    left: 370px;
+    bottom: 7px;
+    font-weight: 500;
+}
+
+/* Input "ADD OD y OI" */
+.prescriptionContainer .data--OD-InputADD,
+.prescriptionContainer .data--OS-InputADD {
+    left: 380px;
+    bottom: 5px;
+}
+
+/* Label "DNP OD y OI */
+.prescriptionContainer .OD--data label:nth-child(13),
+.prescriptionContainer .OS--data label:nth-child(13) {
+    left: 460px;
+}
+
+/* Input "DNP OD y OI" */
+.prescriptionContainer .data--OD-InputDNP,
+.prescriptionContainer .data--OS-InputDNP {
+    left: 460px;
+    bottom: 5px;
+}
+
+/* Label "Prisma Potencia OD y OI */
+.prescriptionContainer .OD--data label:nth-child(15),
+.prescriptionContainer .OS--data label:nth-child(15) {
+    left: 530px;
+    width: max-content;
+}
+
+/* Input "Prisma Potencia OD y OI" */
+.prescriptionContainer .data--OD-InputPrism,
+.prescriptionContainer .data--OS-InputPrism {
+    left: 530px;
+    bottom: 5px;
+}
+
+/* Label "Prisma Base OD y OI */
+.prescriptionContainer .OD--data label:nth-child(17),
+.prescriptionContainer .OS--data label:nth-child(17) {
+    left: 680px;
+    width: max-content;
+}
+
+/* Label "Grado OD y OI */
+.prescriptionContainer .OD--data label:nth-child(19),
+.prescriptionContainer .OS--data label:nth-child(19) {
+    left: 725px;
+    bottom: 10px;
+    width: max-content;
+}
+
+/* Input "Prisma Potencia OD y OI" */
+.prescriptionContainer .data--OD-InputBase,
+.prescriptionContainer .data--OS-InputBase {
+    left: 680px;
+    bottom: 5px;
+}

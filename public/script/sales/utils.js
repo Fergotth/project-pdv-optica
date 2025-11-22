@@ -446,13 +446,12 @@ export const onItemRemoved = (code, quantity) => {
     updateState(previus => {
         const { dataArticlesAdded } = previus;
         const sku = code;
-    
-        const newQty = Math.max((dataArticlesAdded[sku] || 0) - quantity, 0);
-    
+        const newQty = dataArticlesAdded[sku] - quantity;
         const updatedArticles = { ...dataArticlesAdded };
-        if (newQty === 0) delete updatedArticles[sku];
+        
+        if (newQty < 1) delete updatedArticles[sku];
         else updatedArticles[sku] = newQty;
     
         return { dataArticlesAdded: updatedArticles };
     });
-}
+};
