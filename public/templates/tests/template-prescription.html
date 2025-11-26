@@ -227,57 +227,85 @@
             ["-9.25", "-8.25", "-0.00", "-0.00", "-0.00", "-0.75", "-1.25", "-1.25", "-1.25", "-1.25", "-1.25", "-1.75", "-1.75", "-2.25", "-2.75", "-2.75", "-2.75", "-2.75", "-2.75"],
             ["-9.50", "-8.50", "-0.00", "-0.00", "-0.00", "-0.75", "-1.25", "-1.25", "-1.25", "-1.25", "-1.25", "-1.75", "-1.75", "-2.25", "-2.75", "-2.75", "-2.75", "-2.75", "-2.75"],
             ["-9.75", "-8.75", "-0.00", "-0.00", "-0.00", "-0.75", "-1.25", "-1.25", "-1.25", "-1.25", "-1.25", "-1.75", "-1.75", "-2.25", "-2.75", "-2.75", "-2.75", "-2.75", "-2.75"],
-            ["-10.00", "9.00", "-0.00", "-0.00", "-0.00", "-0.75", "-1.25", "-1.25", "-1.25", "-1.25", "-1.25", "-1.75", "-1.75", "-1.75", "-2.75", "-2.75", "-2.75", "-2.75", "-2.75"]
+            ["-10.00", "9.00", "-0.00", "-0.00", "-0.00", "-0.75", "-1.25", "-1.25", "-1.25", "-1.25", "-1.25", "-1.75", "-1.75", "-1.75", "-2.75", "-2.75", "-2.75", "-2.75", "-2.75"],
+            ["-10.25", "-9.50"],
+            ["-10.50", "-9.50"],
+            ["-10.75", "-10.00"],
+            ["-11.00", "-10.00"],
+            ["-11.25", "-10.50"],
+            ["-11.50", "-10.50"],
+            ["-11.75", "-11.00"],
+            ["-12.00", "-11.00"],
+            ["-12.25", "-11.00"],
+            ["-12.50", "-11.50"],
+            ["-12.75", "-11.50"],
+            ["-13.00", "-11.50"],
+            ["-13.25", "-11.50"],
+            ["-13.50", "-12.00"],
+            ["-13.75", "-12.00"],
+            ["-14.00", "-12.00"]
         ];
+        
+        let actualSheet = 'Oftalmica';
+        let dataSheet = {
+            frame: {
+                ODSignSph: '',
+                ODSphValue:'',
+                ODCylSign: '-',
+                ODCylValue: '',
+                ODAxisValue: '',
+                ODADDValue: '',
+                ODPrismValue: '',
+                ODPrismBaseValue: '',
+                OSSignSph: '',
+                OSSphValue: '',
+                OSCylSign: '-',
+                OSCylValue: '',
+                OSAxisValue: '',
+                OSADDValue: '',
+                OSPrismValue: '',
+                OSPrismBaseValue: ''
+            },
+            lc: {
+                ODSignSph: '',
+                ODSphValue:'',
+                ODCylSign: '-',
+                ODCylValue: '',
+                ODAxisValue: '',
+                ODADDValue: '',
+                ODPrismValue: '',
+                ODPrismBaseValue: '',
+                OSSignSph: '',
+                OSSphValue: '',
+                OSCylSign: '-',
+                OSCylValue: '',
+                OSAxisValue: '',
+                OSADDValue: '',
+                OSPrismValue: '',
+                OSPrismBaseValue: ''
+            }
+        };
+
         // manejador de seleccion del menu lateral
         const clickTarget = (event) => {
             const target = event.target;
 
             if (["menu--contactGlasses", "menu--glasses"].some(cls => target.classList.contains(cls))) {
-                labelPrescription.textContent = target.dataset.prescription;
-                const changeMenuSelect = (type) => {
-                    const newOptions = type ? 
-                    `
-                    <option value="">Seleccione el tipo de lente</option>
-                    <option value="sv">Monofocal</option>
-                    <option value="bf">Bifocal</option>
-                    <option value="prg">Progresivo</option>
-                    ` : 
-                    `
-                    <option value="">Seleccione el tipo de LC</option>
-                    <option value="sph">Esferico</option>
-                    <option value="tor">Torico</option>
-                    `
-                    ;
+                const labelSheet = target.dataset.prescription;
+                labelPrescription.textContent = labelSheet; 
+                //lcConvertion();
 
-                    return newOptions;
-                };
-
-                const changeVisibility = (visibility) => {
-                    inputODDNP.disabled = visibility;
-                    inputODDNP.style.background = !visibility ? "#fff" : "#00000033";
-                    inputODPrism.disabled = visibility;
-                    inputODPrism.style.background = !visibility ? "#fff" : "#00000033";
-                    inputODBase.disabled = visibility;
-                    inputODBase.style.background = !visibility ? "#fff" : "#00000033";
-                    inputOSDNP.disabled = visibility;
-                    inputOSDNP.style.background = !visibility ? "#fff" : "#00000033";
-                    inputOSPrism.disabled = visibility;
-                    inputOSPrism.style.background = !visibility ? "#fff" : "#00000033";
-                    inputOSBase.disabled = visibility;
-                    inputOSBase.style.background = !visibility ? "#fff" : "#00000033";
-
-                    selectMenu.replaceChildren();
-                    selectMenu.innerHTML = changeMenuSelect(!visibility);
-                };
+                if (actualSheet !== labelSheet) {
+                    getValuesPrescription(labelSheet !== 'Oftalmica' ? 'frame' : 'lc');
+                    setValuesPrescription(labelSheet === 'Oftalmica' ? 'frame' : 'lc');
+                    actualSheet = labelSheet;
+                }
 
                 if (target.classList.contains("menu--contactGlasses")) {
                     changeVisibility(true);
                 } else {
                     changeVisibility(false);
                 }
-
-                return;
             }
         };
 
@@ -369,6 +397,110 @@
         inputOSBase.addEventListener('keydown', keydownInputNumber);
         selectMenu.addEventListener('change', changeOption);
         
+        const lcConvertion = () => {
+            const ODSph = `${ODSign.value}${inputODSph.value}`;
+            const OSSph = `${OSSign.value}${inputOSSph.value}`;
+            const ODCyl = inputODCyl.value !== "" ? `${ODCylSign.value}${inputODCyl.value}` : null; 
+            const OSCyl = inputOSCyl.value !== "" ? `${OSCylSign.value}${inputOSCyl.value}` : null;
+            let OD = null;
+            let OS = null;
+
+            const getValue = (sph, cyl) => {
+                for(let row = 0; row < tableLCBaushLomb.length; row++) {
+                    if (tableLCBaushLomb[row][0] === sph)
+                        if (cyl) {
+                            for(let col = 0; col < tableLCBaushLomb[0].length; col++) {
+                                if (tableLCBaushLomb[0][col] === cyl)
+                                    return `${tableLCBaushLomb[row][1]} ${tableLCBaushLomb[row][col]}`;
+                                
+                                if (col + 1 === tableLCBaushLomb[0].length)
+                                    return null;
+                            }
+                        } else
+                            return tableLCBaushLomb[row][1];
+                }
+                return null;
+            }
+
+            OD = getValue(ODSph, ODCyl);
+            OS = getValue(OSSph, OSCyl);
+        };
+
+        const setValuesPrescription = (key) => {
+            ODSign.value = dataSheet[key].ODSignSph;
+            inputODSph.value = dataSheet[key].ODSphValue;
+            ODCylSign.value = dataSheet[key].ODCylSign;
+            inputODCyl.value = dataSheet[key].ODCylValue;
+            inputODAxis.value = dataSheet[key].ODAxisValue;
+            inputODADD.value = dataSheet[key].ODADDValue;
+            inputODPrism.value = dataSheet[key].ODPrismValue;
+            inputODBase.value = dataSheet[key].ODPrismBaseValue;
+            OSSign.value = dataSheet[key].OSSignSph;
+            inputOSSph.value = dataSheet[key].OSSphValue;
+            OSCylSign.value = dataSheet[key].OSCylSign;
+            inputOSCyl.value = dataSheet[key].OSCylValue;
+            inputOSAxis.value = dataSheet[key].OSAxisValue;
+            inputOSADD.value = dataSheet[key].OSADDValue;
+            inputOSPrism.value = dataSheet[key].OSPrismValue;
+            inputOSBase.value = dataSheet[key].OSPrismBaseValue;
+        };
+
+        const getValuesPrescription = (key) => {
+            dataSheet[key] = {
+                ODSignSph: ODSign.value,
+                ODSphValue: inputODSph.value,
+                ODCylSign: ODCylSign.value,
+                ODCylValue: inputODCyl.value,
+                ODAxisValue: inputODAxis.value,
+                ODADDValue: inputODADD.value,
+                ODPrismValue: key === "lc" ? "" : inputODPrism.value,
+                ODPrismBaseValue: key === "lc" ? "" : inputODBase.value,
+                OSSignSph: OSSign.value,
+                OSSphValue: inputOSSph.value,
+                OSCylSign: OSCylSign.value,
+                OSCylValue: inputOSCyl.value,
+                OSAxisValue: inputOSAxis.value,
+                OSADDValue: inputOSADD.value,
+                OSPrismValue: key === "lc" ? "" : inputOSPrism.value,
+                OSPrismBaseValue: key === "lc" ? "" : inputOSBase.value
+            };
+        };
+
+        const changeMenuSelect = (type) => {
+            const newOptions = type ? 
+            `
+            <option value="">Seleccione el tipo de lente</option>
+            <option value="sv">Monofocal</option>
+            <option value="bf">Bifocal</option>
+            <option value="prg">Progresivo</option>
+            ` : 
+            `
+            <option value="">Seleccione el tipo de LC</option>
+            <option value="sph">Esferico</option>
+            <option value="tor">Torico</option>
+            `
+            ;
+
+            return newOptions;
+        };
+
+        const changeVisibility = (visibility) => {
+            inputODDNP.disabled = visibility;
+            inputODDNP.style.background = !visibility ? "#fff" : "#00000033";
+            inputODPrism.disabled = visibility;
+            inputODPrism.style.background = !visibility ? "#fff" : "#00000033";
+            inputODBase.disabled = visibility;
+            inputODBase.style.background = !visibility ? "#fff" : "#00000033";
+            inputOSDNP.disabled = visibility;
+            inputOSDNP.style.background = !visibility ? "#fff" : "#00000033";
+            inputOSPrism.disabled = visibility;
+            inputOSPrism.style.background = !visibility ? "#fff" : "#00000033";
+            inputOSBase.disabled = visibility;
+            inputOSBase.style.background = !visibility ? "#fff" : "#00000033";
+
+            selectMenu.replaceChildren();
+            selectMenu.innerHTML = changeMenuSelect(!visibility);
+        };
     </script>
 </body>
 </html>
