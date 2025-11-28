@@ -135,6 +135,7 @@
                         </div>
                     </div>
                 </section>
+                <button class="prescription--converter" title="RX Oftalmica a Lente de contacto">Convertir Rx</button>
             </div>
         </section>
     </div>
@@ -142,6 +143,7 @@
         const menu = document.querySelector('.left-section--menu'); // contenedor principal del menu
         const selectMenu = document.querySelector('.end--menu'); // menu de tipo de material o LC
         const labelPrescription = document.querySelector('.title--kindOfPrescription'); // label del tipo de prescripcion
+        const btnConverter = document.querySelector('.prescription--converter'); // boton convertir rx
         const ODSign = document.querySelector('.data--OD-InputSignSph'); // input del signo de la esfera del OD
         const OSSign = document.querySelector('.data--OS-InputSignSph'); // input del signo de la esfera del OI
         const inputODSph = document.querySelector('.data--OD-InputSph'); // input de esfera OD
@@ -286,14 +288,19 @@
             }
         };
 
+        // boton desahibilitado por default
+        btnConverter.style.opacity = 0;
+
         // manejador de seleccion del menu lateral
         const clickTarget = (event) => {
             const target = event.target;
 
             if (["menu--contactGlasses", "menu--glasses"].some(cls => target.classList.contains(cls))) {
                 const labelSheet = target.dataset.prescription;
+                // corrgir animacion de label
+                labelPrescription.style.opacity = 0;
                 labelPrescription.textContent = labelSheet; 
-                //lcConvertion();
+                labelPrescription.style.opacity = 1;
 
                 if (actualSheet !== labelSheet) {
                     getValuesPrescription(labelSheet !== 'Oftalmica' ? 'frame' : 'lc');
@@ -303,8 +310,10 @@
 
                 if (target.classList.contains("menu--contactGlasses")) {
                     changeVisibility(true);
+                    btnConverter.style.opacity = 0.8;
                 } else {
                     changeVisibility(false);
+                    btnConverter.style.opacity = 0;
                 }
             }
         };
@@ -361,6 +370,16 @@
                     break;
             }
         };
+
+        // convertir RX oftalmica a LC
+        const convertRX = () => {
+            if (selectMenu.value === "")
+                alert("No se ha seleccionado ninguna opcion");
+            else {
+                lcConvertion(dataSheet.frame);
+
+            }
+        };
         
         menu.addEventListener('click', clickTarget);
         ODSign.addEventListener('input', keydownSign);
@@ -396,14 +415,19 @@
         inputOSBase.addEventListener('input', keydownInputNumber);
         inputOSBase.addEventListener('keydown', keydownInputNumber);
         selectMenu.addEventListener('change', changeOption);
+        btnConverter.addEventListener('click', convertRX);
         
-        const lcConvertion = () => {
-            const ODSph = `${ODSign.value}${inputODSph.value}`;
-            const OSSph = `${OSSign.value}${inputOSSph.value}`;
-            const ODCyl = inputODCyl.value !== "" ? `${ODCylSign.value}${inputODCyl.value}` : null; 
-            const OSCyl = inputOSCyl.value !== "" ? `${OSCylSign.value}${inputOSCyl.value}` : null;
-            let OD = null;
-            let OS = null;
+        const lcConvertion = (data) => {
+            const ODSignSph = data.ODSignSph;
+            const ODSphValue = data.ODSphValue;
+            const ODSignCyl = data.ODSignCyl; 
+            const ODCylValue = data.ODCylValue;
+            const OSSignSph = data.OSSignSph;
+            const OSSphValue = data.OSSphValue;
+            const OSSignCyl = data.OSSignCyl; 
+            const OSCylValue = data.OSCylValue;
+            let OD = {};
+            let OS = {};
 
             const getValue = (sph, cyl) => {
                 for(let row = 0; row < tableLCBaushLomb.length; row++) {
@@ -411,21 +435,39 @@
                         if (cyl) {
                             for(let col = 0; col < tableLCBaushLomb[0].length; col++) {
                                 if (tableLCBaushLomb[0][col] === cyl)
-                                    return `${tableLCBaushLomb[row][1]} ${tableLCBaushLomb[row][col]}`;
+                                    return {
+                                        SignSph: tableLCBaushLomb[row][1].charAt(0),
+                                        SphValue: tableLCBaushLomb[row][1].slice(1),
+                                        SignCyl: tableLCBaushLomb[row][col].charAt(0),
+                                        Cyl: tableLCBaushLomb[row][col].slice(1)
+                                    };
                                 
                                 if (col + 1 === tableLCBaushLomb[0].length)
                                     return null;
                             }
                         } else
-                            return tableLCBaushLomb[row][1];
+                            return {
+                                SignSph: tableLCBaushLomb[row][1].charAt(0),
+                                SphValue: tableLCBaushLomb[row][1].slice(1),
+                                SignCyl: "-",
+                                Cyl: ""
+                            };
                 }
                 return null;
             }
 
-            OD = getValue(ODSph, ODCyl);
-            OS = getValue(OSSph, OSCyl);
+            OD = getValue(`${ODSignSph}${ODSphValue}`, `${ODSignCyl}${ODCylValue}`);
+            OS = getValue(`${OSSignSph}${OSSphValue}`, `${OSSignCyl}${OSCylValue}`);
+
+            if (!OD && !OS) alert("No existe esa RX en Lente de contacto");
+            setValuesConverted('lc', OD, OS);
         };
 
+        const setValuesConverted = (key, OD, OS) => {
+            // continuar aqui
+            // colocar en los campos los valores convertidos y luego guardar en el objeto los datos de LC
+        };
+        
         const setValuesPrescription = (key) => {
             ODSign.value = dataSheet[key].ODSignSph;
             inputODSph.value = dataSheet[key].ODSphValue;
