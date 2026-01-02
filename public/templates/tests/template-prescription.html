@@ -420,11 +420,11 @@
         const lcConvertion = (data) => {
             const ODSignSph = data.ODSignSph;
             const ODSphValue = data.ODSphValue;
-            const ODSignCyl = data.ODSignCyl; 
+            const ODSignCyl = data.ODCylSign; 
             const ODCylValue = data.ODCylValue;
             const OSSignSph = data.OSSignSph;
             const OSSphValue = data.OSSphValue;
-            const OSSignCyl = data.OSSignCyl; 
+            const OSSignCyl = data.OSCylSign; 
             const OSCylValue = data.OSCylValue;
             let OD = {};
             let OS = {};
@@ -450,7 +450,7 @@
                                 SignSph: tableLCBaushLomb[row][1].charAt(0),
                                 SphValue: tableLCBaushLomb[row][1].slice(1),
                                 SignCyl: "-",
-                                Cyl: ""
+                                Cyl: "0.00"
                             };
                 }
                 return null;
@@ -460,12 +460,24 @@
             OS = getValue(`${OSSignSph}${OSSphValue}`, `${OSSignCyl}${OSCylValue}`);
 
             if (!OD && !OS) alert("No existe esa RX en Lente de contacto");
-            setValuesConverted('lc', OD, OS);
+            else setValuesConverted('lc', OD, OS);
         };
 
         const setValuesConverted = (key, OD, OS) => {
-            // continuar aqui
-            // colocar en los campos los valores convertidos y luego guardar en el objeto los datos de LC
+            dataSheet[key].ODSignSph = OD.SignSph;
+            dataSheet[key].ODSphValue = OD.SphValue;
+            dataSheet[key].ODCylSign = OD.SignCyl;
+            dataSheet[key].ODCylValue = OD.Cyl;
+            dataSheet[key].ODAxisValue = Math.round(parseInt(dataSheet['frame'].ODAxisValue) / 10) * 10;
+            dataSheet[key].OSSignSph = OS.SignSph;
+            dataSheet[key].OSSphValue = OS.SphValue;
+            dataSheet[key].OSCylSign = OS.SignCyl;
+            dataSheet[key].OSCylValue = OS.Cyl;
+            dataSheet[key].OSAxisValue = Math.round(parseInt(dataSheet['frame'].OSAxisValue) / 10) * 10;
+// crear funcion para corregir el eje
+
+
+            setValuesPrescription(key);
         };
         
         const setValuesPrescription = (key) => {
