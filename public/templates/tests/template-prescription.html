@@ -380,6 +380,16 @@
 
             }
         };
+
+        const convertAxis = (axis) => {
+            if (!!axis) {
+                const newAxis = Math.round(axis / 10) * 10;
+                return newAxis > 180 || newAxis === 0 ? 180 : newAxis;
+            } else {
+                alert("Favor de color el eje a convertir");
+                return undefined;
+            }
+        };
         
         menu.addEventListener('click', clickTarget);
         ODSign.addEventListener('input', keydownSign);
@@ -468,14 +478,12 @@
             dataSheet[key].ODSphValue = OD.SphValue;
             dataSheet[key].ODCylSign = OD.SignCyl;
             dataSheet[key].ODCylValue = OD.Cyl;
-            dataSheet[key].ODAxisValue = Math.round(parseInt(dataSheet['frame'].ODAxisValue) / 10) * 10;
+            dataSheet[key].ODAxisValue = convertAxis(parseInt(dataSheet['frame'].ODAxisValue));
             dataSheet[key].OSSignSph = OS.SignSph;
             dataSheet[key].OSSphValue = OS.SphValue;
             dataSheet[key].OSCylSign = OS.SignCyl;
             dataSheet[key].OSCylValue = OS.Cyl;
-            dataSheet[key].OSAxisValue = Math.round(parseInt(dataSheet['frame'].OSAxisValue) / 10) * 10;
-// crear funcion para corregir el eje
-
+            dataSheet[key].OSAxisValue = convertAxis(parseInt(dataSheet['frame'].OSAxisValue));
 
             setValuesPrescription(key);
         };
