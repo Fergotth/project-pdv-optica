@@ -10,7 +10,8 @@ import {
 import { showErrorMessage } from "../utils/errorMessage.js";
 import { 
     getProductHTML,
-    getItemToCardHTML 
+    getItemToCardHTML,
+    getPrescriptionHTML
 } from "./salesDom.js";
 import { 
     subtotal,
@@ -27,6 +28,7 @@ import { newAlert } from "../utils/alerts.js";
 import { handlerPaymentCloseIcon } from "./handlers.js";
 import { loader } from '../utils/loader.js';
 import Class from "./consts.js";
+import scriptPrescription from "../prescription/scriptPrescriptions.js";
 
 /**
  * Manejador para mostrar la categoria de material seeccionada
@@ -257,8 +259,8 @@ export const generateTicket = async (NextID, type, ReceiptID = undefined, SaleID
 
 /**
  * Convierte el numero en texto
- * @param {Number} number 
- * @returns {String}
+ * @param {Number} number //* Numero a convertir
+ * @returns {String} //* Numero en texto
  */
 export const numberToWords = (number) => {
     const units = ['', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
@@ -322,10 +324,15 @@ export const numberToWords = (number) => {
 
 /**
  * Devuelve la fecha actual dd/mm/aaaa hh:mm am/pm
- * @returns {String}
+ * @param {Integer} daysToAdd   //* Dias a agregar a la fecha actual
+ * @param {Boolean} includeTime //* Incluir la hora en el formato
+ * @returns {String}            //* Fecha formateada
  */
-export const getCurrentDateTime = () => {
+export const getCurrentDateTime = ({ daysToAdd = 0, includeTime = true } = {}) => {
     const now = new Date();
+
+    now.setDate(now.getDate() + daysToAdd);
+
     const day = String(now.getDate()).padStart(2, '0');
     const month = String(now.getMonth() + 1).padStart(2, '0'); // Los meses empiezan en 0
     const year = now.getFullYear();
@@ -333,9 +340,11 @@ export const getCurrentDateTime = () => {
     let hours = now.getHours();
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const ampm = hours >= 12 ? 'pm' : 'am';
-    hours = hours % 12 || 12; // Convierte a formato 12 horas
+    hours = hours % 12 || 12; //* Convierte a formato 12 horas
+    const date = `${day}/${month}/${year}`; //* Formato dd/mm/aaaa
+    const time = `${hours}:${minutes}${ampm}`; //* Formato hh:mm am/pm
 
-    return `${day}/${month}/${year} ${hours}:${minutes}${ampm}`;
+    return includeTime ? `${date} ${time}` : date;
 };
 
 /**
@@ -454,4 +463,18 @@ export const onItemRemoved = (code, quantity) => {
     
         return { dataArticlesAdded: updatedArticles };
     });
+};
+
+/**
+ * Funcion para insertar la plantilla de prescripcion
+ * @param {HTMLDivElement} DOM 
+ */
+export const loadScriptPrescription = (DOM, client) => {
+    const data = {
+        client: client,
+        date: getCurrentDateTime({ daysToAdd: 0, includeTime: false }),
+        expirationDate: getCurrentDateTime({ daysToAdd: 30, includeTime: false })
+    };
+    DOM.appendChild(getParsedHTML(getPrescriptionHTML(data)));
+    scriptPrescription();
 };

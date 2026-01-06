@@ -17,7 +17,8 @@ import {
     handleFlushCart,
     renderItemToCard,
     onItemAdded,
-    onItemRemoved
+    onItemRemoved,
+    loadScriptPrescription
 } from "./utils.js";
 import { 
     getState, 
@@ -370,10 +371,10 @@ export const handlerItemDeletePayment = ({ DOM, value }) => {
 
 /**
  * Manejador del boton de aplicar pagos
- * @param {void} param0 
+ * @param {OBject<HTMLDivElement>} DOM 
  * @returns {void}
  */
-export const handlerBtnApplyPayments = ({}) => {
+export const handlerBtnApplyPayments = ({ DOM }) => {
     if (!document.querySelector('.paymentItem')) {
         newAlert({
             icon: "error",
@@ -384,6 +385,8 @@ export const handlerBtnApplyPayments = ({}) => {
         return;
     }
 
+    const client = getElement('.input-client').textContent.trim();
+
     saveData(getCartItems(), getPayments(), getSummarySale());
     restartSaleForm();
     newAlert({
@@ -391,6 +394,9 @@ export const handlerBtnApplyPayments = ({}) => {
         title: "VENTA",
         text: "Venta registrada exitosamente"
     });
+
+    //* Aqui se insertara la plantilla para capturar la graduacion de la venta oftalmica generada
+    loadScriptPrescription(DOM, client);
 };
 
 /**

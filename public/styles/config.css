@@ -11,6 +11,7 @@
 @import url('clients.css');
 @import url('registerProduct.css');
 @import url('productDetails.css');
+@import url('prescription.css');
 
 :root {
     --bk-main: #fafafa;
