@@ -36,13 +36,15 @@ export const getCartItems = () => {
         SKU: item.querySelector('.product-image').dataset.sku,
         Product: item.querySelector('.details-description').textContent,
         Quantity: Number(item.querySelector(Class.label.quantity).textContent),
-        Price: Number(item.querySelector(Class.label.unitprice).textContent.replace("$", ""))
+        Price: Number(item.querySelector(Class.label.unitprice).textContent.replace("$", "")),
+        requirePrescription: item.dataset.ophthalmic === 'true' ? true : false
     }));
 
     // Actualizamos el estado de manera inmutable
     updateState(previusData => ({
         ...previusData,
-        dataCart: [...previusData.dataCart, ...newData]
+        dataCart: [...previusData.dataCart, ...newData],
+        requirePrescription: newData.some(product => product.requirePrescription)
     }));
 
     return getState().dataCart;

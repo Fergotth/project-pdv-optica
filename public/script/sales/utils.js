@@ -472,7 +472,7 @@ export const onItemRemoved = (code, quantity) => {
 export const loadScriptPrescription = (DOM, client) => {
     const data = {
         client: client,
-        date: getCurrentDateTime({ daysToAdd: 0, includeTime: false }),
+        date: getCurrentDateTime({ includeTime: false }),
         expirationDate: getCurrentDateTime({ daysToAdd: 30, includeTime: false })
     };
     DOM.appendChild(getParsedHTML(getPrescriptionHTML(data)));

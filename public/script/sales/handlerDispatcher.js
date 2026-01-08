@@ -161,5 +161,9 @@ export const getHandlerArgs = {
 
     handlerSetQuotationBtn: () => ({
         quotation: getElement('.quotationInputValue').value
+    }),
+
+    handlerClosePrescriptionBtn: () => ({
+        DOM: getElement('.overlayPromptDiscount')
     })
 };

@@ -44,7 +44,7 @@ svg {
     top: 2vh;
 }
 
-.sales-sideleft {
+.container-sales .sales-sideleft {
     height: 85vh;
     width: 6vw;
     background-color: #fdfefe;
@@ -55,7 +55,7 @@ svg {
     align-items: center;
 }
 
-.sales-sidecenter {
+.container-sales .sales-sidecenter {
     height: 85vh;
     width: 59vw;
     background-color: transparent;
@@ -71,7 +71,7 @@ svg {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.separator {
+.container-sales .separator {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,7 +82,7 @@ svg {
 }
 
 /* Side left styles */
-.sales-sideleft > * {
+.container-sales .sales-sideleft > * {
     width: 5.5vw;
     height: 5.5vw;
     margin-top: 15px;
@@ -92,7 +92,7 @@ svg {
     background-color: transparent;
 }
 
-.sales-sideleft > .sideleft-button {
+.container-sales .sales-sideleft > .sideleft-button {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -102,57 +102,57 @@ svg {
     transition: background 0.2s ease-in-out;
 }	
 
-.sales-sideleft > .sideleft-button button {
+.container-sales .sales-sideleft > .sideleft-button button {
     color: #D0D3D4;
 }
 
-.sales-sideleft > .sideleft-button span {
+.container-sales .sales-sideleft > .sideleft-button span {
     pointer-events: none;
     color: #D0D3D4;
 }
 
-.sales-sideleft > .sideleft-button svg {
+.container-sales .sales-sideleft > .sideleft-button svg {
     color:#BDBDBD;
     pointer-events: none;
 }
 
-.sales-sideleft > .sideleft-button:hover {
+.container-sales .sales-sideleft > .sideleft-button:hover {
     cursor: pointer;
     background: var(--bk-button);
 }
 
-.sales-sideleft > .sideleft-button:hover > svg {
+.container-sales .sales-sideleft > .sideleft-button:hover > svg {
     color: var(--colortext-regular);
     stroke-width: 2;
     pointer-events: none;
 }
 
-.sales-sideleft > .sideleft-button:hover > span {
+.container-sales .sales-sideleft > .sideleft-button:hover > span {
     font-weight: 500;
     color: #020202;
     pointer-events: none;
 }
 
-.sales-sideleft > .sideleft-button:active {
+.container-sales .sales-sideleft > .sideleft-button:active {
     transition: all 0.1 ease-in-out;
     transform: scale(1.1);
 }
 
 /* Side Center Styles */
-.sales-sidecenter .sidecenter-firstsection {
+.container-sales .sales-sidecenter .sidecenter-firstsection {
     display: flex;
     flex-direction: row;
     width: 100%;
     height: 13%;
 }
 
-.sales-sidecenter .sidecenter-firstsection .sidecenter-firstsection-title {
+.container-sales .sales-sidecenter .sidecenter-firstsection .sidecenter-firstsection-title {
     width: 40%;
     display: flex;
     align-items: center;
 }
 
-.sales-sidecenter .sidecenter-firstsection .sidecenter-firstsection-inputs {
+.container-sales .sales-sidecenter .sidecenter-firstsection .sidecenter-firstsection-inputs {
     width: 60%;
     display: flex;
     flex-direction: column;
@@ -161,7 +161,7 @@ svg {
     align-items: center;
 }
 
-.sidecenter-firstsection-inputs div {
+.container-sales .sidecenter-firstsection-inputs div {
     position: absolute;
     top: 0;
     left: 30px;
@@ -169,32 +169,32 @@ svg {
     width: calc(98% - 24px);
 }
 
-.sidecenter-firstsection-inputs label {
+.container-sales .sidecenter-firstsection-inputs label {
     height: 28px;
 }
 
-.sidecenter-firstsection-inputs input {
+.container-sales .sidecenter-firstsection-inputs input {
     margin-left: 5px;
 }
 
-.sidecenter-secondsection > div:hover {
+.container-sales .sidecenter-secondsection > div:hover {
     background: linear-gradient(90deg,rgba(0, 102, 255, 0.72) 8%, rgba(0, 102, 255, 1) 100%);
 }
 
-.sidecenter-secondsection > div:hover svg {
+.container-sales .sidecenter-secondsection > div:hover svg {
     color: #fafafa;
 }
 
-.sidecenter-secondsection > div svg {
+.container-sales .sidecenter-secondsection > div svg {
     pointer-events: none;
 }
 
-.sidecenter-secondsection > div:hover span {
+.container-sales .sidecenter-secondsection > div:hover span {
     color: #020202;
     font-weight: 500;
 }
 
-.sidecenter-firstsection-inputs .search-icon {
+.container-sales .sidecenter-firstsection-inputs .search-icon {
     position: absolute;
     display: flex;
     align-content: center;
@@ -204,13 +204,13 @@ svg {
     border-radius: 7px;
 }
 
-.sidecenter-firstsection-inputs .search-icon:hover,
-.sidecenter-firstsection-inputs .sku-icon:hover {
+.container-sales .sidecenter-firstsection-inputs .search-icon:hover,
+.container-sales .sidecenter-firstsection-inputs .sku-icon:hover {
     border: 1px solid rgba(0, 102, 255, 1);
 }
 
-.sidecenter-firstsection-inputs .search-icon svg,
-.sidecenter-firstsection-inputs .sku-icon svg {
+.container-sales .sidecenter-firstsection-inputs .search-icon svg,
+.container-sales .sidecenter-firstsection-inputs .sku-icon svg {
     background-color: #fafafa;
     height: 100%;
     border-top-left-radius: 7px;
@@ -218,7 +218,7 @@ svg {
     cursor: pointer;
 }
 
-.sidecenter-firstsection-inputs input {
+.container-sales .sidecenter-firstsection-inputs input {
     position: absolute;
     bottom: 0;
     width: calc(98% - 24px);
@@ -230,7 +230,7 @@ svg {
     outline: none;
 }
 
-.sidecenter-firstsection-inputs .sku-icon {
+.container-sales .sidecenter-firstsection-inputs .sku-icon {
     position: absolute;
     display: flex;
     align-items: center;
@@ -240,12 +240,12 @@ svg {
     border-radius: 7px;
 }
 
-.sidecenter-firstsection-title span {
+.container-sales .sidecenter-firstsection-title span {
     font-size: var(--fontsize-titles);
     font-weight: 500;
 }
 
-.sidecenter-secondsection {
+.container-sales .sidecenter-secondsection {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -254,7 +254,7 @@ svg {
     height: 10%;
 }
 
-.sidecenter-secondsection div {
+.container-sales .sidecenter-secondsection div {
     height: 100%;
     width: 10%;
     background-color: #fdfefe;
@@ -262,7 +262,7 @@ svg {
     border-radius: 7px;
 }
 
-.secondsection-item {
+.container-sales .secondsection-item {
     width: 100%;
     height: 100%;
     display: flex;
@@ -275,52 +275,53 @@ svg {
     transition: background 0.2s ease, box-shadow 0.4s ease;
 }
 
-.secondsection-item span {
+.container-sales .secondsection-item span {
     color: #D0D3D4;
     position: relative;
     top: 8px;
 }
 
-.secondsection-item svg {
+.container-sales .secondsection-item svg {
     width: 45px;
     height: 45px;
     flex-shrink: 0;
     color: #BDBDBD
 }
 
-.radio-item:checked + .secondsection-item {
+.container-sales .radio-item:checked + .secondsection-item {
     background: var(--bk-button);
     color: #fafafa;
     border-radius: 7px;
     box-shadow: 0 0 12px rgba(0, 102, 255, 0.5);
 }
 
-.radio-item:checked + .secondsection-item svg {
+.container-sales .radio-item:checked + .secondsection-item svg {
     color: #fafafa;
 }
 
-.radio-item:checked + .secondsection-item span {
+.container-sales .radio-item:checked + .secondsection-item span {
     color: #020202;
     font-weight: 500;
 }
 
 /* Side Center Third Section */
-.sidecenter-thirdsection {
+.container-sales .sidecenter-thirdsection {
     display: flex;
     position: relative;
     width: 100%;
     height: 77%;
 }
 
-.sidecenter-thirdsection .thirdsection-title {
+.container-sales .sidecenter-thirdsection .thirdsection-title {
     font-size: var(--fontsize-titles);
     margin-top: 30px;
     font-weight: 500;
 }
 
-.sidecenter-thirdsection .thirdsection-content {
+.container-sales .sidecenter-thirdsection .thirdsection-content {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-auto-rows: auto;
     justify-items: center;
     margin-top: 30px;
     align-items: start;
@@ -332,21 +333,21 @@ svg {
     border-radius: 5px;
 }
 
-.sidecenter-thirdsection .thirdsection-content .content-image {
-    height: 120px;
-    width: 120px;
+.container-sales .sidecenter-thirdsection .thirdsection-content .content-image {
+    width: 140px;
+    aspect-ratio: 1 / 1; /* cuadrado */
     margin-top: 5px;
     background-color: #fdfefe;
     border-radius: 7px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.sidecenter-thirdsection .thirdsection-content .content-image:hover {
+.container-sales .sidecenter-thirdsection .thirdsection-content .content-image:hover {
     box-shadow: 0 0 10px #ffa500aa;
     cursor: pointer;
 }
 
-.sidecenter-thirdsection .thirdsection-content .content-image img {
+.container-sales .sidecenter-thirdsection .thirdsection-content .content-image img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -356,14 +357,14 @@ svg {
 }
 
 /* Right side style */
-.sideright-firstsection {
+.container-sales .sideright-firstsection {
     width: 100%;
     height: 10%;
     display: flex;
     flex-direction: row;
 }
 
-.sideright-secondsection {
+.container-sales .sideright-secondsection {
     width: 100%;
     height: 45%;
     display: flex;
@@ -372,7 +373,7 @@ svg {
     overflow-y: auto;
 }
 
-.sideright-title {
+.container-sales .sideright-title {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -382,12 +383,12 @@ svg {
     font-weight: 500;
 }
 
-.sideright-title svg {
+.container-sales .sideright-title svg {
     position: relative;
     left: 1rem;
 }
 
-.sideright-title .cartQuantity {
+.container-sales .sideright-title .cartQuantity {
     position: relative;
     display: flex;
     justify-content: center;
@@ -402,7 +403,7 @@ svg {
     border-radius: 50%;
 }
 
-.sideright-deleteIcon {
+.container-sales .sideright-deleteIcon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -411,24 +412,24 @@ svg {
     margin-top: 5px;
 }
 
-.deleteIcon-container {
+.container-sales .deleteIcon-container {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 7px;
 }
 
-.deleteIcon-container svg {
+.container-sales .deleteIcon-container svg {
     height: 50px;
     width: 50px;
     color: #D0D3D4;
     pointer-events: none;
 }
 
-.deleteIcon-container:hover svg {
+.container-sales .deleteIcon-container:hover svg {
     color: #020202;
     cursor: pointer;
 }
 
-.sideright-secondsection .item {
+.container-sales .sideright-secondsection .item {
     width: 90%;
     height: 25%;
     display: flex;

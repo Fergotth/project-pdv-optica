@@ -396,7 +396,8 @@ export const handlerBtnApplyPayments = ({ DOM }) => {
     });
 
     //* Aqui se insertara la plantilla para capturar la graduacion de la venta oftalmica generada
-    loadScriptPrescription(DOM, client);
+    if (getState().requirePrescription)
+        loadScriptPrescription(DOM, client);
 };
 
 /**
@@ -533,4 +534,21 @@ export const handlerSetQuotationBtn = async ({ quotation }) => {
 
     handlerCancelSetQuotationBtn({ DOM: getElement('.overlayPromptQuotation') });
     recalculateSummary();
+};
+
+/**
+ * Manejador del boton cerrar captura de receta
+ * @param {Object<HTMLDivElement>} DOM //* Objeto del DOM de la captura de receta 
+ */
+export const handlerClosePrescriptionBtn = ({ DOM }) => {
+    newAlert({
+        icon: 'question',
+        title: "AVISO",
+        text: "¿Desea cerrar la captura de receta?"
+    })
+    .then(response => {
+        if (response) {
+            if (DOM) DOM.remove();
+        }
+    });
 };

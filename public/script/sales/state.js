@@ -14,7 +14,8 @@ let state = {
     typeOfPayment: 'Efectivo',
     paymentsApplicated: 0,
     nextID: 1,
-    procesing: false
+    procesing: false,
+    requirePrescription: false
 };
 
 /**

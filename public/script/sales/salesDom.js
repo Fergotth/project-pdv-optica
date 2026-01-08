@@ -45,7 +45,7 @@ export const getItemToCardHTML = (product) => {
     const pathImg = product.Image ? `../../images/${product.Image}` : "../../images/no-image.jpg";
 
     return `
-        <div class="item" title="${product.Description}">
+        <div class="item" title="${product.Description}" data-ophthalmic="${product.Category === 'glasses' ? 'true' : 'false'}">
             <div class="item-delete deleteItem" title="Quitar producto">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 6h18"/>
@@ -323,7 +323,7 @@ export const getPrescriptionHTML = (data) => {
                 <section class="p--header">
                     <h1>Captura de Receta de Laboratorio</h1>
                 </section>
-                <div class="p--closeIcon" title="Cerrar">
+                <div class="p--closeIcon closePrescriptionBtn" title="Cerrar">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 6 6 18"/>
                         <path d="m6 6 12 12"/>
