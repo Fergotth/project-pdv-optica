@@ -43,7 +43,7 @@
     
 }
 
-.discount-container {
+.promptDiscount .discount-container {
     position: relative;
     display: flex;
     height: 2.8rem;
@@ -55,7 +55,7 @@
     margin-top: 12px;
 }
 
-.discount-container .discountInputValue {
+.promptDiscount .discount-container .discountInputValue {
     height: 100%;
     width: 100%;
     border-radius: 8px;
@@ -70,17 +70,17 @@
     transition: all .15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.discount-container .discountInputValue:focus {
+.promptDiscount .discount-container .discountInputValue:focus {
     border: 1px solid #FFA500
 }
 
-.discount-container input[type=number]::-webkit-inner-spin-button,
-.discount-container input[type=number]::-webkit-outer-spin-button {
+.promptDiscount .discount-container input[type=number]::-webkit-inner-spin-button,
+.promptDiscount .discount-container input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-.setDiscountBtn {
+.promptDiscount .setDiscountBtn {
     position: absolute;
     width: auto;
     right: 4px;
@@ -103,11 +103,11 @@
     transition: .6s ease;
 }
 
-.setDiscountBtn:hover {
+.promptDiscount .setDiscountBtn:hover {
     cursor: pointer;
 }
 
-.discount-container input:placeholder-shown ~ .setDiscountBtn {
+.promptDiscount .discount-container input:placeholder-shown ~ .setDiscountBtn {
     pointer-events: none;
     background-color: gray;
     opacity: 0.5;

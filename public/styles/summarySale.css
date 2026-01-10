@@ -121,20 +121,20 @@ svg {
     letter-spacing: 0.5px;
 }
 
-.leftsection-carousel-header {
+.paymentContainer .leftsection-carousel-header {
     display: flex;
     flex-direction: column;
     margin-top: 3rem;
     padding-left: 1.5rem;
 }
 
-.leftsection-carousel-header span:nth-child(1) {
+.paymentContainer .leftsection-carousel-header span:nth-child(1) {
     font-size: 1rem;
     font-weight: 500;
     width: auto;
 }
 
-.leftsection-carousel-header span:nth-child(2) {
+.paymentContainer .leftsection-carousel-header span:nth-child(2) {
     font-size: 0.8rem;
     font-weight: 500;
     color: #acacac;
@@ -142,13 +142,13 @@ svg {
     width: auto;
 }
 
-.header-left hr {
+.paymentContainer .header-left hr {
     width: 100%;
     height: 1px;
     background: #555;
 }
 
-.paymentLabels {
+.paymentContainer .paymentLabels {
     height: 36px;
     width: 50%;
     display: flex;
@@ -156,12 +156,12 @@ svg {
     justify-content: center;
 }
 
-.paymentLabels span:nth-child(1) {
+.paymentContainer .paymentLabels span:nth-child(1) {
     font-weight: 500;
     letter-spacing: 0.5px;
 }
 
-.paymentLabels span:nth-child(2) {
+.paymentContainer .paymentLabels span:nth-child(2) {
     font-weight: 500;
     font-size: 0.8rem;
     letter-spacing: 0.5px;
@@ -169,7 +169,7 @@ svg {
 }
 
 /* seccion derecha */
-.rightsection {
+.paymentContainer .rightsection {
     width: 40%;
     height: 100%;
     display: flex;
@@ -179,7 +179,7 @@ svg {
     position: relative;
 }
 
-.rightsection .summaryClient {
+.paymentContainer .rightsection .summaryClient {
     width: 70%;
     height: 35%;
     background: #455a64;
@@ -191,7 +191,7 @@ svg {
 }
 
 
-.rightsection .summaryClient .summaryClientContainer {
+.paymentContainer .rightsection .summaryClient .summaryClientContainer {
     height: 60%;
     width: 100%;
     min-width: 0;
@@ -199,7 +199,7 @@ svg {
     flex-direction: column;
 }
 
-.rightsection .summaryClient .summaryClientContainer span {
+.paymentContainer .rightsection .summaryClient .summaryClientContainer span {
     width: calc(100% - 15px);
     white-space: nowrap;
     overflow: hidden;
@@ -211,7 +211,7 @@ svg {
     min-width: 0;
 }
 
-.rightsection .summaryClient .summaryClientSaleDetails {
+.paymentContainer .rightsection .summaryClient .summaryClientSaleDetails {
     height: 40%;
     width: 100%;
     display: flex;
@@ -224,38 +224,38 @@ svg {
     border-radius: 0 0 7px 7px;
 }
 
-.rightsection .summaryClient .clientIcon {
+.paymentContainer .rightsection .summaryClient .clientIcon {
     margin: 15px;
     background: #fdfdfd;
     width: 36px;
     border-radius: 7px;
 }
 
-.rightsection .summaryClient .summaryClientSaleDetails span {
+.paymentContainer .rightsection .summaryClient .summaryClientSaleDetails span {
     margin-bottom: 10px;
     height: 36px;
 }
 
-.rightsection .summaryClient .summaryClientSaleDetails span:nth-child(1) {
+.paymentContainer .rightsection .summaryClient .summaryClientSaleDetails span:nth-child(1) {
     margin-left: 30px;
     font-weight: 500;
     color: red;
     font-size: 1.3rem;
 }
 
-.rightsection .summaryClient .summaryClientSaleDetails span:nth-child(2) {
+.paymentContainer .rightsection .summaryClient .summaryClientSaleDetails span:nth-child(2) {
     font-weight: 500;
     font-size: 1.4rem;
     margin-left: 10px;
 }
 
-.rightsection .summaryClient .summaryClientSaleDetails span:nth-child(3) {
+.paymentContainer .rightsection .summaryClient .summaryClientSaleDetails span:nth-child(3) {
     font-weight: 300;
     font-size: 0.9rem;
     padding-left: 2px;
 }
 
-.rightsection .summarySale {
+.paymentContainer .rightsection .summarySale {
     width: 80%;
     height: 67.5%;
     position: absolute;
@@ -265,7 +265,7 @@ svg {
     border-radius: 7px;
 }
 
-.summarySale .saleTicket {
+.paymentContainer .summarySale .saleTicket {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -274,7 +274,7 @@ svg {
     border-bottom: 1px solid #acacac;
 }
 
-.summarySale .salePayments {
+.paymentContainer .summarySale .salePayments {
     display: flex;
     flex-direction: column;
     margin: 29% 10% 0 10%;
@@ -288,19 +288,19 @@ svg {
     overflow-x: hidden;
 }
 
-.summarySale .salePayments .paymentItem {
+.paymentContainer .summarySale .salePayments .paymentItem {
     flex: 0 0 25%;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.summarySale .salePayments .paymentItem:hover {
+.paymentContainer .summarySale .salePayments .paymentItem:hover {
     background: #acacac;
 }
 
-.summarySale .salePayments .paymentItem .itemCheck,
-.summarySale .salePayments .paymentItem .itemDeletePayment {
+.paymentContainer .summarySale .salePayments .paymentItem .itemCheck,
+.paymentContainer .summarySale .salePayments .paymentItem .itemDeletePayment {
     height: 100%;
     width: 10%;
     display: flex;
@@ -309,26 +309,26 @@ svg {
     position: relative;
 }
 
-.summarySale .salePayments .paymentItem .itemCheck {
+.paymentContainer .summarySale .salePayments .paymentItem .itemCheck {
     color: #113399;
 }
 
-.summarySale .salePayments .paymentItem .itemDeletePayment {
+.paymentContainer .summarySale .salePayments .paymentItem .itemDeletePayment {
     color: #ff1111;
 }
 
-.summarySale .salePayments .paymentItem .itemDeletePayment svg {
+.paymentContainer .summarySale .salePayments .paymentItem .itemDeletePayment svg {
     pointer-events: none;
 }
 
-.summarySale .salePayments .paymentItem .itemDeletePayment:hover {
+.paymentContainer .summarySale .salePayments .paymentItem .itemDeletePayment:hover {
     cursor: pointer;
     transition: transform 0.2s;
     transform: scale(1.3);
 
 }
 
-.summarySale .salePayments .paymentItem span {
+.paymentContainer .summarySale .salePayments .paymentItem span {
     display: flex;
     align-items: center;
     height: 100%;
@@ -338,32 +338,32 @@ svg {
     font-size: 0.9rem;
 }
 
-.summarySale .salePayments .paymentItem span:nth-child(3) {
+.paymentContainer .summarySale .salePayments .paymentItem span:nth-child(3) {
     font-weight: 500;
 }
 
-.summaryPaymentDetail {
+.paymentContainer .summaryPaymentDetail {
     display: flex;
     flex-direction: column;
     align-items: end;
     margin: 2% 10% 0 0;
 }
 
-.summaryPaymentDetail .detailTotal {
+.paymentContainer .summaryPaymentDetail .detailTotal {
     padding: 3px 0;
 }
 
-.summaryPaymentDetail .detailTotal span:nth-child(1) {
+.paymentContainer .summaryPaymentDetail .detailTotal span:nth-child(1) {
     font-weight: 500;
     font-size: 1.3rem;
 }
 
-.summaryPaymentDetail > span {
+.paymentContainer .summaryPaymentDetail > span {
     font-size: 0.8rem;
     letter-spacing: 0.5px;
 }
 
-.summarySale .btnApplyPayments {
+.paymentContainer .summarySale .btnApplyPayments {
     display: flex;
     justify-content: center;
     align-items: end;

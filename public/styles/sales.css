@@ -1,9 +1,3 @@
-@import url('discountPromt.css');
-@import url('loader.css');
-@import url('summarySale.css');
-@import url('searchClientForm.css');
-@import url('quotationPrompt.css');
-
 svg {
     pointer-events: none;
 }
@@ -439,11 +433,11 @@ svg {
     animation: showForm 0.2s ease-in-out;
 }
 
-.sideright-secondsection .item:hover {
+.container-sales .sideright-secondsection .item:hover {
     background-color: var(--color-hover-gray);
 }
 
-.sideright-secondsection .item .item-delete {
+.container-sales .sideright-secondsection .item .item-delete {
     height: 100%;
     width: 10%;
     display: flex;
@@ -452,19 +446,19 @@ svg {
     border-radius: 7px 0 0 7px;
 }
 
-.sideright-secondsection .item .item-delete svg {
+.container-sales .sideright-secondsection .item .item-delete svg {
     color: #D0D3D4;
     pointer-events: none;
 }
 
-.sideright-secondsection .item .item-delete:hover svg {
+.container-sales .sideright-secondsection .item .item-delete:hover svg {
     cursor: pointer;
     color: #FFA500;
     transition: transform 0.2s;
     transform: scale(1.5);
 }
 
-.sideright-secondsection .item .item-product {
+.container-sales .sideright-secondsection .item .item-product {
     height: 100%;
     width: 60%;
     display: flex;
@@ -474,18 +468,18 @@ svg {
     min-width: 0;
 }
 
-.sideright-secondsection .item .item-product .product-image {
+.container-sales .sideright-secondsection .item .item-product .product-image {
     width: 20%;
     height: 60%;
 }
 
-.sideright-secondsection .item .item-product .product-image img {
+.container-sales .sideright-secondsection .item .item-product .product-image img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-.sideright-secondsection .item .item-product .product-details {
+.container-sales .sideright-secondsection .item .item-product .product-details {
     width: 80%;
     height: 100%;
     display: flex;
@@ -494,11 +488,11 @@ svg {
     min-width: 0;
 }
 
-.sideright-secondsection .item .item-product .product-details > span {
+.container-sales .sideright-secondsection .item .item-product .product-details > span {
     margin-left: 15px;
 }
 
-.sideright-secondsection .item .item-product .product-details .details-description {
+.container-sales .sideright-secondsection .item .item-product .product-details .details-description {
     font-size: 0.8rem;
     font-weight: 500;
     overflow: hidden;
@@ -506,7 +500,7 @@ svg {
     white-space: nowrap;
 }
 
-.sideright-secondsection .item .item-product .product-details .details-price {
+.container-sales .sideright-secondsection .item .item-product .product-details .details-price {
     color: red;
     flex-direction: row;
     justify-content: center;
@@ -514,7 +508,7 @@ svg {
     min-width: 0;
 }
 
-.sideright-secondsection .item .item-button {
+.container-sales .sideright-secondsection .item .item-button {
     height: 90%;
     width: 15%;
     display: flex;
@@ -522,7 +516,7 @@ svg {
     border-radius: 7px;
 }
 
-.sideright-secondsection .item .item-button .button-quantity {
+.container-sales .sideright-secondsection .item .item-button .button-quantity {
     width: 60%;
     height: 90%;
     display: flex;
@@ -530,7 +524,7 @@ svg {
     align-items: center;
 }
 
-.sideright-secondsection .item .item-button .button-buttons {
+.container-sales .sideright-secondsection .item .item-button .button-buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -539,7 +533,7 @@ svg {
     height: 100%;
 }
 
-.sideright-secondsection .item .item-button .button-buttons > button {
+.container-sales .sideright-secondsection .item .item-button .button-buttons > button {
     background: var(--bk-button);
     width: 100%;
     height: 53%;
@@ -550,37 +544,37 @@ svg {
     border: none;
 }
 
-.sideright-secondsection .item .item-button .button-buttons .buttons-plus svg,
-.sideright-secondsection .item .item-button .button-buttons .buttons-minus svg {
+.container-sales .sideright-secondsection .item .item-button .button-buttons .buttons-plus svg,
+.container-sales .sideright-secondsection .item .item-button .button-buttons .buttons-minus svg {
     pointer-events: none;
 }
 
-.sideright-secondsection .item .item-button .button-buttons .buttons-plus:hover,
-.sideright-secondsection .item .item-button .button-buttons .buttons-minus:hover {
+.container-sales .sideright-secondsection .item .item-button .button-buttons .buttons-plus:hover,
+.container-sales .sideright-secondsection .item .item-button .button-buttons .buttons-minus:hover {
     cursor: pointer;
     color: #020202;
 }
 
-.sideright-secondsection .item .item-button .button-buttons .buttons-plus:active,
-.sideright-secondsection .item .item-button .button-buttons .buttons-minus:active {
+.container-sales .sideright-secondsection .item .item-button .button-buttons .buttons-plus:active,
+.container-sales .sideright-secondsection .item .item-button .button-buttons .buttons-minus:active {
     transition: transform 0.1s ease-in-out;
     transform: scale(1.3);
 }
 
-.sideright-secondsection .item .item-button .button-buttons .buttons-minus,
-.sideright-secondsection .item .item-button .button-buttons .buttons-plus {
+.container-sales .sideright-secondsection .item .item-button .button-buttons .buttons-minus,
+.container-sales .sideright-secondsection .item .item-button .button-buttons .buttons-plus {
     color: #fafafa;
 }
 
-.sideright-secondsection .item .item-button .button-buttons .buttons-minus {
+.container-sales .sideright-secondsection .item .item-button .button-buttons .buttons-minus {
     border-bottom-right-radius: 7px;
 }
 
-.sideright-secondsection .item .item-button .button-buttons .buttons-plus {
+.container-sales .sideright-secondsection .item .item-button .button-buttons .buttons-plus {
     border-top-right-radius: 7px;
 }
 
-.sideright-secondsection .item .item-price {
+.container-sales .sideright-secondsection .item .item-price {
     height: 100%;
     width: 19%;
     border-radius: 0 7px 7px 0;
@@ -593,49 +587,49 @@ svg {
 }
 
 /* */
-.sideright-thirdsection {
+.container-sales .sideright-thirdsection {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
 
-.thirdsection-discount {
+.container-sales .thirdsection-discount {
     display: flex;
     flex-direction: row;
     width: 100%;
     height: 100%;
 }
 
-.sideright-thirdsection .discount {
+.container-sales .sideright-thirdsection .discount {
     color: red;
 }
 
-.thirdsection-discount details {
+.container-sales .thirdsection-discount details {
     position: relative;
 }
 
-.thirdsection-discount details[open] {
+.container-sales .thirdsection-discount details[open] {
     animation: showForm 0.1s ease-in-out;
 }
 
-.thirdsection-discount details summary {
+.container-sales .thirdsection-discount details summary {
     list-style: none;
 }
 
-.thirdsection-discount details[open] svg {
+.container-sales .thirdsection-discount details[open] svg {
     background-color: #FFA500;
     border-radius: 5px;  
 }
 
-.thirdsection-discount details summary svg {
+.container-sales .thirdsection-discount details summary svg {
     margin-left: 5px;
     transform: translateY(35%);
 }
 
-.thirdsection-discount details summary svg:hover {
+.container-sales .thirdsection-discount details summary svg:hover {
     cursor: pointer;
 }
 
-.thirdsection-discount details ul {
+.container-sales .thirdsection-discount details ul {
     position: absolute;
     list-style: none;
     width: max-content;
@@ -647,45 +641,45 @@ svg {
     user-select: none;
 }
 
-.thirdsection-discount details ul li {
+.container-sales .thirdsection-discount details ul li {
     padding: 5px 15px;
     cursor: pointer;
     font-weight: 500;
     border-radius: 7px;
 }
 
-.thirdsection-discount details ul li:hover {
+.container-sales .thirdsection-discount details ul li:hover {
     background-color: #D0D3D4;
 }
 
-.sideright-thirdsection div {
+.container-sales .sideright-thirdsection div {
     font-weight: 500;
     padding-top: 3px;
 }
 
-.sideright-thirdsection > div:nth-child(1n) {
+.container-sales .sideright-thirdsection > div:nth-child(1n) {
     padding-left: 15px;
 }
 
-.sideright-thirdsection > div:nth-child(2n) {
+.container-sales .sideright-thirdsection > div:nth-child(2n) {
     text-align: right;
     padding-right: 15px;
 }
 
-.sideright-thirdsection .thirdsection-total {
+.container-sales .sideright-thirdsection .thirdsection-total {
     color: var(--colortext-price);
     font-weight: bolder;
 }
 
 /* Estilos sideright - cuarta seccion derecha */
-.sideright-forthsection {
+.container-sales .sideright-forthsection {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.buttonRegisterPay-button {
+.container-sales .buttonRegisterPay-button {
     background: var(--bk-button);
     border: none;
     font-size: var(--fontsize-titles);
@@ -698,7 +692,7 @@ svg {
     margin-top: 15px;
 }
 
-.buttonRegisterPay-button:active {
+.container-sales .buttonRegisterPay-button:active {
     transition: transform 0.1s ease-in-out;
     transform: scale(1.1);
 }

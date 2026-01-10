@@ -12,6 +12,11 @@
 @import url('registerProduct.css');
 @import url('productDetails.css');
 @import url('prescription.css');
+@import url('discountPromt.css');
+@import url('loader.css');
+@import url('summarySale.css');
+@import url('searchClientForm.css');
+@import url('quotationPrompt.css');
 
 :root {
     --bk-main: #fafafa;

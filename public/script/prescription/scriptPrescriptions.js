@@ -2,6 +2,7 @@ import tableLCBaushLomb from "./tablesLC.js";
 import { newAlert } from "../utils/alerts.js";
 
 const scriptPrescription = () => {
+    /* --- Selectores y elementos del DOM --- */
     const menu = document.querySelector('.left-section--menu'); // contenedor principal del menu
     const selectMenu = document.querySelector('.end--menu'); // menu de tipo de material o LC
     const labelPrescription = document.querySelector('.title--kindOfPrescription'); // label del tipo de prescripcion
@@ -25,6 +26,7 @@ const scriptPrescription = () => {
     const inputODBase = document.querySelector('.data--OD-InputBase'); // input de base de prisma OD
     const inputOSBase = document.querySelector('.data--OS-InputBase'); // input de base de prisma OI
 
+    /* --- Estado --- */
     let actualSheet = 'Oftalmica';
     let dataSheet = {
         frame: {
@@ -68,98 +70,15 @@ const scriptPrescription = () => {
     // boton desahibilitado por default
     btnConverter.style.opacity = 0;
 
-    // manejador de seleccion del menu lateral
-    const clickTarget = (event) => {
-        const target = event.target;
-
-        if (["menu--contactGlasses", "menu--glasses"].some(cls => target.classList.contains(cls))) {
-            const labelSheet = target.dataset.prescription;
-            // corrgir animacion de label
-            labelPrescription.style.opacity = 0;
-            labelPrescription.textContent = labelSheet; 
-            labelPrescription.style.opacity = 1;
-
-            if (actualSheet !== labelSheet) {
-                getValuesPrescription(labelSheet !== 'Oftalmica' ? 'frame' : 'lc');
-                setValuesPrescription(labelSheet === 'Oftalmica' ? 'frame' : 'lc');
-                actualSheet = labelSheet;
-            }
-
-            if (target.classList.contains("menu--contactGlasses")) {
-                changeVisibility(true);
-                btnConverter.style.opacity = 0.8;
-            } else {
-                changeVisibility(false);
-                btnConverter.style.opacity = 0;
-            }
-        }
+    /* --- Utilidades / Validaciones --- */
+    //* validar el poder de la esfera o cilindro que sea un termino valido, que sea multiplo de 0.25
+    const validatePower = (power) => {
+         return Number.isInteger(power * 4);
     };
 
-    // manejador del signo + o -  del valor de la esfera
-    const keydownSign = (event) => {
-        const input = event.target;
-        let value = input.value.trim();
-
-        if (value === "") return;
-        if (value.length > 1) value = value[0];
-        if (!["+", "-"].includes(value)) {
-            input.value = "";
-            return;
-        }
-        input.value = value;
-    };
-
-    // manjeador de teclas prohibidas para los input numericos y cantidad de valores en el input
-    const keydownInputNumber = (event) => {
-        const input = event.target;
-
-        if (event.type === "keydown") {
-            const key = event.key;
-            const blockedKey = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "+", "-"];
-
-            if (blockedKey.includes(key)) {
-                event.preventDefault();
-                return;
-            }
-        }
-
-        if (input.value.length > 5) {
-            input.value = input.value.slice(0, 5);
-        }
-    };
-
-    // manjeador para las opciones del menu select
-    const changeOption = (event) => {
-        const selected = event.target.value;
-
-        switch(selected) {
-            case "sv":
-                inputODADD.disabled = true;
-                inputODADD.style.background = "#00000033";
-                inputOSADD.disabled = true;
-                inputOSADD.style.background = "#00000033";
-                break;
-            default:
-                inputODADD.disabled = false;
-                inputODADD.style.background = "#fff";
-                inputOSADD.disabled = false;
-                inputOSADD.style.background = "#fff";
-                break;
-        }
-    };
-
-    // convertir RX oftalmica a LC
-    const convertRX = () => {
-        if (selectMenu.value === "")
-            newAlert({
-                icon: 'info',
-                title: 'Selecciona una opcion',
-                text: 'Favor de seleccionar el tipo de lente de contacto a convertir'
-        });
-        else {
-            lcConvertion(dataSheet.frame);
-
-        }
+    //* validad el valor del eje que este entre 0 y 180 y no sea numero decimal
+    const validateAxis = (axis) => {
+        return axis >= 0 && axis <= 180 && Number.isInteger(axis);
     };
 
     const convertAxis = (axis) => {
@@ -176,42 +95,99 @@ const scriptPrescription = () => {
         }
     };
 
-    menu.addEventListener('click', clickTarget);
-    ODSign.addEventListener('input', keydownSign);
-    OSSign.addEventListener('input', keydownSign);
-    inputODSph.addEventListener('input', keydownInputNumber);
-    inputODSph.addEventListener('keydown', keydownInputNumber);
-    inputOSSph.addEventListener('input', keydownInputNumber);
-    inputOSSph.addEventListener('keydown', keydownInputNumber);
-    inputODCyl.addEventListener('input', keydownInputNumber);
-    inputODCyl.addEventListener('keydown', keydownInputNumber);
-    ODCylSign.addEventListener('input', keydownSign);
-    OSCylSign.addEventListener('input', keydownSign);
-    inputOSCyl.addEventListener('input', keydownInputNumber);
-    inputOSCyl.addEventListener('keydown', keydownInputNumber);
-    inputODAxis.addEventListener('input', keydownInputNumber);
-    inputODAxis.addEventListener('keydown', keydownInputNumber);
-    inputOSAxis.addEventListener('input', keydownInputNumber);
-    inputOSAxis.addEventListener('keydown', keydownInputNumber);
-    inputODADD.addEventListener('input', keydownInputNumber);
-    inputODADD.addEventListener('keydown', keydownInputNumber);
-    inputOSADD.addEventListener('input', keydownInputNumber);
-    inputOSADD.addEventListener('keydown', keydownInputNumber);
-    inputODDNP.addEventListener('input', keydownInputNumber);
-    inputODDNP.addEventListener('keydown', keydownInputNumber);
-    inputOSDNP.addEventListener('input', keydownInputNumber);
-    inputOSDNP.addEventListener('keydown', keydownInputNumber);
-    inputODPrism.addEventListener('input', keydownInputNumber);
-    inputODPrism.addEventListener('keydown', keydownInputNumber);
-    inputOSPrism.addEventListener('input', keydownInputNumber);
-    inputOSPrism.addEventListener('keydown', keydownInputNumber);
-    inputODBase.addEventListener('input', keydownInputNumber);
-    inputODBase.addEventListener('keydown', keydownInputNumber);
-    inputOSBase.addEventListener('input', keydownInputNumber);
-    inputOSBase.addEventListener('keydown', keydownInputNumber);
-    selectMenu.addEventListener('change', changeOption);
-    btnConverter.addEventListener('click', convertRX);
+    const changeMenuSelect = (type) => {
+        const newOptions = type ? 
+        `
+        <option value="">Seleccione el tipo de lente</option>
+        <option value="sv">Monofocal</option>
+        <option value="bf">Bifocal</option>
+        <option value="prg">Progresivo</option>
+        ` : 
+        `
+        <option value="">Seleccione el tipo de LC</option>
+        <option value="sph">Esferico</option>
+        <option value="tor">Torico</option>
+        `
+        ;
 
+        return newOptions;
+    };
+
+    const changeVisibility = (visibility) => {
+        inputODDNP.disabled = visibility;
+        inputODDNP.style.background = !visibility ? "#fff" : "#00000033";
+        inputODPrism.disabled = visibility;
+        inputODPrism.style.background = !visibility ? "#fff" : "#00000033";
+        inputODBase.disabled = visibility;
+        inputODBase.style.background = !visibility ? "#fff" : "#00000033";
+        inputOSDNP.disabled = visibility;
+        inputOSDNP.style.background = !visibility ? "#fff" : "#00000033";
+        inputOSPrism.disabled = visibility;
+        inputOSPrism.style.background = !visibility ? "#fff" : "#00000033";
+        inputOSBase.disabled = visibility;
+        inputOSBase.style.background = !visibility ? "#fff" : "#00000033";
+
+        selectMenu.replaceChildren();
+        selectMenu.innerHTML = changeMenuSelect(!visibility);
+    };
+
+    /* --- Lectura / Escritura de valores (get/set) --- */
+    const getValuesPrescription = (key) => {
+        dataSheet[key] = {
+            ODSignSph: ODSign.value,
+            ODSphValue: inputODSph.value,
+            ODCylSign: ODCylSign.value,
+            ODCylValue: inputODCyl.value,
+            ODAxisValue: inputODAxis.value,
+            ODADDValue: inputODADD.value,
+            ODPrismValue: key === "lc" ? "" : inputODPrism.value,
+            ODPrismBaseValue: key === "lc" ? "" : inputODBase.value,
+            OSSignSph: OSSign.value,
+            OSSphValue: inputOSSph.value,
+            OSCylSign: OSCylSign.value,
+            OSCylValue: inputOSCyl.value,
+            OSAxisValue: inputOSAxis.value,
+            OSADDValue: inputOSADD.value,
+            OSPrismValue: key === "lc" ? "" : inputOSPrism.value,
+            OSPrismBaseValue: key === "lc" ? "" : inputOSBase.value
+        };
+    };
+
+    const setValuesPrescription = (key) => {
+        ODSign.value = dataSheet[key].ODSignSph;
+        inputODSph.value = dataSheet[key].ODSphValue;
+        ODCylSign.value = dataSheet[key].ODCylSign;
+        inputODCyl.value = dataSheet[key].ODCylValue;
+        inputODAxis.value = dataSheet[key].ODAxisValue;
+        inputODADD.value = dataSheet[key].ODADDValue;
+        inputODPrism.value = dataSheet[key].ODPrismValue;
+        inputODBase.value = dataSheet[key].ODPrismBaseValue;
+        OSSign.value = dataSheet[key].OSSignSph;
+        inputOSSph.value = dataSheet[key].OSSphValue;
+        OSCylSign.value = dataSheet[key].OSCylSign;
+        inputOSCyl.value = dataSheet[key].OSCylValue;
+        inputOSAxis.value = dataSheet[key].OSAxisValue;
+        inputOSADD.value = dataSheet[key].OSADDValue;
+        inputOSPrism.value = dataSheet[key].OSPrismValue;
+        inputOSBase.value = dataSheet[key].OSPrismBaseValue;
+    };
+
+    const setValuesConverted = (key, OD, OS) => {
+        dataSheet[key].ODSignSph = OD.SignSph;
+        dataSheet[key].ODSphValue = OD.SphValue;
+        dataSheet[key].ODCylSign = OD.SignCyl;
+        dataSheet[key].ODCylValue = OD.Cyl;
+        dataSheet[key].ODAxisValue = convertAxis(parseInt(dataSheet['frame'].ODAxisValue));
+        dataSheet[key].OSSignSph = OS.SignSph;
+        dataSheet[key].OSSphValue = OS.SphValue;
+        dataSheet[key].OSCylSign = OS.SignCyl;
+        dataSheet[key].OSCylValue = OS.Cyl;
+        dataSheet[key].OSAxisValue = convertAxis(parseInt(dataSheet['frame'].OSAxisValue));
+
+        setValuesPrescription(key);
+    };
+
+    /* --- Conversión LC --- */
     const lcConvertion = (data) => {
         const ODSignSph = data.ODSignSph;
         const ODSphValue = data.ODSphValue;
@@ -263,96 +239,144 @@ const scriptPrescription = () => {
         else setValuesConverted('lc', OD, OS);
     };
 
-    const setValuesConverted = (key, OD, OS) => {
-        dataSheet[key].ODSignSph = OD.SignSph;
-        dataSheet[key].ODSphValue = OD.SphValue;
-        dataSheet[key].ODCylSign = OD.SignCyl;
-        dataSheet[key].ODCylValue = OD.Cyl;
-        dataSheet[key].ODAxisValue = convertAxis(parseInt(dataSheet['frame'].ODAxisValue));
-        dataSheet[key].OSSignSph = OS.SignSph;
-        dataSheet[key].OSSphValue = OS.SphValue;
-        dataSheet[key].OSCylSign = OS.SignCyl;
-        dataSheet[key].OSCylValue = OS.Cyl;
-        dataSheet[key].OSAxisValue = convertAxis(parseInt(dataSheet['frame'].OSAxisValue));
+    /* --- Manejadores de eventos --- */
+    // manejador de seleccion del menu lateral
+    const clickTarget = (event) => {
+        const target = event.target;
 
-        setValuesPrescription(key);
+        if (["menu--contactGlasses", "menu--glasses"].some(cls => target.classList.contains(cls))) {
+            const labelSheet = target.dataset.prescription;
+            // corrgir animacion de label
+            labelPrescription.style.opacity = 0;
+            labelPrescription.textContent = labelSheet; 
+            labelPrescription.style.opacity = 1;
+
+            if (actualSheet !== labelSheet) {
+                getValuesPrescription(labelSheet !== 'Oftalmica' ? 'frame' : 'lc');
+                setValuesPrescription(labelSheet === 'Oftalmica' ? 'frame' : 'lc');
+                actualSheet = labelSheet;
+            }
+
+            if (target.classList.contains("menu--contactGlasses")) {
+                changeVisibility(true);
+                btnConverter.style.opacity = 0.8;
+            } else {
+                changeVisibility(false);
+                btnConverter.style.opacity = 0;
+            }
+        }
     };
 
-    const setValuesPrescription = (key) => {
-        ODSign.value = dataSheet[key].ODSignSph;
-        inputODSph.value = dataSheet[key].ODSphValue;
-        ODCylSign.value = dataSheet[key].ODCylSign;
-        inputODCyl.value = dataSheet[key].ODCylValue;
-        inputODAxis.value = dataSheet[key].ODAxisValue;
-        inputODADD.value = dataSheet[key].ODADDValue;
-        inputODPrism.value = dataSheet[key].ODPrismValue;
-        inputODBase.value = dataSheet[key].ODPrismBaseValue;
-        OSSign.value = dataSheet[key].OSSignSph;
-        inputOSSph.value = dataSheet[key].OSSphValue;
-        OSCylSign.value = dataSheet[key].OSCylSign;
-        inputOSCyl.value = dataSheet[key].OSCylValue;
-        inputOSAxis.value = dataSheet[key].OSAxisValue;
-        inputOSADD.value = dataSheet[key].OSADDValue;
-        inputOSPrism.value = dataSheet[key].OSPrismValue;
-        inputOSBase.value = dataSheet[key].OSPrismBaseValue;
+    // manejador del signo + o -  del valor de la esfera
+    const keydownSign = (event) => {
+        const input = event.target;
+        let value = input.value.trim();
+
+        if (value === "") return;
+        if (value.length > 1) value = value[0];
+        if (!["+", "-"].includes(value)) {
+            input.value = "";
+            return;
+        }
+        input.value = value;
     };
 
-    const getValuesPrescription = (key) => {
-        dataSheet[key] = {
-            ODSignSph: ODSign.value,
-            ODSphValue: inputODSph.value,
-            ODCylSign: ODCylSign.value,
-            ODCylValue: inputODCyl.value,
-            ODAxisValue: inputODAxis.value,
-            ODADDValue: inputODADD.value,
-            ODPrismValue: key === "lc" ? "" : inputODPrism.value,
-            ODPrismBaseValue: key === "lc" ? "" : inputODBase.value,
-            OSSignSph: OSSign.value,
-            OSSphValue: inputOSSph.value,
-            OSCylSign: OSCylSign.value,
-            OSCylValue: inputOSCyl.value,
-            OSAxisValue: inputOSAxis.value,
-            OSADDValue: inputOSADD.value,
-            OSPrismValue: key === "lc" ? "" : inputOSPrism.value,
-            OSPrismBaseValue: key === "lc" ? "" : inputOSBase.value
-        };
+    //* manejador de teclas prohibidas para los input numericos y cantidad de valores en el input
+    const keydownInputNumber = (event) => {
+        const input = event.target;
+
+        if (event.type === "keydown") {
+            const key = event.key;
+            const blockedKey = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "+", "-"];
+
+            if (blockedKey.includes(key)) {
+                event.preventDefault();
+                return;
+            }
+        }
+
+        if (input.value.length > 5) {
+            input.value = input.value.slice(0, 5);
+        }
+
+        //* valida el poder de la esfera o cilindro
+        input.style.border = !validatePower(parseFloat(input.value)) ? "1px solid #c00000" : "none";
+
+        //* valida el valor del eje
+        if (input.classList.contains("data--OD-InputAxis") || input.classList.contains("data--OS-InputAxis"))
+            input.style.border = !validateAxis(parseFloat(input.value)) ? "1px solid #c00000" : "none";
     };
 
-    const changeMenuSelect = (type) => {
-        const newOptions = type ? 
-        `
-        <option value="">Seleccione el tipo de lente</option>
-        <option value="sv">Monofocal</option>
-        <option value="bf">Bifocal</option>
-        <option value="prg">Progresivo</option>
-        ` : 
-        `
-        <option value="">Seleccione el tipo de LC</option>
-        <option value="sph">Esferico</option>
-        <option value="tor">Torico</option>
-        `
-        ;
+    // manejador para las opciones del menu select
+    const changeOption = (event) => {
+        const selected = event.target.value;
 
-        return newOptions;
+        switch(selected) {
+            case "sv":
+                inputODADD.disabled = true;
+                inputODADD.style.background = "#00000033";
+                inputOSADD.disabled = true;
+                inputOSADD.style.background = "#00000033";
+                break;
+            default:
+                inputODADD.disabled = false;
+                inputODADD.style.background = "#fff";
+                inputOSADD.disabled = false;
+                inputOSADD.style.background = "#fff";
+                break;
+        }
     };
 
-    const changeVisibility = (visibility) => {
-        inputODDNP.disabled = visibility;
-        inputODDNP.style.background = !visibility ? "#fff" : "#00000033";
-        inputODPrism.disabled = visibility;
-        inputODPrism.style.background = !visibility ? "#fff" : "#00000033";
-        inputODBase.disabled = visibility;
-        inputODBase.style.background = !visibility ? "#fff" : "#00000033";
-        inputOSDNP.disabled = visibility;
-        inputOSDNP.style.background = !visibility ? "#fff" : "#00000033";
-        inputOSPrism.disabled = visibility;
-        inputOSPrism.style.background = !visibility ? "#fff" : "#00000033";
-        inputOSBase.disabled = visibility;
-        inputOSBase.style.background = !visibility ? "#fff" : "#00000033";
+    // convertir RX oftalmica a LC
+    const convertRX = () => {
+        if (selectMenu.value === "")
+            newAlert({
+                icon: 'info',
+                title: 'Selecciona una opcion',
+                text: 'Favor de seleccionar el tipo de lente de contacto a convertir'
+        });
+        else {
+            lcConvertion(dataSheet.frame);
 
-        selectMenu.replaceChildren();
-        selectMenu.innerHTML = changeMenuSelect(!visibility);
+        }
     };
+
+    /* --- Listeners / Enlaces --- */
+    menu.addEventListener('click', clickTarget);
+    ODSign.addEventListener('input', keydownSign);
+    OSSign.addEventListener('input', keydownSign);
+    inputODSph.addEventListener('input', keydownInputNumber);
+    inputODSph.addEventListener('keydown', keydownInputNumber);
+    inputOSSph.addEventListener('input', keydownInputNumber);
+    inputOSSph.addEventListener('keydown', keydownInputNumber);
+    inputODCyl.addEventListener('input', keydownInputNumber);
+    inputODCyl.addEventListener('keydown', keydownInputNumber);
+    ODCylSign.addEventListener('input', keydownSign);
+    OSCylSign.addEventListener('input', keydownSign);
+    inputOSCyl.addEventListener('input', keydownInputNumber);
+    inputOSCyl.addEventListener('keydown', keydownInputNumber);
+    inputODAxis.addEventListener('input', keydownInputNumber);
+    inputODAxis.addEventListener('keydown', keydownInputNumber);
+    inputOSAxis.addEventListener('input', keydownInputNumber);
+    inputOSAxis.addEventListener('keydown', keydownInputNumber);
+    inputODADD.addEventListener('input', keydownInputNumber);
+    inputODADD.addEventListener('keydown', keydownInputNumber);
+    inputOSADD.addEventListener('input', keydownInputNumber);
+    inputOSADD.addEventListener('keydown', keydownInputNumber);
+    inputODDNP.addEventListener('input', keydownInputNumber);
+    inputODDNP.addEventListener('keydown', keydownInputNumber);
+    inputOSDNP.addEventListener('input', keydownInputNumber);
+    inputOSDNP.addEventListener('keydown', keydownInputNumber);
+    inputODPrism.addEventListener('input', keydownInputNumber);
+    inputODPrism.addEventListener('keydown', keydownInputNumber);
+    inputOSPrism.addEventListener('input', keydownInputNumber);
+    inputOSPrism.addEventListener('keydown', keydownInputNumber);
+    inputODBase.addEventListener('input', keydownInputNumber);
+    inputODBase.addEventListener('keydown', keydownInputNumber);
+    inputOSBase.addEventListener('input', keydownInputNumber);
+    inputOSBase.addEventListener('keydown', keydownInputNumber);
+    selectMenu.addEventListener('change', changeOption);
+    btnConverter.addEventListener('click', convertRX);
 };
 
 export default scriptPrescription;
