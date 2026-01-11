@@ -72,13 +72,33 @@ const scriptPrescription = () => {
 
     /* --- Utilidades / Validaciones --- */
     //* validar el poder de la esfera o cilindro que sea un termino valido, que sea multiplo de 0.25
-    const validatePower = (power) => {
-         return Number.isInteger(power * 4);
+    const validatePower = (power, input) => {
+        const elements = [
+            "data--OD-InputSph", 
+            "data--OS-InputSph", 
+            "data--OD-InputCyl", 
+            "data--OS-InputCyl", 
+            "data--OD-InputADD", 
+            "data--OS-InputADD"
+        ];
+
+        if (elements.some(cls => input.classList.contains(cls)))
+            return Number.isInteger(power * 4);
+
+        return true;
     };
 
     //* validad el valor del eje que este entre 0 y 180 y no sea numero decimal
-    const validateAxis = (axis) => {
-        return axis >= 0 && axis <= 180 && Number.isInteger(axis);
+    const validateAxis = (axis, input) => {
+        const elements = [
+            "data--OD-InputAxis", 
+            "data--OS-InputAxis"
+        ];
+
+        if (elements.some(cls => input.classList.contains(cls)))
+            return axis >= 0 && axis <= 180 && Number.isInteger(axis);
+
+        return true;
     };
 
     const convertAxis = (axis) => {
@@ -295,16 +315,14 @@ const scriptPrescription = () => {
             }
         }
 
-        if (input.value.length > 5) {
+        if (input.value.length > 5)
             input.value = input.value.slice(0, 5);
-        }
 
-        //* valida el poder de la esfera o cilindro
-        input.style.border = !validatePower(parseFloat(input.value)) ? "1px solid #c00000" : "none";
-
-        //* valida el valor del eje
-        if (input.classList.contains("data--OD-InputAxis") || input.classList.contains("data--OS-InputAxis"))
-            input.style.border = !validateAxis(parseFloat(input.value)) ? "1px solid #c00000" : "none";
+        const isPowerValid = validatePower(parseFloat(input.value), input);
+        const isAxisValid = validateAxis(parseFloat(input.value), input);
+        const isValid = isPowerValid && isAxisValid;
+    
+        input.style.border = !isValid ? "1px solid #c00000" : "none";
     };
 
     // manejador para las opciones del menu select
