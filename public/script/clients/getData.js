@@ -22,14 +22,19 @@ export const getDataClientForm = () => {
  * @param {String} name                 // Nombre del cliente a buscar 
  * @returns {Promise<Object> || Array}  // Devuelve un objeto con los datos encontrar o un array vacio si no
  */
-export const getDataClientDB = async (typeOfParam) => {
+export const getDataClientDB = async (typeOfParam, remainingAttempts = 3) => {
     try {
         const response = await fetch(`/get-clients?q=${encodeURIComponent(typeOfParam)}`);
         const data = await response.json();
         return data;
     } catch (error) {
-        showErrorMessage(document.body, `Error al obtener datos del cliente: ${error}`);
-        console.error('Error al obtener datos del cliente:', error);
-        return [];
+        if (remainingAttempts > 0) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return await getDataClientDB(typeOfParam, remainingAttempts - 1);
+        } else {
+            showErrorMessage(document.body, `Error al obtener datos del cliente: ${error}`);
+            console.error('Error al obtener datos del cliente:', error);
+            return [];
+        }
     }
 };

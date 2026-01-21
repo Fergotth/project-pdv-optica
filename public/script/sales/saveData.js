@@ -94,7 +94,7 @@ export const saveData = async (cartItems, paymentItems, saleSummary) => {
         });
 
         if (ticketSaved) {
-            generateTicket(nextID, "sale");
+            await generateTicket({ NextID: nextID, type: "sale" });
         } else {
             showErrorMessage(document.body, `No se pudo guardar el HTML del ticket ${nextID}`);
             console.warn('No se pudo guardar el HTML del ticket');
@@ -139,7 +139,7 @@ export const saveQuotation = async (data) => {
         throw new Error('Error al guardar el ticket HTML');
     }
 
-    generateTicket(data.nextID, "quotation");
+    await generateTicket({ NextID: data.nextID, type: "quotation" });
     await flushState();
     restartSaleForm();
 };

@@ -6,7 +6,7 @@ import { showErrorMessage } from "../utils/errorMessage.js";
  * 
  * @param {String} param    // Nombre o ID del cliente a buscar 
  */
-export const showClientHTML = async (param) => {
+export const showClientHTML = async (param, remainingAttempts = 3) => {
     try {
         const clients = await getDataClientDB(param);
 
@@ -20,7 +20,13 @@ export const showClientHTML = async (param) => {
                 text: "No se encontraron clientes con ese nombre"
             });
         }
-    } catch {
-        showErrorMessage(document.body, `Error al buscar el cliente en la Base Datos: ${error}`);
+    } catch (error) {
+        if (remainingAttempts > 0) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            await showClientHTML(param, remainingAttempts - 1);
+        } else {
+            showErrorMessage(document.body, `Error al buscar el cliente en la Base Datos: ${error}`);
+            console.error('Error al buscar el cliente en la Base Datos: ', error);
+        }
     }
 };

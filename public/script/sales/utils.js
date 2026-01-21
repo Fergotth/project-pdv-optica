@@ -229,7 +229,7 @@ const setMoneyContent = (selector, value, isNegative = false) => {
  * @param {Integer || undefined} ReceiptID 
  * @param {Integer || undefined} SaleID 
  */
-export const generateTicket = async (NextID, type, ReceiptID = undefined, SaleID = undefined) => {
+export const generateTicket = async ({ NextID, type, ReceiptID = undefined, SaleID = undefined, remainingAttempts = 3 } = {}) => {
     try {
         loader(true);
         const response = await fetch('/generate-ticketPDF', {
@@ -248,10 +248,17 @@ export const generateTicket = async (NextID, type, ReceiptID = undefined, SaleID
 
         const data = await response.json(); // <- seguro ahora
         console.log('PDF creado:', data.file);
+        console.log(`Intentos pendientes: $${remainingAttempts}`); //! Eliminar luego esta linea
         window.open(data.file, '_blank');
     } catch (err) {
-        showErrorMessage(document.body, `Error al generar el PDF: ${err}`);
-        console.error('Error al generar el PDF:', err);
+        if (remainingAttempts > 0) {
+            await new Promise(resolve => setTimeout(resolve, 500)); // Delay de 500ms
+            await generateTicket({ NextID, type, ReceiptID, SaleID, remainingAttempts: remainingAttempts - 1 });
+        } else {
+            showErrorMessage(document.body, `Error al generar el PDF: ${err}`);
+            console.error('Error al generar el PDF:', err);
+            console.error('Intentos agotados para generar el PDF.');
+        }
     } finally {
         loader(false);
     }

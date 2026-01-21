@@ -89,7 +89,7 @@ export const createTicketPayment = async (ID, nextIDReceipt, nextIDPayment) => {
     });
 
     if (ticketSaved) {
-        generateTicket(nextIDPayment, "payment", nextIDReceipt, ID);
+        await generateTicket({ NextID: nextIDPayment, type: "payment", ReceiptID: nextIDReceipt, SaleID: ID });
     } else {
         showErrorMessage(document.body, `No se pudo guardar el HTML del ticket ${nextIDPayment}`);
         console.warn('No se pudo guardar el HTML del ticket');
