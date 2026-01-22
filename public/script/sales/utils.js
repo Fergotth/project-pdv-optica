@@ -248,7 +248,7 @@ export const generateTicket = async ({ NextID, type, ReceiptID = undefined, Sale
 
         const data = await response.json(); // <- seguro ahora
         console.log('PDF creado:', data.file);
-        console.log(`Intentos pendientes: $${remainingAttempts}`); //! Eliminar luego esta linea
+        console.log(`Intentos pendientes: ${remainingAttempts}`); //! Eliminar luego esta linea
         window.open(data.file, '_blank');
     } catch (err) {
         if (remainingAttempts > 0) {

@@ -13,7 +13,7 @@ import { getDataNoteArticlesDB } from '../kardexNotes/getData.js';
  * @param {Integer} value       // ID de la nota a buscar
  * @returns {Promise<Object>}   // Objeto con los datos de la nota
  */
-export const getData = async (value) => {
+export const getData = async (value, remainingAttempts = 3) => {
     try {
         const response = await fetch(`/find-unpaidSale?q=${encodeURIComponent(value)}`);
 
@@ -36,8 +36,13 @@ export const getData = async (value) => {
         };
 
     } catch (error) {
-        showErrorMessage(document.body, `Error en getData: ${error.message}`);
-        throw error;
+        if (remainingAttempts > 0) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return await getData(value, remainingAttempts - 1);
+        } else {
+            showErrorMessage(document.body, `Error en getData: ${error.message}`);
+            throw error;
+        }
     }
 };
 
@@ -83,7 +88,7 @@ export const getPaymentsData = async (items) => {
  * @param {Integer} IDSale              // ID de la nota a buscar
  * @returns {Promise<Integer> || null}  // ID siguiente de recibo
  */
-export const getNextReceiptId = async (IDSale) => {
+export const getNextReceiptId = async (IDSale, remainingAttempts = 3) => {
     try {
         const response = await fetch(`/find-paymentsNextReceipt?q=${encodeURIComponent(IDSale)}`);
         
@@ -96,9 +101,14 @@ export const getNextReceiptId = async (IDSale) => {
         return data.NextReceiptID ?? null;
 
     } catch (error) {
-        showErrorMessage(document.body, `Error en getNextReceiptID: ${error}`);
-        console.error("Error en getNextId:", error);
-        return null;
+        if (remainingAttempts > 0) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return await getNextReceiptId(IDSale, remainingAttempts - 1);
+        } else {
+            showErrorMessage(document.body, `Error en getNextReceiptID: ${error}`);
+            console.error("Error en getNextId:", error);
+            return null;
+        }
     }
 };
 
@@ -107,7 +117,7 @@ export const getNextReceiptId = async (IDSale) => {
  * @param {void}
  * @returns {Promise<Integer> || null}  // ID siguiente de pago
  */
-export const getNextPaymentID = async () => {
+export const getNextPaymentID = async (remainingAttempts = 3) => {
     try {
         const response = await fetch(`/find-nextPaymentID`);
         
@@ -120,21 +130,26 @@ export const getNextPaymentID = async () => {
         return nextID?.NextPaymentID || 1;
 
     } catch (error) {
-        showErrorMessage(document.body, `Error en getNextPaymentID: ${error}`);
-        console.error("Error en getNextId:", error);
-        return null;
+        if (remainingAttempts > 0) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return await getNextPaymentID(remainingAttempts - 1);
+        } else {
+            showErrorMessage(document.body, `Error en getNextPaymentID: ${error}`);
+            console.error("Error en getNextId:", error);
+            return null;
+        }
     }
 };
 
-/**
- * 
- * @param {Integer} ID                      // ID de la nota a buscar
- * @returns {Object<Array, Array, Number>}  // Objetos con los datos para el nuevo ticket
- */
 export const getDataTicket = async (ID) => {
     const summarySale = safeNumber(getElement('.summaryClientSaleDetails span:nth-child(2)').textContent);
+    const articles = await getDataNoteArticlesDB(ID);
     
-    const cartItems = (await getDataNoteArticlesDB(ID)).map(item => ({
+    if (!articles) {
+        showErrorMessage(document.body, "No se encontraron artículos para la nota.");
+        return null;
+    }
+    const cartItems = articles.map(item => ({
         Quantity: item.Quantity,
         Product: item.Product
     }));

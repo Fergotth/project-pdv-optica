@@ -8,25 +8,32 @@ import { updateState, getState } from "./state.js";
  * @param {String} url 
  * @returns {Promise<Object[]> || Promise<[]>} 
  */
-export const getDataDB = async (url) => {
+export const getDataDB = async (url, remainingAttempts = 3) => {
     try {
         const response = await fetch(url);
         if (!response.ok) {
             showErrorMessage(document.body, `HTTP error! status: ${response.status}`);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+
         const data = await response.json();
+        
         return data;
     } catch (error) {
-        showErrorMessage(document.body, `Error al obtener datos de la base de datos: ${error}`);
-        console.error('Error al obtener datos de la base de datos:', error);
-        return null; //ajuste a []
+        if (remainingAttempts > 0) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return await getDataDB(url, remainingAttempts - 1);
+        } else {
+            showErrorMessage(document.body, `Error al obtener datos de la base de datos: ${error}`);
+            console.error('Error al obtener datos de la base de datos:', error);
+            return null; //ajuste a []
+        }
     }
 };
 
 /**
  * Obtiene los elementos del carrito de compras
- * @returns {Array}
+ * @returns {Object}
  */
 export const getCartItems = () => {
     const items = getElement(Class.list.itemsInCart).querySelectorAll('.item');
@@ -128,15 +135,20 @@ export const getDataQuotation = async () => {
  * @param {String} type 
  * @returns {Promise<Object> || Promise<null>}
  */
-export const getQuoationDB = async (type) => {
+export const getQuoationDB = async (type, remainingAttempts = 3) => {
     try {
         const response = await fetch(`/get-quotation?q=${encodeURIComponent(type)}`);
         const data = await response.json();
         return data;
     } catch (err) {
-        showErrorMessage(document.body, `Error al obtener los datos de la cotiacion: ${err}`);
-        console.error("Error al obtener los datos de la cotizacion: ", err);
-        return null;
+        if (remainingAttempts > 0) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return await getQuoationDB(type, remainingAttempts - 1);
+        } else {
+            showErrorMessage(document.body, `Error al obtener los datos de la cotiacion: ${err}`);
+            console.error("Error al obtener los datos de la cotizacion: ", err);
+            return null;
+        }
     }
 };
 

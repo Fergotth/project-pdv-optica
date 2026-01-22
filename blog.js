@@ -7,3 +7,5 @@
 //* 20/01/2026 - agregado reintento al postDataToDB.js
 //* 20/01/2026 - agregado reintento al getDataClientDB.js
 //* 20/01/2026 - agregado reintento al showClient.js
+//* 21/01/2026 - se mejora el script global en general para agregar reintentos en las funciones fetch
+//* 21/01/2026 - se mejora script de ticket para no repetir codigo de style de cada ticket

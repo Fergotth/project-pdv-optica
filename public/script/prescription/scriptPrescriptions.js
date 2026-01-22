@@ -250,13 +250,16 @@ const scriptPrescription = () => {
         OD = getValue(`${ODSignSph}${ODSphValue}`, `${ODSignCyl}${ODCylValue}`);
         OS = getValue(`${OSSignSph}${OSSphValue}`, `${OSSignCyl}${OSCylValue}`);
 
-        if (!OD && !OS) 
+        if (!OD || !OS) {
             newAlert({
                 icon: 'info',
                 title: 'No existe esa RX en Lente de contacto',
                 text: 'Favor de verificar los valores ingresados'
             });
-        else setValuesConverted('lc', OD, OS);
+            return;
+        }
+
+        setValuesConverted('lc', OD, OS);
     };
 
     /* --- Manejadores de eventos --- */

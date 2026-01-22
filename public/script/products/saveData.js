@@ -46,7 +46,7 @@ export const saveProduct = async (data) => {
     return false;
 };
 
-export const saveImageProduct = async (img) => {
+export const saveImageProduct = async (img, remainingAttempts = 3) => {
     const formData = new FormData();
     formData.append('image', img);
 
@@ -57,7 +57,6 @@ export const saveImageProduct = async (img) => {
         });
 
         if (!response.ok) {
-            showErrorMessage(`Error HTTP al guardar la imagen: ${response.status}`);
             throw new Error(`Error HTTP al guardar la imagen: ${response.status}`);
         }
 
@@ -65,9 +64,14 @@ export const saveImageProduct = async (img) => {
         
         return response.ok;
     } catch (error) {
-        showErrorMessage(`Error al subir la imagen: ${error}`);
-        console.error('Error al subir la imagen:', error);
-        
-        return false;
+        if (remainingAttempts > 0) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return await saveImageProduct(img, remainingAttempts - 1);
+        } else {
+            showErrorMessage(`Error al subir la imagen: ${error}`);
+            console.error('Error al subir la imagen:', error);
+            
+            return false;
+        }
     }
 };

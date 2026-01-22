@@ -32,15 +32,25 @@ export const getDataProductForm = () => {
  * @param {String} article // Nombre del articulo a buscar
  * @returns {Promise<Object> || []} // Devuelve un objeto con los datos encontrados o un array vacio si no
  */
-export const getDataProductDB = async (article) => {
+export const getDataProductDB = async (article, remainingAttempts = 3) => {
     try {
         const response = await fetch(`/find-article?q=${encodeURIComponent(article)}`);
+        
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        
         const data = await response.json();
         return data;
     } catch (error) {
-        showErrorMessage(document.body, `Error al obtener datos del articulo: ${error}`);
-        console.error('Error al obtener datos del articulo:', error);
-        return [];
+        if (remainingAttempts > 0) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return await getDataProductDB(article, remainingAttempts - 1);
+        } else {
+            showErrorMessage(document.body, `Error al obtener datos del articulo: ${error}`);
+            console.error('Error al obtener datos del articulo:', error);
+            return [];
+        }
     }
 };
 
@@ -48,14 +58,24 @@ export const getDataProductDB = async (article) => {
  * @param {String} article // Nombre del articulo o articulos a buscar
  * @returns {Promise<Object> || []} // Devuelve un objeto con los datos encontrados o un array vacio si no
  */
-export const getDataProductsDB = async (article) => {
+export const getDataProductsDB = async (article, remainingAttempts = 3) => {
     try {
         const response = await fetch(`/consult-articles?q=${encodeURIComponent(article)}`);
+        
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        
         const data = await response.json();
         return data;
     } catch (error) {
-        showErrorMessage(document.body, `Error al obtener datos del articulo: ${error}`);
-        console.error('Error al obtener datos del articulo:', error);
-        return [];
+        if (remainingAttempts > 0) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return await getDataProductsDB(article, remainingAttempts - 1);
+        } else {
+            showErrorMessage(document.body, `Error al obtener datos del articulo: ${error}`);
+            console.error('Error al obtener datos del articulo:', error);
+            return [];
+        }
     }
 };
