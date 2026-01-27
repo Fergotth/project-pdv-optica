@@ -136,10 +136,32 @@
                     </div>
                 </section>
                 <button class="prescription--converter" title="RX Oftalmica a Lente de contacto">Convertir Rx</button>
+                <button class="prescription--save-prescription">Guardar y generar receta</button>
+            </div>
+        </section>
+        <section class="p--info-frame" style="display: none;">
+            <div class="info-frame--container">
+                <div class="info-frame--img">
+                    <img src="..\..\images\frame-details.png" alt="">
+                </div>
+                <div class="info-frame--data">
+                    <span>Horizontal</span>
+                    <span>Vertical</span>
+                    <span>Diagonal</span>
+                    <span>Puente</span>
+                </div>
             </div>
         </section>
     </div>
     <script>
+        // Seccion extra para el nuevo boton
+        const infoFrame = document.querySelector('.prescription--save-prescription'); // boton guardar y generar receta
+        infoFrame.addEventListener('click', () => {
+            const frameInfoSection = document.querySelector('.p--info-frame');
+            frameInfoSection.style.display = 'flex';
+        });
+        // fin de nueva seccion
+
         const menu = document.querySelector('.left-section--menu'); // contenedor principal del menu
         const selectMenu = document.querySelector('.end--menu'); // menu de tipo de material o LC
         const labelPrescription = document.querySelector('.title--kindOfPrescription'); // label del tipo de prescripcion

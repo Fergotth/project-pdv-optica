@@ -448,6 +448,7 @@ export const getPrescriptionHTML = (data) => {
                             </div>
                         </section>
                         <button class="prescription--converter" title="RX Oftalmica a Lente de contacto">Convertir Rx</button>
+                        <button class="prescription--save-prescription">Guardar y generar receta</button>
                     </div>
                 </section>
             </div>
