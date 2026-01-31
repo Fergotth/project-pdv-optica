@@ -1,6 +1,6 @@
 import { getElement } from "../utils/getElement.js";
 import { showErrorMessage } from "../utils/errorMessage.js";
-import Class from "./consts.js";
+import { Class } from "./consts.js";
 import { updateState, getState } from "./state.js";
 
 /**

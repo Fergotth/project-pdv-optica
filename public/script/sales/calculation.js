@@ -2,7 +2,7 @@ import {
     getState, 
     updateState 
 } from "./state.js";
-import Class from "./consts.js";
+import { Class } from "./consts.js";
 import { getElement } from "../utils/getElement.js";
 
 /**

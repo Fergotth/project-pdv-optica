@@ -1,5 +1,6 @@
 import { formatMoney } from "./utils.js";
 import { getState } from "./state.js";
+import { svgFrame } from "./consts.js";
 
 /**
  * Regresa el innerHTML para cada elemento
@@ -449,6 +450,33 @@ export const getPrescriptionHTML = (data) => {
                         </section>
                         <button class="prescription--converter" title="RX Oftalmica a Lente de contacto">Convertir Rx</button>
                         <button class="prescription--save-prescription">Guardar y generar receta</button>
+                    </div>
+                </section>
+                <section class="p--info-frame" style="display: none;">
+                    <div class="info-frame--container">
+                        <span class="info-frame--title">Medidas del armazon</span>
+                        <div class="info-frame--img">
+                            <div class="img--svg">${svgFrame}</div>
+                        </div>
+                        <div class="info-frame--data">
+                            <div class="data-pair">
+                                <label>1 - Horizontal</label>
+                                <input type="number" class="data-input">
+                            </div>
+                            <div class="data-pair">
+                                <label>2 - Vertical</label>
+                                <input type="number" class="data-input">
+                            </div>
+                            <div class="data-pair">
+                                <label>3 - Diagonal</label>
+                                <input type="number" class="data-input">
+                            </div>
+                            <div class="data-pair">
+                                <label>4 - Puente</label>
+                                <input type="number" class="data-input">
+                            </div>
+                        </div>
+                        <button class="info-frame--btnSave">Generar ticket</button>
                     </div>
                 </section>
             </div>

@@ -27,7 +27,7 @@ import { validateData } from "./validations.js";
 import { newAlert } from "../utils/alerts.js";
 import { handlerPaymentCloseIcon } from "./handlers.js";
 import { loader } from '../utils/loader.js';
-import Class from "./consts.js";
+import { Class } from "./consts.js";
 import scriptPrescription from "../prescription/scriptPrescriptions.js";
 
 /**

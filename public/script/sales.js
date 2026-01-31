@@ -3,7 +3,7 @@ import { getElement } from "./utils/getElement.js";
 import { flushState, updateState } from "./sales/state.js";
 import { loader } from "./utils/loader.js";
 import { showErrorMessage } from "./utils/errorMessage.js";
-import Class from "./sales/consts.js";
+import { Class } from "./sales/consts.js";
 import * as handlers from './sales/handlers.js';
 
 const sales = async () => {

@@ -1,6 +1,6 @@
 import { getElement } from "../utils/getElement.js";
 import { total } from "./calculation.js";
-import Class from "./consts.js";
+import { Class } from "./consts.js";
 import { getState } from "./state.js";
 
 /**

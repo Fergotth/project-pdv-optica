@@ -11,3 +11,7 @@
 //* 21/01/2026 - se mejora script de ticket para no repetir codigo de style de cada ticket
 //* 22/01/2026 - se agrega boton de guardar receta en la interfaz de receta
 //* 22/01/2026 - se empieza a implementar la captura de datos del armazon en la receta
+//* 30/01/2026 - se agrega z-index al boton de cerrar en la receta para que quede por encima del modal
+//* 30/01/2026 - se agrega el boton de guardar receta en la interfaz de receta
+//* 30/01/2026 - se re estructura el codigo para mayor claridad de scriptPrescriptions.js
+//* 30/01/2026 - se agrega el favicon.ico al proyecto

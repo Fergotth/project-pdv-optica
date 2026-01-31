@@ -24,7 +24,7 @@ import {
     getState, 
     updateState 
 } from "./state.js";
-import Class from "./consts.js";
+import { Class } from "./consts.js";
 import { calcuteNewPayment } from "./calculation.js";
 import { 
     getCartItems,
