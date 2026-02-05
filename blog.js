@@ -1,5 +1,6 @@
 //! Falta agregar alguna validacion para que cuando se intenten guardar los datos en el backend, si falla el servidor, 
 //! se mantengan los datos en el frontend y no se borren y se vuelva a intentar el guardado
+//! Falta generar ticket de receta, queda pendiente
 
 //* 10/01/2026 - correccion de validacion de power y axis para que solo se apliquen en los campos correspondientes
 //* 20/01/2026 - correccion de error al generar ticket cuando falla la primera vez
@@ -15,3 +16,4 @@
 //* 30/01/2026 - se agrega el boton de guardar receta en la interfaz de receta
 //* 30/01/2026 - se re estructura el codigo para mayor claridad de scriptPrescriptions.js
 //* 30/01/2026 - se agrega el favicon.ico al proyecto
+//* 04/02/2026 - se agrega en operaciones el dropdown para registrar en las notas de venta el material a surtir
