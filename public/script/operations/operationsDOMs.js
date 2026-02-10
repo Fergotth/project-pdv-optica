@@ -272,3 +272,80 @@ export const getProductInventary = () => {
     </div>
     `;
 };
+
+export const getMaterialHTML = () => {
+    return `
+    <div class="overlayPromptDiscount">
+        <div class="popupRegisterMaterial">
+            <h2>Registrar material a surtir</h2>
+            <form id="registerNoteForm">
+                <label for="date">Fecha</label>
+                <input type="date" id="date" name="date" required>
+                <label for="note">Nota</label>
+                <input type="text" id="note" name="note" required>
+                <label>Sucursal</label>
+                <select name="branch" id="branch" required>
+                    <option value="">Selecciona una sucursal</option>
+                    <option value="vere">Optica Vere</option>
+                    <option value="eco">Ecovision</option>
+                    <option value="centro">Optica del Centro</option>
+                    <option value="total">Vision Total</option>
+                    <option value="laboratorio">Laboratorio</option>
+                </select>
+                <label>Material</label>
+                <select name="material" id="material" required>
+                    <option value="">Selecciona un material</option>
+                    <option value=""></option>
+                    <option value="svw">Monofocal Blanco</option>
+                    <option value="svar">Monofocal Antirreflejante</option>
+                    <option value="svphar">Monofocal Fotocromatico Antirreflejante</option>
+                    <option value="svbb">Monofocal Blueblock</option>
+                    <option value="svphbb">Monofocal Fotocromatico Blueblock</option>
+                    <option value=""></option>
+                    <option value="ftw">Bifocal Blanco</option>
+                    <option value="ftar">Bifocal Antirreflejante</option>
+                    <option value="ftphar">Bifocal Fotocromatico Antirreflejante</option>
+                    <option value=""></option>
+                    <option value="prgar">Progresivo Antirreflejante</option>
+                    <option value="prgphar">Progresivo Fotocromatico Antirreflejante</option>
+                </select>
+                <div class="prescription">
+                    <div class="OD">
+                        <label>OD</label>
+                        <select name="SphOD" id="SphOD" required>
+                            <option value="">Esfera</option>
+                        </select>
+                        <select name="CylOD" id="CylOD" required>
+                            <option value="">Cilindro</option>
+                        </select>
+                        <select name="AxisOD" id="AxisOD" required>
+                            <option value="">Eje</option>
+                        </select>
+                        <select name="ADDOD" id="ADDOD" disabled required>
+                            <option value="">Adicion</option>
+                        </select>
+                    </div>
+                    <div class="OS">
+                        <label>OI</label>
+                        <select name="SphOS" id="SphOS" required>
+                            <option value="">Esfera</option>
+                        </select>
+                        <select name="CylOS" id="CylOS" required>
+                            <option value="">Cilindro</option>
+                        </select>
+                        <select name="AxisOS" id="AxisOS" required>
+                            <option value="">Eje</option>
+                        </select>
+                        <select name="ADDOS" id="ADDOS" disabled required>
+                            <option value="">Adicion</option>
+                        </select>
+                    </div>
+                </div>
+                <label for="observations">Observaciones</label>
+                <input type="text" id="observations" name="observations">
+                <button type="button" class="btnSaveDataMaterials">Guardar</button>
+            </form>
+        </div>
+    </div>
+    `;
+};

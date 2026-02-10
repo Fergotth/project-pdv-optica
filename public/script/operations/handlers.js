@@ -9,9 +9,15 @@ import { showErrorMessage } from "../utils/errorMessage.js";
 import { saveProduct } from "../products/saveData.js";
 import { renderArticlesFounded } from "../products/utils.js"
 import { getDataProductsDB } from "../products/getData.js";
+import { 
+    getDataFormMaterial,
+    validateMaterialData
+} from "../materials/utils.js";
 import productSctipt from "../products/addProductScript.js";
+import scriptMaterials from "../materials/scriptMaterials.js";
 
 let producsInstanceEvents = null;
+let materialsInstanceEvents = null;
 
 /**
  * 
@@ -50,7 +56,7 @@ export const handlerCloseFormClient = () => {
  * @param {Object<HTMLElement, String>} param0  // HTMLElement donde se insertara el nuevo elemento contenido innerHTML  
  */
 export const handlerRegisterArticles = ({ DOM, innerHTML }) => {
-    DOM.appendChild(getParsedHTML(innerHTML));
+    DOM.appendChild(getParsedHTML(innerHTML)); 
     producsInstanceEvents = productSctipt();
 };
 
@@ -105,4 +111,33 @@ export const handlerBtnSearchArticles = async ({ value }) => {
             text: "No se encontro ningun articulo."
         });
     }
+};
+
+/**
+ * 
+ * @param {*Object<HTMLDivElement, String>} param0 // Objeto contenedor del HTMLDivElement donde se insertara el nuevo elemento y el codigo HTML a insertar
+ */
+export const handlerRegisterNote = ({ DOM, innerHTML }) => {
+    DOM.appendChild(getParsedHTML(innerHTML));
+    materialsInstanceEvents = scriptMaterials();
+};
+
+/**
+ * @param {void}    // Cierra el HTMLDivElement overlay de registro de materiales
+ */
+export const handlerBtnSaveDataMaterials = () => { debugger
+    const data = getDataFormMaterial(materialsInstanceEvents.elements);
+    const isValid = validateMaterialData(data);
+    
+    if (isValid !== null) {
+        showErrorMessage(document.body, `Los datos del material no son válidos: ${isValid}`);
+        return;
+    }
+
+    console.log(data);
+    if (materialsInstanceEvents) {
+        materialsInstanceEvents.removeListeners();
+        materialsInstanceEvents = null;
+    }
+    closeOverlay(getElement('.overlayPromptDiscount'));
 };

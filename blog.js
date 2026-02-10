@@ -17,3 +17,6 @@
 //* 30/01/2026 - se re estructura el codigo para mayor claridad de scriptPrescriptions.js
 //* 30/01/2026 - se agrega el favicon.ico al proyecto
 //* 04/02/2026 - se agrega en operaciones el dropdown para registrar en las notas de venta el material a surtir
+//* 05/02/2026 - se empieza a crear la plantilla para registrar nota de venta, se agrega el dropdown para seleccionar el material a surtir
+//* 06/02/2026 - se agrega script para manejar los eventos, funciones y utilidades de materiales
+//* 07/02/2026 - se agrega el script de utilidades para validar los campos de materiales y agregar los valores a los selects

@@ -2,7 +2,8 @@ import { getElement } from "../utils/getElement.js";
 import { 
     getClientHTML, 
     getProductsHTML, 
-    getProductInventary 
+    getProductInventary,
+    getMaterialHTML
 } from "./operationsDOMs.js";
 import { getDataClientForm } from "../clients/getData.js";
 import { getDataProductForm } from "../products/getData.js";
@@ -42,5 +43,12 @@ export const getHandlerArgs = {
 
     handlerBtnSearchArticles: () => ({
         value: getElement('.searcher--input').value
-    })
+    }),
+
+    handlerRegisterNote: () => ({
+        DOM: getElement('.containerOperations'),
+        innerHTML: getMaterialHTML()
+    }),
+
+    handlerBtnSaveDataMaterials: () => ({})
 };

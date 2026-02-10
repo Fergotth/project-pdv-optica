@@ -5,13 +5,13 @@ import { showErrorMessage } from './errorMessage.js';
  * @param {HTMLElement} element     // Elemento HTML
  * @returns {HTMLElement}           // Regresa el elemento validado
  */
-export const getElement = (strClass) => {
+export const getElement = (strSelector) => {
     
-    const element = strClass.includes('.') ? document.querySelector(strClass) : document.getElementById(strClass);
+    const element = document.querySelector(strSelector) || document.getElementById(strSelector);
 
     if (!element || !(element instanceof HTMLElement)) {
-        showErrorMessage(document.body, `Elemento (${strClass}) no existe en el DOM`);
-        throw new Error(`Elemento (${strClass}) no existe en el DOM`);
+        showErrorMessage(document.body, `Elemento (${strSelector}) no existe en el DOM`);
+        throw new Error(`Elemento (${strSelector}) no existe en el DOM`);
     }
 
     return element;

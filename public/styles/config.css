@@ -17,6 +17,7 @@
 @import url('summarySale.css');
 @import url('searchClientForm.css');
 @import url('quotationPrompt.css');
+@import url('materialsout.css');
 
 :root {
     --bk-main: #fafafa;
