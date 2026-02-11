@@ -3,8 +3,7 @@ import {
     setDataToSelects,
     toggleADDField,
     toggleAxisField,
-    getDataFormMaterial,
-    validateMaterialData
+    loadActualDateHandler
 } from "./utils.js";
 
 const scriptMaterials = () => {
@@ -14,6 +13,7 @@ const scriptMaterials = () => {
     };
 
     const elements = {
+        modal: getElement('.popupRegisterMaterial'),
         sphOD: getElement('.popupRegisterMaterial #SphOD'),
         sphOS: getElement('.popupRegisterMaterial #SphOS'),
         cylOD: getElement('.popupRegisterMaterial #CylOD'),
@@ -29,8 +29,11 @@ const scriptMaterials = () => {
         observations: getElement('.popupRegisterMaterial #observations')
     };
 
-    //* se agregan los valores a los selects
+    //* evento para agregar los valores a los selects
     setDataToSelects(elements);
+
+    //* evento para cargar la fecha actual al abrir el modal en el input de fecha
+    loadActualDateHandler(elements.date);
 
     //? funciones para los eventos
     const materialChangeHandler = (e) => {

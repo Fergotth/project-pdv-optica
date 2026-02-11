@@ -3,7 +3,8 @@ import {
     getClientHTML, 
     getProductsHTML, 
     getProductInventary,
-    getMaterialHTML
+    getMaterialHTML,
+    getMaterialDispatchedHTML
 } from "./operationsDOMs.js";
 import { getDataClientForm } from "../clients/getData.js";
 import { getDataProductForm } from "../products/getData.js";
@@ -50,5 +51,12 @@ export const getHandlerArgs = {
         innerHTML: getMaterialHTML()
     }),
 
-    handlerBtnSaveDataMaterials: () => ({})
+    handlerBtnSaveDataMaterials: () => ({}),
+
+    handlerBtnCloseRegisterMaterial: () => ({}),
+
+    handlerConsultGeneralMaterialDispatched: () => ({
+        DOM: getElement('.containerOperations'),
+        innerHTML: getMaterialDispatchedHTML()
+    })
 };

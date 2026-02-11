@@ -1,6 +1,7 @@
 /**
+ * Contenido HTML para el modal de registro de cliente
  * @param {void}
- * @returns {String}    // Contenido para el elemento HTNL nuevo
+ * @returns {String}    // Contenido para el elemento HTML nuevo
  */
 export const getClientHTML = () => {
     return `
@@ -39,8 +40,9 @@ export const getClientHTML = () => {
 };
 
 /**
+ * Contenido HTML para el modal de registro de nuevos productos
  * @param {void}
- * @returns {String}    // Contenido para el elemento HTNL nuevo
+ * @returns {String}    // Contenido para el elemento HTML nuevo
  */
 export const getProductsHTML = () => {
     return `
@@ -205,7 +207,10 @@ export const getProductsHTML = () => {
     `;
 };
 
-// aun falta realizar bien esta parte
+/**
+ * Contenido HTML para el modal de consulta de articulos en el inventario
+ * @returns {String}    // Contenido para el elemento HTML nuevo
+ */
 export const getProductInventary = () => {
     return `
     <div class="overlay">
@@ -273,11 +278,21 @@ export const getProductInventary = () => {
     `;
 };
 
+/**
+ * Contenido HTML para el modal de registro de salida de materiales a surtir
+ * @returns {String}    // Contenido para el elemento HTML nuevo
+ */
 export const getMaterialHTML = () => {
     return `
     <div class="overlayPromptDiscount">
         <div class="popupRegisterMaterial">
             <h2>Registrar material a surtir</h2>
+            <div class="btnCloseRegisterMaterial" title="Cerrar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </div>
             <form id="registerNoteForm">
                 <label for="date">Fecha</label>
                 <input type="date" id="date" name="date" required>
@@ -344,6 +359,108 @@ export const getMaterialHTML = () => {
                 <label for="observations">Observaciones</label>
                 <input type="text" id="observations" name="observations">
                 <button type="button" class="btnSaveDataMaterials">Guardar</button>
+            </form>
+        </div>
+    </div>
+    `;
+};
+
+/**
+ * Contenido HTML para el modal de consulta de articulos en el inventario
+ * @returns {String}    // Contenido para el elemento HTML nuevo
+ */
+export const getMaterialDispatchedHTML = () => {
+    return `
+    <div class="overlayPromptDiscount">
+        <div class="popupConsultMaterialDispatched">
+            <h2>Consulta de materiales surtidos a sucursales</h2>
+            <div class="btnCloseConsultMaterialDispatched" title="Cerrar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </div>
+            <form id="formConsultMaterialDispatchedMenu">
+                <label for="selectSucursal">Selecciona la sucursal:</label>
+                <select id="selectSucursal" name="selectSucursal" required>
+                    <option value="" disabled selected>Selecciona una sucursal</option>
+                    <option value="Todas">Todas</option>
+                    <option value="" disabled selected></option>
+                    <option value="Optica Vere">Optica Vere</option>
+                    <option value="Ecovision">Ecovision</option>
+                    <option value="Optica del Centro">Optica del Centro</option>
+                    <option value="Vision Total">Vision Total</option>
+                    <option value="Laboratorio">Laboratorio</option>
+                </select>
+                <button type="button">Consultar</button>
+            </form>
+            <form id="formConsultMaterialDispatchedTable">
+                <table class="material-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Sucursal</th>
+                            <th>No. Nota</th>
+                            <th>Material</th>
+                            <th>Esfera OD</th>
+                            <th>Cilindro OD</th>
+                            <th>Eje OD</th>
+                            <th>ADD OD</th>
+                            <th>Esfera OI</th>
+                            <th>Cilindro OI</th>
+                            <th>Eje OI</th>
+                            <th>ADD OI</th>
+                            <th>Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>2026-02-10</td>
+                            <td>Sucursal Centro</td>
+                            <td>001</td>
+                            <td>Lente CR-39</td>
+                            <td>-1.50</td>
+                            <td>-1.25</td>
+                            <td>73</td>
+                            <td>+2.00</td>
+                            <td>-0.50</td>
+                            <td>-0.25</td>
+                            <td>170</td>
+                            <td>+2.00</td>
+                            <td>Entrega urgente</td>
+                        </tr>
+                        <tr>
+                            <td>2026-02-09</td>
+                            <td>Sucursal Norte</td>
+                            <td>Policarbonato</td>
+                            <td>-2.00</td>
+                            <td>-1.75</td>
+                            <td>-1.00</td>
+                            <td>-0.75</td>
+                            <td>160</td>
+                            <td>165</td>
+                            <td>+1.50</td>
+                            <td>+1.75</td>
+                            <td>Paciente adulto mayor</td>
+                        </tr>
+                        <tr>
+                            <td>2026-02-08</td>
+                            <td>Sucursal Sur</td>
+                            <td>Progresivo Fotocromatico Blueblock</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>Solo armazón</td>
+                        </tr>
+
+                    </tbody>
+                </table>
             </form>
         </div>
     </div>

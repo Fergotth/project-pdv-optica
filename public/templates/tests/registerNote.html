@@ -7,98 +7,89 @@
 </head>
 <body>
     <div class="overlayPromptDiscount">
-        <div class="popupRegisterMaterial">
-            <h2>Registrar material a surtir</h2>
-            <form id="registerNoteForm">
-                <label for="date">Fecha</label>
-                <input type="date" id="date" name="date" required>
-                <label for="note">Nota</label>
-                <input type="text" id="note" name="note" required>
-                <label>Sucursal</label>
-                <select name="branch" id="branch" required>
-                    <option value="">Selecciona una sucursal</option>
-                    <option value="sucursal1">Optica Vere</option>
-                    <option value="sucursal2">Ecovision</option>
-                    <option value="sucursal3">Optica del Centro</option>
-                    <option value="sucursal4">Vision Total</option>
-                    <option value="sucursal5">Laboratorio</option>
+        <div class="popupConsultMaterialDispatched">
+            <h2>Consulta de materiales surtidos a sucursales</h2>
+            <form id="formConsultMaterialDispatchedMenu">
+                <label for="selectSucursal">Selecciona la sucursal:</label>
+                <select id="selectSucursal" name="selectSucursal" required>
+                    <option value="" disabled selected>Selecciona una sucursal</option>
+                    <option value="Todas">Todas</option>
+                    <option value="" disabled selected></option>
+                    <option value="Optica Vere">Optica Vere</option>
+                    <option value="Ecovision">Ecovision</option>
+                    <option value="Optica del Centro">Optica del Centro</option>
+                    <option value="Vision Total">Vision Total</option>
+                    <option value="Laboratorio">Laboratorio</option>
                 </select>
-                <label>Material</label>
-                <select name="material" id="material" required>
-                    <option value="">Selecciona un material</option>
-                    <option value=""></option>
-                    <option value="material1">Monofocal Blanco</option>
-                    <option value="material2">Monofocal Antirreflejante</option>
-                    <option value="material3">Monofocal Fotocromatico Antirreflejante</option>
-                    <option value="material4">Monofocal Blueblock</option>
-                    <option value="material5">Monofocal Fotocromatico Blueblock</option>
-                    <option value=""></option>
-                    <option value="material6">Bifocal Blanco</option>
-                    <option value="material7">Bifocal Antirreflejante</option>
-                    <option value="material8">Bifocal Fotocromatico Antirreflejante</option>
-                    <option value=""></option>
-                    <option value="material9">Progresivo Antirreflejante</option>
-                    <option value="material10">Progresivo Fotocromatico Antirreflejante</option>
-                </select>
-                <div class="prescription">
-                    <div class="OD">
-                        <label for="">OD</label>
-                        <select name="SphOD" id="SphOD" required>
-                            <option value="">Esfera</option>
-                            <option value="sphOD1">Sph OD 1</option>
-                            <option value="sphOD2">Sph OD 2</option>
-                            <option value="sphOD3">Sph OD 3</option>
-                        </select>
-                        <select name="CylOD" id="CylOD" required>
-                            <option value="">Cilindro</option>
-                            <option value="cylOD1">Cyl OD 1</option>
-                            <option value="cylOD2">Cyl OD 2</option>
-                            <option value="cylOD3">Cyl OD 3</option>
-                        </select>
-                        <select name="AxisOD" id="AxisOD" required>
-                            <option value="">Eje</option>
-                            <option value="axisOD1">Axis OD 1</option>
-                            <option value="axisOD2">Axis OD 2</option>
-                            <option value="axisOD3">Axis OD 3</option>
-                        </select>
-                        <select name="ADDOD" id="ADDOD" required>
-                            <option value="">Adicion</option>
-                            <option value="addOD1">ADD OD 1</option>
-                            <option value="addOD2">ADD OD 2</option>
-                            <option value="addOD3">ADD OD 3</option>
-                        </select>
-                    </div>
-                    <div class="OS">
-                        <label for="">OI</label>
-                        <select name="SphOD" id="SphOD" required>
-                            <option value="">Esfera</option>
-                            <option value="sphOD1">Sph OD 1</option>
-                            <option value="sphOD2">Sph OD 2</option>
-                            <option value="sphOD3">Sph OD 3</option>
-                        </select>
-                        <select name="CylOD" id="CylOD" required>
-                            <option value="">Cilindro</option>
-                            <option value="cylOD1">Cyl OD 1</option>
-                            <option value="cylOD2">Cyl OD 2</option>
-                            <option value="cylOD3">Cyl OD 3</option>
-                        </select>
-                        <select name="AxisOD" id="AxisOD" required>
-                            <option value="">Eje</option>
-                            <option value="axisOD1">Axis OD 1</option>
-                            <option value="axisOD2">Axis OD 2</option>
-                            <option value="axisOD3">Axis OD 3</option>
-                        </select>
-                        <select name="ADDOD" id="ADDOD" required>
-                            <option value="">Adicion</option>
-                            <option value="addOD1">ADD OD 1</option>
-                            <option value="addOD2">ADD OD 2</option>
-                            <option value="addOD3">ADD OD 3</option>
-                        </select>
-                    </div>
-                </div>
-                <label for="observations">Observaciones</label>
-                <input type="text" id="observations" name="observations">
-                <button type="submit">Guardar</button>
+                <button type="button">Consultar</button>
+            </form>
+            <form id="formConsultMaterialDispatchedTable">
+                <table class="material-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Sucursal</th>
+                            <th>No. Nota</th>
+                            <th>Material</th>
+                            <th>Esfera OD</th>
+                            <th>Cilindro OD</th>
+                            <th>Eje OD</th>
+                            <th>ADD OD</th>
+                            <th>Esfera OI</th>
+                            <th>Cilindro OI</th>
+                            <th>Eje OI</th>
+                            <th>ADD OI</th>
+                            <th>Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>2026-02-10</td>
+                            <td>Sucursal Centro</td>
+                            <td>001</td>
+                            <td>Lente CR-39</td>
+                            <td>-1.50</td>
+                            <td>-1.25</td>
+                            <td>73</td>
+                            <td>+2.00</td>
+                            <td>-0.50</td>
+                            <td>-0.25</td>
+                            <td>170</td>
+                            <td>+2.00</td>
+                            <td>Entrega urgente</td>
+                        </tr>
+                        <tr>
+                            <td>2026-02-09</td>
+                            <td>Sucursal Norte</td>
+                            <td>Policarbonato</td>
+                            <td>-2.00</td>
+                            <td>-1.75</td>
+                            <td>-1.00</td>
+                            <td>-0.75</td>
+                            <td>160</td>
+                            <td>165</td>
+                            <td>+1.50</td>
+                            <td>+1.75</td>
+                            <td>Paciente adulto mayor</td>
+                        </tr>
+                        <tr>
+                            <td>2026-02-08</td>
+                            <td>Sucursal Sur</td>
+                            <td>Progresivo Fotocromatico Blueblock</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>Solo armazón</td>
+                        </tr>
+
+                    </tbody>
+                </table>
             </form>
         </div>
     </div>
@@ -128,10 +119,9 @@
             backdrop-filter: blur(2px);
         }
 
-        .popupRegisterMaterial {
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
+        .popupConsultMaterialDispatched {
+            width: 90vw;
+            height: 90vh;
             background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
             padding: 20px;
             border-radius: 12px;
@@ -153,7 +143,7 @@
             }
         }
 
-        .popupRegisterMaterial h2 {
+        .popupConsultMaterialDispatched h2 {
             color: #2c3e50;
             margin-bottom: 20px;
             font-size: 24px;
@@ -162,15 +152,23 @@
             padding-bottom: 15px;
         }
 
-        .popupRegisterMaterial #registerNoteForm {
+        .popupConsultMaterialDispatched #formConsultMaterialDispatchedMenu {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            overflow-y: auto;
-            flex: 1;
+            margin-bottom: 15px;
         }
 
-        .popupRegisterMaterial label {
+        .popupConsultMaterialDispatched #formConsultMaterialDispatchedTable {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 5px; /* para que no tape el scroll */
+        }
+
+        .popupConsultMaterialDispatched label {
             display: block;
             color: #34495e;
             font-weight: 600;
@@ -179,9 +177,7 @@
             letter-spacing: 0.5px;
         }
 
-        .popupRegisterMaterial input[type="date"],
-        .popupRegisterMaterial input[type="text"],
-        .popupRegisterMaterial select {
+        .popupConsultMaterialDispatched select {
             width: 100%;
             padding: 10px 10px;
             border: 2px solid #ecf0f1;
@@ -192,21 +188,14 @@
             background-color: #fff;
         }
 
-        .popupRegisterMaterial input[type="date"]:focus,
-        .popupRegisterMaterial input[type="text"]:focus,
-        .popupRegisterMaterial select:focus {
+        .popupConsultMaterialDispatched select:focus {
             outline: none;
             border-color: #3498db;
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
             background-color: #f8fbff;
         }
 
-        .popupRegisterMaterial input[type="date"]::placeholder,
-        .popupRegisterMaterial input[type="text"]::placeholder {
-            color: #bdc3c7;
-        }
-
-        .popupRegisterMaterial select {
+        .popupConsultMaterialDispatched select {
             cursor: pointer;
             appearance: none;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -216,7 +205,8 @@
             padding-right: 40px;
         }
 
-        .popupRegisterMaterial button[type="submit"] {
+        .popupConsultMaterialDispatched button[type="button"] {
+            margin-top: 10px;
             padding: 13px 30px;
             background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             color: white;
@@ -231,136 +221,47 @@
             box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
         }
 
-        .popupRegisterMaterial button[type="submit"]:hover {
+        .popupConsultMaterialDispatched button[type="button"]:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
             background: linear-gradient(135deg, #2980b9 0%, #2471a3 100%);
         }
 
-        .popupRegisterMaterial button[type="submit"]:active {
+        .popupConsultMaterialDispatched button[type="button"]:active {
             transform: translateY(0);
             box-shadow: 0 2px 10px rgba(52, 152, 219, 0.3);
         }
 
-        .popupRegisterMaterial .prescription {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .popupRegisterMaterial .OD,
-        .popupRegisterMaterial .OS {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 10px;
-            background-color: rgba(52, 152, 219, 0.05);
-            border-radius: 8px;
-            border-left: 4px solid #3498db;
-        }
-
-        .popupRegisterMaterial .OD > label,
-        .popupRegisterMaterial .OS > label {
-            font-size: 16px;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 8px;
-        }
-
-        .popupRegisterMaterial .OD > select,
-        .popupRegisterMaterial .OS > select {
+        .popupConsultMaterialDispatched .material-table {
             width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
         }
 
-        .popupRegisterMaterial .OD {
-
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 6px;
+        .popupConsultMaterialDispatched .material-table thead {
+            position: sticky;
+            top: 0;
+            background: #f8f9fa;
+            z-index: 2;
         }
 
-        .popupRegisterMaterial .OD > label {
-            grid-column: 1 / -1;
+        .popupConsultMaterialDispatched .material-table th,
+        .popupConsultMaterialDispatched .material-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e1e4e8;
+            text-align: left;
+            white-space: nowrap;
         }
 
-        .popupRegisterMaterial .OD > select {
-            grid-column: span 1;
+        .popupConsultMaterialDispatched .material-table th {
+            color: #2c3e50;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
         }
 
-        .popupRegisterMaterial .OS {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 6px;
-        }
-
-        .popupRegisterMaterial .OS > label {
-            grid-column: 1 / -1;
-        }
-
-        .popupRegisterMaterial .OS > select {
-            grid-column: span 1;
-        }
-
-        @media (min-width: 600px) {
-            .popupRegisterMaterial .OD,
-            .popupRegisterMaterial .OS {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 6px;
-                align-items: end;
-            }
-
-            .popupRegisterMaterial .OD > label,
-            .popupRegisterMaterial .OS > label {
-                grid-column: 1 / -1;
-            }
-
-            .popupRegisterMaterial .OD > select,
-            .popupRegisterMaterial .OS > select {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .popupRegisterMaterial {
-                width: 95%;
-                padding: 25px;
-            }
-
-            .popupRegisterMaterial h2 {
-                font-size: 20px;
-            }
-
-            .popupRegisterMaterial label {
-                font-size: 13px;
-            }
-
-            .popupRegisterMaterial input[type="date"],
-            .popupRegisterMaterial input[type="text"],
-            .popupRegisterMaterial select {
-                padding: 10px 12px;
-                font-size: 13px;
-            }
-
-            .popupRegisterMaterial .button[type="submit"] {
-                font-size: 14px;
-                padding: 11px 25px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .popupRegisterMaterial {
-                padding: 20px;
-            }
-
-            .popupRegisterMaterial h2 {
-                font-size: 18px;
-                margin-bottom: 20px;
-            }
-
-            .popupRegisterMaterial #registerNoteForm {
-                gap: 15px;
-            }
+        .popupConsultMaterialDispatched .material-table tbody tr:hover {
+            background-color: #f0f6ff;
         }
     </style>
 </body>

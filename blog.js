@@ -20,3 +20,9 @@
 //* 05/02/2026 - se empieza a crear la plantilla para registrar nota de venta, se agrega el dropdown para seleccionar el material a surtir
 //* 06/02/2026 - se agrega script para manejar los eventos, funciones y utilidades de materiales
 //* 07/02/2026 - se agrega el script de utilidades para validar los campos de materiales y agregar los valores a los selects
+//* 10/02/2026 - se re organiza server.js para agregar la nueva ruta de materiales y se crea el archivo materialDispatchDB.js para manejar las rutas de materiales
+//* 10/02/2026 - se crea la base de datos para el registro de despachos de materiales
+//* 10/02/2026 - Se crea la ruta en el backend para guardar los datos y se conecta con el frontend para guardar los datos desde la interfaz de registro de materiales
+//* 10/02/2026 - se crea el archivo saveData.js de materiales para manejar la función de guardar los datos del formulario de registro de materiales
+//* 10/02/2026 - se agrega boton cerrar al popup de registro de materiales
+//* 10/02/2026 - se agrega poppu o ventana para consultar los materiales despachados en las notas de venta de las sucursales o laboratorio

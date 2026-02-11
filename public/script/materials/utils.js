@@ -1,3 +1,5 @@
+import { newAlert } from "../utils/alerts.js";
+
 /**
  * Genera los valores del poder en el menu select de la receta 
  * @param {Number} sign 
@@ -94,19 +96,19 @@ export const toggleAxisField = (axisElement, disabled, COLORS) => {
  */
 export const getDataFormMaterial = (elements) => {
     return {
-        sphOD: elements.sphOD.value,
-        sphOS: elements.sphOS.value,
-        cylOD: elements.cylOD.value,
-        cylOS: elements.cylOS.value,
-        axisOD: elements.axisOD.value,
-        axisOS: elements.axisOS.value,
-        addOD: elements.addOD.value,
-        addOS: elements.addOS.value,
-        date: elements.date.value,
-        note: elements.note.value,
-        branch: elements.branch.value,
-        material: elements.material.value,
-        observations: elements.observations.value
+        SphOD: elements.sphOD.value,
+        SphOS: elements.sphOS.value,
+        CylOD: elements.cylOD.value,
+        CylOS: elements.cylOS.value,
+        AxisOD: elements.axisOD.value,
+        AxisOS: elements.axisOS.value,
+        ADDOD: elements.addOD.value,
+        ADDOS: elements.addOS.value,
+        DateRegistered: elements.date.value,
+        Branch: elements.branch.value,
+        Material: elements.material.value,
+        Observations: elements.observations.value,
+        Note: elements.note.value
     };
 };
 
@@ -116,16 +118,16 @@ export const getDataFormMaterial = (elements) => {
  * @returns {string|null}  // Retorna el nombre del campo que falló, o null si todo es válido
  */
 export const validateMaterialData = (data) => {
-    const requiredFields = ['sphOD', 'sphOS', 'cylOD', 'cylOS', 'material', 'note', 'branch', 'date'];
+    const requiredFields = ['SphOD', 'SphOS', 'CylOD', 'CylOS', 'Material', 'Note', 'Branch', 'DateRegistered'];
     const nameFieldMap = {
-        sphOD: 'Esfera OD',
-        sphOS: 'Esfera OI',
-        cylOD: 'Cilindro OD',
-        cylOS: 'Cilindro OI',
-        material: 'Material',
-        note: 'Nota',
-        branch: 'Sucursal',
-        date: 'Fecha'
+        SphOD: 'Esfera OD',
+        SphOS: 'Esfera OI',
+        CylOD: 'Cilindro OD',
+        CylOS: 'Cilindro OI',
+        Material: 'Material',
+        Note: 'Nota',
+        Branch: 'Sucursal',
+        DateRegistered: 'Fecha'
     };
 
     for (const field of requiredFields) {
@@ -133,19 +135,43 @@ export const validateMaterialData = (data) => {
             return nameFieldMap[field];
     }
 
-    if (data.cylOD !== '0.00' && !data.axisOD)
+    if (data.CylOD !== '0.00' && !data.AxisOD)
         return 'Eje OD';
 
-    if (data.cylOS !== '0.00' && !data.axisOS)
+    if (data.CylOS !== '0.00' && !data.AxisOS)
         return 'Eje OI';
 
-    if (data.material.includes('ft') || data.material.includes('prg')) {
-        if (!data.addOD)
+    if (data.Material.includes('ft') || data.Material.includes('prg')) {
+        if (!data.ADDOD)
             return 'ADD OD';
-        if (!data.addOS)
+        if (!data.ADDOS)
             return 'ADD OI';
     }
 
     //? Todo válido
     return null;
+};
+
+/**
+ * Funcion para cargar la fecha actual al abrir el modal en el input de fecha
+ * @param {*HTMLInputElement} e // Elemento input de fecha al que se le asignara la fecha actual
+ */
+export const loadActualDateHandler = (e) => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    e.value = `${yyyy}-${mm}-${dd}`;
+};
+
+/**
+ * Muestra el mensaje de alerta con el mensaje especificado
+ * @param {String} message 
+ */
+export const showAlert = (message, icon = 'info') => {
+    newAlert({
+        icon: icon,
+        text: message,
+        title: 'AVISO'
+    });
 };

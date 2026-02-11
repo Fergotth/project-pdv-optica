@@ -164,10 +164,34 @@ dbQuotations.run(`
         )
 `);
 
+// Crear tabla Materials (Registro de materiales)
+const dbMaterialDispatch = new sqlite3.Database(path.join(dataDir, 'materialsDispatch.db'));
+
+dbMaterialDispatch.run(`
+    CREATE TABLE IF NOT EXISTS MaterialDispatched (
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        Date TEXT DEFAULT (date('now','localtime')),
+        DateRegistered TEXT,
+        Note INTEGER,
+        Branch TEXT,
+        Material TEXT,
+        SphOD TEXT,
+        SphOS TEXT,
+        CylOD TEXT,
+        CylOS TEXT,
+        AxisOD INTEGER,
+        AxisOS INTEGER,
+        ADDOD TEXT,
+        ADDOS TEXT,
+        Observations TEXT
+    )
+`);
+
 module.exports = { 
     dbSales, 
     dbClients, 
     dbProducts,
     dbParams,
-    dbQuotations
+    dbQuotations,
+    dbMaterialDispatch
 };
