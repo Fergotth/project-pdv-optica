@@ -4,7 +4,16 @@ const { dbMaterialDispatch } = require('../database');
 
 // Ruta para obtener los datos de despacho de materiales
 router.get('/get-materials-dispatched', (req, res) => {
-    dbMaterialDispatch.all(`SELECT * FROM MaterialDispatch`, [], (err, rows) => {
+    const { branch } = req.query;
+    let query = `SELECT * FROM MaterialDispatched`;
+    const params = [];
+
+    if (branch !== 'all') {
+        query += ` WHERE Branch = ?`;
+        params.push(branch);
+    }
+
+    dbMaterialDispatch.all(query, params, (err, rows) => {
         if (err) {
             console.error('Error al obtener despachos:', err.message);
             return res.status(500).json({ error: 'Error al obtener los despachos de materiales' });
@@ -28,6 +37,93 @@ router.post('/save-material-dispatched', (req, res) => {
         }
         res.json({ id: this.lastID });
     });
+});
+
+// Ruta para exportar a excel los datos consultados
+router.post('/export-to-excel', (req, res) => {
+    const { branch, rows } = req.body;
+
+    if (!rows || !Array.isArray(rows)) {
+        return res.status(400).json({ error: "Datos inválidos" });
+    }
+
+    const XLSX = require("xlsx-js-style");
+    const path = require("path");
+
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.aoa_to_sheet([]);
+
+    const branchName = branch || "Todas";
+    const today = new Date().toLocaleDateString("es-MX");
+
+    // Título
+    XLSX.utils.sheet_add_aoa(worksheet, [
+        ["REPORTE DE DESPACHO DE MATERIAL"]
+    ], { origin: "A1" });
+
+    worksheet["!merges"] = [
+        { s: { r: 0, c: 0 }, e: { r: 0, c: 12 } }
+    ];
+
+    // Subtítulos
+    XLSX.utils.sheet_add_aoa(worksheet, [
+        [`Sucursal: ${branchName}`],
+        [`Fecha de reporte: ${today}`],
+        []
+    ], { origin: "A3" });
+
+    // Encabezados
+    const headers = [
+        "Fecha",
+        "Sucursal",
+        "No. Nota",
+        "Material",
+        "Esfera OD",
+        "Cilindro OD",
+        "Eje OD",
+        "ADD OD",
+        "Esfera OI",
+        "Cilindro OI",
+        "Eje OI",
+        "ADD OI",
+        "Observaciones"
+    ];
+
+    XLSX.utils.sheet_add_aoa(worksheet, [headers], { origin: "A6" });
+
+    // Datos (YA NO CONSULTAMOS BD)
+    const dataStartRow = 6;
+
+    rows.forEach((row, index) => {
+        const rowData = [
+            row.DateRegistered,
+            row.Branch,
+            row.Note,
+            row.Material,
+            row.SphOD,
+            row.CylOD,
+            row.AxisOD,
+            row.ADDOD,
+            row.SphOS,
+            row.CylOS,
+            row.AxisOS,
+            row.ADDOS,
+            row.Observations
+        ];
+
+        XLSX.utils.sheet_add_aoa(worksheet, [rowData], {
+            origin: { r: dataStartRow + index, c: 0 }
+        });
+    });
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Despacho");
+
+    const fileName = `DaterialesDespachados_${today.replace(/\//g, "-")}.xlsx`;
+    const filePath = path.join(__dirname, fileName);
+
+    XLSX.writeFile(workbook, filePath);
+
+    res.download(filePath);
 });
 
 module.exports = router;

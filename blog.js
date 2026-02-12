@@ -26,3 +26,4 @@
 //* 10/02/2026 - se crea el archivo saveData.js de materiales para manejar la función de guardar los datos del formulario de registro de materiales
 //* 10/02/2026 - se agrega boton cerrar al popup de registro de materiales
 //* 10/02/2026 - se agrega poppu o ventana para consultar los materiales despachados en las notas de venta de las sucursales o laboratorio
+//* 11/02/2026 - se agrega sriptConsult.js para la consula de materiales despachados

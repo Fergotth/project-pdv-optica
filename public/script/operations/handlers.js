@@ -9,16 +9,18 @@ import { saveProduct } from "../products/saveData.js";
 import { renderArticlesFounded } from "../products/utils.js"
 import { getDataProductsDB } from "../products/getData.js";
 import { 
-    getDataFormMaterial,
     validateMaterialData,
     showAlert
 } from "../materials/utils.js";
 import { saveData } from "../materials/saveData.js";
+import { getDataFormMaterial } from "../materials/getData.js";
 import productSctipt from "../products/addProductScript.js";
-import scriptMaterials from "../materials/scriptMaterials.js";
+import scriptMaterials from "../materials/scriptDispatchMaterial.js";
+import scriptConsultDispatchedMaterials from "../materials/scriptConsult.js";
 
 let producsInstanceEvents = null;
 let materialsInstanceEvents = null;
+let consultDispatchedMaterials = null;
 
 /**
  * 
@@ -173,4 +175,20 @@ export const handlerBtnCloseRegisterMaterial = () => {
  */
 export const handlerConsultGeneralMaterialDispatched = ({ DOM, innerHTML }) => {
     DOM.appendChild(getParsedHTML(innerHTML));
+    consultDispatchedMaterials = scriptConsultDispatchedMaterials();
+};
+
+/**
+ * Cierra el formulario de consulta de materiales despachados
+ * @param {void}    // Cierra el HTMLDivElement overlay de consulta de materiales despachados
+*/ 
+export const handlerBtnCloseConsultMaterialDispatched = () => {
+//* Se eliminan los listeners para evitar fugas de memoria 
+    if (consultDispatchedMaterials) {
+        consultDispatchedMaterials.removeListeners();
+        consultDispatchedMaterials = null;
+    }
+
+    //* Se cierra el overlay del modal
+    closeOverlay(getElement('.overlayPromptDiscount'));
 };

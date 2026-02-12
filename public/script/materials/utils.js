@@ -1,4 +1,6 @@
 import { newAlert } from "../utils/alerts.js";
+import { getElement } from "../utils/getElement.js";
+import { getDataDispatchedMaterials } from "./getData.js";
 
 /**
  * Genera los valores del poder en el menu select de la receta 
@@ -90,29 +92,6 @@ export const toggleAxisField = (axisElement, disabled, COLORS) => {
 };
 
 /**
- * Obtiene los datos del material a partir de los valores de los elementos select e inputs
- * @param {Object} elements   // Objeto con los elementos select a los que se les agregaran los valores correspondientes
- * @returns {Object}          // Objeto con los datos del material
- */
-export const getDataFormMaterial = (elements) => {
-    return {
-        SphOD: elements.sphOD.value,
-        SphOS: elements.sphOS.value,
-        CylOD: elements.cylOD.value,
-        CylOS: elements.cylOS.value,
-        AxisOD: elements.axisOD.value,
-        AxisOS: elements.axisOS.value,
-        ADDOD: elements.addOD.value,
-        ADDOS: elements.addOS.value,
-        DateRegistered: elements.date.value,
-        Branch: elements.branch.value,
-        Material: elements.material.value,
-        Observations: elements.observations.value,
-        Note: elements.note.value
-    };
-};
-
-/**
  * Valida los datos de un material
  * @param {Object} data 
  * @returns {string|null}  // Retorna el nombre del campo que falló, o null si todo es válido
@@ -174,4 +153,88 @@ export const showAlert = (message, icon = 'info') => {
         text: message,
         title: 'AVISO'
     });
+};
+
+/**
+ * Renderiza los datos de los materiales despachados en la interfaz
+ * @param {Object} data // Datos de los materiales despachados obtenidos de la Base de Datos
+ */
+export const renderDispatchedMaterial = async () => {
+    const { branchs, materials } = mapedFields();
+
+    //* Sucursal seleccionada para la busqueda
+    const selectedBranch = getElement('#selectSucursal').value || 'all';
+
+    //* Obtiene los datos de la base de datos
+    const data = await getDataDispatchedMaterials({ branch: selectedBranch });
+
+    //* Contenedor donde se renderizaran los materiales despachados
+    const container = getElement('.popupConsultMaterialDispatched tbody');
+    
+    //* Limpiar el contenedor antes de renderizar los nuevos datos
+    container.replaceChildren();
+
+    //* Renderizar cada material despachado en una fila de la tabla
+    data.forEach(field => {
+        //* elemento nuevo a crear
+        const e = document.createElement('tr');
+
+        e.innerHTML = `
+            <td>${field.DateRegistered}</td>
+            <td>${branchs[field.Branch]}</td>
+            <td>${field.Note}</td>
+            <td>${materials[field.Material]}</td>
+            <td>${field.SphOD}</td>
+            <td>${field.CylOD !== '0.00' ? field.CylOD : "-----"}</td>
+            <td>${field.AxisOD ? field.AxisOD : "---"}</td>
+            <td>${!field.Material.includes('sv') ? field.ADDOD : "-----"}</td>
+            <td>${field.SphOS}</td>
+            <td>${field.CylOS !== '0.00' ? field.CylOS : "-----"}</td>
+            <td>${field.AxisOS? field.AxisOS : "---"}</td>
+            <td>${!field.Material.includes('sv') ? field.ADDOS : "-----"}</td>
+            <td>${field.Observations}</td>
+        `;
+
+        //* Agregar la fila al contenedor
+        container.appendChild(e);
+    });
+};
+
+//! falta armar bien esta funcion
+export const exportToExcel = async () => {
+    await fetch('/export-material-dispatched', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            branch: selectedBranch,
+            rows: data
+        })
+    });
+};
+
+//* Datos formateados para mostrarse mejor
+const mapedFields = () => {
+    return {
+        branchs: {
+            'vere': "Optica Vere",
+            'total': "Vision Total",
+            'laboratorio': "Laboratorio",
+            'centro': "Optica del Centro",
+            'eco': "Ecovision"
+        },
+        materials: {
+            'svw': "Monofocal Blanco",
+            'svar': "Monofocal Antirreflejante",
+            'svphar': "Monofocal Fotocromatico Antirreflejante",
+            'svbb': "Monofocal Blueblock",
+            'svphbb': "Monofocal Fotocromatico Blueblock",
+            'ftw': "Bifocal Flat-Top Blanco",
+            'ftaw': "Bifocal Flat-Top Antirreflejante",
+            'ftphar': "Bifocal Flat-Top Fotocromatico Antirreflejante",
+            'prgar': "Progresivo Antirreflejante",
+            'prgphar': "Progresivo Fotocromatico Antirreflejante"
+        }
+    };
 };

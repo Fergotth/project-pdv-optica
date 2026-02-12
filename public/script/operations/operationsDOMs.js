@@ -384,15 +384,15 @@ export const getMaterialDispatchedHTML = () => {
                 <label for="selectSucursal">Selecciona la sucursal:</label>
                 <select id="selectSucursal" name="selectSucursal" required>
                     <option value="" disabled selected>Selecciona una sucursal</option>
-                    <option value="Todas">Todas</option>
+                    <option value="all">Todas</option>
                     <option value="" disabled selected></option>
-                    <option value="Optica Vere">Optica Vere</option>
-                    <option value="Ecovision">Ecovision</option>
-                    <option value="Optica del Centro">Optica del Centro</option>
-                    <option value="Vision Total">Vision Total</option>
-                    <option value="Laboratorio">Laboratorio</option>
+                    <option value="vere">Optica Vere</option>
+                    <option value="eco">Ecovision</option>
+                    <option value="centro">Optica del Centro</option>
+                    <option value="total">Vision Total</option>
+                    <option value="laboratorio">Laboratorio</option>
                 </select>
-                <button type="button">Consultar</button>
+                <button type="button" class="btnConsultMaterialDispatched">Consultar</button>
             </form>
             <form id="formConsultMaterialDispatchedTable">
                 <table class="material-table">
@@ -413,53 +413,7 @@ export const getMaterialDispatchedHTML = () => {
                             <th>Observaciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-
-                        <tr>
-                            <td>2026-02-10</td>
-                            <td>Sucursal Centro</td>
-                            <td>001</td>
-                            <td>Lente CR-39</td>
-                            <td>-1.50</td>
-                            <td>-1.25</td>
-                            <td>73</td>
-                            <td>+2.00</td>
-                            <td>-0.50</td>
-                            <td>-0.25</td>
-                            <td>170</td>
-                            <td>+2.00</td>
-                            <td>Entrega urgente</td>
-                        </tr>
-                        <tr>
-                            <td>2026-02-09</td>
-                            <td>Sucursal Norte</td>
-                            <td>Policarbonato</td>
-                            <td>-2.00</td>
-                            <td>-1.75</td>
-                            <td>-1.00</td>
-                            <td>-0.75</td>
-                            <td>160</td>
-                            <td>165</td>
-                            <td>+1.50</td>
-                            <td>+1.75</td>
-                            <td>Paciente adulto mayor</td>
-                        </tr>
-                        <tr>
-                            <td>2026-02-08</td>
-                            <td>Sucursal Sur</td>
-                            <td>Progresivo Fotocromatico Blueblock</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>—</td>
-                            <td>—</td>
-                            <td>—</td>
-                            <td>—</td>
-                            <td>Solo armazón</td>
-                        </tr>
-
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </form>
         </div>

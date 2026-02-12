@@ -58,5 +58,7 @@ export const getHandlerArgs = {
     handlerConsultGeneralMaterialDispatched: () => ({
         DOM: getElement('.containerOperations'),
         innerHTML: getMaterialDispatchedHTML()
-    })
+    }),
+
+    handlerBtnCloseConsultMaterialDispatched: () => ({})
 };
