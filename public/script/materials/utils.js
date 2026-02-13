@@ -1,6 +1,10 @@
 import { newAlert } from "../utils/alerts.js";
 import { getElement } from "../utils/getElement.js";
 import { getDataDispatchedMaterials } from "./getData.js";
+import { 
+    dispatch, 
+    getState
+} from "./stateMaterials.js";
 
 /**
  * Genera los valores del poder en el menu select de la receta 
@@ -97,17 +101,7 @@ export const toggleAxisField = (axisElement, disabled, COLORS) => {
  * @returns {string|null}  // Retorna el nombre del campo que falló, o null si todo es válido
  */
 export const validateMaterialData = (data) => {
-    const requiredFields = ['SphOD', 'SphOS', 'CylOD', 'CylOS', 'Material', 'Note', 'Branch', 'DateRegistered'];
-    const nameFieldMap = {
-        SphOD: 'Esfera OD',
-        SphOS: 'Esfera OI',
-        CylOD: 'Cilindro OD',
-        CylOS: 'Cilindro OI',
-        Material: 'Material',
-        Note: 'Nota',
-        Branch: 'Sucursal',
-        DateRegistered: 'Fecha'
-    };
+    const  { requiredFields, nameFieldMap } = getState();
 
     for (const field of requiredFields) {
         if (!data[field] || data[field].toString().trim() === '')
@@ -115,16 +109,16 @@ export const validateMaterialData = (data) => {
     }
 
     if (data.CylOD !== '0.00' && !data.AxisOD)
-        return 'Eje OD';
-
+        return nameFieldMap.AxisOD;
+    
     if (data.CylOS !== '0.00' && !data.AxisOS)
-        return 'Eje OI';
-
+        return nameFieldMap.AxisOS;
+    
     if (data.Material.includes('ft') || data.Material.includes('prg')) {
         if (!data.ADDOD)
-            return 'ADD OD';
+            return nameFieldMap.ADDOD;
         if (!data.ADDOS)
-            return 'ADD OI';
+            return nameFieldMap.ADDOS;
     }
 
     //? Todo válido
@@ -160,13 +154,26 @@ export const showAlert = (message, icon = 'info') => {
  * @param {Object} data // Datos de los materiales despachados obtenidos de la Base de Datos
  */
 export const renderDispatchedMaterial = async () => {
-    const { branchs, materials } = mapedFields();
+    const { branchs, materials } = getState();
 
     //* Sucursal seleccionada para la busqueda
     const selectedBranch = getElement('#selectSucursal').value || 'all';
 
     //* Obtiene los datos de la base de datos
     const data = await getDataDispatchedMaterials({ branch: selectedBranch });
+    
+    //! funcion para exportar a excel ---(pendiente utilizar [ya es funcional])--
+    // //* guarda el objeto obtenido de la BD en el state
+    // if (data.length > 0) {
+    //     dispatch({ type: "CLEAR_TEMP_DATA" });
+    //     dispatch({ 
+    //         type: "SET_DB_DATA",
+    //         upload: data
+    //     });
+
+    //     exportToExcel(getState(), selectedBranch);
+    // }
+    //! ----------------------------------------------
 
     //* Contenedor donde se renderizaran los materiales despachados
     const container = getElement('.popupConsultMaterialDispatched tbody');
@@ -186,11 +193,11 @@ export const renderDispatchedMaterial = async () => {
             <td>${materials[field.Material]}</td>
             <td>${field.SphOD}</td>
             <td>${field.CylOD !== '0.00' ? field.CylOD : "-----"}</td>
-            <td>${field.AxisOD ? field.AxisOD : "---"}</td>
+            <td>${field.AxisOD !== "" ? field.AxisOD : "---"}</td>
             <td>${!field.Material.includes('sv') ? field.ADDOD : "-----"}</td>
             <td>${field.SphOS}</td>
             <td>${field.CylOS !== '0.00' ? field.CylOS : "-----"}</td>
-            <td>${field.AxisOS? field.AxisOS : "---"}</td>
+            <td>${field.AxisOS !== "" ? field.AxisOS : "---"}</td>
             <td>${!field.Material.includes('sv') ? field.ADDOS : "-----"}</td>
             <td>${field.Observations}</td>
         `;
@@ -200,41 +207,54 @@ export const renderDispatchedMaterial = async () => {
     });
 };
 
-//! falta armar bien esta funcion
-export const exportToExcel = async () => {
-    await fetch('/export-material-dispatched', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            branch: selectedBranch,
-            rows: data
-        })
-    });
+//* exporta datos a excel
+const exportToExcel = async (state, selectedBranch) => {
+    const branch = state.branchs[selectedBranch];
+
+    if (!state.dataFromDB || state.dataFromDB.length === 0) {
+        alert("No hay datos para exportar");
+        return;
+    }
+
+    try {
+        const response = await fetch('/export-to-excel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                branch: branch,
+                rows: state.dataFromDB
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error("Error al generar el archivo");
+        }
+
+        // Manejo correcto del archivo
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "ReporteMateriales.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error("Error exportando:", error);
+        alert("Error al exportar el archivo");
+    }
 };
 
-//* Datos formateados para mostrarse mejor
-const mapedFields = () => {
-    return {
-        branchs: {
-            'vere': "Optica Vere",
-            'total': "Vision Total",
-            'laboratorio': "Laboratorio",
-            'centro': "Optica del Centro",
-            'eco': "Ecovision"
-        },
-        materials: {
-            'svw': "Monofocal Blanco",
-            'svar': "Monofocal Antirreflejante",
-            'svphar': "Monofocal Fotocromatico Antirreflejante",
-            'svbb': "Monofocal Blueblock",
-            'svphbb': "Monofocal Fotocromatico Blueblock",
-            'ftw': "Bifocal Flat-Top Blanco",
-            'ftaw': "Bifocal Flat-Top Antirreflejante",
-            'ftphar': "Bifocal Flat-Top Fotocromatico Antirreflejante",
-            'prgar': "Progresivo Antirreflejante",
-            'prgphar': "Progresivo Fotocromatico Antirreflejante"
+//* Limpia el formulario
+export const cleanForm = (elements) => {
+    Object.values(elements).forEach(e => {
+        if (e && "value" in e) {
+            e.value = "";
         }
-    };
+    });
 };

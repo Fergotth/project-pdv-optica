@@ -10,10 +10,12 @@ import { renderArticlesFounded } from "../products/utils.js"
 import { getDataProductsDB } from "../products/getData.js";
 import { 
     validateMaterialData,
-    showAlert
+    showAlert,
+    cleanForm
 } from "../materials/utils.js";
 import { saveData } from "../materials/saveData.js";
 import { getDataFormMaterial } from "../materials/getData.js";
+import { dispatch } from "../materials/stateMaterials.js";
 import productSctipt from "../products/addProductScript.js";
 import scriptMaterials from "../materials/scriptDispatchMaterial.js";
 import scriptConsultDispatchedMaterials from "../materials/scriptConsult.js";
@@ -129,26 +131,38 @@ export const handlerRegisterNote = ({ DOM, innerHTML }) => {
  * @param {void}    // Cierra el HTMLDivElement overlay de registro de materiales
  */
 export const handlerBtnSaveDataMaterials = async () => {
+    //* obtener datos del form en pantalla
     const data = getDataFormMaterial(materialsInstanceEvents.elements);
-    const response = validateMaterialData(data);
-    
-    //* Si los datos no son válidos, se muestra un mensaje de error y se detiene la ejecución
-    if (response !== null) {
+
+    //* se guarda la info en el state 
+    dispatch({ 
+        type: "SET_FORM_DATA",
+        upload: data
+    });
+
+    //* Valida los datos, si no son válidos, se muestra un mensaje de error y se detiene la ejecución
+    if (validateMaterialData(data) !== null) {
         showAlert(`Los datos del material no son válidos: Falta el campo ${response}`);
         return;
     }
 
-    //* Si los datos son válidos, se procede a guardarlos o devolver un error si falla el guardado y detener el cierre del modal
+    //* Si los datos son válidos, se procede a guardarlos o devolver un error si falla el guardado
     if (!await saveData(data)) return;
 
-    //* Se cierra el modal y se eliminan los listeners para evitar fugas de memoria
-    if (materialsInstanceEvents) {
-        materialsInstanceEvents.removeListeners();
-        materialsInstanceEvents = null;
-    }
+    newAlert({
+        icon: 'question',
+        title: "AVISO",
+        text: "¿Desea surtir otra nota?"
+    }).then(res => {
+        if (res)
+            cleanForm(materialsInstanceEvents.elements); //* limpiar el formulario
+        else {
+            handlerBtnCloseRegisterMaterial({}); //* cierra el formulario
+        }
+    });
 
-    //* Se cierra el overlay del modal
-    closeOverlay(getElement('.overlayPromptDiscount'));
+    //* limpia los datos guardados anteriormente
+    dispatch({ type: "CLEAR_TEMP_DATA" })
 };
 
 /**
@@ -162,9 +176,6 @@ export const handlerBtnCloseRegisterMaterial = () => {
         materialsInstanceEvents = null;
     }
 
-    //* Se muestra mensaje de cancelacion de registro de material
-    showAlert("Registro de material cancelado", "info");
-    
     //* Se cierra el overlay del modal
     closeOverlay(getElement('.overlayPromptDiscount'));
 };

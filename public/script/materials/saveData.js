@@ -1,4 +1,5 @@
 import { postData } from "../utils/postDataToDB.js";
+import { dispatch } from "./stateMaterials.js";
 
 /**
  * Guardar los datos del formulario de registro de salida de materiales
@@ -6,5 +7,15 @@ import { postData } from "../utils/postDataToDB.js";
  * @returns {boolean}    // Retorna true si el guardado fue exitoso, o false si hubo un error al guardar los datos
  */
 export const saveData = async (data) => {
-    return await postData('/save-material-dispatched', data);
+    //* respuesta booleana 
+    const response = await postData('/save-material-dispatched', data);
+
+    //* si fue "true" guarda la data en state
+    if (response)
+        dispatch({
+            type: "SET_DB_DATA",
+            upload: data
+        });
+
+    return response;
 };

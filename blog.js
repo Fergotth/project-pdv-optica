@@ -27,3 +27,7 @@
 //* 10/02/2026 - se agrega boton cerrar al popup de registro de materiales
 //* 10/02/2026 - se agrega poppu o ventana para consultar los materiales despachados en las notas de venta de las sucursales o laboratorio
 //* 11/02/2026 - se agrega sriptConsult.js para la consula de materiales despachados
+//* 11/02/2026 - se agrega al server de materialDispatchDB.js la ruta para exportar a excel los datos
+//* 12/02/2026 - se implementa Redux para manejar el estado de Materiales 
+//* 12/02/2026 - se modifica funciones de handlers, saveDatam getDara y utils para el nuevo manejador de estado
+//* 12/02/2026 - ya es funcional la funcion para exportar a excel la consulta de materiales despachados
