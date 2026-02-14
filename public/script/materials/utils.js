@@ -161,19 +161,6 @@ export const renderDispatchedMaterial = async () => {
 
     //* Obtiene los datos de la base de datos
     const data = await getDataDispatchedMaterials({ branch: selectedBranch });
-    
-    //! funcion para exportar a excel ---(pendiente utilizar [ya es funcional])--
-    // //* guarda el objeto obtenido de la BD en el state
-    // if (data.length > 0) {
-    //     dispatch({ type: "CLEAR_TEMP_DATA" });
-    //     dispatch({ 
-    //         type: "SET_DB_DATA",
-    //         upload: data
-    //     });
-
-    //     exportToExcel(getState(), selectedBranch);
-    // }
-    //! ----------------------------------------------
 
     //* Contenedor donde se renderizaran los materiales despachados
     const container = getElement('.popupConsultMaterialDispatched tbody');
@@ -207,8 +194,55 @@ export const renderDispatchedMaterial = async () => {
     });
 };
 
-//* exporta datos a excel
-const exportToExcel = async (state, selectedBranch) => {
+/**
+ * Exportar los datos consultados a excel
+ * @returns 
+ */
+export const exportToExcel = async () => {
+    //* Sucursal seleccionada para la busqueda
+    const selectedBranch = getElement('.popupConsultMaterialDispatched #selectSucursal').value;
+    const existData = getElement('.popupConsultMaterialDispatched tbody');
+
+    //* Si no ha selecionado ninguna sucursal termina la ejecucion
+    if (!selectedBranch && existData.rows.length === 0) {
+        newAlert({
+            icon: 'info',
+            title: "AVISO",
+            text: "No se ha seleccionado ninguna sucursal"
+        });
+        return;
+    }
+
+    //* Si no he realizado ninguna busqueda
+    if (existData.row.length === 0) {
+        newAlert({
+            icon: 'info',
+            title: "AVISO",
+            text: "No se ha realizado ninguna busqueda"
+        });
+        return;
+    }
+
+    //* Obtiene los datos de la base de datos
+    const data = await getDataDispatchedMaterials({ branch: selectedBranch });
+    
+    //* guarda el objeto obtenido de la BD en el state
+    if (data.length > 0) {
+        dispatch({ type: "CLEAR_TEMP_DATA" });
+        dispatch({ 
+            type: "SET_DB_DATA",
+            upload: data
+        });
+    } else {
+        newAlert({
+            icon: 'info',
+            title: "AVISO",
+            text: "No se encontro ningun registro con esa sucursal"
+        });
+        return;
+    }
+
+    const state = getState();
     const branch = state.branchs[selectedBranch];
 
     if (!state.dataFromDB || state.dataFromDB.length === 0) {
@@ -248,6 +282,28 @@ const exportToExcel = async (state, selectedBranch) => {
         console.error("Error exportando:", error);
         alert("Error al exportar el archivo");
     }
+};
+
+//! probar esto !!!
+/**
+ * Actualizar la hoja de excel del inventario de materiales
+ * @param {String} sph 
+ * @param {String} cyl 
+ * @param {Object} sheet
+ */
+export const updateStockInExcel = async (sph, cyl, sheet) => {
+    const res = await fetch('/update-stock', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        sph: sph,
+        cyl: cyl,
+        sheet: sheet
+        })
+    });
+
+    const data = await res.json();
+    return data.success;
 };
 
 //* Limpia el formulario

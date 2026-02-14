@@ -1,6 +1,7 @@
 //! Falta agregar alguna validacion para que cuando se intenten guardar los datos en el backend, si falla el servidor, 
 //! se mantengan los datos en el frontend y no se borren y se vuelva a intentar el guardado
 //! Falta generar ticket de receta, queda pendiente
+//! Corregir la ruta donde se guardan los reportes de excel
 
 //* 10/01/2026 - correccion de validacion de power y axis para que solo se apliquen en los campos correspondientes
 //* 20/01/2026 - correccion de error al generar ticket cuando falla la primera vez
@@ -31,3 +32,5 @@
 //* 12/02/2026 - se implementa Redux para manejar el estado de Materiales 
 //* 12/02/2026 - se modifica funciones de handlers, saveDatam getDara y utils para el nuevo manejador de estado
 //* 12/02/2026 - ya es funcional la funcion para exportar a excel la consulta de materiales despachados
+//* 13/02/2026 - se agrega carpeta dentro routes 'services' para guardar script del backend para trabajar con excel
+//* 13/02/2026 - se crea funcion para guardar o modificar datos de la base de datos de excel de materiales

@@ -383,9 +383,9 @@ export const getMaterialDispatchedHTML = () => {
             <form id="formConsultMaterialDispatchedMenu">
                 <label for="selectSucursal">Selecciona la sucursal:</label>
                 <select id="selectSucursal" name="selectSucursal" required>
-                    <option value="" disabled selected>Selecciona una sucursal</option>
+                    <option value="" selected>Selecciona una sucursal</option>
                     <option value="all">Todas</option>
-                    <option value="" disabled selected></option>
+                    <option value="" disabled></option>
                     <option value="vere">Optica Vere</option>
                     <option value="eco">Ecovision</option>
                     <option value="centro">Optica del Centro</option>
@@ -393,6 +393,7 @@ export const getMaterialDispatchedHTML = () => {
                     <option value="laboratorio">Laboratorio</option>
                 </select>
                 <button type="button" class="btnConsultMaterialDispatched">Consultar</button>
+                <button type="button" class="btnExportMaterialDispatchedToExcel">Exportar Reporte a Excel</button>
             </form>
             <form id="formConsultMaterialDispatchedTable">
                 <table class="material-table">

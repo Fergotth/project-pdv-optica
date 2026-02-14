@@ -1,6 +1,9 @@
+const XLSX = require("xlsx-js-style");
+const path = require("path");
 const express = require('express');
 const router = express.Router();
 const { dbMaterialDispatch } = require('../database');
+const { updateStock } = require("./services/excel.services.js");
 
 // Ruta para obtener los datos de despacho de materiales
 router.get('/get-materials-dispatched', (req, res) => {
@@ -47,12 +50,8 @@ router.post('/export-to-excel', (req, res) => {
         return res.status(400).json({ error: "Datos inválidos" });
     }
 
-    const XLSX = require("xlsx-js-style");
-    const path = require("path");
-
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.aoa_to_sheet([]);
-
     const branchName = branch || "Todas";
     const today = new Date().toLocaleDateString("es-MX");
 
@@ -118,12 +117,52 @@ router.post('/export-to-excel', (req, res) => {
 
     XLSX.utils.book_append_sheet(workbook, worksheet, "Despacho");
 
-    const fileName = `DaterialesDespachados_${today.replace(/\//g, "-")}.xlsx`;
-    const filePath = path.join(__dirname, fileName);
+    // GENERAR BUFFER EN MEMORIA
+    const buffer = XLSX.write(workbook, {
+        type: "buffer",
+        bookType: "xlsx"
+    });
+
+    // Enviar como archivo sin guardarlo
+    res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=ReporteMateriales_${today.replace(/\//g, "-")}.xlsx`
+    );
+
+    res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    res.send(buffer);
+});
+
+//* Ruta para modificar en el excel el materiar surtido
+router.post('/update-stock', (req, res) => {
+    const { sph, cyl, sheet } = req.body;
+    const filePath = path.join(__dirname, "micas.xlsx");
+
+    const workbook = XLSX.readFile(filePath);
+    const worksheet = workbook.Sheets[workbook.SheetNames[sheet.index]];
+
+    const updatedCell = updateStock(worksheet, sph, cyl, { 
+        row: sheet.row, 
+        col: sph.includes("-") ? sheet.minus.col : sheet.plus.col
+    });
+
+    if (!updatedCell) {
+        return res.status(404).json({
+            success: false,
+            message: "No se encontró la combinación sph/cyl"
+        });
+    }
 
     XLSX.writeFile(workbook, filePath);
 
-    res.download(filePath);
+    res.json({
+        success: true,
+        cell: updatedCell
+    });
 });
 
 module.exports = router;
