@@ -15,7 +15,7 @@ import {
 } from "../materials/utils.js";
 import { saveData } from "../materials/saveData.js";
 import { getDataFormMaterial } from "../materials/getData.js";
-import { dispatch } from "../materials/stateMaterials.js";
+import { store } from "../materials/stateMaterials.js";
 import productSctipt from "../products/addProductScript.js";
 import scriptMaterials from "../materials/scriptDispatchMaterial.js";
 import scriptConsultDispatchedMaterials from "../materials/scriptConsult.js";
@@ -134,14 +134,20 @@ export const handlerBtnSaveDataMaterials = async () => {
     //* obtener datos del form en pantalla
     const data = getDataFormMaterial(materialsInstanceEvents.elements);
 
+    //* subscribe para escuchas cambios en el estado o state, se puede eliminar si no se necesita escuchar cambios en el estado
+    store.subscribe(() => {
+        store.getState();
+    });
+
     //* se guarda la info en el state 
-    dispatch({ 
+    store.dispatch({ 
         type: "SET_FORM_DATA",
         upload: data
     });
 
     //* Valida los datos, si no son válidos, se muestra un mensaje de error y se detiene la ejecución
-    if (validateMaterialData(data) !== null) {
+    const response = validateMaterialData(data);
+    if (response !== null) {
         showAlert(`Los datos del material no son válidos: Falta el campo ${response}`);
         return;
     }
@@ -162,7 +168,7 @@ export const handlerBtnSaveDataMaterials = async () => {
     });
 
     //* limpia los datos guardados anteriormente
-    dispatch({ type: "CLEAR_TEMP_DATA" })
+    store.dispatch({ type: "CLEAR_TEMP_DATA" })
 };
 
 /**

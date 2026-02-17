@@ -1,5 +1,5 @@
 import { postData } from "../utils/postDataToDB.js";
-import { dispatch } from "./stateMaterials.js";
+import { store } from "./stateMaterials.js";
 import { updateStockInExcel } from "./utils.js";
 
 /**
@@ -7,17 +7,23 @@ import { updateStockInExcel } from "./utils.js";
  * @param {Object} data // Objeto contenedor de los datos del formulario a guardar
  * @returns {boolean}    // Retorna true si el guardado fue exitoso, o false si hubo un error al guardar los datos
  */
-export const saveData = async (data) => {
-    //!
-    //* respuesta booleana 
-    const response = await postData('/save-material-dispatched', data);
+export const saveData = async (data) => { debugger
+    //! ----------
+    const { sheet } = store.getState();
+    await updateStockInExcel(data.SphOD, data.CylOD, sheet[data.Material]);
+    await updateStockInExcel(data.SphOS, data.CylOS, sheet[data.Material]);
+    //! ----------
 
-    //* si fue "true" guarda la data en state
-    if (response)
-        dispatch({
-            type: "SET_DB_DATA",
-            upload: data
-        });
+    // //* respuesta booleana 
+    // const response = await postData('/save-material-dispatched', data);
 
-    return response;
+    // //* si fue "true" guarda la data en state
+    // if (response)
+    //     store.dispatch({
+    //         type: "SET_DB_DATA",
+    //         upload: data
+    //     });
+
+    // return response;
+    return false;
 };

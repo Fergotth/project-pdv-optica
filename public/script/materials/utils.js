@@ -1,11 +1,7 @@
 import { newAlert } from "../utils/alerts.js";
 import { getElement } from "../utils/getElement.js";
 import { getDataDispatchedMaterials } from "./getData.js";
-import { 
-    dispatch, 
-    getState
-} from "./stateMaterials.js";
-
+import { store } from "./stateMaterials.js";
 /**
  * Genera los valores del poder en el menu select de la receta 
  * @param {Number} sign 
@@ -101,7 +97,7 @@ export const toggleAxisField = (axisElement, disabled, COLORS) => {
  * @returns {string|null}  // Retorna el nombre del campo que falló, o null si todo es válido
  */
 export const validateMaterialData = (data) => {
-    const  { requiredFields, nameFieldMap } = getState();
+    const  { requiredFields, nameFieldMap } = store.getState();
 
     for (const field of requiredFields) {
         if (!data[field] || data[field].toString().trim() === '')
@@ -154,7 +150,7 @@ export const showAlert = (message, icon = 'info') => {
  * @param {Object} data // Datos de los materiales despachados obtenidos de la Base de Datos
  */
 export const renderDispatchedMaterial = async () => {
-    const { branchs, materials } = getState();
+    const { branchs, materials } = store.getState();
 
     //* Sucursal seleccionada para la busqueda
     const selectedBranch = getElement('#selectSucursal').value || 'all';
@@ -214,7 +210,7 @@ export const exportToExcel = async () => {
     }
 
     //* Si no he realizado ninguna busqueda
-    if (existData.row.length === 0) {
+    if (existData.rows.length === 0) {
         newAlert({
             icon: 'info',
             title: "AVISO",
@@ -228,8 +224,8 @@ export const exportToExcel = async () => {
     
     //* guarda el objeto obtenido de la BD en el state
     if (data.length > 0) {
-        dispatch({ type: "CLEAR_TEMP_DATA" });
-        dispatch({ 
+        store.dispatch({ type: "CLEAR_TEMP_DATA" });
+        store.dispatch({ 
             type: "SET_DB_DATA",
             upload: data
         });
@@ -242,7 +238,7 @@ export const exportToExcel = async () => {
         return;
     }
 
-    const state = getState();
+    const state = store.getState();
     const branch = state.branchs[selectedBranch];
 
     if (!state.dataFromDB || state.dataFromDB.length === 0) {
@@ -303,6 +299,7 @@ export const updateStockInExcel = async (sph, cyl, sheet) => {
     });
 
     const data = await res.json();
+    console.log(data);
     return data.success;
 };
 

@@ -146,8 +146,7 @@ router.post('/update-stock', (req, res) => {
     const worksheet = workbook.Sheets[workbook.SheetNames[sheet.index]];
 
     const updatedCell = updateStock(worksheet, sph, cyl, { 
-        row: sheet.row, 
-        col: sph.includes("-") ? sheet.minus.col : sheet.plus.col
+        table: sph.includes("-") ? sheet.minus : sheet.plus 
     });
 
     if (!updatedCell) {
