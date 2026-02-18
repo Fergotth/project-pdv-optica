@@ -1,4 +1,4 @@
-const XLSX = require("xlsx-js-style");
+const ExcelJS = require('exceljs');
 const path = require("path");
 const express = require('express');
 const router = express.Router();
@@ -43,35 +43,31 @@ router.post('/save-material-dispatched', (req, res) => {
 });
 
 // Ruta para exportar a excel los datos consultados
-router.post('/export-to-excel', (req, res) => {
+router.post('/export-to-excel', async (req, res) => {
     const { branch, rows } = req.body;
 
     if (!rows || !Array.isArray(rows)) {
         return res.status(400).json({ error: "Datos inválidos" });
     }
 
-    const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.aoa_to_sheet([]);
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Despacho");
+
     const branchName = branch || "Todas";
     const today = new Date().toLocaleDateString("es-MX");
 
-    // Título
-    XLSX.utils.sheet_add_aoa(worksheet, [
-        ["REPORTE DE DESPACHO DE MATERIAL"]
-    ], { origin: "A1" });
+    // TÍTULO
+    worksheet.mergeCells('A1:M1');
+    const titleCell = worksheet.getCell('A1');
+    titleCell.value = "REPORTE DE DESPACHO DE MATERIAL";
+    titleCell.font = { size: 14, bold: true };
+    titleCell.alignment = { horizontal: 'center' };
 
-    worksheet["!merges"] = [
-        { s: { r: 0, c: 0 }, e: { r: 0, c: 12 } }
-    ];
+    // SUBTÍTULOS
+    worksheet.getCell('A3').value = `Sucursal: ${branchName}`;
+    worksheet.getCell('A4').value = `Fecha de reporte: ${today}`;
 
-    // Subtítulos
-    XLSX.utils.sheet_add_aoa(worksheet, [
-        [`Sucursal: ${branchName}`],
-        [`Fecha de reporte: ${today}`],
-        []
-    ], { origin: "A3" });
-
-    // Encabezados
+    // ENCABEZADOS (fila 6)
     const headers = [
         "Fecha",
         "Sucursal",
@@ -88,13 +84,19 @@ router.post('/export-to-excel', (req, res) => {
         "Observaciones"
     ];
 
-    XLSX.utils.sheet_add_aoa(worksheet, [headers], { origin: "A6" });
+    const headerRow = worksheet.getRow(6);
+    headers.forEach((header, index) => {
+        const cell = headerRow.getCell(index + 1);
+        cell.value = header;
+        cell.font = { bold: true };
+        cell.alignment = { horizontal: 'center' };
+    });
 
-    // Datos (YA NO CONSULTAMOS BD)
-    const dataStartRow = 6;
-
+    // DATOS (desde fila 7)
     rows.forEach((row, index) => {
-        const rowData = [
+        const dataRow = worksheet.getRow(7 + index);
+
+        dataRow.values = [
             row.DateRegistered,
             row.Branch,
             row.Note,
@@ -109,21 +111,23 @@ router.post('/export-to-excel', (req, res) => {
             row.ADDOS,
             row.Observations
         ];
+    });
 
-        XLSX.utils.sheet_add_aoa(worksheet, [rowData], {
-            origin: { r: dataStartRow + index, c: 0 }
+    // 🟢 AJUSTAR ANCHO AUTOMÁTICO
+    worksheet.columns.forEach(column => {
+        let maxLength = 10;
+        column.eachCell({ includeEmpty: true }, cell => {
+            const length = cell.value ? cell.value.toString().length : 10;
+            if (length > maxLength) {
+                maxLength = length;
+            }
         });
+        column.width = maxLength + 2;
     });
 
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Despacho");
+    // GENERAR BUFFER
+    const buffer = await workbook.xlsx.writeBuffer();
 
-    // GENERAR BUFFER EN MEMORIA
-    const buffer = XLSX.write(workbook, {
-        type: "buffer",
-        bookType: "xlsx"
-    });
-
-    // Enviar como archivo sin guardarlo
     res.setHeader(
         "Content-Disposition",
         `attachment; filename=ReporteMateriales_${today.replace(/\//g, "-")}.xlsx`
@@ -138,16 +142,23 @@ router.post('/export-to-excel', (req, res) => {
 });
 
 //* Ruta para modificar en el excel el materiar surtido
-router.post('/update-stock', (req, res) => {
+router.post('/update-stock', async (req, res) => {
     const { sph, cyl, sheet } = req.body;
     const filePath = path.join(__dirname, "micas.xlsx");
 
-    const workbook = XLSX.readFile(filePath);
-    const worksheet = workbook.Sheets[workbook.SheetNames[sheet.index]];
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.readFile(filePath);
 
-    const updatedCell = updateStock(worksheet, sph, cyl, { 
-        table: sph.includes("-") ? sheet.minus : sheet.plus 
-    });
+    const worksheet = workbook.worksheets[sheet.index];
+
+    const updatedCell = updateStock(
+        worksheet,
+        sph,
+        cyl,
+        sph.includes("-") || sph === "0.00"
+            ? sheet.minus
+            : sheet.plus
+    );
 
     if (!updatedCell) {
         return res.status(404).json({
@@ -156,7 +167,7 @@ router.post('/update-stock', (req, res) => {
         });
     }
 
-    XLSX.writeFile(workbook, filePath);
+    await workbook.xlsx.writeFile(filePath);
 
     res.json({
         success: true,

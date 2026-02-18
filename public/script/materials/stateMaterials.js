@@ -38,21 +38,18 @@ const createStore = () => {
             },
             'svphar': {
                 index: 3,
-                row: 4,
-                plus: { col: 17 },
-                minus: { col: 1 }
+                minus: { sphCol: 1, sphStartRow: 5, sphEndRow: 29, cylRow: 4, cylStartCol: 2, cylEndCol: 14 },
+                plus: { sphCol: 17, sphStartRow: 5, sphEndRow: 28, cylRow: 4, cylStartCol: 18, cylEndCol: 30 }
             },
             'svbb': {
                 index: 2,
-                row: 6,
-                plus: { col: 21 },
-                minus: { col: 1 }
+                minus: { sphCol: 1, sphStartRow: 7, sphEndRow: 31, cylRow: 6, cylStartCol: 2, cylEndCol: 18 },
+                plus: { sphCol: 21, sphStartRow: 7, sphEndRow: 30, cylRow: 6, cylStartCol: 22, cylEndCol: 30 }
             },
             'svphbb': {
                 index: 11,
-                row: 4,
-                plus: { col: 17 },
-                minus: { col: 1 }
+                minus: { sphCol: 1, sphStartRow: 5, sphEndRow: 29, cylRow: 4, cylStartCol: 2, cylEndCol: 14 },
+                plus: { sphCol: 17, sphStartRow: 5, sphEndRow: 28, cylRow: 4, cylStartCol: 18, cylEndCol: 30 }
             },
             'ftw': {
                 index: 5,

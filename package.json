@@ -1,13 +1,13 @@
 {
   "dependencies": {
     "body-parser": "^2.2.0",
+    "exceljs": "^4.4.0",
     "express": "^5.1.0",
     "html-pdf": "^3.0.1",
     "multer": "^2.0.2",
     "pdfkit": "^0.17.1",
     "pm2": "^6.0.14",
     "puppeteer": "^13.7.0",
-    "sqlite3": "^5.1.7",
-    "xlsx-js-style": "^1.2.0"
+    "sqlite3": "^5.1.7"
   }
 }
